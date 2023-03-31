@@ -9,7 +9,7 @@ app.set('views', 'views');
 
 const rutasHome = require('./routes/home_routes.js')
 
-app.use("/assets",express.static(__dirname + '/public')); 
+app.use("/public",express.static(__dirname + '/public')); 
 
 app.use('/', rutasHome);
 
