@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 
 // Le decimos a node que nuestros assets se encuentran en assets
-app.use(express.static(__dirname + '/assets')); 
+app.use('/assets', express.static(path.join(__dirname, 'assets')))
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
