@@ -11,7 +11,9 @@ app.use('/', rutasHome);
 
 //app.use("/public",express.static(__dirname + '/public')); 
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use('/assets',express.static(__dirname + '/assets')); 
+
+// Le decimos a node que nuestros assets se encuentran en assets
+app.use(express.static(__dirname + '/assets')); 
 
 // Puerto al que escucha 3000
 app.listen(3000, ()=>{
