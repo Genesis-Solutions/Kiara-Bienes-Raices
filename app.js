@@ -8,14 +8,17 @@ const port = 3000;
 
 app.use(express.json());
 
+app.use(express.static('assets')); 
+app.use('/img', express.static('img'));
+
 // Le decimos a node que nuestros assets se encuentran en assets
-app.use(express.static(path.join(__dirname, '/assets')))
+//app.use(express.static(path.join(__dirname, '/assets')))
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const rutasHome = require('./routes/home_routes.js')
+const rutasHome = require('./routes/homeRoutes.js')
 
 app.use('/', rutasHome);
 
