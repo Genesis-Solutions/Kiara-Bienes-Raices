@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Mi página web</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CRUD - Delete</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+        <link rel="icon" type="image/png" href="img/housefondo.png">
     </head>
-    <body>
-        <h1>Bienvenido a mi página web</h1>
-        <p>Esta es la pagina de delete.</p>
+    <body class="bg-gray-100 flex flex-col h-screen justify-between">
+        <div class="container mx-auto flex-grow">
+            <h1 class="text-2xl text-center font-bold my-8">Lista de Elementos - Delete</h1>
+            <div class="grid grid-cols-2 gap-8">
+                <% elementos.forEach(elemento => { %>
+                <form class="bg-white p-6 rounded-lg shadow-md" method="POST">
+                    <input type="hidden" name="id" value="<%= elemento.id %>">
+                    <div class="mb-4">
+                    <label class="text-xl text-gray-600">Nombre</label>
+                    <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombre" value="<%= elemento.nombre %>" required>
+                    </div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Modificar</button>
+                </form>
+                <% }); %>
+            </div>
+        </div>
     </body>
 </html>

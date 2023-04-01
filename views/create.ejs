@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Mi página web</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CRUD - Create</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+        <link rel="icon" type="image/png" href="img/housefondo.png">
     </head>
-    <body>
-        <h1>Bienvenido a mi página web</h1>
-        <p>Esta es la pagina de create.</p>
+    <body class="bg-gray-100 flex items-center justify-center h-screen">
+        <div class="grid grid-cols-2 gap-8">
+            <form class="bg-white p-6 rounded-lg shadow-md" method="POST">
+                <div class="mb-4">
+                    <label class="text-xl text-gray-600">Nombre</label>
+                    <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombreText" required>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
+            </form>
+            <form class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="text-xl text-gray-600">Nombre</label>
+                    <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombreFile" required>
+                    <label class="text-xl text-gray-600">Subir archivo</label>
+                    <input class="border-2 border-gray-300 p-2 w-full" type="file" name="archivo" required>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
+            </form>
+        </div>
     </body>
 </html>

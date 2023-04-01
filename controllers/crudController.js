@@ -6,7 +6,7 @@ exports.getCreate = (req, res, next) => {
 }
 
 exports.postCreate = (req, res, next) => {
-    res.render('create')
+    
 }
 
 exports.getRead = (req, res, next) => {
