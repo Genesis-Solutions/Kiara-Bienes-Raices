@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Homepage CRUD</title>
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css">
+    </head>
+
+    <body>
+
+        <%- include('includes/navbarCRUD'); %>
+
+        <div class="container mx-auto mt-8">
+            <div class="flex items-center justify-center">
+                <h2 class="text-3xl font-bold mb-4">Prueba de arquitectura - CRUD</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <a href="/crud/create" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-lg">Create</a>
+                <a href="/crud/read" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg">Read</a>
+                <a href="/crud/update" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-8 rounded-lg">Update</a>
+                <a href="/crud/delete" class="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-8 rounded-lg">Delete</a>
+            </div>
+        </div>
+    </body>
+
+</html>

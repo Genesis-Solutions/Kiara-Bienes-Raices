@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 // Puerto al que escucha 3000
 app.listen(port, ()=>{
-    console.log("Server running on port", port)
+    console.log(`Example app listening at http://localhost:${port}`);
     console.log(__dirname + '/assets')
 });
 

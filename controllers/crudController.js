@@ -73,5 +73,5 @@ exports.deleteRegisterById = async(req, res, next) => {
 // Menu de CRUD ------------------------
 
 exports.getHomepage = (req,res,next) => {;
-    res.render('homepage');
+    res.render('homepageCRUD');
 };
