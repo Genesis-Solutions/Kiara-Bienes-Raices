@@ -3,16 +3,21 @@ const router = express.Router();
 
 const crudController = require('../controllers/crudController');
 
-// Rutas
+//Create
+router.post('/create/text', crudController.postCreateText);
+router.post('/create/media',crudController.postCreateMedia);
+//router.post('/create/file', crudController.postCreateFile);
 router.get('/create', crudController.getCreate);
-router.post('/create', crudController.postCreate);
-
+//Read
+router.get('/read/obtener_texto', crudController.getReadText);
 router.get('/read', crudController.getRead);
-
-router.get('/update', crudController.getUpdate); 
-//router.post('/update', crudController.root);
-
-router.get('/delete', crudController.getDelete); 
-//router.post('/delete', crudController.root);
+//Update
+router.put('/update/actualizar_registro/:id', crudController.updateRegisterById);
+router.get('/update', crudController.getUpdate);
+//Delete
+router.delete('/delete/eliminar_registro/:id', crudController.deleteRegisterById);
+router.get('/delete', crudController.getDelete);
+//Homepage
+router.get('/', crudController.getHomepage);
 
 module.exports = router;

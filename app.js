@@ -9,7 +9,7 @@ const port = 3000;
 app.use(express.json());
 
 //Le decimos a node que nuestros assets se encuentran en assets
-app.use(express.static(path.join(__dirname, '/assets')))
+app.use(express.static(path.join(__dirname, 'assets')))
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
