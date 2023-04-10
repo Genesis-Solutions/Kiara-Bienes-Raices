@@ -8,4 +8,10 @@ module.exports = class Media {
         );
     }
 
+    static fecthAll() {
+        return db.execute(
+            'SELECT * FROM test_media'
+        );
+    }
+
 }

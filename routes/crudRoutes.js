@@ -10,7 +10,7 @@ router.post('/create/media',crudController.postCreateMedia);
 router.get('/create', crudController.getCreate);
 //Read
 router.get('/read/obtener_texto', crudController.getReadText);
-router.get('/read/obtener_media', crudController.getReadText);
+router.get('/read/obtener_media', crudController.getReadMedia);
 router.get('/read', crudController.getRead);
 //Update
 router.put('/update/actualizar_registro/:id', crudController.updateRegisterById);

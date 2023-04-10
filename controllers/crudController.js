@@ -47,6 +47,11 @@ exports.getReadText = async(req, res, next) => {
     res.status(200).json({code:200,code:"Ok",data:data[0]})
 }
 
+exports.getReadMedia = async(req, res, next) => {
+    const data  = await Media.fecthAll();
+    res.status(200).json({code:200,code:"Ok",data:data[0]})
+}
+
 // Operaciones de Update ---------------
 
 exports.getUpdate = (req, res, next) => {
