@@ -134,6 +134,7 @@
                     thead += '<tr>'
                     thead += '<th>Id</th>'
                     thead += '<th>Texto</th>'
+                    thead += '<th>Ruta de imagen</th>'
                     thead += '<th>Imagen</th>'
                     thead += '</tr>'
                 thead += '</thead>'
@@ -141,6 +142,7 @@
                     tfooter += '<tr>'
                     tfooter += '<th>Id</th>'
                     tfooter += '<th>Texto</th>'
+                    tfooter += '<th>Ruta de imagen</th>'
                     tfooter += '<th>Imagen</th>'
                     tfooter += '</tr>'
                 tfooter += '</tfoot>'
@@ -170,6 +172,13 @@
                         data: null,
                         render: function(data, type, row) {
                             return '<span class="badge badge-success">'+data.mediaRoute+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            //return '<span class="badge badge-success">'+data.mediaRoute+'</span>'
+                            return '<img src="file:///'+data.mediaRoute+'" alt="Texto alternativo" width="100" height="100">'
                         }
                     },
                     ] 
