@@ -5,28 +5,51 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CRUD - Create</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
-        <link rel="icon" type="image/png" href="img/housefondo.png">
+        <!-- Enlazar con el archivo de estilos de Tailwind -->
+        <link href="//cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     </head>
-    <body class="bg-gray-100 flex items-center justify-center h-screen">
+
+    <body>
+
+        <%- include('includes/navbarCRUD'); %>
+
         <div class="grid grid-cols-2 gap-8">
-            <form class="bg-white p-6 rounded-lg shadow-md" method="POST">
+            <form id="formText" action="create/text" onsubmit="enviarFormulario(e)" onsub class="bg-white p-6 rounded-lg shadow-md" method="POST">
                 <div class="mb-4">
+                    <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_text</h2>
                     <label class="text-xl text-gray-600">Nombre</label>
                     <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombreText" required>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
-            <form class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+            <form id="formMedia" action="create/media" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
+                    <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_media</h2>
+                    <label class="text-xl text-gray-600">Nombre</label>
+                    <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombreMedia" required>
+                    <label class="text-xl text-gray-600">Subir fotografia</label>
+                    <input type="file" id="media" name="media" class="border-2 border-gray-300 p-2 w-full"  required>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
+            </form>
+            <form id="formFile" action="create/file" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_file</h2>
                     <label class="text-xl text-gray-600">Nombre</label>
                     <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombreFile" required>
-                    <label class="text-xl text-gray-600">Subir archivo</label>
-                    <input class="border-2 border-gray-300 p-2 w-full" type="file" name="archivo" required>
+                    <label class="text-xl text-gray-600">Subir documento</label>
+                    <input class="border-2 border-gray-300 p-2 w-full" type="file" name="file" required>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
         </div>
+
+        <script>
+            function enviarFormulario(e){
+                e.preventDefault();
+            }
+        </script>
+
     </body>
+
 </html>

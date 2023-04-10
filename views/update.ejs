@@ -1,29 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
+
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CRUD - Update</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
-        <link rel="icon" type="image/png" href="img/housefondo.png">
+        <!-- Enlazar con el archivo de estilos de Tailwind -->
+        <link href="//cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+        <!-- Enlazar con el archivo de DataTables CSS -->
+        <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
     </head>
-    <body class="bg-gray-100 flex flex-col h-screen justify-between">
-        <div class="container mx-auto flex-grow">
-            <h1 class="text-2xl text-center font-bold my-8">Lista de Elementos - Update</h1>
-            <div class="grid grid-cols-2 gap-8">
-                <% elementos.forEach(elemento => { %>
-                <form class="bg-white p-6 rounded-lg shadow-md" method="POST">
-                    <input type="hidden" name="id" value="<%= elemento.id %>">
+
+    <body>
+
+        <%- include('includes/navbarCRUD'); %>
+
+        <main class="container mx-auto my-8">
+        <div class="flex items-center justify-center">
+            <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_text</h2>
+        </div>
+        <!-- Inicio de la DataTable -->
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            </table>
+        </div>
+
+        <!-- Modal para CRUD -->
+        <div id="modalCRUD" style="display:none" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-gray-200 px-4 py-3 border-b border-gray-300 text-lg font-semibold uppercase">
+                <h5 id="modal-title" class="inline-block"></h5>
+                </div>
+                <form id="formRegistros" class="px-4 py-3">
+                <div class="bg-white">
+                    <label for="idRegistro" class="block text-gray-700 font-semibold mb-2">Registro con el Id: </label>
+                    <input id="idRegistro" type="text" readonly>
                     <div class="mb-4">
-                    <label class="text-xl text-gray-600">Nombre</label>
-                    <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombre" value="<%= elemento.nombre %>" required>
+                    <label for="descripcion" class="block text-gray-700 font-semibold mb-2">Descripción:</label>
+                    <input id="descripcion" name="descripcion" type="text" class="form-control w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:ring-opacity-50">
                     </div>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Modificar</button>
+                </div>
+                <div class="bg-gray-100 px-4 py-3 border-t border-gray-300 text-right">
+                    <button type="button" onclick="esconderModal()" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-300 border border-gray-400 rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2 btnCancelar" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnGuardar" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Guardar</button>
+                </div>
                 </form>
-                <% }); %>
+            </div>
             </div>
         </div>
+
+        <!-- Enlazar con la biblioteca de jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <!-- Enlazar con el archivo de DataTables JS -->
+        <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+
+        <script crossorigin="anonymous" type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
+        <script type="text/javascript">
+            //Iniciar DataTable
+            $(document).ready(function(e){
+                recargarTablaUsuarios()
+            })
+        </script>
+
+        <script type="text/javascript">
+            //Configuración de la DataTable
+            function recargarTablaUsuarios(){
+                if ($.fn.DataTable.isDataTable("#dataTable")) {
+                    $("#dataTable").dataTable().fnDestroy();
+                    $('#dataTable').empty();
+                }
+                var thead = ""
+                var tfooter = ""
+                thead += '<thead>'
+                    thead += '<tr>'
+                    thead += '<th>Id</th>'
+                    thead += '<th>Texto</th>'
+                    thead += '<th>Modificar elemento</th>'
+                    thead += '</tr>'
+                thead += '</thead>'
+                tfooter += '<tfoot>'
+                    tfooter += '<tr>'
+                    tfooter += '<th>Id</th>'
+                    tfooter += '<th>Texto</th>'
+                    tfooter += '<th>Modificar elemento</th>'
+                    tfooter += '</tr>'
+                tfooter += '</tfoot>'
+                $('#dataTable').append(thead);
+                $('#dataTable').append(tfooter);
+                $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
+                dataTable = $("#dataTable").dataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                processing : true,
+                lengthMenu : [10, 1, 2, 3, 5],
+                order      : [[0,'asc']],
+                deferRender: true,
+                ajax       : '/crud/read/obtener_texto',
+                columns    : [
+                    {
+                        data: "idTestText"
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.text+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<button type="button" id="button" dataId='+data.idTestText+' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btnEditar">Edit</button>'
+                        }
+                    },
+                    ] 
+                })
+            }
+        </script>
+
+        <script type="text/javascript">
+            //Mostrar modal    
+            function mostrarModal(){   
+                $("#modalCRUD").css("display", "block");
+            }
+        </script>
+
+        <script type="text/javascript">
+            //Esconder modal    
+            function esconderModal(){   
+                $("#modalCRUD").css("display", "none");
+            }
+        </script>
+
+        <script type="text/javascript">
+            //Mostar modal de Editar registro    
+            $(document).on("click", ".btnEditar", function(){		            
+                opcion='editar';
+                fila = $(this).closest("tr");	        
+                id = parseInt(fila.find('td:eq(0)').text());
+                descripcion = fila.find('td:eq(1)').text(); 
+                $("#idRegistro").val(id);
+                $("#descripcion").val(descripcion);          
+                $(".modal-title").text("Editar Artículo");
+                mostrarModal()
+            });
+        </script>
+
+        <script type="text/javascript">
+            //Editar registro
+            $('#formRegistros').submit(function(e){                                     
+                e.preventDefault();
+                id = $.trim($('#idRegistro').val());    
+                descripcion = $.trim($('#descripcion').val());
+                $.ajax({                    
+                    url: '/crud/update/actualizar_registro/'+id,
+                    method: 'PUT',                                        
+                    contentType: 'application/json',  
+                    data:  JSON.stringify({
+                        id:id, 
+                        descripcion:descripcion
+                    }),                       
+                });
+                recargarTablaUsuarios()
+                esconderModal()
+            });   
+        </script>
+
     </body>
 </html>
