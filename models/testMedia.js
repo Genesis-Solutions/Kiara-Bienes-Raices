@@ -14,4 +14,10 @@ module.exports = class Media {
         );
     }
 
+    static deleteRegisterById(id) {
+        return db.execute(
+            'DELETE FROM test_media WHERE idTestMedia=?',[id]
+        );
+    }
+
 }

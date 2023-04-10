@@ -24,9 +24,18 @@
         <div class="flex items-center justify-center">
             <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_text</h2>
         </div>
-        <!-- Inicio de la DataTable -->
+        <!-- Inicio de la DataTable de test_text -->
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTableTestText" width="100%" cellspacing="0">
+            </table>
+        </div>
+
+        <div class="flex items-center justify-center">
+            <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_media</h2>
+        </div>
+        <!-- Inicio de la DataTable de test_media -->
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableTestMedia" width="100%" cellspacing="0">
             </table>
         </div>
 
@@ -53,16 +62,17 @@
         <script type="text/javascript">
             //Iniciar DataTable
             $(document).ready(function(e){
-                recargarTablaUsuarios();
+                recargarTablaTestText();
+                recargarTablaTestMedia();
             })
         </script>
 
         <script type="text/javascript">
             //Configuración de la DataTable
-            function recargarTablaUsuarios(){
-                if ($.fn.DataTable.isDataTable("#dataTable")) {
-                    $("#dataTable").dataTable().fnDestroy();
-                    $('#dataTable').empty();
+            function recargarTablaTestText(){
+                if ($.fn.DataTable.isDataTable("#dataTableTestText")) {
+                    $("#dataTableTestText").dataTable().fnDestroy();
+                    $('#dataTableTestText').empty();
                 }
                 var thead = ""
                 var tfooter = ""
@@ -80,15 +90,15 @@
                     tfooter += '<th>Eliminar elemento</th>'
                     tfooter += '</tr>'
                 tfooter += '</tfoot>'
-                $('#dataTable').append(thead);
-                $('#dataTable').append(tfooter);
+                $('#dataTableTestText').append(thead);
+                $('#dataTableTestText').append(tfooter);
                 $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
-                dataTable = $("#dataTable").dataTable({
+                dataTable = $("#dataTableTestText").dataTable({
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 },
                 processing : true,
-                lengthMenu : [10, 1, 2, 3, 5],
+                lengthMenu : [5, 1, 2, 3, 5, 10],
                 order      : [[0,'asc']],
                 deferRender: true,
                 ajax       : '/crud/read/obtener_texto',
@@ -105,7 +115,7 @@
                     {
                         data: null,
                         render: function(data, type, row) {
-                            return '<button type="button" id="button" dataId='+data.idTestText+' class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminar">Delete</button>'
+                            return '<button type="button" id="button" dataId='+data.idTestText+' class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarText">Delete</button>'
                         }
                     },
                     ] 
@@ -114,8 +124,72 @@
         </script>
 
         <script type="text/javascript">
-            //Mostar SA de eliminar registro    
-            $(document).on("click", ".btnEliminar", function(){		            
+            //Configuración de la DataTable
+            function recargarTablaTestMedia(){
+                if ($.fn.DataTable.isDataTable("#dataTableTestMedia")) {
+                    $("#dataTableTestMedia").dataTable().fnDestroy();
+                    $('#dataTableTestMedia').empty();
+                }
+                var thead = ""
+                var tfooter = ""
+                thead += '<thead>'
+                    thead += '<tr>'
+                    thead += '<th>Id</th>'
+                    thead += '<th>Texto</th>'
+                    thead += '<th>Imagen</th>'
+                    thead += '<th>Eliminar elemento</th>'
+                    thead += '</tr>'
+                thead += '</thead>'
+                tfooter += '<tfoot>'
+                    tfooter += '<tr>'
+                    tfooter += '<th>Id</th>'
+                    tfooter += '<th>Texto</th>'
+                    tfooter += '<th>Imagen</th>'
+                    tfooter += '<th>Eliminar elemento</th>'
+                    tfooter += '</tr>'
+                tfooter += '</tfoot>'
+                $('#dataTableTestMedia').append(thead);
+                $('#dataTableTestMedia').append(tfooter);
+                $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
+                dataTable = $("#dataTableTestMedia").dataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                processing : true,
+                lengthMenu : [5, 1, 2, 3, 5, 10],
+                order      : [[0,'asc']],
+                deferRender: true,
+                ajax       : '/crud/read/obtener_media',
+                columns    : [
+                    {
+                        data: "idTestMedia"
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.mediaName+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.mediaRoute+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<button type="button" id="button" dataId='+data.idTestMedia+' class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarMedia">Delete</button>'
+                        }
+                    },
+                    ] 
+                })
+            }
+        </script>
+
+        <script type="text/javascript">
+            //Mostar SA de eliminar registro de test_text  
+            $(document).on("click", ".btnEliminarText", function(){		            
                 fila = $(this).closest("tr");	        
                 id = parseInt(fila.find('td:eq(0)').text());
                 Swal.fire({
@@ -125,10 +199,32 @@
                     }).then((result) => {               
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/crud/delete/eliminar_registro/'+id,
+                            url: '/crud/delete/eliminar_registro/text/'+id,
                             method: 'delete',  
                         });
-                        recargarTablaUsuarios();
+                        recargarTablaTestText();
+                        Swal.fire('¡Registro Eliminado!')
+                    } 
+                })
+            });   
+        </script>
+
+        <script type="text/javascript">
+            //Mostar SA de eliminar registro de test_media 
+            $(document).on("click", ".btnEliminarMedia", function(){		            
+                fila = $(this).closest("tr");	        
+                id = parseInt(fila.find('td:eq(0)').text());
+                Swal.fire({
+                    title: '¿Confirma la eliminación del registro?',                
+                    showCancelButton: true,
+                    confirmButtonText: `Confirmar`,                
+                    }).then((result) => {               
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/crud/delete/eliminar_registro/media/'+id,
+                            method: 'delete',  
+                        });
+                        recargarTablaTestMedia();
                         Swal.fire('¡Registro Eliminado!')
                     } 
                 })

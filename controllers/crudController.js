@@ -70,9 +70,14 @@ exports.getDelete = (req, res, next) => {
     res.render('delete')
 }
 
-exports.deleteRegisterById = async(req, res, next) => {
+exports.deleteTextById = async(req, res, next) => {
     const id = req.params.id;
     await Text.deleteRegisterById(id);
+}
+
+exports.deleteMediaById = async(req, res, next) => {
+    const id = req.params.id;
+    await Media.deleteRegisterById(id);
 }
 
 // Menu de CRUD ------------------------

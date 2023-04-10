@@ -16,7 +16,8 @@ router.get('/read', crudController.getRead);
 router.put('/update/actualizar_registro/:id', crudController.updateRegisterById);
 router.get('/update', crudController.getUpdate);
 //Delete
-router.delete('/delete/eliminar_registro/:id', crudController.deleteRegisterById);
+router.delete('/delete/eliminar_registro/text/:id', crudController.deleteTextById);
+router.delete('/delete/eliminar_registro/media/:id', crudController.deleteMediaById);
 router.get('/delete', crudController.getDelete);
 //Homepage
 router.get('/', crudController.getHomepage);
