@@ -24,8 +24,8 @@ exports.postCreateMedia = (req, res, next) => {
         }
         const text = req.body.nombreMedia;
         var pathDest = req.files[0].destination.slice(1);
-        console.log("pathDest",pathDest);
-        var finalPath = path.join(__dirname, '../'+pathDest);
+        const filename = req.files[0].filename;
+        var finalPath = path.join(__dirname, '../'+pathDest+"/"+filename);
         //res.status(200).json({code: 200, msg:"Ok"}); 
         Media.insertRegister(text,finalPath);
         res.redirect('/crud/read');
