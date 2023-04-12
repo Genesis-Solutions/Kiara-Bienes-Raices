@@ -1,8 +1,11 @@
 const { uploadMedia } = require('../helper/multerMedia');
+const { uploadFile } = require('../helper/multerFile');
 const path = require('path');
 const fs = require('fs');
+const Security  = require('../helper/security');
 const Text = require('../models/testText');
 const Media = require('../models/testMedia');
+const File = require('../models/testFile');
 
 // Operaciones de Create ---------------
 
@@ -34,7 +37,26 @@ exports.postCreateMedia = (req, res, next) => {
 }
 
 exports.postCreateFile = (req, res, next) => {
-    
+    var upload = uploadFile.array('file',1);
+    upload(req,res,function(err) {
+        if(err) {
+            console.log(err);
+            return res.end("Error uploading file.");
+        }
+        const text = req.body.nombreFile;
+        var pathDest = req.files[0].destination.slice(1);
+        var finalPath = path.join(__dirname, '../'+pathDest);
+        const filename = req.files[0].filename;
+        var original = "SECRET_KEY_USERS";
+        Security.encryptFile("./assets/file",filename,original)
+        .then(function(results){
+            console.log(req.files[0])
+            res.status(200).json({code: 200, msg:"Ok"})
+        })
+        //res.status(200).json({code: 200, msg:"Ok"}); 
+        File.insertRegister(text,finalPath,filename);
+        res.redirect('/crud/read');
+    })
 }
 
 // Operaciones de Read -----------------
