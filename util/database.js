@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 
 const database = {
-    host: '127.0.0.1',
+    host: 'localhost',
     user: 'root',
     database: 'crud',
     password: 'Kiara_b1en_esraices//q',
