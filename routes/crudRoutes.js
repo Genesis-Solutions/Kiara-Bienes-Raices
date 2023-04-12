@@ -13,7 +13,8 @@ router.get('/read/obtener_texto', crudController.getReadText);
 router.get('/read/obtener_media', crudController.getReadMedia);
 router.get('/read', crudController.getRead);
 //Update
-router.put('/update/actualizar_registro/:id', crudController.updateRegisterById);
+router.put('/update/actualizar_registro/text/:id', crudController.updateTextById);
+router.put('/update/actualizar_registro/media/:id', crudController.updateMediaById);
 router.get('/update', crudController.getUpdate);
 //Delete
 router.delete('/delete/eliminar_registro/text/:id', crudController.deleteTextById);
