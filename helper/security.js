@@ -49,3 +49,42 @@ exports.encryptFile = function(filePath, originalName, password) {
         });
     });
 }
+
+exports.decryptFile = function(filePath, originalName, password) {
+    return new Promise(function(resolve,reject) {
+        log("Empezando des encriptación")
+        log(filePath)
+        log(originalName)
+        var archivo = originalName;
+        log(filePath+originalName)
+        const readInitVect = fs.createReadStream(filePath+originalName, { end: 15 });
+        let initVect;
+        readInitVect.on('data', (chunk) => {
+        initVect = chunk;
+    });
+    // Once we’ve got the initialization vector, we can decrypt the file.
+    readInitVect.on('close', () => {
+        log("Done reading vector")
+        const cipherKey = getCipherKey(password);
+        const readStream = fs.createReadStream(filePath+"/"+originalName, { start: 16 });
+        const decipher = crypto.createDecipheriv('aes256', cipherKey, initVect);
+        const unzip = zlib.Inflate();
+        const writeStream = fs.createWriteStream(filePath+"/des_"+originalName.replace(".enc",""));
+        readStream
+            .pipe(decipher)
+            //.pipe(unzip)
+            .pipe(writeStream).on('finish', () => {
+            ////log('All writes are now complete.');
+            //log("Finalizando des encriptación")
+            fs.unlink(filePath+"/"+originalName, (err) => {
+            if (err) {
+                console.error(err)
+                resolve({type:"ENCRYPT", msg:"ERROR", error: err})
+            }
+            resolve({type:"ENCRYPT", msg:"OK", error: null})
+            })
+            resolve({type:"ENCRYPT", msg:"OK", error: null})
+            });
+        });
+    });
+}

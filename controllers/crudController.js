@@ -47,6 +47,7 @@ exports.postCreateFile = (req, res, next) => {
         var pathDest = req.files[0].destination.slice(1);
         var finalPath = path.join(__dirname, '../'+pathDest);
         const filename = req.files[0].filename;
+        const encFilename = req.files[0].filename+".enc";
         var original = "SECRET_KEY_USERS";
         Security.encryptFile("./assets/file",filename,original)
         .then(function(results){
@@ -54,7 +55,7 @@ exports.postCreateFile = (req, res, next) => {
             res.status(200).json({code: 200, msg:"Ok"})
         })
         //res.status(200).json({code: 200, msg:"Ok"}); 
-        File.insertRegister(text,finalPath,filename);
+        File.insertRegister(text,finalPath,encFilename);
         res.redirect('/crud/read');
     })
 }
