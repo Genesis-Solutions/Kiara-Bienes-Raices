@@ -2,9 +2,10 @@ const db = require('../util/database');
 
 module.exports = class Media {
 
-    static insertRegister(text,media) {
+    static insertRegister(text,route,name) {
         return db.execute(
-            'INSERT INTO test_media(mediaName,mediaRoute) VALUES (?,?)',[text,media]
+            'INSERT INTO test_media(mediaDescription,mediaRoute,mediaName) VALUES (?,?,?)',
+            [text,route,name]
         );
     }
 
@@ -14,10 +15,33 @@ module.exports = class Media {
         );
     }
 
-    static deleteRegisterById(id) {
+    static updateRegisterById(id,text,imgName) {
         return db.execute(
-            'DELETE FROM test_media WHERE idTestMedia=?',[id]
+            'UPDATE test_media SET mediaDescription = ?, mediaName = ?  WHERE idTestMedia = ?',
+            [text,imgName,id]
         );
     }
+
+    static fetchPathById(id) {
+        return db.execute(
+            'SELECT mediaRoute FROM test_media WHERE idTestMedia=?',
+            [id]
+        );
+    }
+
+    static fetchArchiveNameById(id) {
+        return db.execute(
+            'SELECT mediaName FROM test_media WHERE idTestMedia=?',
+            [id]
+        );
+    }
+
+    static deleteRegisterById(id) {
+        return db.execute(
+            'DELETE FROM test_media WHERE idTestMedia=?',
+            [id]
+        );
+    }
+
 
 }

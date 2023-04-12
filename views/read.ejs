@@ -120,7 +120,7 @@
             }
         </script>
 
-                <script type="text/javascript">
+        <script type="text/javascript">
             function recargarTablaTestMedia(){
                 if ($.fn.DataTable.isDataTable("#dataTableTestMedia")) {
                 //$("#table_report").DataTable().clear().draw();
@@ -165,13 +165,13 @@
                     {
                         data: null,
                         render: function(data, type, row) {
-                            return '<span class="badge badge-success">'+data.mediaName+'</span>'
+                            return '<span class="badge badge-success">'+data.mediaDescription+'</span>'
                         }
                     },
                     {
                         data: null,
                         render: function(data, type, row) {
-                            return '<span class="badge badge-success">'+data.mediaRoute+'</span>'
+                            return '<span class="badge badge-success">'+data.mediaRoute+"-"+data.mediaName+'</span>'
                         }
                     },
                     {

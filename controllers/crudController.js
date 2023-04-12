@@ -1,4 +1,4 @@
-const { upload } = require('../middleware/multer');
+const { uploadMedia } = require('../helper/multerMedia');
 const path = require('path');
 const Text = require('../models/testText');
 const Media = require('../models/testMedia');
@@ -16,18 +16,18 @@ exports.postCreateText = (req, res, next) => {
 }
 
 exports.postCreateMedia = (req, res, next) => {
-    var uploadMedia = upload.array('media',1);
-    uploadMedia(req,res,function(err) {
+    var upload = uploadMedia.array('media',1);
+    upload(req,res,function(err) {
         if(err) {
             console.log(err);
             return res.end("Error uploading file.");
         }
         const text = req.body.nombreMedia;
         var pathDest = req.files[0].destination.slice(1);
+        var finalPath = path.join(__dirname, '../'+pathDest);
         const filename = req.files[0].filename;
-        var finalPath = path.join(__dirname, '../'+pathDest+"/"+filename);
         //res.status(200).json({code: 200, msg:"Ok"}); 
-        Media.insertRegister(text,finalPath);
+        Media.insertRegister(text,finalPath,filename);
         res.redirect('/crud/read');
     })
 }
