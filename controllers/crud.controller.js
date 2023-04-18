@@ -3,7 +3,7 @@ const { uploadFile } = require('../helper/MulterFile.Helper');
 const path = require('path');
 const fs = require('fs');
 const Security  = require('../helper/Security.Helper');
-const Text = require('../models/TestText.Model.js');
+const Text = require('../models/TestText.Model');
 const Media = require('../models/TestMedia.Model');
 const File = require('../models/TestFile.Model');
 
