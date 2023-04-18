@@ -11,7 +11,10 @@ router.get('/create', crudController.getCreate);
 //Read
 router.get('/read/obtener_texto', crudController.getReadText);
 router.get('/read/obtener_media', crudController.getReadMedia);
+router.get('/read/obtener_files', crudController.getReadFiles);
 router.get('/read', crudController.getRead);
+//Desencriptacion
+router.get('/desencriptar/:name', crudController.desencriptar);
 //Update
 router.put('/update/actualizar_registro/text/:id', crudController.updateTextById);
 router.put('/update/actualizar_registro/media/:id', crudController.updateMediaById);

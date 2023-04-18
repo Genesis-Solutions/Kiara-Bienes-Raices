@@ -9,4 +9,10 @@ module.exports = class File {
         );
     }
 
+    static fecthAll() {
+        return db.execute(
+            'SELECT * FROM test_file'
+        );
+    }
+
 }

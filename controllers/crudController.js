@@ -27,11 +27,12 @@ exports.postCreateMedia = (req, res, next) => {
             return res.end("Error uploading file.");
         }
         const text = req.body.nombreMedia;
-        var pathDest = req.files[0].destination.slice(1);
-        var finalPath = path.join(__dirname, '../'+pathDest);
+        //var pathDest = req.files[0].destination.slice(1);
+        var pathDest = req.files[0].destination.slice(8);
+        //var finalPath = path.join(__dirname, '../'+pathDest1);
         const filename = req.files[0].filename;
         //res.status(200).json({code: 200, msg:"Ok"}); 
-        Media.insertRegister(text,finalPath,filename);
+        Media.insertRegister(text,pathDest,filename);
         res.redirect('/crud/read');
     })
 }
@@ -44,8 +45,8 @@ exports.postCreateFile = (req, res, next) => {
             return res.end("Error uploading file.");
         }
         const text = req.body.nombreFile;
-        var pathDest = req.files[0].destination.slice(1);
-        var finalPath = path.join(__dirname, '../'+pathDest);
+        var pathDest = req.files[0].destination.slice(8);
+        //var finalPath = path.join(__dirname, '../'+pathDest);
         const filename = req.files[0].filename;
         const encFilename = req.files[0].filename+".enc";
         var original = "SECRET_KEY_USERS";
@@ -55,7 +56,7 @@ exports.postCreateFile = (req, res, next) => {
             res.status(200).json({code: 200, msg:"Ok"})
         })
         //res.status(200).json({code: 200, msg:"Ok"}); 
-        File.insertRegister(text,finalPath,encFilename);
+        File.insertRegister(text,pathDest,encFilename);
         res.redirect('/crud/read');
     })
 }
@@ -74,6 +75,22 @@ exports.getReadText = async(req, res, next) => {
 exports.getReadMedia = async(req, res, next) => {
     const data  = await Media.fecthAll();
     res.status(200).json({code:200,code:"Ok",data:data[0]})
+}
+
+exports.getReadFiles = async(req, res, next) => {
+    const data  = await File.fecthAll();
+    res.status(200).json({code:200,code:"Ok",data:data[0]})
+}
+
+// Operacion de desencriptacion --------
+
+exports.desencriptar = (req, res, next) => {
+    req.setTimeout(4500000);
+    var original = "SECRET_KEY_USERS";
+    var name = req.params.name;
+    Security.decryptFile("./assets/file/",name,original).then(function(results){
+        res.status(200).json({code: 200, msg:"Ok"})
+    });
 }
 
 // Operaciones de Update ---------------

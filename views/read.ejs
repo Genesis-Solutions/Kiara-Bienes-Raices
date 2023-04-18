@@ -37,6 +37,15 @@
             </table>
         </div>
 
+        <div class="flex items-center justify-center">
+            <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_file</h2>
+        </div>
+        <!-- Inicio de la DataTable de test_file -->
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableTestFiles" width="100%" cellspacing="0">
+            </table>
+        </div>
+
         <!-- Enlazar con la biblioteca de jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
         <!-- Enlazar con el archivo de DataTables JS -->
@@ -60,6 +69,7 @@
             $(document).ready(function(e){
                 recargarTablaTestText();
                 recargarTablaTestMedia();
+                recargarTablaTestFiles();
             })
         </script>
 
@@ -178,7 +188,73 @@
                         data: null,
                         render: function(data, type, row) {
                             //return '<span class="badge badge-success">'+data.mediaRoute+'</span>'
-                            return '<img src="file:///'+data.mediaRoute+'" alt="Texto alternativo" width="100" height="100">'
+                            return '<img src="'+data.mediaRoute+"/"+data.mediaName+'" alt="Texto alternativo" width="100" height="100">'
+                        }
+                    },
+                    ] 
+                })
+            }
+        </script>
+
+        <script type="text/javascript">
+            function recargarTablaTestFiles(){
+                if ($.fn.DataTable.isDataTable("#dataTableTestFiles")) {
+                //$("#table_report").DataTable().clear().draw();
+                $("#dataTableTestFiles").dataTable().fnDestroy();
+                //$("#table_report").dataTable();
+                $('#dataTableTestFiles').empty();
+                }
+                var thead = ""
+                var tfooter = ""
+                thead += '<thead>'
+                    thead += '<tr>'
+                    thead += '<th>Id</th>'
+                    thead += '<th>Texto</th>'
+                    thead += '<th>Ruta de archivo</th>'
+                    thead += '<th>Archivo</th>'
+                    thead += '</tr>'
+                thead += '</thead>'
+                tfooter += '<tfoot>'
+                    tfooter += '<tr>'
+                    tfooter += '<th>Id</th>'
+                    tfooter += '<th>Texto</th>'
+                    tfooter += '<th>Ruta de achivo</th>'
+                    tfooter += '<th>Archivo</th>'
+                    tfooter += '</tr>'
+                tfooter += '</tfoot>'
+                $('#dataTableTestFiles').append(thead);
+                $('#dataTableTestFiles').append(tfooter);
+                $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
+                dataTable = $("#dataTableTestFiles").dataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                processing : true,
+                lengthMenu : [5, 1, 2, 3, 5, 10],
+                order      : [[0,'asc']],
+                deferRender: true,
+                ajax       : '/crud/read/obtener_files',
+                columns    : [
+                    {
+                        data: "idTestFile"
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.fileDescription+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.fileRoute+"-"+data.fileName+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.fileName+'</span>'
+                            //return '<img src="/crud/desencriptar/'+data.mediaName+'" alt="Texto alternativo" width="100" height="100">'
                         }
                     },
                     ] 
