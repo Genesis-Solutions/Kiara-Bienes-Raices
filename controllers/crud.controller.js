@@ -1,29 +1,29 @@
-const { uploadMedia } = require('../helper/multerMedia');
-const { uploadFile } = require('../helper/multerFile');
+const { uploadMedia } = require('../helper/MulterMedia.Helper');
+const { uploadFile } = require('../helper/MulterFile.Helper');
 const path = require('path');
 const fs = require('fs');
-const Security  = require('../helper/security');
-const Text = require('../models/testText');
-const Media = require('../models/testMedia');
-const File = require('../models/testFile');
+const Security  = require('../helper/Security.Helper');
+const Text = require('../models/TestText.Model');
+const Media = require('../models/TestMedia.Model');
+const File = require('../models/TestFile.Model');
 
 // Operaciones de Create ---------------
 
-exports.getCreate = (req, res, next) => {
-    res.render('create')
+exports.getCreate = ( res ) => {
+    res.render('create');
 }
 
-exports.postCreateText = (req, res, next) => {
+exports.postCreateText = ( req, res ) => {
     const text = req.body.nombreText;
     Text.insertRegister(text);
     res.redirect('/crud/read');
 }
 
-exports.postCreateMedia = (req, res, next) => {
+exports.postCreateMedia = ( req, res ) => {
     var upload = uploadMedia.array('media',1);
     upload(req,res,function(err) {
         if(err) {
-            console.log(err);
+            //console.log(err);
             return res.end("Error uploading file.");
         }
         const text = req.body.nombreMedia;
@@ -37,11 +37,11 @@ exports.postCreateMedia = (req, res, next) => {
     })
 }
 
-exports.postCreateFile = (req, res, next) => {
+exports.postCreateFile = ( req, res ) => {
     var upload = uploadFile.array('file',1);
     upload(req,res,function(err) {
         if(err) {
-            console.log(err);
+            //console.log(err);
             return res.end("Error uploading file.");
         }
         const text = req.body.nombreFile;
@@ -52,8 +52,8 @@ exports.postCreateFile = (req, res, next) => {
         var original = "SECRET_KEY_USERS";
         Security.encryptFile("./assets/file",filename,original)
         .then(function(results){
-            console.log(req.files[0])
-            res.status(200).json({code: 200, msg:"Ok"})
+            //console.log(req.files[0]);
+            res.status(200).json({code: 200, msg:"Ok"});
         })
         //res.status(200).json({code: 200, msg:"Ok"}); 
         File.insertRegister(text,pathDest,encFilename);
@@ -63,49 +63,49 @@ exports.postCreateFile = (req, res, next) => {
 
 // Operaciones de Read -----------------
 
-exports.getRead = (req, res, next) => {
-    res.render('read')
+exports.getRead = ( res ) => {
+    res.render('read');
 }
 
-exports.getReadText = async(req, res, next) => {
+exports.getReadText = async( res ) => {
     const data  = await Text.fecthAll();
-    res.status(200).json({code:200,code:"Ok",data:data[0]})
+    res.status(200).json({code:200,code:"Ok",data:data[0]});
 }
 
-exports.getReadMedia = async(req, res, next) => {
+exports.getReadMedia = async( res ) => {
     const data  = await Media.fecthAll();
-    res.status(200).json({code:200,code:"Ok",data:data[0]})
+    res.status(200).json({code:200,code:"Ok",data:data[0]});
 }
 
-exports.getReadFiles = async(req, res, next) => {
+exports.getReadFiles = async( res ) => {
     const data  = await File.fecthAll();
-    res.status(200).json({code:200,code:"Ok",data:data[0]})
+    res.status(200).json({code:200,code:"Ok",data:data[0]});
 }
 
 // Operacion de desencriptacion --------
 
-exports.desencriptar = (req, res, next) => {
+exports.desencriptar = ( req, res ) => {
     req.setTimeout(4500000);
     var original = "SECRET_KEY_USERS";
     var name = req.params.name;
     Security.decryptFile("./assets/file/",name,original).then(function(results){
-        res.status(200).json({code: 200, msg:"Ok"})
+        res.status(200).json({code: 200, msg:"Ok"});
     });
 }
 
 // Operaciones de Update ---------------
 
-exports.getUpdate = (req, res, next) => {
-    res.render('update')
+exports.getUpdate = ( res ) => {
+    res.render('update');
 }
 
-exports.updateTextById = async(req, res, next) => {
+exports.updateTextById = async( req ) => {
     const id = req.params.id;
     const text = req.body.descripcion;
     await Text.updateRegisterById(id,text);
 }
 
-exports.updateMediaById = async(req, res, next) => {
+exports.updateMediaById = async( req, res ) => {
     var upload = uploadMedia.array('mediaUpdate',1);
     upload(req,res,function(err) {
         if(err) {
@@ -131,16 +131,16 @@ exports.updateMediaById = async(req, res, next) => {
 
 // Operaciones de Delete ---------------
 
-exports.getDelete = (req, res, next) => {
+exports.getDelete = ( res ) => {
     res.render('delete')
 }
 
-exports.deleteTextById = async(req, res, next) => {
+exports.deleteTextById = async( req ) => {
     const id = req.params.id;
     await Text.deleteRegisterById(id);
 }
 
-exports.deleteMediaById = async(req, res, next) => {
+exports.deleteMediaById = async( req ) => {
     const id = req.params.id;
     const path = await Media.fetchPathById(id);
     const name = await Media.fetchArchiveNameById(id);
@@ -154,6 +154,6 @@ exports.deleteMediaById = async(req, res, next) => {
 
 // Menu de CRUD ------------------------
 
-exports.getHomepage = (req,res,next) => {;
+exports.getHomepage = ( res ) => {;
     res.render('homepageCRUD');
 };

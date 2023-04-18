@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const crudController = require('../controllers/crudController');
+const crudController = require('../controllers/crud.controller');
 
 //Create
 router.post('/create/text', crudController.postCreateText);

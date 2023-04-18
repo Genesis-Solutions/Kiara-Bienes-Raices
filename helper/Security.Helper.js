@@ -3,7 +3,7 @@ var fs = require('fs');
 var Promise = require('promise');
 var zlib = require('zlib');
 var crypto = require('crypto');
-var AppendInitVect = require('./AppendInitVect');
+var AppendInitVect = require('./AppendInitVect.Helper');
 var log = console.log;
 
 function getCipherKey(password) {

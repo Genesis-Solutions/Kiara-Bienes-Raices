@@ -15,8 +15,8 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const rutasHome = require('./routes/homeRoutes.js')
-const rutasCRUD = require('./routes/crudRoutes.js')
+const rutasHome = require('./routes/homepage.routes.js')
+const rutasCRUD = require('./routes/crud.routes.js')
 
 app.use('/crud', rutasCRUD);
 app.use('/', rutasHome);
