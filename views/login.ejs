@@ -1,28 +1,57 @@
-<section class="bg-gray-50 min-h-screen flex items-center justify-center">
-    <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-7xl p-5">
-        <div class="md:block hidden w-1/2 p-5 ">
-            <img class="rounded-2xl" src="/img/casa.jpg" alt="">
-        </div>
-        <div class="md:w-1/2 px-16 flex flex-col items-center justify-center">
-            <h2 class="font-bold text-4xl mt-2 text-[#131C1B]">Bienvenido a Kiara, <br> <span class="text-2xl font-normal">inicia sesión para continuar</span></h2>
-            <form method="POST" action="/login" class="flex flex-col gap-4 ">
-                <input class="p-2 mt-8 rounded-xl border" name="emailUsuario" type="email" placeholder="E-mail">
-                <input class="p-2 rounded-xl border" name="passwordUsuario" type="password" placeholder="Contraseña">
-                <button class="bg-[#131C1B] rounded-xl text-white py-2">Inicia sesión</button>
-            </form>
-            <a href="">
-                <p class="text-sm mt-4 text-[#131C1B] underline">¿Olvidaste tu Contraseña?</p>
-            </a>
-            <p class="text-sm mt-4 text-[#131C1B]">¿No tienes una cuenta? <a href="" class="underline">Regístrate</a> </p>
-            <p class="text-sm mt-10 text-[#131C1B]">Síguenos en</p>
-            <div class="flex gap-5">
-                <a href="#">
-                    <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CDN Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CLI Tailwind -->
+    <!-- <link href="/style.css" rel="stylesheet"> -->
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+
+    <title>Kiara Bienes Raíces</title>
+    <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
+</head>
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <section class="bg-gray-50 min-h-screen flex items-center justify-center">
+        <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-7xl p-5">
+            <div class="md:block hidden w-1/2 p-5 ">
+                <img class="rounded-2xl" src="img/casa.jpg" alt="">
+            </div>
+            <div class="md:w-1/2 px-16 flex flex-col items-center justify-center">
+                <h2 class="font-bold text-4xl mt-2 text-[#131C1B]">Bienvenido a Kiara, <br> <span class="text-2xl font-normal">inicia sesión para continuar</span></h2>
+                <form method="POST" action="/login" class="flex flex-col gap-4 ">
+                    <input class="p-2 mt-8 rounded-xl border" name="emailUsuario" id="emailUsuario" type="email" placeholder="E-mail">
+                    <input class="p-2 rounded-xl border" name="passwordUsuario" id="passwordUsuario" type="password" placeholder="Contraseña">
+                    <button class="bg-[#131C1B] rounded-xl text-white py-2">Inicia sesión</button>
+                </form>
+                <a href="">
+                    <p class="text-sm mt-4 text-[#131C1B] underline">¿Olvidaste tu Contraseña?</p>
                 </a>
-                <a href="#">
-                    <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-                </a>
+                <p class="text-sm mt-4 text-[#131C1B]">¿No tienes una cuenta? <a href="" class="underline">Regístrate</a> </p>
+                <p class="text-sm mt-10 text-[#131C1B]">Síguenos en</p>
+                <div class="flex gap-5">
+                    <a href="#">
+                        <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+                    </a>
+                    <a href="#">
+                        <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+</body>
+</html>
