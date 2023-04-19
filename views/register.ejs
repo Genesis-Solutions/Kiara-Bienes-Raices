@@ -1,91 +1,141 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CDN Tailwind -->
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-    <!-- CLI Tailwind -->
-    <link href="/style.css" rel="stylesheet">
+    <!-- CDN Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CLI Tailwind
+    <link href="/style.css" rel="stylesheet"> -->
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
 
     <title>Kiara Bienes Raíces</title>
+    <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
 </head>
+
 <body style="font-family: 'Montserrat', sans-serif">
 
-<div class="container mx-auto">
-    <div class="flex w-8/12 mx-auto shadow-lg overflow-hidden">
-        <div class="w-1/2" style="background-image: url(img/casa2_main.png);">
-    
+    <div class="container mx-auto">
+        <div class="flex w-8/12 mx-auto shadow-lg overflow-hidden">
+            <div class="w-1/2" style="background-image: url(img/casa2_main.png);">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="px-20 py-20 justify-center">
+        <div>
+            <h1 class="text-5xl font-extrabold">Bienvenido a Kiara,</h1>
+            <h1 class="text-5xl font-extrabold">ingresa tus datos para </h1>
+            <h1 class="text-5xl font-extrabold">crear tu cuenta</h1>
+        </div>
+
+        <div class="flex space-x-5">
+            <h2 class="text-2xl font-semibold">¿Ya tienes una cuenta?</h2>
+            <a href="/login" class="text-2xl underline">Inicia sesión</a>
         </div>
 
     </div>
 
-</div>
 
-
-<div class="px-20 py-20 justify-center">
-    <h1 class="text-5xl font-extrabold">Bienvenido a Kiara,</h1>
-    <h1 class="text-5xl font-extrabold">ingresa tus datos para </h1>
-    <h1 class="text-5xl font-extrabold">crear tu cuenta</h1>    
-    <div class="mt-5">
-        <h2 class="text-4xl font-medium">¿Ya tienes una cuenta?</h2>
-        <a href="/login" class="text-4xl font-medium underline">Inicia sesión</a>
-    </div>
-</div>
-
-
-<!-- Sección de entradas para la información del usuario para el registro -->
-<form action="">
-    <div class="grid-cols-4 gap-5">
-        <p class="text-base">Nombre(s)</p>
-        <input class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 required:border-red-500"
-        type="text" id="nombre" placeholder="María Regina">
-        <p class="text-base">Apellidos</p>
-        <input class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 required:border-red-500"
-        type="text" id="apellido" placeholder="Portillo Hernández">
-    </div>
-    <div class="grid-cols-2 gap-12">
-        <p class="text-base">Correo Electrónico</p>
-        <input class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 required:border-red-500"
-        type="email" id="email" placeholder="alejandro@gmail.com">
-        <p class="text-base">Número de teléfono</p>
-        <input class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 required:border-red-500"
-        type="text" id="telefono" placeholder="+52 472 649 9178">
-    </div>
-    <!-- <div class="grid-cols-2 gap-12">
-        <div class="relative" data-te-dropdown-ref"">
-            <button id="estadoCivil" px-5 py-2 w-full rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 type="button" data-te-dropdown-ref="""" ></button>
-
+    <!-- Formulario para el registro de un usuario -->
+    <form action="" class="space-y-4 mx-auto px-20">
+        <div class="flex">
+            <div class="grid grid-cols-2 gap-12">
+                <div class="w-1/2">
+                    <label for="nombre">Nombre(s)</label>
+                    <input
+                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="nombre" placeholder="María Regina" required />
+                </div>
+                <div class="w-1/2">
+                    <label for="apellido">Apellidos</label>
+                    <input
+                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="apellido" placeholder="Portillo Hernández" required />
+                </div>
+            </div>
         </div>
-    </div> -->
-    <div class="grid-cols-3 gap-12">
-        <p>COntrasela</p>
-        <input class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 required:border-red-500"
-        type="password" id="contrasenia" placeholder="********">
-        <input class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 required:border-red-500"
-        type="password" id="confirmarContrasenia" placeholder="********">
-        <input class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 required:border-red-500"
-        type="password" id="confirmarContrasenia" placeholder="********">
-    </div>
+
+        <div class="flex">
+            <div class="grid grid-cols-2 gap-12">
+                <div class="w-1/2">
+                    <label for="email">Correo Electrónico</label>
+                    <input
+                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="email" id="email" placeholder="alejandro@gmail.com" required />
+                </div>
+                <div class="w-1/2">
+                    <label for="apellido">Número de Teléfono</label>
+                    <input type="tel"
+                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        , id="telefono" placeholder="+52 472 649 9178" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="grid grid-cols-2">
+         
+                <div class="w-1/2">
+                    <label for="ocupacion">Ocupación</label>
+                    <input type="text"
+                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        placeholder="Contador">
+                </div>
+                <div class="w-1/2">
+                    <label for="estadoCivil">Estado Civil</label>
+                    <button id="dropdown-button" data-dropdown-toggle="dropdown"
+                        class="h-12 px-5 py-2 w-48 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 block"
+                        type="button">
+                        Opciones <i class="ml-2 fa-solid fa-chevron-down space-x-8"></i>
+                    </button>
+                </div>
+
+
+            <div class="flex space-x-8">
+                <div class="grid grid-cols-2 gap-12">
+                    <div class="w-1/2">
+                        <label for="contrasenia">Ingresar Contraseña</label>
+                        <input
+                            class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="password" id="contrasenia" placeholder="********">
+                    </div>
+                    <div class="w-1/2">
+                        <label for="confirmarContrasenia">Confirmar Contraseña</label>
+                        <input
+                            class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="password" id="confirmarContrasenia" placeholder="********">
+                    </div>
+                </div>
 
 
 
-</form>
+                <!-- <div class="flex">
+                <div class="p-10 justify-center">
+                    <button
+                        class="px-5 py-2 w-full rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                        Crear Cuenta
+                    </button>
+                </div>
+            </div> -->
 
-
-
-    
+    </form>
 
 
 </body>
