@@ -1,0 +1,28 @@
+<section class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-7xl p-5">
+        <div class="md:block hidden w-1/2 p-5 ">
+            <img class="rounded-2xl" src="/img/casa.jpg" alt="">
+        </div>
+        <div class="md:w-1/2 px-16 flex flex-col items-center justify-center">
+            <h2 class="font-bold text-4xl mt-2 text-[#131C1B]">Bienvenido a Kiara, <br> <span class="text-2xl font-normal">inicia sesión para continuar</span></h2>
+            <form method="POST" action="/login" class="flex flex-col gap-4 ">
+                <input class="p-2 mt-8 rounded-xl border" name="emailUsuario" type="email" placeholder="E-mail">
+                <input class="p-2 rounded-xl border" name="passwordUsuario" type="password" placeholder="Contraseña">
+                <button class="bg-[#131C1B] rounded-xl text-white py-2">Inicia sesión</button>
+            </form>
+            <a href="">
+                <p class="text-sm mt-4 text-[#131C1B] underline">¿Olvidaste tu Contraseña?</p>
+            </a>
+            <p class="text-sm mt-4 text-[#131C1B]">¿No tienes una cuenta? <a href="" class="underline">Regístrate</a> </p>
+            <p class="text-sm mt-10 text-[#131C1B]">Síguenos en</p>
+            <div class="flex gap-5">
+                <a href="#">
+                    <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+                </a>
+                <a href="#">
+                    <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
