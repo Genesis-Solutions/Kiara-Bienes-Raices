@@ -1,36 +1,368 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esperanos Pronto</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CDN Tailwind -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <!-- CLI Tailwind -->
+    <link href="/style.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
 
-    <link rel="icon" type="image/png" href="/img/kiarabr_logo.png">
+    <title>Kiara Bienes Raíces</title>
+    <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
 </head>
-<body>
-    <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-        <div class="text-center">
-            <div class="w-full flex justify-center items-center self-center">
-                <img class="w-48 h-48 object-scale-down" src="/img/kiarabr_logo.png">
-            </div>
-          <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">¡Espéranos Pronto!</h1>
-          <p class="pt-4 mt-6 text-base leading-7 text-gray-600">Nuestro equipo de desarrollo está trabajando para mejorar tu experiencia.</p>
-          <div class="mt-10 flex items-center justify-center gap-x-6">
-            <a href="https://www.facebook.com/urbannus.bienes.raices/?locale=es_LA">
-                <i class="fa-brands fa-facebook fa-2xl hover:text-blue-600 hover:scale-110 transition duration-150"></i>
-            </a>
-            <a href="https://www.youtube.com/@kiarabienesraicesdelgrupou144">
-                <i class="fa-brands fa-youtube fa-2xl hover:text-red-600 hover:scale-110 transition duration-150"></i>
-            </a>
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Heading Section -->
+
+    <div class="bg-cover w-full" style="background-image: url(img/main_img.jpg)">
+
+        <!-- NavBar Section -->
+
+        <nav class="flex flex-wrap px-8 py-6 items-center justify-between w-full text-lg">
             <a href="#">
-                <i class="fa-brands fa-instagram fa-2xl hover:text-pink-500 hover:scale-110 transition duration-150"></i>
+                <img class="h-16 w-16" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
             </a>
-          </div>
+            <svg id="menu-button" class="h-6 w-6 cursor-pointer lg:hidden" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <div class="hidden w-full lg:flex lg:items-center text-center lg:w-auto" id="menu">
+                <ul class="pt-2 text-base font-medium lg:flex lg:justify-between lg:pt-0">
+                    <li>
+                        <a class="lg:p-4 py-2 block hover:underline" href="#">
+                            Propiedades
+                        </a>
+                    </li>
+                    <li>
+                        <a class="lg:p-4 py-2 block hover:underline" href="#">
+                            Vender o Rentar mi Propiedad
+                        </a>
+                    </li>
+                    <li>
+                        <a class="lg:p-4 py-2 block hover:underline" href="#">
+                            Nosotros
+                        </a>
+                    </li>
+                    <li>
+                        <a class="lg:p-4 py-2 block hover:underline" href="#">
+                            Servicios
+                        </a>
+                    </li>
+                    <li>
+                        <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                            Iniciar Sesión
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="px-10 pb-10 lg:grid lg:grid-cols-3 md:flex flex-col">
+
+            <!-- Slogan Section -->
+
+            <div class="px-20 py-20 text-center">
+                <h1 class="text-5xl font-extrabold">Tu patrimonio, en manos expertas</h1>
+            </div>
+
+            <!-- SearchBar Section -->
+
+            <div class="col-span-2 text-gray-600 flex flex-col justify-center px-12 md:pb-10">
+                <div class="flex justify-center">
+                    <button class="px-5 py-2 bg-gray-800 text-base text-white font-medium rounded-tl-lg hover:font-semibold hover:bg-gray-700">
+                        Rentar
+                    </button>
+                    <button class="px-5 py-2 ml-2 bg-gray-800 text-base text-white font-medium rounded-tr-lg hover:font-semibold hover:bg-gray-700">
+                        Comprar
+                    </button>
+                </div>
+                <form>
+                    <div class="flex justify-center">
+                        <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-medium text-center text-white bg-gray-800 rounded-l-lg hover:font-semibold hover:bg-gray-700" type="button">
+                            Tipo<i class="ml-2 fa-solid fa-chevron-down"></i>
+                        </button>
+                        <input class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ingresa tu búsqueda (ej: Juriquilla)">
+                        <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-gray-800 rounded-r-lg hover:font-semibold hover:bg-gray-700" type="button">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </main>
+
+    </div>
+
+    <!-- Properties Section -->
+
+    <div class="lg:px-10 lg:py-10 md:px-12 md:py-8 flex-col justify-center">
+        <div>
+            <h2 class="lg:py-10 md:py-8 text-4xl font-bold lg:flex lg:justify-center md:text-center">
+                ¡Explora nuestras nuevas propiedades!
+            </h2>
+        </div>
+
+        <!-- Cards Section -->
+
+        <div class="lg:py-12 md:py-8 lg:flex lg:flex-row lg:justify-center lg:space-x-8 md:grid md:grid-cols-2 md:gap-12">
+            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                <img src="img/casa1_main.png" class="w-full h-44 rounded-t-lg">
+                <div class="px-5 py-3">
+                    <h3 class="text-lg font-semibold">Casa 1</h3>
+                    <div class="grid grid-cols-2 gap-2 py-2">
+                        <div>
+                            <i class="fa-solid fa-house"></i> 450 m2
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bed"></i> 4 rec.
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bath"></i> 5 baños
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-car"></i> 4 estac.
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-medium">$ 5,500,000 MXN</h3>
+                </div>
+            </div>
+
+            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                <img src="img/casa2_main.png" class="w-full h-44 rounded-t-lg">
+                <div class="px-5 py-3">
+                    <h3 class="text-lg font-semibold">Casa 2</h3>
+                    <div class="grid grid-cols-2 gap-2 py-2">
+                        <div>
+                            <i class="fa-solid fa-house"></i> 320 m2
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bed"></i> 3 rec.
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bath"></i> 3 baños
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-car"></i> 2 estac.
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-medium">$ 1,900,000 MXN</h3>
+                </div>
+            </div>
+
+            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                <img src="img/casa3_main.png" class="w-full h-44 rounded-t-lg">
+                <div class="px-5 py-3">
+                    <h3 class="text-lg font-semibold">Casa 3</h3>
+                    <div class="grid grid-cols-2 gap-2 py-2">
+                        <div>
+                            <i class="fa-solid fa-house"></i> 290 m2
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bed"></i> 2 rec.
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bath"></i> 2 baños
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-car"></i> 1 estac.
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-medium">$ 2,700,000 MXN</h3>
+                </div>
+            </div>
+
+            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                <img src="img/casa4_main.png" class="w-full h-44 rounded-t-lg">
+                <div class="px-5 py-3">
+                    <h3 class="text-lg font-semibold">Casa 4</h3>
+                    <div class="grid grid-cols-2 gap-2 py-2">
+                        <div>
+                            <i class="fa-solid fa-house"></i> 400 m2
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bed"></i> 4 rec.
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-bath"></i> 4 baños
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-car"></i> 3 estac.
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-medium">$ 2,500,000 MXN</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+
+    <div class="bg-sky-950 lg:grid lg:grid-cols-2 md:flex md:flex-col">
+        <div class="px-16 py-10">
+            <h2 class="py-10 text-4xl font-bold text-white">
+                Encuentra tu lugar perfecto
+            </h2>
+            <p class="text-base text-white">
+                En Kiara, ofrecemos una experiencia excepcional de compra o renta de inmuebles, gracias a nuestro equipo de profesionales comprometidos en brindarle el mejor servicio posible. Con nuestros conocimientos del mercado inmobiliario, elegirnos será la mejor decisión que pueda tomar.
+            </p>
+
+            <!-- Properties Section -->
+
+            <div class="grid grid-cols-2 px-2 py-14 gap-14">
+                <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
+                    <div class="flex justify-center">
+                        <!-- <i class="fa-solid fa-building fa-lg mr-3"></i> -->
+                        <p class="font-medium">
+                            Departamentos
+                        </p>
+                    </div>
+                    <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
+                        Ver
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
+                    <div class="flex justify-center">
+                        <!-- <i class="fa-solid fa-house fa-lg mr-3"></i> -->
+                        <p class="font-medium">
+                            Casas
+                        </p>
+                    </div>
+                    <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
+                        Ver
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
+                    <div class="flex justify-center">
+                        <!-- <i class="fa-solid fa-city fa-lg mr-3"></i> -->
+                        <p class="font-medium">
+                            Oficinas
+                        </p>
+                    </div>
+                    <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
+                        Ver
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
+                    <div class="flex justify-center">
+                        <!-- <i class="fa-solid fa-shop fa-lg mr-3"></i> -->
+                        <p class="font-medium">
+                            Locales
+                        </p>
+                    </div>
+                    <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
+                        Ver
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="bg-cover" style="background-image: url(img/features_img.jpg);">
+            <!-- <img src="img/features_img.jpg" class="w-full h-96 bg-cover"> -->
+        </div>
+    </div>
+
+    <!-- Process Section -->
+
+    <div class="p-20">
+        <div class="flex justify-center">
+            <h2 class="text-4xl font-bold md:text-center">
+                ¿Te interesa vender o rentar tu propiedad?
+            </h2>
+        </div>
+        <div class="lg:grid lg:grid-cols-3 place-items-center pt-12 md:flex md:flex-col md:space-y-12 md:text-center">
+            <div class="hover:scale-105 transition duration-150">
+                <img src="img/process1_img.png" class="">
+                <p>
+                    <span class="underline underline-offset-4">Contacta</span> a uno de nuestros agentes
+                </p>
+            </div>
+            <div class="hover:scale-105 transition duration-150">
+                <img src="img/process2_img.png" class="">
+                <p class="lg:pl-16">
+                    Prepara tu <span class="underline underline-offset-4">documentación</span>
+                </p>
+            </div>
+            <div class="hover:scale-105 transition duration-150">
+                <img src="img/process3_img.png" class="">
+                <p class="pl-5">
+                    Visualiza el <span class="underline underline-offset-4">seguimiento</span> de tu proceso
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer Section -->
+
+    <div class="bg-gray-800 text-white p-20 justify-center">
+        <div class="grid lg:grid-cols-4 md:grid-cols-2 md:gap-12">
+            <div class="flex justify-center md:justify-start">
+                <div class="bg-white rounded-full w-48 h-48 flex justify-center items-center">
+                    <img class="h-28 w-28" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
+                </div>
+            </div>
+            <div class="pt-8 md:pt-0">
+                <h3 class="text-lg font-semibold">
+                    Compañía
+                </h3>
+                <ul class="text-sm py-5">
+                    <div class="space-y-4">
+                        <li class="hover:underline">Propiedades</li>
+                        <li class="hover:underline">Vender / Rentar</li>
+                        <li class="hover:underline">Nosotros</li>
+                        <li class="hover:underline">Servicios</li>
+                    </div>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold">
+                    Ayuda
+                </h3>
+                <ul class="text-sm py-5">
+                    <div class="space-y-4">
+                        <li class="hover:underline">FAQs</li>
+                        <li class="hover:underline">Política de Privacidad</li>
+                    </div>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold">
+                    Contacto
+                </h3>
+                <ul class="text-sm py-5">
+                    <div class="space-y-4">
+                        <li><i class="fa-brands fa-whatsapp"></i> +52 442 796 7322</li>
+                        <li><i class="fa-brands fa-whatsapp"></i> +52 442 386 3232</li>
+                        <li>contacto.kiarainmuebles@gmail.com</li>
+                    </div>
+                </ul>
+                <div class="space-x-5">
+                    <i class="fa-brands fa-facebook fa-2xl hover:text-blue-600 hover:scale-110 transition duration-150"></i>
+                    <i class="fa-brands fa-youtube fa-2xl hover:text-red-600 hover:scale-110 transition duration-150"></i>
+                    <i class="fa-brands fa-instagram fa-2xl hover:text-pink-500 hover:scale-110 transition duration-150"></i>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center pt-10 text-sm">
+            <p>
+                © 2023 | Kiara Bienes Raíces
+            </p>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+
 </body>
 </html>
