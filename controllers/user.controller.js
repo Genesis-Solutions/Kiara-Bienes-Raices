@@ -1,19 +1,19 @@
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const User = require('../models/users');
+const User = require('../models/user.model');
 
 // -- LOGIN -- //
 
 // - Getter de la vista Login
-exports.get_login = (req, res, next) => {
+exports.getLogin = (req, res, next) => {
     res.render ('login', {
-        email: req.session.email ? req.session.email : '',
+        emailUsuario: req.session.emailUsuario ? req.session.emailUsuario : '',
         info: '',
     }); 
 };
 
 exports.login = (req, res, next) => {
-    User.findOne (req.body.email).then (async ([rows, data]) => {
+    User.findOne (req.body.emailUsuario).then (async ([rows, data]) => {
 
         //Si no existe el correo, redirige a la pantalla de login
 
@@ -31,18 +31,20 @@ exports.login = (req, res, next) => {
 
         // Contraseña del usuario:
 
-        request.session.passwordUsuario = rows[0].passwordUsuario;
+        req.session.passwordUsuario = rows[0].passwordUsuario;
 
         // Método de comparación para determinar autenticidad de la contraseña:
 
-        bcrypt.compare(request.body.passwordUsuario, request.session.passwordUsuario).then(doMatch => {
+        bcrypt.compare(req.body.passwordUsuario, req.session.passwordUsuario).then(doMatch => {
             if (doMatch) {
                 console.log('success login');
-                return response.redirect('./');
+                return res.redirect('./');
             } else {
-                return response.redirect('/login')
+                return res.redirect('/login')
             }
         });
 
+    }).catch((error) => {
+        console.log(error);
     }); 
 };
