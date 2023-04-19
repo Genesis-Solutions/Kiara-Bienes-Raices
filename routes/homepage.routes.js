@@ -6,8 +6,7 @@ const userController = require('../controllers/user.controller');
 
 // Rutas
 router.get('/', homeController.root); 
-router.get('/login', userController.get_login);
+router.get('/login', userController.getLogin);
 router.post('/login', userController.login);
-
 
 module.exports = router;
