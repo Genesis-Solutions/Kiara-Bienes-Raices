@@ -25,9 +25,11 @@ exports.login = (req, res, next) => {
 
         req.session.isLoggedIn = true;
         req.session.idUsuario = rows[0].idUsuario;
-        req.session.nombreUsuario = rows[0].nombre;
+        req.session.nombreUsuario = rows[0].nombreUsuario;
         req.session.apellidosUsuario = rows[0].apellidosUsuario;
         req.session.emailUsuario = rows[0].emailUsuario;
+
+        console.log("en método login " + req.session.nombreUsuario)
 
         // Contraseña del usuario:
 
