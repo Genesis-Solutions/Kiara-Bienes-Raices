@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "build-tail": "NODE_ENV=production tailwindcss build -i ./styles/input.css -o ./styles/style.css"
+    "build-tail": "tailwindcss build -i ./styles/input.css -o ./styles/style.css"
   },
   "author": "genesis-terra",
   "license": "MIT",
