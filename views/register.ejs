@@ -27,36 +27,25 @@
 
 <body style="font-family: 'Montserrat', sans-serif">
 
-    <div class="container mx-auto">
-        <div class="flex w-8/12 mx-auto shadow-lg overflow-hidden">
-            <div class="w-1/2" style="background-image: url(img/casa2_main.png);">
+    <div class="space-y-4 mx-auto px-20">
+        <div class="px-20 py-20 justify-center w-1/2 space-y-4">
 
-            </div>
+                <div class="flex space-x-5 px-20">
+                    <h1 class="text-5xl font-semibold">Bienvenido a Kiara, ingresa tus datos para crear tu cuenta</h1>
+                </div>
 
+                <div class="flex space-x-5 px-20">
+                    <h2 class="text-base">¿Ya tienes una cuenta?</h2>
+                    <a href="/login" class="text-base underline">Inicia sesión</a>
+                </div>
         </div>
-
     </div>
-
-
-    <div class="px-20 py-20 justify-center">
-        <div>
-            <h1 class="text-5xl font-extrabold">Bienvenido a Kiara,</h1>
-            <h1 class="text-5xl font-extrabold">ingresa tus datos para </h1>
-            <h1 class="text-5xl font-extrabold">crear tu cuenta</h1>
-        </div>
-
-        <div class="flex space-x-5">
-            <h2 class="text-2xl font-semibold">¿Ya tienes una cuenta?</h2>
-            <a href="/login" class="text-2xl underline">Inicia sesión</a>
-        </div>
-
-    </div>
-
 
     <!-- Formulario para el registro de un usuario -->
-    <form action="" class="space-y-4 mx-auto px-20">
-        <div class="flex">
-            <div class="grid grid-cols-2 gap-12">
+
+    <div class="grid grid-cols-2">
+        <form action="" class="space-y-4 mx-auto px-20">
+            <div class="flex space-x-5">
                 <div class="w-1/2">
                     <label for="nombre">Nombre(s)</label>
                     <input
@@ -70,15 +59,14 @@
                         type="text" id="apellido" placeholder="Portillo Hernández" required />
                 </div>
             </div>
-        </div>
 
-        <div class="flex">
-            <div class="grid grid-cols-2 gap-12">
+            <div class="flex space-x-5">
+
                 <div class="w-1/2">
                     <label for="email">Correo Electrónico</label>
                     <input
                         class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="email" id="email" placeholder="alejandro@gmail.com" required />
+                        type="email" id="email" placeholder="maria@gmail.com" required />
                 </div>
                 <div class="w-1/2">
                     <label for="apellido">Número de Teléfono</label>
@@ -86,17 +74,16 @@
                         class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         , id="telefono" placeholder="+52 472 649 9178" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
                 </div>
+
             </div>
-        </div>
 
+            <div class="flex space-x-5">
 
-        <div class="grid grid-cols-2">
-         
                 <div class="w-1/2">
                     <label for="ocupacion">Ocupación</label>
-                    <input type="text"
+                    <input
                         class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        placeholder="Contador">
+                        type="text" id="ocupacion" placeholder="Contador" required />
                 </div>
                 <div class="w-1/2">
                     <label for="estadoCivil">Estado Civil</label>
@@ -107,35 +94,40 @@
                     </button>
                 </div>
 
+            </div>
 
-            <div class="flex space-x-8">
-                <div class="grid grid-cols-2 gap-12">
-                    <div class="w-1/2">
-                        <label for="contrasenia">Ingresar Contraseña</label>
-                        <input
-                            class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="password" id="contrasenia" placeholder="********">
-                    </div>
-                    <div class="w-1/2">
-                        <label for="confirmarContrasenia">Confirmar Contraseña</label>
-                        <input
-                            class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="password" id="confirmarContrasenia" placeholder="********">
-                    </div>
+            <div class="flex space-x-5">
+
+                <div class="w-1/2">
+                    <label for="contrasenia">Contraseña</label>
+                    <input
+                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="password" id="contrasenia" placeholder="********">
+                </div>
+                <div class="w-1/2">
+                    <label for="confirmarContrasenia">Confirmar Contraseña</label>
+                    <input
+                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="password" id="confirmarContrasenia" placeholder="********">
                 </div>
 
+            </div>
 
+            <div class="col-span-2 flex flex-col items-center justify-center">
+                <button
+                    class="px-5 py-2 w-3/4 rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 items-center">
+                    Crear Cuenta
+                </button>
+            </div>
+        </form>
 
-                <!-- <div class="flex">
-                <div class="p-10 justify-center">
-                    <button
-                        class="px-5 py-2 w-full rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        Crear Cuenta
-                    </button>
-                </div>
-            </div> -->
+        <div class="grid-cols-2">
+            <div class="col-span-2">
+                <img src="img/casaSignUp.jpg" alt="Imagen de fondo del registro de usuario" class="w-auto mx-auto h-full bg-right">
+        </div>
+      
+        </div>
+          
 
-    </form>
-
-
+ 
 </body>
