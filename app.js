@@ -1,10 +1,8 @@
 const express = require('express');
-
 const path = require('path');
 const bodyParser = require('body-parser');
-
-const app = express();
 const port = 3000;
+const app = express();
 app.use(express.json());
 
 // Le decimos a node que nuestros assets se encuentran en assets
