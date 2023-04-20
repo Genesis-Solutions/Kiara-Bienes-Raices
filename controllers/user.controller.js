@@ -6,14 +6,14 @@ const User = require('../models/user.model');
 
 // - Getter de la vista Login
 exports.getLogin = (req, res, next) => {
-    res.render ('login', {
+    res.render('login', {
         emailUsuario: req.session.emailUsuario ? req.session.emailUsuario : '',
         info: '',
-    }); 
+    });
 };
 
 exports.login = (req, res, next) => {
-    User.findOne (req.body.emailUsuario).then (async ([rows, data]) => {
+    User.findOne(req.body.emailUsuario).then(async ([rows, data]) => {
 
         //Si no existe el correo, redirige a la pantalla de login
 
@@ -46,12 +46,83 @@ exports.login = (req, res, next) => {
 
     }).catch((error) => {
         console.log(error);
-    }); 
+    });
 };
 
 // -- REGISTER -- //
 
-// - Getter de la vista Register
 exports.getRegister = (req, res, next) => {
+    res.render('register');
+};
 
+exports.register = (req, res, next) => {
+    // Validate the user's input
+    const errors = validateInput(nombreUsuario, apellidosUsuario, emailUsuario, passwordUsuario, telefonoUsuario, estadoCivilUsuario, ocupacionUsuario);
+    if (errors.length > 0) {
+        res.render("register", { errors });
+        return;
+    }
+
+    try {
+        // Generate a salt and hash the password
+        const salt = bcrypt.genSalt(10);
+        const hashedPassword = bcrypt.hash(passwordUsuario, salt);
+    } catch (error) {
+        console.log(error);
+    }
+
+    function validateInput(nombreUsuario, apellidosUsuario, emailUsuario, passwordUsuario, telefonoUsuario, estadoCivilUsuario, ocupacionUsuario) {
+        const errors = [];
+
+        if (!nombreUsuario) {
+            errors.push("El nombre es requerido.");
+        } else if (!/^[a-zA-Z]+$/.test(nombreUsuario)) {
+            errors.push("El nombre debe contener solo letras.");
+        }
+
+        if (!apellidosUsuario) {
+            errors.push("Los apellidos son requeridos.");
+        } else if (!/^[a-zA-Z]+$/.test(apellidosUsuario)) {
+            errors.push("Los apellidos deben contener solo letras.");
+        }
+
+        if (!emailUsuario) {
+            errors.push("El correo electrónico es requerido.");
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.push("Correo electrónico inválido.");
+        }
+        if (!passwordUsuario) {
+            errors.push("Contraseña requerida.");
+        } else if (password.length < 8) {
+            errors.push("La contraseña debe tener al menos 8 caracteres.");
+        }
+        if (!phone_number) {
+            errors.push("El teléfono es requerido.");
+        } else if (!/^[0-9]+$/.test(phone_number)) {
+            errors.push("El teléfono debe contener solo números.");
+        }
+        if (!estadoCivilUsuario) {
+            errors.push("Estado civil requerido. (Soltero, Casado,Bienes Mancomunados, Separado, Divorciado, Viudo)");
+        } else if (!/^[a-zA-Z]+$/.test(estadoCivilUsuario)) {
+            errors.push("El estado civil debe contener solo letras.");
+        }
+        if (!/^[a-zA-Z]+$/.test(ocupacionUsuario)) {
+            errors.push("La ocupación debe contener solo letras.");
+        }
+
+        // Prevent SQL injection attacks
+        const sqlRegex = /['"\\]/g;
+        if (sqlRegex.test(nombreUsuario) || sqlRegex.test(apellidosUsuario) || sqlRegex.test(emailUsuario)) {
+            errors.push("Entrada inválida.");
+        }
+
+        return errors;
+    }
+
+    // If everything is ok, insert the user into the database
+    User.insertUser(nombreUsuario, apellidosUsuario, emailUsuario, hashedPassword, telefonoUsuario, estadoCivilUsuario, ocupacionUsuario).then(() => {
+        res.redirect("/index");
+    }).catch((error) => {
+        console.log(error);
+    });
 };
