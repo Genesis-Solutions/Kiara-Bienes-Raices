@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, '/styles')))
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const rutasHome = require('./routes/homepage.routes.js')
+const rutasHome = require('./routes/homepage.routes.js');
 
 app.use('/', rutasHome);
 

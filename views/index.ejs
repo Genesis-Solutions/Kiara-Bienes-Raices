@@ -18,55 +18,18 @@
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
-
+   
     <title>Kiara Bienes Raíces</title>
     <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
 </head>
+
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- Heading Section -->
 
     <div class="bg-cover w-full" style="background-image: url(img/main_img.jpg)">
 
-        <!-- NavBar Section -->
-
-        <nav class="flex flex-wrap px-8 py-6 items-center justify-between w-full text-lg">
-            <a href="#">
-                <img class="h-16 w-16" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
-            </a>
-            <svg id="menu-button" class="h-6 w-6 cursor-pointer lg:hidden" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-            <div class="hidden w-full lg:flex lg:items-center text-center lg:w-auto" id="menu">
-                <ul class="pt-2 text-base font-medium lg:flex lg:justify-between lg:pt-0">
-                    <li>
-                        <a class="lg:p-4 py-2 block hover:underline" href="#">
-                            Propiedades
-                        </a>
-                    </li>
-                    <li>
-                        <a class="lg:p-4 py-2 block hover:underline" href="#">
-                            Vender o Rentar mi Propiedad
-                        </a>
-                    </li>
-                    <li>
-                        <a class="lg:p-4 py-2 block hover:underline" href="#">
-                            Nosotros
-                        </a>
-                    </li>
-                    <li>
-                        <a class="lg:p-4 py-2 block hover:underline" href="#">
-                            Servicios
-                        </a>
-                    </li>
-                    <li>
-                        <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
-                            Iniciar Sesión
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <%- include("partials/navbar/navbar") %>
 
         <div class="px-10 pb-10 lg:grid lg:grid-cols-3 md:flex flex-col">
 
@@ -303,66 +266,9 @@
         </div>
     </div>
 
+    <%- include("partials/footer/footer") %>
 
-    <!-- Footer Section -->
-
-    <div class="bg-gray-800 text-white p-20 justify-center">
-        <div class="grid lg:grid-cols-4 md:grid-cols-2 md:gap-12">
-            <div class="flex justify-center md:justify-start">
-                <div class="bg-white rounded-full w-48 h-48 flex justify-center items-center">
-                    <img class="h-28 w-28" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
-                </div>
-            </div>
-            <div class="pt-8 md:pt-0">
-                <h3 class="text-lg font-semibold">
-                    Compañía
-                </h3>
-                <ul class="text-sm py-5">
-                    <div class="space-y-4">
-                        <li class="hover:underline">Propiedades</li>
-                        <li class="hover:underline">Vender / Rentar</li>
-                        <li class="hover:underline">Nosotros</li>
-                        <li class="hover:underline">Servicios</li>
-                    </div>
-                </ul>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold">
-                    Ayuda
-                </h3>
-                <ul class="text-sm py-5">
-                    <div class="space-y-4">
-                        <li class="hover:underline">FAQs</li>
-                        <li class="hover:underline">Política de Privacidad</li>
-                    </div>
-                </ul>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold">
-                    Contacto
-                </h3>
-                <ul class="text-sm py-5">
-                    <div class="space-y-4">
-                        <li><i class="fa-brands fa-whatsapp"></i> +52 442 796 7322</li>
-                        <li><i class="fa-brands fa-whatsapp"></i> +52 442 386 3232</li>
-                        <li>contacto.kiarainmuebles@gmail.com</li>
-                    </div>
-                </ul>
-                <div class="space-x-5">
-                    <i class="fa-brands fa-facebook fa-2xl hover:text-blue-600 hover:scale-110 transition duration-150"></i>
-                    <i class="fa-brands fa-youtube fa-2xl hover:text-red-600 hover:scale-110 transition duration-150"></i>
-                    <i class="fa-brands fa-instagram fa-2xl hover:text-pink-500 hover:scale-110 transition duration-150"></i>
-                </div>
-            </div>
-        </div>
-        <div class="flex justify-center pt-10 text-sm">
-            <p>
-                © 2023 | Kiara Bienes Raíces
-            </p>
-        </div>
-    </div>
-
-    <script src="index.js"></script>
+    <!-- <script src="./partials/navbar/index.js"></script> -->
 
 </body>
 </html>
