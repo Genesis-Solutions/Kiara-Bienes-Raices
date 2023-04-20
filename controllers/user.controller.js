@@ -56,20 +56,44 @@ exports.getRegister = (req, res, next) => {
 };
 
 exports.register = (req, res, next) => {
-    // Validate the user's input
+
+    const nombreUsuario = req.body.nombreUsuario;
+    const apellidosUsuario = req.body.apellidosUsuario;
+    const emailUsuario = req.body.emailUsuario;
+    const passwordUsuario = req.body.passwordUsuario;
+    const telefonoUsuario = req.body.telefonoUsuario;
+    const estadoCivilUsuario = req.body.estadoCivilUsuario;
+    const ocupacionUsuario = req.body.ocupacionUsuario;
+    
+    // Validar los datos de entrada
     const errors = validateInput(nombreUsuario, apellidosUsuario, emailUsuario, passwordUsuario, telefonoUsuario, estadoCivilUsuario, ocupacionUsuario);
     if (errors.length > 0) {
         res.render("register", { errors });
         return;
     }
+    const errorsPassword = validateConfirmPassword(passwordUsuario, confirmPasswordUsuario);
+    if (errorsPassword.length > 0) {
+        res.render("register", { errorsPassword });
+        return;
+    }
+
 
     try {
-        // Generate a salt and hash the password
+        // Generar la sal y el hash de la contraseña
         const salt = bcrypt.genSalt(10);
         const hashedPassword = bcrypt.hash(passwordUsuario, salt);
     } catch (error) {
         console.log(error);
     }
+
+    function validateConfirmPassword(passwordUsuario, confirmPasswordUsuario) {
+        const errors = [];
+        if (passwordUsuario !== confirmPasswordUsuario) {
+            errors.push("Las contraseñas no coinciden.");
+        }
+        return errors;
+    }
+
 
     function validateInput(nombreUsuario, apellidosUsuario, emailUsuario, passwordUsuario, telefonoUsuario, estadoCivilUsuario, ocupacionUsuario) {
         const errors = [];
@@ -119,7 +143,7 @@ exports.register = (req, res, next) => {
         return errors;
     }
 
-    // If everything is ok, insert the user into the database
+    // Si todo fue validado correctamente, se inserta el usuario en la base de datos
     User.insertUser(nombreUsuario, apellidosUsuario, emailUsuario, hashedPassword, telefonoUsuario, estadoCivilUsuario, ocupacionUsuario).then(() => {
         res.redirect("/index");
     }).catch((error) => {
