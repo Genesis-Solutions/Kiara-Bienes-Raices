@@ -1,0 +1,47 @@
+<!-- NavBar Section -->
+
+<nav class="flex flex-wrap px-8 py-6 items-center justify-between w-full text-lg">
+    <a href="#">
+        <img class="h-16 w-16" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
+    </a>
+    <svg id="menu-button" class="h-6 w-6 cursor-pointer lg:hidden" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+    <div class="hidden w-full lg:flex lg:items-center text-center lg:w-auto" id="menu">
+        <ul class="pt-2 text-base font-medium lg:flex lg:justify-between lg:pt-0">
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="#">
+                    Propiedades
+                </a>
+            </li>
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="#">
+                    Vender o Rentar mi Propiedad
+                </a>
+            </li>
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="#">
+                    Nosotros
+                </a>
+            </li>
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="#">
+                    Servicios
+                </a>
+            </li>
+            <li>
+                <% if (isLogged != true) { %>
+                    <a href="/login">
+                        <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                            Iniciar Sesión
+                        </button>
+                    </a>
+                <% } else { %>
+                    <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                        <%- nombreUsuario -%> <%- apellidosUsuario -%>
+                    </button>
+                <% }; %>
+            </li>
+        </ul>
+    </div>
+</nav>
