@@ -27,7 +27,7 @@ module.exports = class User {
 
     static insertUser(nombreUsuario, apellidosUsuario, estadoCivilUsuario, telefonoUsuario, emailUsuario, passwordUsuario, ocupacionUsuario) {
         return db.execute(
-            'INSERT INTO usuario (nombreUsuario,apellidoUsuario, estadoCivilUsuario, telefonoUsuario, emailUsuario, passwordUsuario)VALUES(?, ?, ?, ?, ?, ?, ?)',[nombreUsuario, apellidosUsuario, estadoCivilUsuario, telefonoUsuario, emailUsuario, passwordUsuario, ocupacionUsuario]
+            'INSERT INTO usuario (nombreUsuario,apellidoUsuario, estadoCivilUsuario, telefonoUsuario, emailUsuario, passwordUsuario, ocupacionUsuario)VALUES(?, ?, ?, ?, ?, ?, ?)',[nombreUsuario, apellidosUsuario, estadoCivilUsuario, telefonoUsuario, emailUsuario, passwordUsuario, ocupacionUsuario]
         )
     }
 

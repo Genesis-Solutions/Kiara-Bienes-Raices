@@ -1,14 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const homeController = require('../controllers/homepage.controller');
-const userController = require('../controllers/user.controller');
+const homeController = require("../controllers/homepage.controller");
+const userController = require("../controllers/user.controller");
 
 // Rutas
-router.get('/', homeController.root); 
-router.get('/login', userController.getLogin);
-router.post('/login', userController.login);
-router.get('/register', userController.getRegister);
-router.post('/register', userController.register);
+router.get("/", homeController.root);
+// router.get('/login', userController.getLogin);
+// router.post('/login', userController.login);
+router.get("/register", userController.getRegister);
+router.post("/register", userController.register);
 
 module.exports = router;
