@@ -79,10 +79,9 @@
                     </div>
                     <div>
                         <label for="apellido">Número de Teléfono</label>
-                            <input type="tel"
+                            <input type="number"
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                                , id="telefonoUsuario" name="telefonoUsuario" placeholder="123-456-7890"
-                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+                                , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" required maxlength="10" />
                     </div>
                     <div>
                         <label for="ocupacion">Ocupación</label>
@@ -94,7 +93,7 @@
                         <label for="estadoCivil">Estado Civil</label>
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                                type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Soltero"
+                                type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Soltero, Casado"
                                 required />
                     </div>
                     <div>
@@ -119,7 +118,6 @@
                         Crear Cuenta
                     </button>
                 </div>
-
             </form>
         </div>
 
