@@ -17,6 +17,7 @@ module.exports = class SearchPage {
         );
     }
 
+
     //Obtener el id de la foto portada del inmueble (primer registro en la entidad fotoInmueble)
     static idFotoPortada(id) {
         return db.execute(
@@ -32,5 +33,6 @@ module.exports = class SearchPage {
             [id]
         );
     }
+
 
 }

@@ -1,5 +1,12 @@
 /*const mysql = require('mysql2');
 
+const databaseLocal = {
+    host: 'localhost',
+    user: 'root',
+    database: 'dev_kiara',
+    password: 'Kiara_b1en_esraices//q',
+};
+
 const databaseInstancia = {
     host: 'localhost',
     user: 'aldo',
@@ -8,6 +15,6 @@ const databaseInstancia = {
     port: 3306
 };
 
-const pool = mysql.createPool(databaseInstancia);
+const pool = mysql.createPool(databaseLocal);
 
 module.exports = pool.promise();*/
