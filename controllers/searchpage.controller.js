@@ -12,9 +12,9 @@ exports.getSearchPage = async( req,res,next ) => {
     //Solicitar la cantidad de resultados por pagina
     const pagina = req.query.pagina ? Number(req.query.pagina) : 1;
     if (pagina>numeroPaginas) {
-        res.redirect('/?pagina='+encodeURIComponent(numeroPaginas));
+        res.redirect('/catalogo?pagina='+encodeURIComponent(numeroPaginas));
     } else if (pagina<1) {
-        res.redirect('/?pagina='+encodeURIComponent('1'));
+        res.redirect('/catalogo?pagina='+encodeURIComponent('1'));
     }
     //Determinar los limites
     const limiteInferior = (pagina-1)*resultadosPorPagina;
@@ -28,11 +28,25 @@ exports.getSearchPage = async( req,res,next ) => {
         inmuebles[0][i].img = imgSrc[0][0].archivoFoto
     }
     //Obtener la información necesaria de la lista
-    let iterador = (pagina-2) < 1 ? 1 : pagina-5;
-    const linkFinal = (iterador+5) <= numeroPaginas ? (iterador+5) : pagina + (numeroPaginas-pagina);
-    if (linkFinal<(pagina+2)) {
-        iterador -= (pagina+2)-numeroPaginas;
+    if (pagina<=3){
+        iterador=1;
     }
+    else{
+        iterador = pagina - 2;
+    }
+    
+    if(pagina<=numeroPaginas-2){
+        linkFinal=pagina+2;
+    }
+    else if(pagina<=numeroPaginas-1){
+        linkFinal=pagina+1;
+    }
+    else{
+        linkFinal=pagina
+    }
+    console.log("Valor del iterador: ",iterador);
+    console.log("Valor de página: ",pagina);
+    console.log("Valor del link Final: ",linkFinal);
     res.render('searchpage', {
         inmuebles: inmuebles[0],
         pagina: pagina,

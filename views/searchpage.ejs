@@ -81,15 +81,15 @@
 
     <div class="break"></div>
     <!--Display the links to the pages-->
-    <% if(pagina > 1) { %> <a href="catalogo?pagina=<%=pagina-1%>">Página anterior</a> <% } %>
+    <% if(pagina > 1) { %> <a href="catalogo?pagina=<%=pagina-1%>">Página Anterior</a> <% } %>
     <% for(let i = iterador; i <= linkFinal; i++) { %>
         <% if(i === pagina) { %>
-        <a class="linkSeleccionado" href="catalogo?pagina=<%=i%>"><%=i%></a>
-        <% continue; %>
-        <% } %>
-        <a href="catalogo?pagina=<%=i%>"><%=i%></a>
+        <b><%=i%></b> 
+        <% } else {%>
+        <a href="catalogo?pagina=<%=i%>"><%=i%></a>  
+        <% } %> 
     <% } %>
-    <% if(pagina < numeroPaginas) { %> <a href="catalogo?pagina=<%=pagina+1%>">Página siguiente</a> <% } %>
+    <% if(pagina < numeroPaginas) { %> <a href="catalogo?pagina=<%=pagina+1%>">Página Siguiente</a> <% } %>
 
     <!-- Footer Section -->
 
