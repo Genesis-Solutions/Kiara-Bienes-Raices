@@ -1,10 +1,10 @@
-/*const mysql = require('mysql2');
+const mysql = require('mysql2');
 
 const databaseLocal = {
     host: 'localhost',
     user: 'root',
     database: 'dev_kiara',
-    password: 'Kiara_b1en_esraices//q',
+    password: 'Azulpera3306',
 };
 
 const databaseInstancia = {
@@ -17,4 +17,4 @@ const databaseInstancia = {
 
 const pool = mysql.createPool(databaseLocal);
 
-module.exports = pool.promise();*/
+module.exports = pool.promise();

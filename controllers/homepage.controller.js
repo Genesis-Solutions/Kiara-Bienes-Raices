@@ -1,6 +1,6 @@
 // Base controlador
 const path = require('path');
 
-exports.root = async (request, response, next) => {
-    response.render('listaPropiedades')
+exports.root = (req,res,next) => {
+    res.render('index')
 }

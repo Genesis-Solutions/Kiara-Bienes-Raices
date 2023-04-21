@@ -25,24 +25,24 @@ exports.getSearchPage = async( req,res,next ) => {
     for (let i=0; i < inmuebles[0].length; i++) {
         const imgId = await SearchPage.idFotoPortada((inmuebles[0][i].idInmueble.toString()));
         const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
-        inmuebles[0][i].img = imgSrc[0][0].archivoFoto
+        inmuebles[0][i].img = imgSrc[0][0].archivoFoto;
     }
     //Obtener la información necesaria de la lista
-    if (pagina<=3){
-        iterador=1;
+    if (pagina <= 3) {
+        iterador = 1;
     }
-    else{
-        iterador = pagina - 2;
+    else {
+        iterador = pagina-2;
     }
 
-    if(pagina<=numeroPaginas-2){
-        linkFinal=pagina+2;
+    if(pagina <= numeroPaginas-2) {
+        linkFinal = pagina+2;
     }
-    else if(pagina<=numeroPaginas-1){
-        linkFinal=pagina+1;
+    else if(pagina <= numeroPaginas-1) {
+        linkFinal = pagina+1;
     }
-    else{
-        linkFinal=pagina
+    else { 
+        linkFinal = pagina;
     }
     res.render('searchpage', {
         inmuebles: inmuebles[0],

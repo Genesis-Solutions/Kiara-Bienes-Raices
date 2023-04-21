@@ -81,6 +81,15 @@
                 Navega a través de nuestro amplio catálogo de propiedades
             </p>
         </div>
+    
+    <!-- Desplegar elementos del catalogo -->
+    <% if(inmuebles.length > 0){ %>
+        <% inmuebles.forEach(inmueble=>{ %>
+            <%- include('tarjetasCatalogo/tarjetaGeneral', {data: inmueble}) %>
+        <% }); %>
+    <% } else { %>
+        <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
+    <% } %>
 
     <div class="break"></div>
     <!--Display the links to the pages-->
