@@ -8,5 +8,6 @@ const userController = require('../controllers/user.controller');
 router.get('/', homeController.root); 
 router.get('/login', userController.getLogin);
 router.post('/login', userController.login);
+router.get('/logout', userController.logOut);
 
 module.exports = router;
