@@ -29,6 +29,20 @@
                     Servicios
                 </a>
             </li>
+            <% if (isLogged == true && idRol == 1) { %>
+                <li>
+                    <a class="lg:p-4 py-2 block hover:underline" href="#">
+                        Panel
+                    </a>
+                </li>
+            <% } %>
+            <% if (isLogged == true && idRol == 2) { %>
+                <li>
+                    <a class="lg:p-4 py-2 block hover:underline" href="#">
+                        Panel
+                    </a>
+                </li>
+            <% } %>
             <li>
                 <% if (isLogged != true) { %>
                     <a href="/login">
@@ -37,20 +51,34 @@
                         </button>
                     </a>
                 <% } else { %>
-                    <div class="ml-6 relative items-center justify-center">
+                    <div class="hidden lg:block ml-6 relative">
                         <div class="object-center">
                             <button id="userButton" class="mr-6 mt-2 block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-800 focus:outline-none">
-
+                                <!-- Foto de usuario cuando se tenga -->
                             </button>
                         </div>
                         <div id="userDropdown" class="w-48 rounded-lg py-2 absolute right-0 mt-6 bg-white hidden">
                             <a class="block px-4 py-2 text-gray-800" href="">Mi perfil</a>
                             <hr class="bg-gray-800">
-                            <a class="block px-4 py-2 text-red-500" href="">Cerrar sesión</a>
+                            <a class="block px-4 py-2 text-red-500" href="/logout">Cerrar sesión</a>
                         </div>
                     </div>
                 <% }; %>
             </li>
+            <% if (isLogged == true) { %>
+                <li>
+                    <a class="lg:hidden lg:p-4 py-2 block hover:underline" href="#">
+                        Mi perfil
+                    </a>
+                </li>
+            <% } %>
+            <% if (isLogged == true) { %>
+                <li>
+                    <a class="lg:hidden lg:p-4 py-2 block hover:underline" href="/logout">
+                        Cerrar sesión
+                    </a>
+                </li>
+            <% } %>
         </ul>
     </div>
 </nav>
