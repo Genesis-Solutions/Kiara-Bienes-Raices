@@ -1,4 +1,5 @@
 const SearchPage = require('../models/searchpage.model.js');
+const bucket = require("../util/awsBucket.js");
 
 //Mostar el catalogo de inmuebles paginado
 exports.getSearchPage = async( req,res,next ) => {
@@ -25,7 +26,8 @@ exports.getSearchPage = async( req,res,next ) => {
     for (let i=0; i < inmuebles[0].length; i++) {
         const imgId = await SearchPage.idFotoPortada((inmuebles[0][i].idInmueble.toString()));
         const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
-        inmuebles[0][i].img = imgSrc[0][0].archivoFoto;
+        const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(27);
+        inmuebles[0][i].img = imgSrcFilename;
     }
     //Obtener la información necesaria de la lista
     if (pagina <= 3) {
@@ -52,4 +54,22 @@ exports.getSearchPage = async( req,res,next ) => {
         numeroPaginas: numeroPaginas
     });
     //res.status(200).json({code: 200, msg:"Ok", data:inmuebles[0]})
+}
+
+//Obtener la imagen del bucket
+exports.getImgFromBucket = ( req,res,next ) => {
+    var img = req.params.img;
+    const AWS_BUCKET = "kiarabienesraices";
+    console.log('Trying to download file: ' + img);
+    var opciones = {
+        Bucket: AWS_BUCKET,
+        Key: img,
+    };
+    bucket.getObject(opciones, function(err, data) {
+        console.log('Entering getObject');
+        res.attachment(img);
+        console.log('Before res.send(data.Body)');
+        console.log('data',data);
+        res.send(data.Body);
+    });
 }
