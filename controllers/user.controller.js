@@ -29,7 +29,7 @@ exports.login = (req, res, next) => {
         req.session.apellidosUsuario = rows[0].apellidosUsuario;
         req.session.emailUsuario = rows[0].emailUsuario;
 
-        console.log("en método login " + req.session.nombreUsuario)
+        // console.log("en método login " + req.session.nombreUsuario)
 
         // Contraseña del usuario:
 
@@ -39,7 +39,7 @@ exports.login = (req, res, next) => {
 
         bcrypt.compare(req.body.passwordUsuario, req.session.passwordUsuario).then(doMatch => {
             if (doMatch) {
-                console.log('success login');
+                // console.log('success login');
                 return res.redirect('./');
             } else {
                 return res.redirect('/login')

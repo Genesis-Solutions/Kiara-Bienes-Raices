@@ -7,8 +7,8 @@ exports.root = async (req, res, next) => {
     const apellidosUsuario = req.session.apellidosUsuario;
     if (req.session.isLoggedIn == true) {
         isLogged = true;
-        console.log("logged = true");
-        console.log(nombreUsuario);
+        // console.log("logged = true");
+        // console.log(nombreUsuario);
 
         res.render('index', {
             isLogged: req.session.isLoggedIn,
@@ -16,8 +16,8 @@ exports.root = async (req, res, next) => {
             apellidosUsuario: apellidosUsuario,
         });
     } else {
-        console.log("logged = false");
-        console.log(isLogged);
+        // console.log("logged = false");
+        // console.log(isLogged);
         res.render('index', {
             isLogged: req.session.isLoggedIn
         });
