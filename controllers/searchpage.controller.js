@@ -1,5 +1,5 @@
 const SearchPage = require('../models/searchpage.model.js');
-const bucket = require("../util/awsBucket.js");
+//const bucket = require("../util/awsBucket.js");
 
 //Mostar el catalogo de inmuebles paginado
 exports.getSearchPage = async( req,res,next ) => {
@@ -28,6 +28,7 @@ exports.getSearchPage = async( req,res,next ) => {
         const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
         const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(27);
         inmuebles[0][i].img = imgSrcFilename;
+
     }
     //Obtener la información necesaria de la lista
     if (pagina <= 3) {
@@ -46,6 +47,8 @@ exports.getSearchPage = async( req,res,next ) => {
     else { 
         linkFinal = pagina;
     }
+
+
     res.render('searchpage', {
         inmuebles: inmuebles[0],
         pagina: pagina,

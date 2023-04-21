@@ -11,10 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- CDN Tailwind -->
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script> 
 
     <!-- CLI Tailwind -->
-    <link href="/style.css" rel="stylesheet">
+    <!-- <link href="/style.css" rel="stylesheet"> -->
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
@@ -25,7 +25,6 @@
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- Heading Section -->
-
     <div class="bg-cover w-full" style="background-image: url(img/main_img.jpg)">
 
         <!-- NavBar Section -->
@@ -67,7 +66,6 @@
                 </ul>
             </div>
         </nav>
-
     </div>
 
     <!-- Properties Section -->
@@ -81,15 +79,36 @@
                 Navega a través de nuestro amplio catálogo de propiedades
             </p>
         </div>
+    <!-- </div> -->
     
     <!-- Desplegar elementos del catalogo -->
-    <% if(inmuebles.length > 0){ %>
-        <% inmuebles.forEach(inmueble=>{ %>
-            <%- include('tarjetasCatalogo/tarjetaGeneral', {data: inmueble}) %>
-        <% }); %>
-    <% } else { %>
-        <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-    <% } %>
+    
+
+        <% if(inmuebles.length > 0){ %>
+            <% inmuebles.forEach(inmueble=>{ %>
+                <!-- 1=casa; 2=depto; 3=local; 4=terreno; 5=bodega; 6=oficina; 7=otro -->
+                <% if(inmueble.idCategoria == 1 || inmueble.idCategoria == 2){ %>
+                    <%- include('tarjetasCatalogo/tarjetaCasa', {data: inmueble}) %>
+                <% } else if (inmueble.idCategoria == 3){ %>
+                    <%- include('tarjetasCatalogo/tarjetaLocal', {data: inmueble}) %>
+                <% } else if (inmueble.idCategoria == 4){ %>
+                    <%- include('tarjetasCatalogo/tarjetaTerreno', {data: inmueble}) %>
+                <% } else if (inmueble.idCategoria == 5){ %>
+                    <%- include('tarjetasCatalogo/tarjetaBodega', {data: inmueble}) %>
+                <% } else if (inmueble.idCategoria == 6){ %>
+                    <%- include('tarjetasCatalogo/tarjetaOficina', {data: inmueble}) %>
+                <% } else if (inmueble.idCategoria == 7){ %>
+                    <%- include('tarjetasCatalogo/tarjetaOtro', {data: inmueble}) %>
+                <%}%>
+
+
+            <% }); %>
+        <% } else { %>
+            <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
+        <% } %>
+
+
+
 
     <div class="break"></div>
     <!--Display the links to the pages-->
@@ -107,6 +126,7 @@
             <% } %>
             <% if(pagina < numeroPaginas) { %> <a href="catalogo?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
         </div>
+    </div>
     </div>
     <!-- Footer Section -->
 
