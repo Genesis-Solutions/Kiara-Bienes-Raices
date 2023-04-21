@@ -12,6 +12,12 @@ exports.getLogin = (req, res, next) => {
     }); 
 };
 
+exports.logOut = (req, res, next) => {
+    req.session.destroy (() => {
+        res.redirect('/login')
+    })
+}
+
 exports.login = (req, res, next) => {
     User.findOne (req.body.emailUsuario).then (async ([rows, data]) => {
 
