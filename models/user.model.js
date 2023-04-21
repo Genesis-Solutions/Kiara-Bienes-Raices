@@ -34,35 +34,24 @@ module.exports = class User {
     ]);
   }
 
-  static insertUser(
-    nombreUsuario,
-    apellidosUsuario,
-    passwordUsuario,
-    telefonoUsuario,
-    emailUsuario,
-    estadoCivilUsuario,
-    ocupacionUsuario
-  ) {
-    return db.execute(
-      "INSERT INTO usuario (nombreUsuario, apellidosUsuario,passwordUsuario ,telefonoUsuario,emailUsuario,estadoCivilUsuario, ocupacionUsuario)VALUES(?, ?, ?, ?, ?, ?, ?)",
-      [
-        nombreUsuario,
-        apellidosUsuario,
-        estadoCivilUsuario,
-        telefonoUsuario,
-        emailUsuario,
-        passwordUsuario,
-        ocupacionUsuario,
-      ]
-    );
-    }
-
-    static insertUser() {
-        return bcrypt.hash(this.passwordUsuario, 12)
-            .then((passwordCifrado) => {
-                return db.execute('INSERT INTO usuario(nombreUsuario, apellidosUsuario, emailUsuario,telefonoUsuario, passwordUsuario, estaodoCivilUsuario, ocupacionUsuario) VALUES (?, ?, ?, ?, ?,?,?)', [this.nombreUsuario, this.apellidosUsuario, this.emailUsuario, passwordCifrado, this.telefonoUsuario, this.estadoCivilUsuario, this.ocupacionUsuario]);
-            }
-        )
-    }
-
+  // Para registrar un nuevo usuario
+  static insertUser() {
+    return bcrypt.hash(this.passwordUsuario, 12).then((passwordCifrado) => {
+      return db.execute(
+        "INSERT INTO usuario(nombreUsuario, apellidosUsuario, emailUsuario,telefonoUsuario, passwordUsuario, estaodoCivilUsuario, ocupacionUsuario,activoUsuario ,idRol, idFoto) VALUES (?, ?, ?, ?, ?,?,?,?,?,?)",
+        [
+          this.nombreUsuario,
+          this.apellidosUsuario,
+          this.emailUsuario,
+          passwordCifrado,
+          this.telefonoUsuario,
+          this.estadoCivilUsuario,
+          this.ocupacionUsuario,
+          this.activoUsuario,
+          this.idRol,
+          this.idFoto,
+        ]
+      );
+    });
+  }
 };

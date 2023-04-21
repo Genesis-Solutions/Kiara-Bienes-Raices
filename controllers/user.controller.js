@@ -58,24 +58,11 @@ exports.getRegister = (req, res, next) => {
 };
 
 exports.register = (req, res, next) => {
-    // const nombreUsuario = req.body.nombreUsuario;
-    // const apellidosUsuario = req.body.apellidosUsuario;
-    // const emailUsuario = req.body.emailUsuario;
-    // const telefonoUsuario = req.body.telefonoUsuario;
-    // const passwordUsuario = req.body.passwordUsuario;
-    // const confirmPasswordUsuario = req.body.confirmPasswordUsuario;
-    // const estadoCivilUsuario = req.body.estadoCivilUsuario;
-    // const ocupacionUsuario = req.body.ocupacionUsuario;
-    // console.log(nombreUsuario);
+    const { nombreUsuario, apellidosUsuario, emailUsuario, telefonoUsuario, passwordUsuario, confirmPasswordUsuario, estadoCivilUsuario, ocupacionUsuario } = req.body;
+    const activoUsuario = 1;
+    const idRol = 2;
+    const idFoto = 1;
 
-    // Revisar si el correo ya está registrado
-    // User.findOne(req.body.emailUsuario)
-    //     .then(async ([rows, data]) => {
-    //         if (rows.length >= 1) {
-    //             errors.push("El correo electrónico ya está registrado.");
-    //             res.render("register", { errors });
-    //         }
-    //     });
         console.log(req.body.emailUsuario)
         User.findOne(req.body.emailUsuario)
         .then(async ([rows, data]) => {
@@ -87,10 +74,20 @@ exports.register = (req, res, next) => {
             console.log(error);
         });
 
+    req.session.nombreUsuario = nombreUsuario;
+    req.session.apellidosUsuario = apellidosUsuario;
+    req.session.emailUsuario = emailUsuario;
+    req.session.telefonoUsuario = telefonoUsuario;
+    req.session.passwordUsuario = passwordUsuario;
+    req.session.confirmPasswordUsuario = confirmPasswordUsuario;
+    req.session.estadoCivilUsuario = estadoCivilUsuario;
+    req.session.ocupacionUsuario = ocupacionUsuario;
+
+
 
     // Si todo fue validado correctamente, se inserta el usuario en la base de datos
     console.log(apellidosUsuario);
-    User.insertUser(req.body.nombreUsuario,req.body.apellidosUsuario, req.body.emailUsuario, req.body.telefonoUsuario, req.body.passwordUsuario, req.body.estadoCivilUsuario, req.body.ocupacionUsuario
+    User.insertUser(nombreUsuario, apellidosUsuario, emailUsuario, telefonoUsuario, passwordUsuario, estadoCivilUsuario, ocupacionUsuario, activoUsuario, idRol, idFoto
     )
         .then(() => {
             res.redirect("/");
