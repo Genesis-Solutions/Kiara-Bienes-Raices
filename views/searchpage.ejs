@@ -85,19 +85,18 @@
     <div class="break"></div>
     <!--Display the links to the pages-->
     <div class="flex justify-center">
+        <div>
             <% if(pagina > 1) { %> 
-                <div class="mr-4">
-                    <a style="margin-right: 100px;" href="catalogo?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
-                </div>
+                    <a href="catalogo?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
             <% } %>
             <% for(let i = iterador; i <= linkFinal; i++) { %>
                 <% if(i === pagina) { %>
-                    <div class="mr-4"><b> <%=i%> </b> </div>
+                    <b> <%=i%> </b>
                 <% } else { %>
-                    <div class="mr-4"><a href="catalogo?pagina=<%=i%>"> <%=i%> </a>  </div>
+                    <a href="catalogo?pagina=<%=i%>"> <%=i%> </a>
                 <% } %> 
             <% } %>
-            <% if(pagina < numeroPaginas) { %> <div class="mr-4"><a href="catalogo?pagina=<%=pagina+1%>"> Página Siguiente</a></div><% } %>
+            <% if(pagina < numeroPaginas) { %> <a href="catalogo?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
         </div>
     </div>
     <!-- Footer Section -->
