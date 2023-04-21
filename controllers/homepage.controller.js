@@ -2,5 +2,5 @@
 const path = require('path');
 
 exports.root = async (request, response, next) => {
-    response.render('register')
+    response.render('index')
 }

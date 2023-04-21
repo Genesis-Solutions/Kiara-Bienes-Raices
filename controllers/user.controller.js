@@ -58,39 +58,15 @@ exports.getRegister = (req, res, next) => {
 };
 
 exports.register = (req, res, next) => {
-    const {
-        nombreUsuario,
-        apellidosUsuario,
-        emailUsuario,
-        passwordUsuario,
-        telefonoUsuario,
-        estadoCivilUsuario,
-        ocupacionUsuario,
-    } = req.body;
-
-    // Validar los datos de entrada
-    const errors = validateInput(
-        nombreUsuario,
-        apellidosUsuario,
-        emailUsuario,
-        passwordUsuario,
-        telefonoUsuario,
-        estadoCivilUsuario,
-        ocupacionUsuario
-    );
-    if (errors.length > 0) {
-        res.render("register", { errors });
-        return;
-    }
-    // revisar que las contraseñas coincidan
-    const passwordError = validateConfirmPassword(
-        passwordUsuario,
-        confirmPasswordUsuario
-    );
-    if (passwordError.length > 0) {
-        res.render("register", { errorsPassword });
-        return;
-    }
+    const nombreUsuario = req.body.nombreUsuario;
+    const apellidosUsuario = req.body.apellidosUsuario;
+    const emailUsuario = req.body.emailUsuario;
+    const telefonoUsuario = req.body.telefonoUsuario;
+    const passwordUsuario = req.body.passwordUsuario;
+    const confirmPasswordUsuario = req.body.confirmPasswordUsuario;
+    const estadoCivilUsuario = req.body.estadoCivilUsuario;
+    const ocupacionUsuario = req.body.ocupacionUsuario;
+    console.log(nombreUsuario);
 
     // Revisar si el correo ya está registrado
     User.findOne(emailUsuario)
@@ -109,92 +85,14 @@ exports.register = (req, res, next) => {
         console.log(error);
     }
 
-    function validateConfirmPassword(passwordUsuario, confirmPasswordUsuario) {
-        const errors = [];
-        if (passwordUsuario !== confirmPasswordUsuario) {
-            errors.push("Las contraseñas no coinciden.");
-        }
-        return errors;
-    }
-
-    function validateInput(
-        nombreUsuario,
-        apellidosUsuario,
-        emailUsuario,
-        passwordUsuario,
-        telefonoUsuario,
-        estadoCivilUsuario,
-        ocupacionUsuario
-    ) {
-        const errors = [];
-
-        if (!nombreUsuario) {
-            errors.push("El nombre es requerido.");
-        } else if (!/^[a-zA-Z]+$/.test(nombreUsuario)) {
-            errors.push("El nombre debe contener solo letras.");
-        }
-
-        if (!apellidosUsuario) {
-            errors.push("Los apellidos son requeridos.");
-        } else if (!/^[a-zA-Z]+$/.test(apellidosUsuario)) {
-            errors.push("Los apellidos deben contener solo letras.");
-        }
-
-        if (!emailUsuario) {
-            errors.push("El correo electrónico es requerido.");
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            errors.push("Correo electrónico inválido.");
-        }
-        if (!passwordUsuario) {
-            errors.push("Contraseña requerida.");
-        } else if (password.length < 8) {
-            errors.push("La contraseña debe tener al menos 8 caracteres.");
-        }
-        if (!telefonoUsuario) {
-            errors.push("El teléfono es requerido.");
-        } else if (!/^[0-9]+$/.test(phone_number)) {
-            errors.push("El teléfono debe contener solo números.");
-        }
-        if (!estadoCivilUsuario) {
-            errors.push(
-                "Estado civil requerido. (Soltero, Casado,Bienes Mancomunados, Separado, Divorciado, Viudo)"
-            );
-        } else if (!/^[a-zA-Z]+$/.test(estadoCivilUsuario)) {
-            errors.push("El estado civil debe contener solo letras.");
-        }
-        if (!/^[a-zA-Z]+$/.test(ocupacionUsuario)) {
-            errors.push("La ocupación debe contener solo letras.");
-        }
-
-        // Prevent SQL injection attacks
-        const sqlRegex = /['"\\]/g;
-        if (
-            sqlRegex.test(nombreUsuario) ||
-            sqlRegex.test(apellidosUsuario) ||
-            sqlRegex.test(emailUsuario) ||
-            sqlRegex.test(passwordUsuario) ||
-            sqlRegex.test(telefonoUsuario) ||
-            sqlRegex.test(estadoCivilUsuario) ||
-            sqlRegex.test(ocupacionUsuario)
-        ) {
-            errors.push("Entrada inválida.");
-        }
-
-        return errors;
-    }
+    console.log(nombreUsuario);
 
     // Si todo fue validado correctamente, se inserta el usuario en la base de datos
-    User.insertUser(
-        nombreUsuario,
-        apellidosUsuario,
-        estadoCivilUsuario,
-        telefonoUsuario,
-        emailUsuario,
-        hashedPassword,
-        ocupacionUsuario
+    console.log(apellidosUsuario);
+    User.insertUser(nombreUsuario, apellidosUsuario, estadoCivilUsuario, telefonoUsuario, emailUsuario, hashedPassword, ocupacionUsuario
     )
         .then(() => {
-            res.redirect("/index");
+            res.redirect("/");
         })
         .catch((error) => {
             console.log(error);

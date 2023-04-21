@@ -27,113 +27,101 @@
 
 <body style="font-family: 'Montserrat', sans-serif">
 
+    <div class="grid md:grid-cols-2">
 
-    <div class="space-y-4 mx-auto px-20">
-        <div class="py-14 justify-center w-1/2 space-y-8">
-            <div class="flex space-x-5 px-20">
-                    <a href="#">
-                        <img class="w-auto" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
-                    </a>
-                <h1 class="text-5xl font-semibold py-5">Bienvenido a Kiara, ingresa tus datos para crear tu cuenta</h1>
-                
-            </div>
+        <!-- Picture Section -->
 
-            <div class="flex space-x-5 px-20">
-                <h2 class="text-base">¿Ya tienes una cuenta?</h2>
-                <a href="/login" class="text-base underline">Inicia sesión</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Formulario para el registro de un usuario -->
-
-    <div class="grid grid-cols-2">
-        <form method="POST" action="/register" class="space-y-4 mx-auto px-20">
-            <div class="flex space-x-5">
-                <div class="w-1/2">
-                    <label for="nombre">Nombre(s)</label>
-                    <input
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" required />
-                </div>
-                <div class="w-1/2">
-                    <label for="apellido">Apellidos</label>
-                    <input
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández"
-                        required />
-                </div>
-            </div>
-
-            <div class="flex space-x-5">
-
-                <div class="w-1/2">
-                    <label for="email">Correo Electrónico</label>
-                    <input
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" required />
-                </div>
-                <div class="w-1/2">
-                    <label for="apellido">Número de Teléfono</label>
-                    <input type="tel"
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        , id="telefonoUsuario" name="telefonoUsuario" placeholder="+52 472 649 9178"
-                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
-                </div>
-
-            </div>
-
-            <div class="flex space-x-5">
-
-                <div class="w-1/2">
-                    <label for="ocupacion">Ocupación</label>
-                    <input
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" />
-                </div>
-                <div class="w-1/2">
-                    <label for="estadoCivil">Estado Civil</label>
-                    <input
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Soltero" required />
-                </div>
-            </div>
-
-            <div class="flex space-x-5">
-
-                <div class="w-1/2">
-                    <label for="contrasenia">Contraseña</label>
-                    <input
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="password" id="password" name="passwordUsuario" placeholder="********">
-                </div>
-                <div class="w-1/2">
-                    <label for="confirmarContrasenia">Confirmar Contraseña</label>
-                    <input
-                        class="h-12 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="password" name="passwordUsuarioConfirmar" id="passwordUsuarioConfirmar"
-                        placeholder="********">
-                </div>
-
-            </div>
-
-            <div class="col-span-2 flex flex-col items-center justify-center">
-                <button
-                    class="px-5 py-2 w-3/4 rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 items-center" type="submit">
-                    Crear Cuenta
-                </button>
-            </div>
-
-        </form>
-        <div class="">
+        <div class="hidden md:flex">
             <img src="img/casaSignUp.jpg" alt="Imagen de fondo del registro de usuario"
-            class="w-auto mx-auto h-full bg-right ">
+                class="w-auto mx-auto h-full bg-right">
         </div>
-        
+
+        <!-- Heading Section -->
+
+        <div class="">
+            <div class="flex justify-end py-5 px-6">
+                <a href="index"></a>
+                <img class="w-1/12" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
+            </div>
+            <div class="px-16 py-2">
+                <h1 class="text-4xl font-extrabold py-5">
+                    Bienvenido a Kiara, ingresa tus datos para crear tu cuenta
+                </h1>
+                <h2 class="text-base">
+                    ¿Ya tienes una cuenta? <a href="/login" class="text-base underline">Inicia sesión</a>
+                </h2>
+            </div>
+
+            <!-- Form Section -->
+
+            <form method="POST" action="/register" class="space-y-2 mx-auto px-20">
+                
+                <div class="grid lg:grid-cols-2 gap-5 mt-3">
+                    <input type="text" hidden="true" id="test" name="test" value="test"/>
+                    <div>
+                        <label for="nombre">Nombre(s)</label>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" required />
+                    </div>
+                    <div>
+                        <label for="apellido">Apellidos</label>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández"
+                                required />
+                    </div>
+                    <div>
+                        <label for="email">Correo Electrónico</label>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" required />
+                    </div>
+                    <div>
+                        <label for="apellido">Número de Teléfono</label>
+                            <input type="tel"
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                , id="telefonoUsuario" name="telefonoUsuario" placeholder="+52 472 649 9178"
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+                    </div>
+                    <div>
+                        <label for="ocupacion">Ocupación</label>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" />
+                    </div>
+                    <div>
+                        <label for="estadoCivil">Estado Civil</label>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Soltero"
+                                required />
+                    </div>
+                    <div>
+                        <label for="contrasenia">Contraseña</label>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                type="password" id="password" name="passwordUsuario" placeholder="********">
+                    </div>
+                    <div>
+                        <label for="confirmarContrasenia">Confirmar Contraseña</label>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                type="password" name="passwordUsuarioConfirmar" id="passwordUsuarioConfirmar"
+                                placeholder="********">
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center py-14">
+                    <button
+                        class="px-5 py-3 w-3/4 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700"
+                        type="submit">
+                        Crear Cuenta
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
     </div>
-
-
-
-
-
 </body>
