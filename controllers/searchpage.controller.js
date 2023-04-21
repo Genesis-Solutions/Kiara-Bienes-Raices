@@ -34,7 +34,7 @@ exports.getSearchPage = async( req,res,next ) => {
     else{
         iterador = pagina - 2;
     }
-    
+
     if(pagina<=numeroPaginas-2){
         linkFinal=pagina+2;
     }
@@ -44,9 +44,6 @@ exports.getSearchPage = async( req,res,next ) => {
     else{
         linkFinal=pagina
     }
-    console.log("Valor del iterador: ",iterador);
-    console.log("Valor de página: ",pagina);
-    console.log("Valor del link Final: ",linkFinal);
     res.render('searchpage', {
         inmuebles: inmuebles[0],
         pagina: pagina,

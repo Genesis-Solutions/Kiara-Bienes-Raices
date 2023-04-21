@@ -75,22 +75,31 @@
     <div class="lg:px-10 lg:py-10 md:px-12 md:py-8 flex-col justify-center">
         <div>
             <h2 class="lg:py-10 md:py-8 text-4xl font-bold lg:flex lg:justify-center md:text-center">
-                Catalogo de propiedades
+                ¡Busca tu lugar perfecto!
             </h2>
+            <p class="text-4x1 font-bold">
+                Navega a través de nuestro amplio catálogo de propiedades
+            </p>
         </div>
 
     <div class="break"></div>
     <!--Display the links to the pages-->
-    <% if(pagina > 1) { %> <a href="catalogo?pagina=<%=pagina-1%>">Página Anterior</a> <% } %>
-    <% for(let i = iterador; i <= linkFinal; i++) { %>
-        <% if(i === pagina) { %>
-        <b><%=i%></b> 
-        <% } else {%>
-        <a href="catalogo?pagina=<%=i%>"><%=i%></a>  
-        <% } %> 
-    <% } %>
-    <% if(pagina < numeroPaginas) { %> <a href="catalogo?pagina=<%=pagina+1%>">Página Siguiente</a> <% } %>
-
+    <div class="flex justify-center">
+            <% if(pagina > 1) { %> 
+                <div class="mr-4">
+                    <a style="margin-right: 100px;" href="catalogo?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
+                </div>
+            <% } %>
+            <% for(let i = iterador; i <= linkFinal; i++) { %>
+                <% if(i === pagina) { %>
+                    <div class="mr-4"><b> <%=i%> </b> </div>
+                <% } else { %>
+                    <div class="mr-4"><a href="catalogo?pagina=<%=i%>"> <%=i%> </a>  </div>
+                <% } %> 
+            <% } %>
+            <% if(pagina < numeroPaginas) { %> <div class="mr-4"><a href="catalogo?pagina=<%=pagina+1%>"> Página Siguiente</a></div><% } %>
+        </div>
+    </div>
     <!-- Footer Section -->
 
     <div class="bg-gray-800 text-white p-20 justify-center">
