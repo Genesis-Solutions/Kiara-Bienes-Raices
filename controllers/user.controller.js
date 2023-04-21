@@ -58,38 +58,39 @@ exports.getRegister = (req, res, next) => {
 };
 
 exports.register = (req, res, next) => {
-    const nombreUsuario = req.body.nombreUsuario;
-    const apellidosUsuario = req.body.apellidosUsuario;
-    const emailUsuario = req.body.emailUsuario;
-    const telefonoUsuario = req.body.telefonoUsuario;
-    const passwordUsuario = req.body.passwordUsuario;
-    const confirmPasswordUsuario = req.body.confirmPasswordUsuario;
-    const estadoCivilUsuario = req.body.estadoCivilUsuario;
-    const ocupacionUsuario = req.body.ocupacionUsuario;
-    console.log(nombreUsuario);
+    // const nombreUsuario = req.body.nombreUsuario;
+    // const apellidosUsuario = req.body.apellidosUsuario;
+    // const emailUsuario = req.body.emailUsuario;
+    // const telefonoUsuario = req.body.telefonoUsuario;
+    // const passwordUsuario = req.body.passwordUsuario;
+    // const confirmPasswordUsuario = req.body.confirmPasswordUsuario;
+    // const estadoCivilUsuario = req.body.estadoCivilUsuario;
+    // const ocupacionUsuario = req.body.ocupacionUsuario;
+    // console.log(nombreUsuario);
 
     // Revisar si el correo ya está registrado
-    User.findOne(emailUsuario)
+    // User.findOne(req.body.emailUsuario)
+    //     .then(async ([rows, data]) => {
+    //         if (rows.length >= 1) {
+    //             errors.push("El correo electrónico ya está registrado.");
+    //             res.render("register", { errors });
+    //         }
+    //     });
+        console.log(req.body.emailUsuario)
+        User.findOne(req.body.emailUsuario)
         .then(async ([rows, data]) => {
             if (rows.length >= 1) {
-                errors.push("El correo electrónico ya está registrado.");
-                res.render("register", { errors });
+                console.log("El correo electrónico ya está registrado.");
             }
+        })
+        .catch((error) => {
+            console.log(error);
         });
 
-    try {
-        // Generar la sal y el hash de la contraseña
-        const salt = bcrypt.genSalt(10);
-        const hashedPassword = bcrypt.hash(passwordUsuario, salt);
-    } catch (error) {
-        console.log(error);
-    }
-
-    console.log(nombreUsuario);
 
     // Si todo fue validado correctamente, se inserta el usuario en la base de datos
     console.log(apellidosUsuario);
-    User.insertUser(nombreUsuario, apellidosUsuario, estadoCivilUsuario, telefonoUsuario, emailUsuario, hashedPassword, ocupacionUsuario
+    User.insertUser(req.body.nombreUsuario,req.body.apellidosUsuario, req.body.emailUsuario, req.body.telefonoUsuario, req.body.passwordUsuario, req.body.estadoCivilUsuario, req.body.ocupacionUsuario
     )
         .then(() => {
             res.redirect("/");

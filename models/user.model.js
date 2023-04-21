@@ -55,5 +55,14 @@ module.exports = class User {
         ocupacionUsuario,
       ]
     );
-  }
+    }
+
+    static insertUser() {
+        return bcrypt.hash(this.passwordUsuario, 12)
+            .then((passwordCifrado) => {
+                return db.execute('INSERT INTO usuario(nombreUsuario, apellidosUsuario, emailUsuario,telefonoUsuario, passwordUsuario, estaodoCivilUsuario, ocupacionUsuario) VALUES (?, ?, ?, ?, ?,?,?)', [this.nombreUsuario, this.apellidosUsuario, this.emailUsuario, passwordCifrado, this.telefonoUsuario, this.estadoCivilUsuario, this.ocupacionUsuario]);
+            }
+        )
+    }
+
 };
