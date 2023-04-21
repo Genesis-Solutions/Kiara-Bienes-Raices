@@ -4,8 +4,7 @@ const databaseLocal = {
     host: 'localhost',
     user: 'root',
     database: 'dev_kiara',
-    password: 'Kiara_b1en_esraices//q',
-
+    password: 'Azulpera3306',
 };
 
 const databaseInstancia = {
