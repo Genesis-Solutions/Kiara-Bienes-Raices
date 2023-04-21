@@ -18,7 +18,7 @@ exports.root = async (req, res, next) => {
             nombreUsuario: nombreUsuario,
             apellidosUsuario: apellidosUsuario,
             idUsuario: idUsuario,
-            idRol: idRol,
+            idRol: idRol
         });
     } else {
         // console.log("logged = false");

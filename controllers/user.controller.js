@@ -14,7 +14,7 @@ exports.getLogin = (req, res, next) => {
 
 exports.logOut = (req, res, next) => {
     req.session.destroy (() => {
-        res.redirect('/login')
+        res.redirect('/')
     })
 }
 
@@ -24,7 +24,7 @@ exports.login = (req, res, next) => {
         //Si no existe el correo, redirige a la pantalla de login
 
         if (rows.length < 1) {
-            return response.redirect('/login');
+            return res.redirect('/login');
         };
 
         // Información del usuario:
