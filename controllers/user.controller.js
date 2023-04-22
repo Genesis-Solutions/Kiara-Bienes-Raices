@@ -1,6 +1,6 @@
-const path = require("path");
-const bcrypt = require("bcryptjs");
-const User = require("../models/user.model");
+const path = require('path');
+const bcrypt = require('bcryptjs');
+const User = require('../models/user.model');
 
 // -- LOGIN -- //
 
