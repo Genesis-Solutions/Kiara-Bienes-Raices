@@ -12,14 +12,20 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
+exports.logOut = (req, res, next) => {
+  req.session.destroy (() => {
+      res.redirect('/')
+  })
+}
+
 exports.login = (req, res, next) => {
-  User.findOne(req.body.emailUsuario)
-    .then(async ([rows, data]) => {
+  User.findOne(req.body.emailUsuario).then(async ([rows, data]) => {
+
       //Si no existe el correo, redirige a la pantalla de login
 
       if (rows.length < 1) {
-        return response.redirect("/login");
-      }
+        return res.redirect("/login");
+    };
 
       // Información del usuario:
 
@@ -39,9 +45,7 @@ exports.login = (req, res, next) => {
 
       // Método de comparación para determinar autenticidad de la contraseña:
 
-      bcrypt
-        .compare(req.body.passwordUsuario, req.session.passwordUsuario)
-        .then((doMatch) => {
+      bcrypt.compare(req.body.passwordUsuario, req.session.passwordUsuario).then((doMatch) => {
           if (doMatch) {
             // console.log('success login');
             return res.redirect("./");
