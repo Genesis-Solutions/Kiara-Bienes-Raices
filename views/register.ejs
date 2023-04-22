@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <!-- CDN Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CLI Tailwind-->
+    <!-- <link href="/style.css" rel="stylesheet">  -->
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+
+    <title>Kiara Bienes Raíces</title>
+    <link rel="icon" type="image/png" href="img/kiarabr_logo.png" />
+</head>
+
+<body style="font-family: 'Montserrat', sans-serif">
+    <div class="grid md:grid-cols-2">
+        <!-- Picture Section -->
+
+        <div class="hidden md:flex">
+            <img src="img/casaSignUp.jpg" alt="Imagen de fondo del registro de usuario"
+                class="w-auto mx-auto h-full bg-right" />
+        </div>
+
+        <!-- Heading Section -->
+
+        <div class="">
+            <div class="flex justify-end py-5 px-6">
+                <a href="index"></a>
+                <img class="w-1/12" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces" />
+            </div>
+            <div class="px-16 py-2">
+                <h1 class="text-4xl font-extrabold py-5">
+                    Bienvenido a Kiara, ingresa tus datos para crear tu cuenta
+                </h1>
+                <h2 class="text-base">
+                    ¿Ya tienes una cuenta?
+                    <a href="/login" class="text-base underline">Inicia sesión</a>
+                </h2>
+            </div>
+
+            <!-- Form Section -->
+
+            <form method="POST" action="/register" class="space-y-2 mx-auto px-20">
+                <div class="grid lg:grid-cols-2 gap-5 mt-3">
+                    <input type="text" hidden="true" id="test" name="test" value="test" />
+                    <div>
+                        <label for="nombre">Nombre(s)</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" maxlength="30" required/>
+                    </div>
+                    <div>
+                        <label for="apellido">Apellidos</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández" maxlength="30"
+                            required/>
+                    </div>
+                    <div>
+                        <label for="email">Correo Electrónico</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" maxlength="60" required />
+                        <% if (typeof errorEmail !=='undefined' ) { %>
+                            <p style="color: red">
+                                <%= errorEmail %>
+                            </p>
+                            <% } %>
+                    </div>
+                    <div>
+                        <label for="apellido">Número de Teléfono</label>
+                        <input type="number"
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" required maxlength="10"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                    </div>
+                    <div>
+                        <label for="ocupacion">Ocupación</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" maxlength="30" />
+                    </div>
+                    <div>
+                        <label for="estadoCivilUsuario"> Estado Civil</label>
+                        <select class="form-select block w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                            id="estadoCivilUsuario" name="estadoCivilUsuario">
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Casado-Bienes Mancomunados">Casado-Bienes Mancomunados</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="contrasenia">Contraseña</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="password" id="password" name="passwordUsuario" placeholder="********" minlength="8"
+                            required />
+                    </div>
+                    <div>
+                        <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="password" name="passwordUsuarioConfirmar" id="passwordUsuarioConfirmar"
+                            placeholder="********" minlength="8" required />
+                        <% if (typeof errorPassword !=='undefined' ) { %>
+                            <p style="color: red">
+                                <%= errorPassword %>
+                            </p>
+                            <% } %>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center py-14">
+                    <button
+                        class="px-5 py-3 w-3/4 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700"
+                        type="submit">
+                        Crear Cuenta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
