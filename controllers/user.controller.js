@@ -79,7 +79,7 @@ exports.register = (req, res, next) => {
     ocupacionUsuario,
   } = req.body;
   const activoUsuario = 1;
-  const idRol = 1;
+  const idRol = 3;
   const idFoto = 1;
   telefonoUsuarioString = telefonoUsuario.toString();
   activoUsuarioString = activoUsuario.toString();
