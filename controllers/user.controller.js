@@ -6,55 +6,124 @@ const User = require('../models/user.model');
 
 // - Getter de la vista Login
 exports.getLogin = (req, res, next) => {
-    res.render ('login', {
-        emailUsuario: req.session.emailUsuario ? req.session.emailUsuario : '',
-        info: '',
-    }); 
+  res.render("login", {
+    emailUsuario: req.session.emailUsuario ? req.session.emailUsuario : "",
+    info: "",
+  });
 };
 
 exports.logOut = (req, res, next) => {
-    req.session.destroy (() => {
-        res.redirect('/')
-    })
+  req.session.destroy (() => {
+      res.redirect('/')
+  })
 }
 
 exports.login = (req, res, next) => {
-    User.findOne (req.body.emailUsuario).then (async ([rows, data]) => {
+  User.findOne(req.body.emailUsuario).then(async ([rows, data]) => {
 
-        //Si no existe el correo, redirige a la pantalla de login
+      //Si no existe el correo, redirige a la pantalla de login
 
-        if (rows.length < 1) {
-            return res.redirect('/login');
-        };
+      if (rows.length < 1) {
+        return res.redirect("/login");
+    };
 
-        // Información del usuario:
+      // Información del usuario:
 
-        req.session.isLoggedIn = true;
-        req.session.idUsuario = rows[0].idUsuario;
-        req.session.nombreUsuario = rows[0].nombreUsuario;
-        req.session.apellidosUsuario = rows[0].apellidosUsuario;
-        req.session.emailUsuario = rows[0].emailUsuario;
-        req.session.idUsuario = rows[0].idUsuario;
-        req.session.idRol = rows[0].idRol;
+      req.session.isLoggedIn = true;
+      req.session.idUsuario = rows[0].idUsuario;
+      req.session.nombreUsuario = rows[0].nombreUsuario;
+      req.session.apellidosUsuario = rows[0].apellidosUsuario;
+      req.session.emailUsuario = rows[0].emailUsuario;
+      req.session.idUsuario = rows[0].idUsuario;
+      req.session.idRol = rows[0].idRol;
 
-        // console.log("en método login " + req.session.nombreUsuario)
+      // console.log("en método login " + req.session.nombreUsuario)
 
-        // Contraseña del usuario:
+      // Contraseña del usuario:
 
-        req.session.passwordUsuario = rows[0].passwordUsuario;
+      req.session.passwordUsuario = rows[0].passwordUsuario;
 
-        // Método de comparación para determinar autenticidad de la contraseña:
+      // Método de comparación para determinar autenticidad de la contraseña:
 
-        bcrypt.compare(req.body.passwordUsuario, req.session.passwordUsuario).then(doMatch => {
-            if (doMatch) {
-                // console.log('success login');
-                return res.redirect('./');
-            } else {
-                return res.redirect('/login')
-            }
+      bcrypt.compare(req.body.passwordUsuario, req.session.passwordUsuario).then((doMatch) => {
+          if (doMatch) {
+            // console.log('success login');
+            return res.redirect("./");
+          } else {
+            return res.redirect("/login");
+          }
         });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-    }).catch((error) => {
-        console.log(error);
-    }); 
+// -- REGISTER -- //
+
+// - Getter de la vista Register
+exports.getRegister = (req, res, next) => {
+  res.render("register");
+};
+
+// - Método de registro
+exports.register = (req, res, next) => {
+  const {
+    nombreUsuario,
+    apellidosUsuario,
+    emailUsuario,
+    telefonoUsuario,
+    passwordUsuario,
+    passwordUsuarioConfirmar,
+    estadoCivilUsuario,
+    ocupacionUsuario,
+  } = req.body;
+  const activoUsuario = 1;
+  const idRol = 1;
+  const idFoto = 1;
+  telefonoUsuarioString = telefonoUsuario.toString();
+  activoUsuarioString = activoUsuario.toString();
+  idRolString = idRol.toString();
+  idFotoString = idFoto.toString();
+
+  // Revisar que el correo no esté registrado
+  User.findOne(emailUsuario)
+    .then(async ([rows, data]) => {
+      if (rows.length >= 1) {
+        console.log("El correo electrónico ingresado ya está registrado.");
+        const errorEmail = "El correo electrónico ingresado ya está registrado";
+        res.render("register", { errorEmail });
+      } else {
+        //Revisar que las contraseñas coincidan
+        if (passwordUsuario == passwordUsuarioConfirmar) {
+          console.log("Las contraseñas coinciden.");
+          // Si todo fue validado correctamente, se inserta el usuario en la base de datos
+          User.insertUser(
+            nombreUsuario,
+            apellidosUsuario,
+            passwordUsuario,
+            telefonoUsuarioString,
+            emailUsuario,
+            estadoCivilUsuario,
+            ocupacionUsuario,
+            activoUsuarioString,
+            idRolString,
+            idFotoString
+          )
+            .then(() => {
+              res.redirect("/");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          console.log("Las contraseñas no coinciden");
+          const errorPassword = "Las contraseñas no coinciden";
+          res.render("register", { errorPassword });
+        }
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
