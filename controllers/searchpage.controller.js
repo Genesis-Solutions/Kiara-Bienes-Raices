@@ -1,7 +1,9 @@
 const SearchPage = require('../models/searchpage.model.js');
 const bucket = require("../util/awsBucket.js");
 
-//Mostar el catalogo de inmuebles paginado
+/*
+* Mostar el catalogo de inmuebles paginado.
+*/
 exports.getSearchPage = async( req,res,next ) => {
     //Obtener la cantidad de inmuebles
     const totalInmuebles = await SearchPage.totalInmuebles();
@@ -54,7 +56,9 @@ exports.getSearchPage = async( req,res,next ) => {
     }); 
 }
 
-//Obtener la imagen del bucket
+/*
+* Obtener la imagen del bucket.
+*/
 exports.getImgFromBucket = ( req,res,next ) => {
     var img = req.query.image;
     const AWS_BUCKET = "kiarabienesraices";

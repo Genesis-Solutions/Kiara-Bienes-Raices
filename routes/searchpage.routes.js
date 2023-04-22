@@ -3,8 +3,13 @@ const router = express.Router();
 
 const searchPageController = require('../controllers/searchpage.controller.js');
 
+/*
+* Rutas del catalogo de inmuebles.
+*/
+
+//Obtener las imagenes del bucket de S3.
 router.get('/get_bucket_img',searchPageController.getImgFromBucket);
-router.get('/:pagina',searchPageController.getSearchPage);
+//Desplegar catalogo y obtener query(?pagina=) de paginación.
 router.get('/',searchPageController.getSearchPage);
 
 module.exports = router;

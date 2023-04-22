@@ -16,8 +16,7 @@ app.use(bodyParser.json());
 const rutasHome = require('./routes/homepage.routes.js');
 const rutasSearchpage = require('./routes/searchpage.routes.js');
 
-//Historia de usuario 2.7 - Ver lista de inmuebles
-app.use('/catalogo', rutasSearchpage);
+app.use('/catalogo', rutasSearchpage); //Historia de usuario 2.7 - Ver lista de inmuebles
 app.use('/', rutasHome);
 
 //app.use("/public",express.static(__dirname + '/public')); 
