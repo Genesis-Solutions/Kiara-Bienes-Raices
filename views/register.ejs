@@ -60,14 +60,15 @@
                         <label for="nombre">Nombre(s)</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" maxlength="30" required />
+                            type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" maxlength="30" required
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  />
                     </div>
                     <div>
                         <label for="apellido">Apellidos</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández" maxlength="30"
-                            required />
+                            required  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                     </div>
                     <div>
                         <label for="email">Correo Electrónico</label>
@@ -92,7 +93,8 @@
                         <label for="ocupacion">Ocupación</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" maxlength="30" />
+                            type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" maxlength="30"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  />
                     </div>
                     <div>
                         <label for="estadoCivilUsuario"> Estado Civil</label>
