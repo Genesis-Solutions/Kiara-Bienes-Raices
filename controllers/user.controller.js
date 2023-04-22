@@ -70,7 +70,7 @@ exports.register = (req, res, next) => {
     emailUsuario,
     telefonoUsuario,
     passwordUsuario,
-    confirmPasswordUsuario,
+    passwordUsuarioConfirmar,
     estadoCivilUsuario,
     ocupacionUsuario,
   } = req.body;
@@ -86,28 +86,37 @@ exports.register = (req, res, next) => {
   User.findOne(emailUsuario)
     .then(async ([rows, data]) => {
       if (rows.length >= 1) {
-        console.log("El correo electrónico ya está registrado.");
+        console.log("El correo electrónico ingresado ya está registrado.");
+        const errorEmail = "El correo electrónico ingresado ya está registrado";
+        res.render("register", { errorEmail });
       } else {
-        console.log("El correo electrónico no está registrado.");
-        // Si todo fue validado correctamente, se inserta el usuario en la base de datos
-        User.insertUser(
-          nombreUsuario,
-          apellidosUsuario,
-          passwordUsuario,
-          telefonoUsuarioString,
-          emailUsuario,
-          estadoCivilUsuario,
-          ocupacionUsuario,
-          activoUsuarioString,
-          idRolString,
-          idFotoString
-        )
-          .then(() => {
-            res.redirect("/");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        //Revisar que las contraseñas coincidan
+        if (passwordUsuario == passwordUsuarioConfirmar) {
+          console.log("Las contraseñas coinciden.");
+          // Si todo fue validado correctamente, se inserta el usuario en la base de datos
+          User.insertUser(
+            nombreUsuario,
+            apellidosUsuario,
+            passwordUsuario,
+            telefonoUsuarioString,
+            emailUsuario,
+            estadoCivilUsuario,
+            ocupacionUsuario,
+            activoUsuarioString,
+            idRolString,
+            idFotoString
+          )
+            .then(() => {
+              res.redirect("/");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          console.log("Las contraseñas no coinciden");
+          const errorPassword = "Las contraseñas no coinciden";
+          res.render("register", { errorPassword });
+        }
       }
     })
     .catch((error) => {
