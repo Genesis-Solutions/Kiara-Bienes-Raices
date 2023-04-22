@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CDN Tailwind -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <!-- CLI Tailwind -->
+    <link href="/style.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+
+    <title>Kiara Bienes Raíces</title>
+    <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
+</head>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Heading Section -->
+
+    <div class="bg-cover w-full">
+
+        <%- include("partials/navbar") %>
+
+            <div class="px-10 pb-10 lg:grid lg:grid-cols-3 md:flex flex-col">
+                <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                    Lista de usuarios
+                </button>
+                <h2 class="text-base font-medium lg:justify-center md:text-center">
+                    Lista de propiedades
+                </h2>
+                <h2 class="text-base font-medium lg:justify-center md:text-center">
+                    Mis propiedades
+                </h2>
+            </div>
+
+    </div>
+
+    
+
+    <!-- Titles -->
+
+    <div class="lg:px-10 lg:py-10 md:px-12 md:py-8 flex-col justify-center">
+        <div>
+            <h2 class="text-4xl font-bold lg:flex lg:justify-center md:text-center">
+                Busca Usuarios
+            </h2>
+            <h2 class="lg:py-10 text-base lg:flex lg:justify-center md:text-center">
+                Puedes buscar usuarios por su nombre, rol modifcar su rol, dar de alta y eliminar
+            </h2>
+        </div>
+
+        <!-- SearchBar Section -->
+
+        <div class="col-span-2 text-gray-600 flex flex-col justify-center px-12 md:pb-10">
+            <form>
+                <div class="flex justify-center mt-2 px-5 py-2 w-full bg-gray-800 rounded-full">
+                    <button id="dropdown-button" data-dropdown-toggle="dropdown"
+                        class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-medium text-center text-white bg-gray-800 rounded-l-lg hover:font-semibold hover:bg-gray-700"
+                        type="button">
+                        Tipo<i class="ml-2 fa-solid fa-chevron-down"></i>
+                    </button>
+                    <input
+                        class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        placeholder="Ingresa tu búsqueda (ej: Juriquilla)">
+                    <button id="dropdown-button" data-dropdown-toggle="dropdown"
+                        class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-gray-800 rounded-r-lg hover:font-semibold hover:bg-gray-700"
+                        type="button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- List Users -->
+
+    <div class="md:flex md:flex-col">
+        <table class="border-collapse border border-slate-400 ...">
+            <thead>
+              <tr>
+                <th class="border border-slate-300 ...">State</th>
+                <th class="border border-slate-300 ...">City</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-slate-300 ...">Indiana</td>
+                <td class="border border-slate-300 ...">Indianapolis</td>
+              </tr>
+              <tr>
+                <td class="border border-slate-300 ...">Ohio</td>
+                <td class="border border-slate-300 ...">Columbus</td>
+              </tr>
+              <tr>
+                <td class="border border-slate-300 ...">Michigan</td>
+                <td class="border border-slate-300 ...">Detroit</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+    <%- include("partials/footer") %>
+
+</body>
+
+</html>
