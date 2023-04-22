@@ -60,20 +60,20 @@
                         <label for="nombre">Nombre(s)</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" required />
+                            type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" maxlength="30" required />
                     </div>
                     <div>
                         <label for="apellido">Apellidos</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández"
+                            type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández" maxlength="30"
                             required />
                     </div>
                     <div>
                         <label for="email">Correo Electrónico</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" required />
+                            type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" maxlength="60" required />
                         <% if (typeof errorEmail !=='undefined' ) { %>
                             <p style="color: red">
                                 <%= errorEmail %>
@@ -92,7 +92,7 @@
                         <label for="ocupacion">Ocupación</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" />
+                            type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" maxlength="30" />
                     </div>
                     <div>
                         <label for="estadoCivilUsuario"> Estado Civil</label>
