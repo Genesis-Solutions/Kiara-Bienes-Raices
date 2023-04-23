@@ -1,6 +1,9 @@
 # Node.js dependencies
 node_modules/
 
+#Credenciales de AWS
+util/awsBucket.js
+
 # Generated files
 *.log
 *.pid
