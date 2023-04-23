@@ -16,8 +16,8 @@ app.set('views', 'views');
 const rutasHome = require('./routes/homepage.routes.js');
 const rutasInmueble = require('./routes/inmueble.routes.js');
 
-app.use('/', rutasHome);
 app.use('/inmueble', rutasInmueble)
+app.use('/', rutasHome);
 //app.use("/public",express.static(__dirname + '/public')); 
 //app.use(express.static(path.join(__dirname, 'public')));
 
