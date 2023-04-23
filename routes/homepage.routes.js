@@ -5,7 +5,6 @@ const homeController = require('../controllers/homepage.controller');
 const inmuebleController = require('../controllers/inmueble.controller');
 
 // Rutas
-router.get('/', homeController.root); 
-router.get('/inmueble/:idInmueble', inmuebleController.getInmueble);
+router.get('/', homeController.root);
 
 module.exports = router;
