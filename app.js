@@ -26,11 +26,10 @@ app.set('views', 'views');
 const rutasHome = require('./routes/homepage.routes.js');
 const rutasInmueble = require('./routes/inmueble.routes.js');
 
-app.use('/', rutasHome);
 app.use('/inmueble', rutasInmueble)
-
-//app.use("/public",express.static(dirname + '/public')); 
-//app.use(express.static(path.join(dirname, 'public')));
+app.use('/', rutasHome);
+//app.use("/public",express.static(__dirname + '/public')); 
+//app.use(express.static(path.join(__dirname, 'public')));
 
 // Puerto al que escucha 3000
 app.listen(3000, ()=>{
