@@ -12,20 +12,21 @@
         <div class="py-5 lg:py-10 px-8">
             <h1 class="text-4xl font-bold"><%= inmueble.nombreInmueble %></h1>
             <hr class="h-px my-3 bg-gray-800 border-0">
-
             <!-- Photo Carousel sm screens -->
-
             <div id="controls-carousel" class="relative w-full mt-4 md:hidden" data-carousel="static">
                 <!-- Carousel wrapper -->
                 <div class="relative rounded-lg h-72 overflow-hidden">
-                    <% fotos.forEach(foto=>{ %>
+                    <div class="duration-700 ease-in-out" data-carousel-item="active">
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
+                    </div>
+                    <% for (let i=1; i < fotos.length; i++) { %>
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="/inmueble/get_bucket_img?image=<%=foto%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=foto%>">
+                            <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
                         </div>
-                    <%})%>
+                    <%}%>
                     <!-- Item 5 -->
                     <div class="flex items-center justify-center duration-700 ease-in-out" data-carousel-item>
-                        <img src="img/inmueble_img5.png" class="absolute block w-full brightness-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="img5">
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full brightness-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="img5">
                         <a href="<%=inmueble.linkVideoInmueble%>" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
                             <i class="fa-solid fa-play"></i> 
                             Video
@@ -48,19 +49,18 @@
             </div>
             
             <!-- Photo Album md and lg screens -->
-
-            <div class="md:mt-5 lg:mt-10 md:grid md:grid-cols-2 md:gap-2 hidden">
-                <div class="cursor-pointer hover:scale-105 transition duration-150">
-                    <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="rounded-l-lg" alt="Imagen principal">
+            <div class="md:mt-5 lg:mt-10 md:grid md:grid-cols-2 h-96 md:gap-2 hidden">
+                <div class="cursor-pointer hover:scale-105 transition duration-150 h-96 w-full">
+                    <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="rounded-l-lg object-cover h-full w-full " alt="Imagen principal">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <% for (let i=1; i < 6; i++) { %>
-                        <div class="cursor-pointer hover:scale-105 transition duration-150">
-                            <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" alt="Imagen de inmueble 4">
+                    <% for (let i=1; i < 4; i++) { %>
+                        <div class="cursor-pointer hover:scale-105 transition duration-150 h-48">
+                            <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="object-cover h-full w-full" alt="Imagen de inmueble 4">
                         </div>
                     <%}%>
                     <div class="flex items-center justify-center cursor-pointer hover:scale-105 transition duration-150">
-                        <img src="img/inmueble_img5.png" class="-z-10 brightness-50 relative rounded-br-lg" alt="Imagen de inmueble 5">
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="-z-10 brightness-50 relative rounded-br-lg object-none h-48 w-full" alt="Imagen de inmueble 5">
                         <a href="<%=inmueble.linkVideoInmueble%>" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
                             <i class="fa-solid fa-play"></i> 
                             Video
@@ -69,9 +69,7 @@
                 </div>
             </div>
         </div>
-
         <!-- Details Section -->
-
         <div class="p-12 bg-sky-950 text-white space-y-6">
             <div class="md:hidden grid grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
