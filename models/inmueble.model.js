@@ -4,13 +4,23 @@ module.exports = class Inmueble {
 
     // Obtener la informacion de un inmueble utilizando su id
     static getInmueble(idInmueble) {
-        return db.execute('SELECT * FROM inmueble WHERE idInmueble=?', [idInmueble]);
+        return db.execute('SELECT * FROM inmueble WHERE idInmueble=?', [idInmueble]).then(([rows, data]) => {
+            console.log(rows)
+            return rows;
+        })
+        .catch((error) => {
+            console.log(error);
+            return 0;
+        });;
     }
 
-    // //Obtener el id del tramite al que el inmueble esta asignado
-    // static getIdTramite(idInmueble) {
-    //     return db.execute('SELECT idTramite FROM tramite WHERE idInmueble=?', [idInmueble]);
-    // }
+    static getIdAgente(idInmueble) {
+        return db.execute('SELECT idAgente FROM tramite WHERE idInmueble = ?', [idInmueble]);
+    }
+
+    static getInfoAgente(idAgente) { 
+        ('SELECT * FROM usuario WHERE idUsuario = ?', [idAgente]) 
+    }
 
     // //Obtener la informacion del Agente asignado a la propiedad con base al id del tramite
     // static getAgentInfo(idTramite) {
@@ -21,8 +31,6 @@ module.exports = class Inmueble {
     static getAgentInfo(idInmueble) {
         return db.execute('SELECT u.idUsuario, u.nombreUsuario, u.telefonoUsuario, u.emailUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = (SELECT idTramite FROM tramite WHERE idInmueble=?)', [idInmueble]);
     }
-
-
 
     // Obtener el id de las fotos del inmueble
     static getIdFotosInmueble(idInmueble) {
