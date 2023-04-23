@@ -18,7 +18,7 @@ app.use(session({
 
 // Le decimos a node que nuestros assets se encuentran en assets
 app.use(express.static(path.join(__dirname, 'assets')))
-//app.use(express.static(path.join(__dirname, 'styles')))
+app.use(express.static(path.join(__dirname, 'styles')))
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
