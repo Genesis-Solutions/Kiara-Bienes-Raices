@@ -1,0 +1,69 @@
+<% var tipoSueloValue = amenidades2.find(item => "tipoSuelo" in item) %>
+<% if (tipoSueloValue.tipoSuelo != null) { %>
+    <li>● Suelo <%= tipoSueloValue.tipoSuelo %></li>
+<% } %>
+
+<% var cuotaMantenimientoValue = amenidades2.find(item => "cuotaMantenimiento" in item) %>
+<% if (cuotaMantenimientoValue.cuotaMantenimiento != null) { %>
+    <li>● Cuota Mantenimiento $<%= cuotaMantenimientoValue.cuotaMantenimiento %> </li>
+<% } %>
+
+<% var cocinaValue = amenidades2.find(item => "cocina" in item) %>
+<% if (cocinaValue.cocina != null) { %>
+    <li>● Cocina</li>
+<% } %>
+
+<% var cisternaValue = amenidades2.find(item => "cisterna" in item) %>
+<% if (cisternaValue.cisterna != null) { %>
+    <li>● Cisterna</li>
+<% } %>
+
+<% var cuartoServicioValue = amenidades2.find(item => "cuartoServicio" in item) %>
+<% if (cuartoServicioValue.cuartoServicio != null) { %>
+    <li>● Cuarto de Servicio</li>
+<% } %>
+
+<% var salaTVValue = amenidades2.find(item => "salaTV" in item) %>
+<% if (salaTVValue.salaTV != null) { %>
+    <li>● Sala de TV </li>
+<% } %>
+
+<% var fechaConstruccionValue = amenidades2.find(item => "fechaConstruccion" in item) %>
+<% if (fechaConstruccionValue.fechaConstruccion != null) { %>
+    <li>● Construcción: <%= fechaConstruccionValue.fechaConstruccion %> </li>
+<% } %>
+
+<% var estudioValue = amenidades2.find(item => "estudio" in item) %>
+<% if (estudioValue.estudio != null) { %>
+    <li>● Estudio</li>
+<% } %>
+
+<% var roofGardenValue = amenidades2.find(item => "roofGarden" in item) %>
+<% if (roofGardenValue.roofGarden != null) { %>
+    <li>● Roof Garden </li>
+<% } %>
+
+<% var areaLavadoValue = amenidades2.find(item => "areaLavado" in item) %>
+<% if (areaLavadoValue.areaLavado != null) { %>
+    <li>● Area de Lavado </li>
+<% } %>
+
+<% var vigilanciaValue = amenidades2.find(item => "vigilancia" in item) %>
+<% if (vigilanciaValue.vigilancia != null) { %>
+    <li>● Vigilancia </li>
+<% } %>
+
+<% var jardinValue = amenidades2.find(item => "jardin" in item) %>
+<% if (jardinValue.jardin != null) { %>
+    <li>● Jardín </li>
+<% } %>
+
+<% var tipoGasValue = amenidades2.find(item => "tipoGas" in item) %>
+<% if (tipoGasValue.tipoGas != null) { %>
+    <li>● Gas <%= tipoGasValue.tipoGas %></li>
+<% } %>
+
+<% var bodegaValue = amenidades2.find(item => "bodega" in item) %>
+<% if (bodegaValue.bodega != null) { %>
+    <li>● Bodega </li>
+<% } %>

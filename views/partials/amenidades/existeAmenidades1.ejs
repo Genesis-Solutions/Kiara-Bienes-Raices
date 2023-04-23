@@ -1,0 +1,56 @@
+<% var m2TerrenoValue = amenidades.find(item => "m2Terreno" in item) %>
+<% if (m2TerrenoValue) { %>
+    <li>● <%= m2TerrenoValue.m2Terreno %>m2 </li>
+<% } %>
+<% var m2ConstruidosValue = amenidades.find(item => "m2Construidos" in item) %>
+<% if (m2ConstruidosValue) { %>
+    <li>● <%= m2ConstruidosValue.m2Construidos %>m2 </li>
+<% } %>
+<% var medidasFondoValue = amenidades.find(item => "medidasFondo" in item) %>
+<% if (medidasFondoValue) { %>
+    <li>● Medida de Fondo <%= medidasFondoValue.medidasFondo %></li>
+<% } %>
+<% var nivelesImuebleValue = amenidades.find(item => "nivelesImueble" in item) %>
+<% if (nivelesImuebleValue) { %>
+    <li>● <%= nivelesImuebleValue.nivelesImueble %> pisos</li>
+<% } %>
+<% var recamarasValue = amenidades.find(item => "recamaras" in item) %>
+<% if (recamarasValue.recamaras != null) { %>
+    <li>● <%= recamarasValue.recamaras %> </li>
+<% } %>
+<% var cuartosPrivadosValue = amenidades.find(item => "cuartosPrivados" in item) %>
+<% if (cuartosPrivadosValue.cuartosPrivados != null) { %>
+    <li>● <%= cuartosPrivadosValue.cuartosPrivados %> </li>
+<% } %>
+<% var baniosValue = amenidades.find(item => "banios" in item) %>
+<% if (baniosValue.banios != null) { %>
+    <li>● <%= baniosValue.banios %> </li>
+<% } %>
+<% var mediosBaniosValue = amenidades.find(item => "mediosBanios" in item) %>
+<% if (mediosBaniosValue.mediosBanios != null) { %>
+    <li>● <%= mediosBaniosValue.mediosBanios %> </li>
+<% } %>
+<% var estacionamientosValue = amenidades.find(item => "estacionamientos" in item) %>
+<% if (estacionamientosValue.estacionamientos != null) { %>
+    <li>● <%= estacionamientosValue.estacionamientos %> </li>
+<% } %>
+<% var usoSueloValue = amenidades.find(item => "usoSuelo" in item) %>
+<% if (usoSueloValue.usoSuelo != null) { %>
+    <li>● <%= usoSueloValue.usoSuelo %> </li>
+<% } %>
+<% var enPrivadaValue = amenidades.find(item => "enPrivada" in item) %>
+<% if (enPrivadaValue.enPrivada != null) { %>
+    <li>● En Privada </li>
+<% } %>
+<% var servicioAguaValue = amenidades.find(item => "servicioAgua" in item) %>
+<% if (servicioAguaValue.servicioAgua != null) { %>
+    <li>● Servicio de Agua </li>
+<% } %>
+<% var servicioLuzValue = amenidades.find(item => "servicioLuz" in item) %>
+<% if (servicioLuzValue.servicioLuz != null) { %>
+    <li>● Servicio de Luz </li>
+<% } %>
+<% var servicioDrenajeValue = amenidades.find(item => "servicioDrenaje" in item) %>
+<% if (servicioDrenajeValue.servicioDrenaje != null) { %>
+    <li>● Servicio de Drenaje </li>
+<% } %>

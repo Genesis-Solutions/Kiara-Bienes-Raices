@@ -1,0 +1,21 @@
+<% var m2Construccion = amenidades.find(item => 'm2Construccion' in item)?.m2Construccion; %>
+<% var banios = amenidades.find(item => 'banios' in item)?.banios; %>
+<% var pisos = amenidades.find(item => 'pisos' in item)?.pisos; %>
+<% var estacionamientos = amenidades.find(item => 'estacionamientos' in item)?.estacionamientos; %>
+
+<div class="px-5 py-3 text-center">
+    <div class="grid grid-cols-2 gap-2 py-2 text-sm">
+        <div>
+            <i class="fa-solid fa-house"></i> <%= m2Construidos %> m2
+        </div>
+        <div>
+            <i class="fa-solid fa-layer-group"></i> <%= pisos %> pisos
+        </div>
+        <div>
+            <i class="fa-solid fa-bath"></i> <%= baños %> baños
+        </div>
+        <div>
+            <i class="fa-solid fa-car"></i> <%= estacionamientos %> estac.
+        </div>
+    </div>
+</div>

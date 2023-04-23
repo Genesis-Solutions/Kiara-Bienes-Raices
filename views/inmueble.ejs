@@ -36,7 +36,7 @@
     <!-- Heading Section -->
 
     <div class="py-5 lg:py-10 px-8">
-        <h1 class="text-4xl font-bold">Casa en Zibatá</h1>
+        <h1 class="text-4xl font-bold"><%= nombreInmueble %></h1>
         <hr class="h-px my-3 bg-gray-800 border-0">
 
         <!-- Photo Carousel sm screens -->
@@ -117,32 +117,59 @@
     <div class="p-12 bg-sky-950 text-white space-y-6">
         <div class="md:hidden grid grid-cols-2">
             <div class="flex flex-col justify-center space-y-2">
-                <h3 class="text-lg font-semibold text-center">$ 2,500,000</h3>
+                <% if ((precioVenta && precioRenta) != null) { %>
+                    <h3 class="text-lg font-semibold text-center">Renta: $<%= precioRenta %>/mes</h3>
+                    <h3 class="text-lg font-semibold text-center">Venta: $<%= precioVenta %></h3>
+                <% } else if(precioRenta != null) { %>
+                    <h3 class="text-lg font-semibold text-center">$<%= precioRenta %>/mes</h3>
+                <% } else if(precioVenta != null) { %>  
+                    <h3 class="text-lg font-semibold text-center">$<%= precioVenta %></h3>
+                <% } %>
                 <div class="flex text-black text-center justify-evenly">
                     <div class="px-5 py-2 rounded-full bg-white">
-                        <p>Venta</p>
+                        <% if(idTipoMovimiento == 1){ %>
+                            <p>Venta</p>
+                        <% } else if(idTipoMovimiento == 2) { %>
+                            <p>Renta</p>
+                        <% } else if(idTipoMovimiento == 3) { %>
+                            <p>Venta/Renta</p>
+                        <% } %>
                     </div>
                     <div class="px-5 py-2 rounded-full bg-white">
-                        <p>Casa</p>
+                        <% if(idCategoria == 1){ %>
+                            <p>Casa</p>
+                        <% } else if(idCategoria == 2) { %>
+                            <p>Departamento</p>
+                        <% } else if(idCategoria == 3) { %>
+                            <p>Local</p>
+                        <% } else if(idCategoria == 4) { %>
+                            <p>Terreno</p>
+                        <% } else if(idCategoria == 5) { %>
+                            <p>Bodega</p>
+                        <% } else if(idCategoria == 6) { %>
+                            <p>Oficina</p>
+                        <% } else if(idCategoria == 7) { %>
+                            <p>Otro</p>
+                        <% } %>
                     </div>
                 </div>
             </div>
-            <div class="px-5 py-3">
-                <div class="grid grid-cols-2 gap-2 py-2 text-sm">
-                    <div>
-                        <i class="fa-solid fa-house"></i> 450 m2
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-bed"></i> 4 rec.
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-bath"></i> 5 baños
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i> 4 estac.
-                    </div>
-                </div>
-            </div>
+            <!-- Checa dependiendo de la Categoria, que amenidades son las principales -->
+            <% if (idCategoria == 1) { %>
+                <%- include("partials/amenidades/casa") %>
+            <% } else if (idCategoria == 2) { %>
+                <%- include("partials/amenidades/departamento") %>
+            <% } else if (idCategoria == 3) { %>
+                <%- include("partials/amenidades/local") %>
+            <% } else if (idCategoria == 4) { %>
+                <%- include("partials/amenidades/terreno") %>
+            <% } else if (idCategoria == 5) { %>
+                <%- include("partials/amenidades/bodega") %>
+            <% } else if (idCategoria == 6) { %>
+                <%- include("partials/amenidades/oficina") %>
+            <% } else if (idCategoria == 7) { %>
+                <%- include("partials/amenidades/otro") %>
+            <% } %>
         </div>
         <div class="md:hidden space-y-2">
             <h2 class="text-2xl font-bold">
@@ -151,21 +178,17 @@
             <div class="grid grid-cols-3 space-x-4">
                 <div>
                     <ul class="space-y-2">
-                        <li>● Cocina</li>
-                        <li>● Cocina</li>
-                        <li>● Cocina</li>
+                        <%- include("partials/amenidades/existeAmenidades1.ejs") %>
                     </ul>
                 </div>
                 <div>
                     <ul class="space-y-2">
-                        <li>● 2 pisos</li>
-                        <li>● 2 pisos</li>
+                        <%- include("partials/amenidades/existeAmenidades2.ejs") %>
                     </ul>
                 </div>
                 <div>
                     <ul class="space-y-2">
-                        <li>● En privada</li>
-                        <li>● En privada</li>
+                        <%- include("partials/amenidades/existeAmenidades3.ejs") %>
                     </ul>
                 </div>
             </div>
@@ -173,31 +196,58 @@
         <div class="hidden md:grid md:grid-cols-2">
             <div class="flex flex-col justify-center space-y-2">
                 <div class="flex flex-col justify-center space-y-2">
-                    <h3 class="text-2xl font-bold text-center">$ 2,600,000</h3>
+                    <% if ((precioVenta && precioRenta) != null) { %>
+                        <h3 class="text-lg font-semibold text-center">Renta: $<%= precioRenta %>/mes</h3>
+                        <h3 class="text-lg font-semibold text-center">Venta: $<%= precioVenta %></h3>
+                    <% } else if(precioRenta != null) { %>
+                        <h3 class="text-lg font-semibold text-center">$<%= precioRenta %>/mes</h3>
+                    <% } else if(precioVenta != null) { %>  
+                        <h3 class="text-lg font-semibold text-center">$<%= precioVenta %></h3>
+                    <% } %>
                     <div class="flex text-black text-center md:justify-evenly lg:space-x-12 lg:justify-center">
                         <div class="px-5 py-2 md:w-32 lg:w-40 rounded-full bg-white">
-                            <p>Venta</p>
+                            <% if(idTipoMovimiento == 1){ %>
+                                <p>Venta</p>
+                            <% } else if(idTipoMovimiento == 2) { %>
+                                <p>Renta</p>
+                            <% } else if(idTipoMovimiento == 3) { %>
+                                <p>Venta/Renta</p>
+                            <% } %>
                         </div>
                         <div class="px-5 py-2 md:w-32 lg:w-40 rounded-full bg-white">
-                            <p>Casa</p>
+                            <% if(idCategoria == 1){ %>
+                                <p>Casa</p>
+                            <% } else if(idCategoria == 2) { %>
+                                <p>Departamento</p>
+                            <% } else if(idCategoria == 3) { %>
+                                <p>Local</p>
+                            <% } else if(idCategoria == 4) { %>
+                                <p>Terreno</p>
+                            <% } else if(idCategoria == 5) { %>
+                                <p>Bodega</p>
+                            <% } else if(idCategoria == 6) { %>
+                                <p>Oficina</p>
+                            <% } else if(idCategoria == 7) { %>
+                                <p>Otro</p>
+                            <% } %>
                         </div>
                     </div>
-                    <div class="px-5 py-3 text-center">
-                        <div class="grid grid-cols-2 gap-2 py-2 text-sm">
-                            <div>
-                                <i class="fa-solid fa-house"></i> 450 m2
-                            </div>
-                            <div>
-                                <i class="fa-solid fa-bed"></i> 4 rec.
-                            </div>
-                            <div>
-                                <i class="fa-solid fa-bath"></i> 5 baños
-                            </div>
-                            <div>
-                                <i class="fa-solid fa-car"></i> 4 estac.
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Checa dependiendo de la Categoria, que amenidades son las principales -->
+                    <% if (idCategoria == 1) { %>
+                        <%- include("partials/amenidades/casa") %>
+                    <% } else if (idCategoria == 2) { %>
+                        <%- include("partials/amenidades/departamento") %>
+                    <% } else if (idCategoria == 3) { %>
+                        <%- include("partials/amenidades/local") %>
+                    <% } else if (idCategoria == 4) { %>
+                        <%- include("partials/amenidades/terreno") %>
+                    <% } else if (idCategoria == 5) { %>
+                        <%- include("partials/amenidades/bodega") %>
+                    <% } else if (idCategoria == 6) { %>
+                        <%- include("partials/amenidades/oficina") %>
+                    <% } else if (idCategoria == 7) { %>
+                        <%- include("partials/amenidades/otro") %>
+                    <% } %>
                 </div>
             </div>
             <div class="space-y-2">
@@ -207,21 +257,17 @@
                 <div class="grid grid-cols-3 space-x-4">
                     <div>
                         <ul class="space-y-2">
-                            <li>● Cocina</li>
-                            <li>● Cocina</li>
-                            <li>● Cocina</li>
+                            <%- include("partials/amenidades/existeAmenidades1.ejs") %>
                         </ul>
                     </div>
                     <div>
                         <ul class="space-y-2">
-                            <li>● 2 pisos</li>
-                            <li>● 2 pisos</li>
+                            <%- include("partials/amenidades/existeAmenidades2.ejs") %>
                         </ul>
                     </div>
                     <div>
                         <ul class="space-y-2">
-                            <li>● En privada</li>
-                            <li>● En privada</li>
+                            <%- include("partials/amenidades/existeAmenidades3.ejs") %>
                         </ul>
                     </div>
                 </div>
@@ -232,7 +278,7 @@
                 Sobre esta propiedad
             </h2>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, expedita explicabo ex sunt modi assumenda atque, facilis ea maiores ut, optio et! Quas sapiente totam, molestias incidunt consequatur iusto nobis dicta velit harum at distinctio nisi provident natus vitae? Molestias?
+                <%= descripcion %>
             </p>
         </div>
     </div>
