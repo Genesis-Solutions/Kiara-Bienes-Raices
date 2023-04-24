@@ -2,7 +2,7 @@
 
 <nav class="flex flex-wrap px-8 py-6 items-center justify-between w-full text-lg">
     <a href="#">
-        <img class="h-16 w-16" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
+        <img class="h-16 w-16" src="/img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
     </a>
     <svg id="menu-button" class="h-6 w-6 cursor-pointer lg:hidden" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -84,6 +84,13 @@
 </nav>
 
 <script>
+    const button = document.querySelector('#menu-button');
+    const menu = document.querySelector('#menu');
+
+    button.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+    });
+    
     const userButton = document.getElementById('userButton')
     const userDropdown = document.getElementById('userDropdown')
 

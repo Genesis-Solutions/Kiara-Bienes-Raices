@@ -1,33 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CDN Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<%- include('partials/head') %>
 
-    <!-- CLI Tailwind -->
-    <!-- <link href="/style.css" rel="stylesheet"> -->
-
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
-
-    <title>Kiara Bienes Raíces</title>
-    <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
-</head>
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- Heading Section -->
 
     <div class="bg-cover w-full" style="background-image: url(img/main_img.jpg)">
-        <%- include("partials/navbar") -%>
+
+        <%- include('partials/navbar') %>
 
         <div class="px-10 pb-10 lg:grid lg:grid-cols-3 md:flex flex-col">
 
@@ -76,93 +55,102 @@
         <!-- Cards Section -->
 
         <div class="lg:py-12 md:py-8 lg:flex lg:flex-row lg:justify-center lg:space-x-8 md:grid md:grid-cols-2 md:gap-12">
-            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
-                <img src="img/casa1_main.png" class="w-full h-44 rounded-t-lg">
-                <div class="px-5 py-3">
-                    <h3 class="text-lg font-semibold">Casa 1</h3>
-                    <div class="grid grid-cols-2 gap-2 py-2">
-                        <div>
-                            <i class="fa-solid fa-house"></i> 450 m2
+            <a href="inmueble/1">
+                <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                    <img src="img/casa1_main.png" class="w-full h-44 rounded-t-lg">
+                    <div class="px-5 py-3">
+                        <h3 class="text-lg font-semibold"> Casa 1 
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2 py-2">
+                            <div>
+                                <i class="fa-solid fa-house"></i> 450 m2
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bed"></i> 4 rec.
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bath"></i> 5 baños
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-car"></i> 4 estac.
+                            </div>
                         </div>
-                        <div>
-                            <i class="fa-solid fa-bed"></i> 4 rec.
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-bath"></i> 5 baños
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-car"></i> 4 estac.
-                        </div>
+                        <h3 class="text-lg font-medium">$ 5,500,000 MXN</h3>
                     </div>
-                    <h3 class="text-lg font-medium">$ 5,500,000 MXN</h3>
                 </div>
-            </div>
+            </a>
 
-            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
-                <img src="img/casa2_main.png" class="w-full h-44 rounded-t-lg">
-                <div class="px-5 py-3">
-                    <h3 class="text-lg font-semibold">Casa 2</h3>
-                    <div class="grid grid-cols-2 gap-2 py-2">
-                        <div>
-                            <i class="fa-solid fa-house"></i> 320 m2
+            <a href="/inmueble">
+                <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                    <img src="img/casa2_main.png" class="w-full h-44 rounded-t-lg">
+                    <div class="px-5 py-3">
+                        <h3 class="text-lg font-semibold">Casa 2</h3>
+                        <div class="grid grid-cols-2 gap-2 py-2">
+                            <div>
+                                <i class="fa-solid fa-house"></i> 320 m2
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bed"></i> 3 rec.
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bath"></i> 3 baños
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-car"></i> 2 estac.
+                            </div>
                         </div>
-                        <div>
-                            <i class="fa-solid fa-bed"></i> 3 rec.
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-bath"></i> 3 baños
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-car"></i> 2 estac.
-                        </div>
+                        <h3 class="text-lg font-medium">$ 1,900,000 MXN</h3>
                     </div>
-                    <h3 class="text-lg font-medium">$ 1,900,000 MXN</h3>
                 </div>
-            </div>
+            </a>
 
-            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
-                <img src="img/casa3_main.png" class="w-full h-44 rounded-t-lg">
-                <div class="px-5 py-3">
-                    <h3 class="text-lg font-semibold">Casa 3</h3>
-                    <div class="grid grid-cols-2 gap-2 py-2">
-                        <div>
-                            <i class="fa-solid fa-house"></i> 290 m2
+            <a href="/inmueble">
+                <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                    <img src="img/casa3_main.png" class="w-full h-44 rounded-t-lg">
+                    <div class="px-5 py-3">
+                        <h3 class="text-lg font-semibold">Casa 3</h3>
+                        <div class="grid grid-cols-2 gap-2 py-2">
+                            <div>
+                                <i class="fa-solid fa-house"></i> 290 m2
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bed"></i> 2 rec.
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bath"></i> 2 baños
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-car"></i> 1 estac.
+                            </div>
                         </div>
-                        <div>
-                            <i class="fa-solid fa-bed"></i> 2 rec.
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-bath"></i> 2 baños
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-car"></i> 1 estac.
-                        </div>
+                        <h3 class="text-lg font-medium">$ 2,700,000 MXN</h3>
                     </div>
-                    <h3 class="text-lg font-medium">$ 2,700,000 MXN</h3>
                 </div>
-            </div>
+            </a>
 
-            <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
-                <img src="img/casa4_main.png" class="w-full h-44 rounded-t-lg">
-                <div class="px-5 py-3">
-                    <h3 class="text-lg font-semibold">Casa 4</h3>
-                    <div class="grid grid-cols-2 gap-2 py-2">
-                        <div>
-                            <i class="fa-solid fa-house"></i> 400 m2
+            <a href="/inmueble">
+                <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
+                    <img src="img/casa4_main.png" class="w-full h-44 rounded-t-lg">
+                    <div class="px-5 py-3">
+                        <h3 class="text-lg font-semibold">Casa 4</h3>
+                        <div class="grid grid-cols-2 gap-2 py-2">
+                            <div>
+                                <i class="fa-solid fa-house"></i> 400 m2
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bed"></i> 4 rec.
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bath"></i> 4 baños
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-car"></i> 3 estac.
+                            </div>
                         </div>
-                        <div>
-                            <i class="fa-solid fa-bed"></i> 4 rec.
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-bath"></i> 4 baños
-                        </div>
-                        <div>
-                            <i class="fa-solid fa-car"></i> 3 estac.
-                        </div>
+                        <h3 class="text-lg font-medium">$ 2,500,000 MXN</h3>
                     </div>
-                    <h3 class="text-lg font-medium">$ 2,500,000 MXN</h3>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -264,18 +252,7 @@
         </div>
     </div>
 
-    <%- include("partials/footer") -%>
-
-    <script>
-
-        const button = document.querySelector('#menu-button');
-        const menu = document.querySelector('#menu');
-
-        button.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-    </script>
+    <%- include("partials/footer") %>
 
 </body>
 </html>
