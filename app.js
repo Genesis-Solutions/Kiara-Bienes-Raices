@@ -29,10 +29,10 @@ app.set('views', 'views');
 
 const rutasHome = require('./routes/homepage.routes.js');
 const rutasInmueble = require('./routes/inmueble.routes.js');
-const rutasDashboard = require('./routes/dashboard.routes.js')
+// const rutasDashboard = require('./routes/dashboard.routes.js');
 
 app.use('/', rutasHome);
-app.use('/dashboard', rutasDashboard)
+// app.use('/dashboard', rutasDashboard);
 
 //app.use("/public",express.static(dirname + '/public')); 
 //app.use(express.static(path.join(dirname, 'public')));

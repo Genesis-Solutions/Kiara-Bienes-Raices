@@ -7,7 +7,7 @@ const Dashboard = require('../models/dashboard.model');
 exports.getDashboard = (req, res, next) => {
     //Revisar que tenga el rol de administrador
     if (req.session.rol !== 1) {
-        return res.status(40.).send("No tiene autorizado acceder a esta página")
+        return res.status(403).send("No tiene autorizado acceder a esta página")
     }
     // Renderizar la vista de registro
     res.render("listUsers");
