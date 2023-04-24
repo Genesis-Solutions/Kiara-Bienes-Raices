@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CDN Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CLI Tailwind -->
+    <!-- <link href="/style.css" rel="stylesheet"> -->
+
+    <!-- CDN Flowbite -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+
+    <title>Kiara Bienes Raíces</title>
+    <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
+</head>
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- NavBar Section -->
+
+    <div class="bg-white">
+        <%- include("partials/navbar") %>
+    </div>
+
+    <!-- Heading Section -->
+
+    <div class="py-5 lg:py-10 px-8">
+        <h1 class="text-4xl font-bold">Casa</h1>
+        <hr class="h-px my-3 bg-gray-800 border-0">
+
+        <!-- Photo Carousel sm screens -->
+
+        <div id="controls-carousel" class="relative w-full mt-4 md:hidden" data-carousel="static">
+            <!-- Carousel wrapper -->
+            <div class="relative rounded-lg h-72 overflow-hidden">
+                 <!-- Item 1 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="img/inmueble_img1.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                </div>
+                <!-- Item 2 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+                    <img src="img/inmueble_img2.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                </div>
+                <!-- Item 3 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="img/inmueble_img3.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                </div>
+                <!-- Item 4 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="img/inmueble_img4.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                </div>
+                <!-- Item 5 -->
+                <div class="flex items-center justify-center duration-700 ease-in-out" data-carousel-item>
+                    <img src="img/inmueble_img5.png" class="absolute block w-full brightness-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
+                        <i class="fa-solid fa-play"></i> 
+                        Video
+                    </a>
+                </div>
+            </div>
+            <!-- Slider controls -->
+            <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <span class="sr-only">Previous</span>
+                </span>
+            </button>
+            <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    <span class="sr-only">Next</span>
+                </span>
+            </button>
+        </div>
+        
+        <!-- Photo Album md and lg screens -->
+
+        <div class="md:mt-5 lg:mt-10 md:grid md:grid-cols-2 md:gap-2 hidden">
+            <div class="cursor-pointer hover:scale-105 transition duration-150">
+                <img src="img/inmueble_img1.png" class="rounded-l-lg" alt="Imagen principal">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div class="cursor-pointer hover:scale-105 transition duration-150">
+                    <img src="img/inmueble_img2.png" alt="Imagen de inmueble 2">
+                </div>
+                <div class="cursor-pointer hover:scale-105 transition duration-150">
+                    <img src="img/inmueble_img3.png" class="rounded-tr-lg" alt="Imagen de inmueble 3">
+                </div>
+                <div class="cursor-pointer hover:scale-105 transition duration-150">
+                    <img src="img/inmueble_img4.png" alt="Imagen de inmueble 4">
+                </div>
+                <div class="flex items-center justify-center cursor-pointer hover:scale-105 transition duration-150">
+                    <img src="img/inmueble_img5.png" class="-z-10 brightness-50 relative rounded-br-lg" alt="Imagen de inmueble 5">
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
+                        <i class="fa-solid fa-play"></i> 
+                        Video
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Details Section -->
+
+    <div class="p-12 bg-sky-950 text-white space-y-6">
+        <div class="md:hidden grid grid-cols-2">
+            <div class="flex flex-col justify-center space-y-2">
+                <h3 class="text-lg font-semibold text-center">$ 2,500,000</h3>
+                <div class="flex text-black text-center justify-evenly">
+                    <div class="px-5 py-2 rounded-full bg-white">
+                        <p>Venta</p>
+                    </div>
+                    <div class="px-5 py-2 rounded-full bg-white">
+                        <p>Casa</p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-5 py-3">
+                <div class="grid grid-cols-2 gap-2 py-2 text-sm">
+                    <div>
+                        <i class="fa-solid fa-house"></i> 450 m2
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-bed"></i> 4 rec.
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-bath"></i> 5 baños
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-car"></i> 4 estac.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden space-y-2">
+            <h2 class="text-2xl font-bold">
+                Lo que ofrece
+            </h2>
+            <div class="grid grid-cols-3 space-x-4">
+                <div>
+                    <ul class="space-y-2">
+                        <li>● Cocina</li>
+                        <li>● Cocina</li>
+                        <li>● Cocina</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="space-y-2">
+                        <li>● 2 pisos</li>
+                        <li>● 2 pisos</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="space-y-2">
+                        <li>● En privada</li>
+                        <li>● En privada</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:grid md:grid-cols-2">
+            <div class="flex flex-col justify-center space-y-2">
+                <div class="flex flex-col justify-center space-y-2">
+                    <h3 class="text-2xl font-bold text-center">$ 2,500,000</h3>
+                    <div class="flex text-black text-center md:justify-evenly lg:space-x-12 lg:justify-center">
+                        <div class="px-5 py-2 md:w-32 lg:w-40 rounded-full bg-white">
+                            <p>Venta</p>
+                        </div>
+                        <div class="px-5 py-2 md:w-32 lg:w-40 rounded-full bg-white">
+                            <p>Casa</p>
+                        </div>
+                    </div>
+                    <div class="px-5 py-3 text-center">
+                        <div class="grid grid-cols-2 gap-2 py-2 text-sm">
+                            <div>
+                                <i class="fa-solid fa-house"></i> 450 m2
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bed"></i> 4 rec.
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-bath"></i> 5 baños
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-car"></i> 4 estac.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-2xl font-bold">
+                    Lo que ofrece
+                </h2>
+                <div class="grid grid-cols-3 space-x-4">
+                    <div>
+                        <ul class="space-y-2">
+                            <li>● Cocina</li>
+                            <li>● Cocina</li>
+                            <li>● Cocina</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="space-y-2">
+                            <li>● 2 pisos</li>
+                            <li>● 2 pisos</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="space-y-2">
+                            <li>● En privada</li>
+                            <li>● En privada</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="space-y-2">
+            <h2 class="text-2xl font-bold">
+                Sobre esta propiedad
+            </h2>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, expedita explicabo ex sunt modi assumenda atque, facilis ea maiores ut, optio et! Quas sapiente totam, molestias incidunt consequatur iusto nobis dicta velit harum at distinctio nisi provident natus vitae? Molestias?
+            </p>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+
+    <div class="p-12 space-y-2">
+        <h2 class="text-2xl font-bold">
+            Conoce los alrededores del inmueble
+        </h2>
+        <div class="flex flex-col md:grid md:grid-cols-2 space-y-3 md:space-x-8">
+            <div class="order-last md:order-first pt-3">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3734.3812706725193!2d-100.41015993714005!3d20.613310384832868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35ae83751a45d%3A0x4fa6ee69f6b64f3a!2sTecnol%C3%B3gico%20de%20Monterrey!5e0!3m2!1ses-419!2smx!4v1681958955130!5m2!1ses-419!2smx" class="w-full rounded-lg h-80 md:h-96" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum blanditiis eveniet reiciendis nihil nemo, odit nulla amet distinctio numquam, libero doloribus. Tempore quasi doloribus corrupti nesciunt ea, eos perferendis in sunt provident hic distinctio rem beatae dicta porro accusantium eius!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+
+    <%- include("partials/footer") %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
+</body>
+</html>
