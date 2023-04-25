@@ -13,10 +13,10 @@
         rel="stylesheet">
 
     <!-- CDN Tailwind -->
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- CLI Tailwind -->
-    <link href="/style.css" rel="stylesheet">
+    <!-- <link href="/style.css" rel="stylesheet"> -->
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
@@ -154,7 +154,7 @@
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 },
                 processing : true,
-                lengthMenu : [5, 1, 2, 3, 5, 10],
+                lengthMenu : [5, 5, 10, 20, 25, 30],
                 order      : [[0,'asc']],
                 deferRender: true,
                 ajax       : '/dashboard/lista/usuarios',
@@ -183,7 +183,7 @@
                     {
                         data: null,
                         render: function(data, type, row) {
-                            return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btnEditarRol">Edit</button>'
+                            return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btnEditarRol">Modificar Rol</button>'
                         }
                     },
                     {
