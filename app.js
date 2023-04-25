@@ -7,8 +7,6 @@ app.use(express.json());
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-
-const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cookieParser());
