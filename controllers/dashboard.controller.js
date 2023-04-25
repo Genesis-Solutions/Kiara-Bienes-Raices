@@ -1,6 +1,7 @@
 const path = require('path');
 const User = require('../models/dashboard.model');
 const Dashboard = require('../models/dashboard.model');
+const { info } = require('console');
 
 // -- LIST USERS -- //
 exports.getDashboard = (req, res, next) => {

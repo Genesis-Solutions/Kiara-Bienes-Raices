@@ -26,176 +26,67 @@
 </head>
 
 <body style="font-family: 'Montserrat', sans-serif">
+
     <!-- Heading Section -->
-    <div class="bg-cover w-full">
+    <div class="bg-white">
         <%- include("partials/navbar") %>
-            <div class="px-10 pb-10 lg:grid lg:grid-cols-3 md:flex flex-col">
-                <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
-                    Lista de usuarios
-                </button>
-                <h2 class="text-base font-medium lg:justify-center md:text-center">
-                    Lista de propiedades
-                </h2>
-                <h2 class="text-base font-medium lg:justify-center md:text-center">
-                    Mis propiedades
-                </h2>
-            </div>
     </div>
+
+    <div class="px-10 pb-10 mt-20 space-x-8 grid grid-cols-3 align-middle">
+        <div class="text-center">
+            <button class="text-center  px-5 py-2 bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                Lista de usuarios
+            </button>
+        </div>
+        <div class="text-center">
+            <button class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">
+                Lista de Propiedades
+            </button>
+        </div>
+        <div class="text-center">
+            <button class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">
+                Mis Propiedades
+            </button>
+        </div>
+    </div>
+    
+    <div class="px-10 pb-10 mt-20 space-x-8 grid grid-cols-3 align-middle hidden">
+        <div class="text-center">
+            <button class="text-center  px-5 py-2 bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                Lista de Propiedades
+            </button>
+        </div>
+        <div class="text-center">
+            <button class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">
+                Mis Propiedades
+            </button>
+        </div>
+    </div>
+    <hr class="h-px mx-10 mt-0 bg-gray-800 border-0">
 
 
     <!-- Titles -->
-    <div class="lg:px-10 lg:py-10 md:px-12 md:py-8 flex-col justify-center">
+    <div class="px-10 py-10 text-center">
         <div>
-            <h2 class="text-4xl font-bold lg:flex lg:justify-center md:text-center">
+            <h2 class="text-4xl font-bold">
                 Busca Usuarios
             </h2>
-            <h2 class="lg:py-10 text-base lg:flex lg:justify-center md:text-center">
+            <h2 class="py-6 text-base">
                 Puedes buscar usuarios por su nombre, rol modifcar su rol, dar de alta y eliminar
             </h2>
         </div>
+
+
         <!-- SearchBar Section -->
-        <div class="col-span-2 text-gray-600 flex flex-col justify-center px-12 md:pb-10">
-            <form>
-                <div class="flex justify-center mt-2 px-5 py-2 w-full bg-gray-800 rounded-full">
-                    <input
-                        class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        placeholder="Buscar">
-                    <button id="dropdown-button" data-dropdown-toggle="dropdown"
-                        class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-gray-800 rounded-r-lg hover:font-semibold hover:bg-gray-700"
-                        type="button">
-                        
-                    </button>
-                    <div>
-                        <select class="form-select block w-full mt-1 rounded-lg border text-white bg-gray-800 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
-                            id="tipoUsuario" name="tipoUsuario">
-                            <option value="Soltero">Agente</option>
-                            <option value="Casado">Administrador</option>
-                            <option value="Casado-Bienes Mancomunados">Usuario</option>
-                        </select>
-                    </div>
-                    <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
-                        Dar de alta Usuario
-                    </button>
-                </div>
-            </form>
+        
+            <button class="px-5 py-2 rounded-full text-base w-auto text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                + Dar de Alta Nuevo Usuario
+            </button>
         </div>
+
+        
     </div>
-
-    <!-- List Users -->
-        <main class="container mx-auto my-8">
-        <div class="flex items-center justify-center">
-            <h2 class="text-2xl font-bold mb-4">Lista de usuarios</h2>
-        </div>
-        <!-- Inicio de la DataTable lista usuarios -->
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTableUsuarios" width="100%" cellspacing="0">
-            </table>
-        </div>
-        <!-- Enlazar con la biblioteca de jQuery -->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-        <!-- Enlazar con el archivo de DataTables JS -->
-        <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
-
-        <script crossorigin="anonymous" type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
-
-        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
-        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-
-        <script type="text/javascript">
-            var log = console.log;
-            $(document).ready(function(e){
-                recargarTablaUsuarios();
-            })
-        </script>
-
-        <script type="text/javascript">
-            function recargarTablaUsuarios(){
-                if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
-                //$("#table_report").DataTable().clear().draw();
-                $("#dataTableUsuarios").dataTable().fnDestroy();
-                //$("#table_report").dataTable();
-                $('#dataTableUsuarios').empty();
-                }
-                var thead = ""
-                var tfooter = ""
-                thead += '<thead>'
-                    thead += '<tr>'
-                    thead += '<th>Id</th>'
-                    thead += '<th>Nombre</th>'
-                    thead += '<th>Apellidos</th>'
-                    thead += '<th>Rol</th>'
-                    thead += '<th>Modificar rol</th>'
-                    thead += '<th>Eliminar usuario</th>'
-                    thead += '</tr>'
-                thead += '</thead>'
-                tfooter += '<tfoot>'
-                    tfooter += '<tr>'
-                    tfooter += '<th>Id</th>'   
-                    tfooter += '<th>Nombre</th>'
-                    tfooter += '<th>Apellidos</th>'
-                    tfooter += '<th>Rol</th>'
-                    tfooter += '<th>Modificar rol</th>'
-                    tfooter += '<th>Eliminar usuario</th>'
-                    tfooter += '</tr>'
-                tfooter += '</tfoot>'
-                $('#dataTableUsuarios').append(thead);
-                $('#dataTableUsuarios').append(tfooter);
-                $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
-                dataTable = $("#dataTableUsuarios").dataTable({
-                language: {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                },
-                processing : true,
-                lengthMenu : [5, 5, 10, 20, 25, 30],
-                order      : [[0,'asc']],
-                deferRender: true,
-                ajax       : '/dashboard/lista/usuarios',
-                columns    : [
-                    {
-                        data: "idUsuario"
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<span class="badge badge-success">'+data.nombreUsuario+'</span>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<span class="badge badge-success">'+data.apellidosUsuario+'</span>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<span class="badge badge-success">'+data.nombreRol+'</span>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btnEditarRol">Modificar Rol</button>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario">Edit</button>'
-                        }
-                    },
-                    ] 
-                })
-            }
-        </script>
+    <%- include("partials/listaUsuarios/datatable.ejs") %>
 
     <%- include("partials/footer") %>
 
