@@ -6,7 +6,7 @@ const bucket = require("../util/awsBucket.js");
 // Obtiene los datos del inmueble
 
 exports.getInmueble = async (req, res, next) => {
-    //Info de agente e inmueble
+    //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
@@ -25,6 +25,7 @@ exports.getInmueble = async (req, res, next) => {
         fotos: arregloFotos,
         inmuebles : inmueble,
         agente : agente,
+        isLogged: req.session.isLoggedIn
     })
 };
 
