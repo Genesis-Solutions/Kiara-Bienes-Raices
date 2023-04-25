@@ -66,18 +66,24 @@
         <div class="col-span-2 text-gray-600 flex flex-col justify-center px-12 md:pb-10">
             <form>
                 <div class="flex justify-center mt-2 px-5 py-2 w-full bg-gray-800 rounded-full">
-                    <button id="dropdown-button" data-dropdown-toggle="dropdown"
-                        class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-medium text-center text-white bg-gray-800 rounded-l-lg hover:font-semibold hover:bg-gray-700"
-                        type="button">
-                        Tipo<i class="ml-2 fa-solid fa-chevron-down"></i>
-                    </button>
                     <input
                         class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        placeholder="Ingresa tu búsqueda (ej: Juriquilla)">
+                        placeholder="Buscar">
                     <button id="dropdown-button" data-dropdown-toggle="dropdown"
                         class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-gray-800 rounded-r-lg hover:font-semibold hover:bg-gray-700"
                         type="button">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        
+                    </button>
+                    <div>
+                        <select class="form-select block w-full mt-1 rounded-lg border text-white bg-gray-800 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                            id="tipoUsuario" name="tipoUsuario">
+                            <option value="Soltero">Agente</option>
+                            <option value="Casado">Administrador</option>
+                            <option value="Casado-Bienes Mancomunados">Usuario</option>
+                        </select>
+                    </div>
+                    <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                        Dar de alta Usuario
                     </button>
                 </div>
             </form>
@@ -87,30 +93,132 @@
 
     <!-- List Users -->
 
-    <div class="md:flex md:flex-col">
-        <table class="border-collapse border border-slate-400 ...">
-            <thead>
-              <tr>
-                <th class="border border-slate-300 ...">State</th>
-                <th class="border border-slate-300 ...">City</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="border border-slate-300 ...">Indiana</td>
-                <td class="border border-slate-300 ...">Indianapolis</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 ...">Ohio</td>
-                <td class="border border-slate-300 ...">Columbus</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 ...">Michigan</td>
-                <td class="border border-slate-300 ...">Detroit</td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
+
+        <main class="container mx-auto my-8">
+
+        <div class="flex items-center justify-center">
+            <h2 class="text-2xl font-bold mb-4">Elementos de la tabla test_text</h2>
+        </div>
+        <!-- Inicio de la DataTable de test_text -->
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableUsuarios" width="100%" cellspacing="0">
+            </table>
+        </div>
+
+        <!-- Enlazar con la biblioteca de jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <!-- Enlazar con el archivo de DataTables JS -->
+        <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+
+        <script crossorigin="anonymous" type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+        <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
+        <script type="text/javascript">
+            var log = console.log;
+            $(document).ready(function(e){
+                recargarTablaUsuarios();
+            })
+        </script>
+
+        <script type="text/javascript">
+            //Intercepta el submit del form
+            $("#form").submit(function(e){
+                e.preventDefault()
+                log("Submit del form")
+            })
+        </script>
+
+        <script type="text/javascript">
+            function recargarTablaUsuarios(){
+                if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
+                //$("#table_report").DataTable().clear().draw();
+                $("#dataTableUsuarios").dataTable().fnDestroy();
+                //$("#table_report").dataTable();
+                $('#dataTableUsuarios').empty();
+                }
+                var thead = ""
+                var tfooter = ""
+                thead += '<thead>'
+                    thead += '<tr>'
+                    thead += '<th>Id</th>'
+                    thead += '<th>Nombre</th>'
+                    thead += '<th>Apellidos</th>'
+                    thead += '<th>Rol</th>'
+                    thead += '<th>Modificar rol</th>'
+                    thead += '<th>Eliminar usuario</th>'
+                    thead += '</tr>'
+                thead += '</thead>'
+                tfooter += '<tfoot>'
+                    tfooter += '<tr>'
+                    tfooter += '<th>Id</th>'   
+                    tfooter += '<th>Nombre</th>'
+                    tfooter += '<th>Apellidos</th>'
+                    tfooter += '<th>Rol</th>'
+                    tfooter += '<th>Modificar rol</th>'
+                    tfooter += '<th>Eliminar usuario</th>'
+                    tfooter += '</tr>'
+                tfooter += '</tfoot>'
+                $('#dataTableUsuarios').append(thead);
+                $('#dataTableUsuarios').append(tfooter);
+                $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
+                dataTable = $("#dataTableUsuarios").dataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                processing : true,
+                lengthMenu : [5, 1, 2, 3, 5, 10],
+                order      : [[0,'asc']],
+                deferRender: true,
+                ajax       : '/dashboard/lists/users',
+                columns    : [
+                    {
+                        data: "idUsuario"
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.nombreUsuario+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.apellidosUsuario+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<span class="badge badge-success">'+data.nombreRol+'</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btnEditarText">Edit</button>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btnEditarText">Edit</button>'
+                        }
+                    },
+                    ] 
+                })
+            }
+        </script>
+       
 
     <%- include("partials/footer") %>
 
