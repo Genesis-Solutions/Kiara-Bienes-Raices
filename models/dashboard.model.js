@@ -4,7 +4,7 @@ module.exports = class Dashboard{
 
     static fetchAllUsers() {
         return db.execute(
-            'SELECT usuario.idUsuario ,usuario.nombreUsuario, usuario.apellidosUsuario, rol.nombreRol AS nombreRol FROM usuario JOIN rol ON usuario.idRol = rol.idRol WHERE usuario.idUsuario'
+            'SELECT U.idUsuario,U.nombreUsuario,U.apellidosUsuario,R.nombreRol FROM usuario U JOIN rol R ON U.idRol = R.idRol'
         )
     }
 

@@ -3,12 +3,10 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const port = 3000;
 const app = express();
-app.use(express.json());
-
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-
+app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -21,18 +19,16 @@ app.use(session({
 
 // Le decimos a node que nuestros assets se encuentran en assets
 app.use(express.static(path.join(__dirname, '/assets')))
-app.use(express.static(path.join(__dirname, '/styles')))
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '/styles')));
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const rutasHome = require('./routes/homepage.routes.js');
 const rutasInmueble = require('./routes/inmueble.routes.js');
-// const rutasDashboard = require('./routes/dashboard.routes.js');
+const rutasDashboard = require('./routes/dashboard.routes.js');
 
+app.use('/dashboard', rutasDashboard);
 app.use('/', rutasHome);
-// app.use('/dashboard', rutasDashboard);
 
 //app.use("/public",express.static(dirname + '/public')); 
 //app.use(express.static(path.join(dirname, 'public')));

@@ -4,5 +4,7 @@ const router = express.Router();
 const dashboardController = require('../controllers/dashboard.controller');
 
 // Rutas
-router.get('/lists/users', dashboardController.getUsers);
-router.get('/lists', dashboardController.getDashboard);
+router.get('/lista/usuarios', dashboardController.getUsers);
+router.get('/lista', dashboardController.getDashboard);
+
+module.exports = router;
