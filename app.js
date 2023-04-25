@@ -33,6 +33,8 @@ app.use('/inmueble', rutasInmueble)
 app.use('/catalogo', rutasSearchpage); //Historia de usuario 2.7 - Ver lista de inmuebles
 app.use('/', rutasHome);
 
+//Historia de usuario 2.1 - Publicar inmueble 
+
 //app.use("/public",express.static(dirname + '/public')); 
 //app.use(express.static(path.join(dirname, 'public')));
 
