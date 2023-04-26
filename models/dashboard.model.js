@@ -8,4 +8,40 @@ module.exports = class Dashboard{
         )
     }
 
+    static adminInsertUser(
+        nombreUsuario,
+        apellidosUsuario,
+        passwordUsuario,
+        telefonoUsuarioString,
+        emailUsuario,
+        estadoCivilUsuario,
+        ocupacionUsuario,
+        activoUsuarioString,
+        idRolString,
+        idFotoString
+      ) {
+        return bcrypt.hash(passwordUsuario, 12).then((passwordCifrado) => {
+          return db
+            .execute(
+              "INSERT INTO usuario(nombreUsuario, apellidosUsuario,passwordUsuario,telefonoUsuario, emailUsuario,estadoCivilUsuario, ocupacionUsuario,activoUsuario ,idRol, idFoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+              [
+                nombreUsuario,
+                apellidosUsuario,
+                passwordCifrado,
+                telefonoUsuarioString,
+                emailUsuario,
+                estadoCivilUsuario,
+                ocupacionUsuario,
+                activoUsuarioString,
+                idRolString,
+                idFotoString,
+              ]
+            )
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      }
+    
+
 }
