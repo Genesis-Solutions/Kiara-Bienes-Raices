@@ -25,7 +25,8 @@ exports.getInmueble = async (req, res, next) => {
         fotos: arregloFotos,
         inmuebles : inmueble,
         agente : agente,
-        isLogged: req.session.isLoggedIn
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol
     })
 };
 
