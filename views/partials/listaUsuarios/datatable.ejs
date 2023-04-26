@@ -24,6 +24,8 @@
     <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
 
     <script type="text/javascript">
         var log = console.log;
@@ -117,6 +119,21 @@
             })
         }
     </script>
+    <script type="text/javascript">
+        //Mostrar modal text   
+        function mostrarModalUpdate(){   
+            $("#modalUpdate").css("display", "block");
+        }
+    </script>
+
+            <script type="text/javascript">
+                //Mostar modal de Editar registro DE MEDIA    
+                $(document).on("click", ".btnEditarRol", function(){		            
+                    mostrarModalUpdate()
+                    
+                });
+            </script>
+
     <style>
         #dataTableUsuarios {
             border-style: solid;
