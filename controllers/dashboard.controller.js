@@ -51,7 +51,7 @@ exports.postAdminUser = (req, res, next) => {
     idFotoString = idFoto.toString();
 
     // Revisar que el correo no esté registrado
-    User.findOne(emailUsuario)
+    Dashboard.findOne(emailUsuario)
         .then(async ([rows, data]) => {
             if (rows.length >= 1) {
                 console.log("El correo electrónico ingresado ya está registrado.");
@@ -75,7 +75,7 @@ exports.postAdminUser = (req, res, next) => {
                         idFotoString
                     )
                         .then(() => {
-                            res.redirect("/dashboard/lista");
+                            res.redirect("/dashboard");
                         })
                         .catch((error) => {
                             console.log(error);
