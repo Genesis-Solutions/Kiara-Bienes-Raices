@@ -56,7 +56,15 @@ exports.postAdminUser = (req, res, next) => {
             if (rows.length >= 1) {
                 console.log("El correo electrónico ingresado ya está registrado.");
                 const errorEmail = "El correo electrónico ingresado ya está registrado";
-                res.render("register", { errorEmail });
+                if (req.session.isLoggedIn == true) {
+                    isLogged = true;
+                    res.render("adminUserRegistration", {
+                        isLogged: req.session.isLoggedIn,
+                        idRol: req.session.idRol,
+                        errorEmail,
+                    });
+                }
+                // res.render("adminUserRegistration", { errorEmail });
             } else {
                 //Revisar que las contraseñas coincidan
                 if (passwordUsuario == passwordUsuarioConfirmar) {
@@ -83,7 +91,15 @@ exports.postAdminUser = (req, res, next) => {
                 } else {
                     console.log("Las contraseñas no coinciden");
                     const errorPassword = "Las contraseñas no coinciden";
-                    res.render("adminUserRegistration", { errorPassword });
+                    if (req.session.isLoggedIn == true) {
+                        isLogged = true;
+                        res.render("adminUserRegistration", {
+                            isLogged: req.session.isLoggedIn,
+                            idRol: req.session.idRol,
+                            errorPassword,
+                        });
+                    }
+                    // res.render("adminUserRegistration", { errorPassword });
                 }
             }
         })
