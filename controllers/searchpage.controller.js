@@ -52,7 +52,8 @@ exports.getSearchPage = async( req,res,next ) => {
         pagina: pagina,
         iterador: iterador,
         linkFinal: linkFinal,
-        numeroPaginas: numeroPaginas
+        numeroPaginas: numeroPaginas,
+        isLogged: req.session.isLogged
     }); 
 }
 
