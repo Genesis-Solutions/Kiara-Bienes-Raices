@@ -10,7 +10,7 @@
     <div class="hidden w-full lg:flex lg:items-center text-center lg:w-auto" id="menu">
         <ul class="pt-2 text-base font-medium lg:flex lg:justify-between lg:pt-0">
             <li>
-                <a class="lg:p-4 py-2 block hover:underline" href="#">
+                <a class="lg:p-4 py-2 block hover:underline" href="/catalogo">
                     Propiedades
                 </a>
             </li>
@@ -84,6 +84,13 @@
 </nav>
 
 <script>
+    const button = document.querySelector('#menu-button');
+    const menu = document.querySelector('#menu');
+
+    button.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+    });
+    
     const userButton = document.getElementById('userButton')
     const userDropdown = document.getElementById('userDropdown')
     userButton.addEventListener('click', ()=> {

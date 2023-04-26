@@ -19,15 +19,20 @@ app.use(session({
 
 // Le decimos a node que nuestros assets se encuentran en assets
 app.use(express.static(path.join(__dirname, '/assets')))
-app.use(express.static(path.join(__dirname, '/styles')));
+app.use(express.static(path.join(__dirname, '/styles')))
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const rutasHome = require('./routes/homepage.routes.js');
 const rutasInmueble = require('./routes/inmueble.routes.js');
 const rutasDashboard = require('./routes/dashboard.routes.js');
+const rutasSearchpage = require('./routes/searchpage.routes.js');
 
 app.use('/dashboard', rutasDashboard);
+app.use('/inmueble', rutasInmueble)
+app.use('/catalogo', rutasSearchpage); //Historia de usuario 2.7 - Ver lista de inmuebles
 app.use('/', rutasHome);
 
 //app.use("/public",express.static(dirname + '/public')); 
