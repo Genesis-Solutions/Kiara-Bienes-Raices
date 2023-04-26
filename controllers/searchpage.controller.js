@@ -47,12 +47,15 @@ exports.getSearchPage = async( req,res,next ) => {
     else { 
         linkFinal = pagina;
     }
+
     res.render('searchpage', {
         inmuebles: inmuebles[0],
         pagina: pagina,
         iterador: iterador,
         linkFinal: linkFinal,
-        numeroPaginas: numeroPaginas
+        numeroPaginas: numeroPaginas,
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol
     }); 
 }
 
