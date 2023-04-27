@@ -49,7 +49,7 @@
     </script>
 
     <script type="text/javascript">
-        function recargarTablaUsuarios() {  
+        function recargarTablaUsuarios() {
             if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
                 //$("#table_report").DataTable().clear().draw();
                 $("#dataTableUsuarios").dataTable().fnDestroy();
@@ -115,8 +115,9 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            if(data.nombreRol=='administrador'){
-                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'    
+                            //Si el usuario es administrador, ocultar el botón.
+                            if (data.nombreRol == 'administrador') {
+                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
                             }
                             return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
                         }
@@ -124,10 +125,11 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                                if(data.nombreRol=='administrador'){
-                                    return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>' 
-                                }
-                                return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                            //Si el usuario es administrador, ocultar el botón.
+                            if (data.nombreRol == 'administrador') {
+                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                            }
+                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
                         }
                     },
                 ]
@@ -136,7 +138,8 @@
     </script>
 
     <script type="text/javascript">
-        var contador=0;
+        var contador = 0;
+        //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
@@ -151,9 +154,10 @@
                     }
                 },
                 showCancelButton: true,
+                //Cuando se reciba el input, si este es de administrador se hará una doble comprobación antes de cambiarlo.
                 inputValidator: (value) => {
                     return new Promise((resolve) => {
-                        if (value=!'1' || contador==1) {
+                        if (value = !'1' || contador == 1) {
                             resolve()
                         } else {
                             resolve('Seleccionar el rol de administrador evitará futuros cambios en el usuario. Presione OK si desea continuar.')
@@ -161,38 +165,41 @@
                         }
                     })
                 }
-            }).then((result) => {          
-                    if (result) {
-                        $.ajax({
-                            url: '/dashboard/lista/actualizar/'+id+result.value,
-                            method: 'put',  
-                        });
-                        Swal.fire('¡El rol ha sido modificado!')
-                        recargarTablaUsuarios();
-                    } 
-                    
-                })
-            
+            }).then((result) => {
+                //Ejecución de la query y recarga de la página.       
+                if (result) {
+                    $.ajax({
+                        url: '/dashboaSrd/lista/actualizar/' + id + result.value,
+                        method: 'put',
+                    });
+                    Swal.fire('¡El rol ha sido modificado!')
+                    recargarTablaUsuarios();
+                }
+
+            })
+
         });
     </script>
     <script type="text/javascript">
         //Funcionalidad de botón de eliminación de usuario
-        $(document).on("click", ".btnEliminarUsuario", function(){		            
-            fila = $(this).closest("tr");	        
+        $(document).on("click", ".btnEliminarUsuario", function () {
+            fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
+            //Modal de confirmación.
             Swal.fire({
-                title: '¿Confirma la eliminación del usuario?',                
+                title: '¿Confirma la eliminación del usuario?',
                 showCancelButton: true,
-                confirmButtonText: `Confirmar`,                
-                }).then((result) => {               
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                //Ejecución de la query y recarga de la página.   
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/dashboard/lista/eliminar/'+id,
-                        method: 'delete',  
+                        url: '/dashboard/lista/eliminar/' + id,
+                        method: 'delete',
                     });
                     recargarTablaUsuarios();
                     Swal.fire('Usuario Eliminado!')
-                } 
+                }
             })
         });
     </script>
