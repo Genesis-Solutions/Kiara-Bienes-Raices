@@ -76,6 +76,17 @@
     </div>
     <%- include("partials/listaUsuarios/datatable.ejs") %>
 
+    <div id="modalRol" style="display:none" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title-text" role="dialog" aria-modal="true">
+        <form action = "/dashboard/modificarRol" method="POST">
+            <label>Modificar rol</label>
+            <input type="hidden" name="idUsuario" id="idUsuario">
+            <select name="nuevoRol" id="nuevoRol">
+                <option value = "1">Administrador</option>
+            </select>
+            <button type="submit">Modificar</button>
+        </form>
+    </div>
+
     <%- include("partials/footer") %>
 
 </body>
