@@ -52,7 +52,9 @@ exports.getSearchPage = async( req,res,next ) => {
         pagina: pagina,
         iterador: iterador,
         linkFinal: linkFinal,
-        numeroPaginas: numeroPaginas
+        numeroPaginas: numeroPaginas,
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol
     }); 
 }
 
@@ -62,7 +64,7 @@ exports.getSearchPage = async( req,res,next ) => {
 exports.getImgFromBucket = ( req,res,next ) => {
     var img = req.query.image;
     const AWS_BUCKET = "kiarabienesraices";
-    //console.log('Trying to download file: ' + img);
+    console.log('Trying to download file: ' + img);
     var opciones = {
         Bucket: AWS_BUCKET,
         Key: img,
