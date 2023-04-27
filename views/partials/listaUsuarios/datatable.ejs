@@ -134,7 +134,6 @@
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
-            
             const { value: eleccion } = Swal.fire({
                 title: 'Selecciona el Rol:',
                 input: 'select',
@@ -155,17 +154,18 @@
                         }
                     })
                 }
-            }).then((result) => {               
-                    if (value) {
+            }).then((result) => {          
+                    if (result) {
                         $.ajax({
-                            url: '/lista/actualizar/'+id,
+                            url: '/lista/actualizar/'+id+result.value,
                             method: 'put',  
                         });
                         Swal.fire('¡El rol ha sido modificado!')
                         recargarTablaUsuarios();
                     } 
+                    
                 })
-            console.log("El valor elegido es: ", eleccion);
+            
         });
 
     </script>
