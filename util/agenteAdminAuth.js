@@ -5,6 +5,7 @@
 * Dentro del proyecto hay algunas funcionalidades que sólo un usuario que
 * cuente con ciertos permisos puede acceder, éste middleware se utiliza
 * para aquellos privilegios compartidos por los roles de administrador
+* y agente.
 *
 * param: req.session.idRol
 * returns: res.status(403).redirect('/')

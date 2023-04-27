@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const isLogged = require('../util/isLogged.js')
+const adminAuth = require('../util/adminAuth.js')
+const agenteAdminAuth = require('../util/agenteAdminAuth.js')
 
 const dashboardController = require('../controllers/dashboard.controller');
 const isLogged = require('../util/isLogged.js')
