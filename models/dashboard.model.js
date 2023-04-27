@@ -50,7 +50,10 @@ module.exports = class Dashboard{
             //Revisión del arrendador
             var count_3= db.execute(
                 'SELECT COUNT(idArrendador) FROM tramite where idArrendador=?',[idUsuario]
-            )         
+            )
+            count_1=count_1.COUNT(idAgenteAsignado)
+            count_2=count_2.COUNT(idAgenteAsignado)
+            count_3=count_3.COUNT(idAgenteAsignado)        
             return count_1+count_2+count_3
         }
 

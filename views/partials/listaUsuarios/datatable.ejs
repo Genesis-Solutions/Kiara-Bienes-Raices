@@ -187,6 +187,7 @@
                     });
                 }
                 //Ejecución de la query y recarga de la página.  
+                console.log('Trámites activos: ',tramites_activos.data)
                 if (tramites_activos==0) {
                     $.ajax({
                         url: '/dashboard/lista/eliminar/' + id,
