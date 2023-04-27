@@ -50,6 +50,7 @@
 
     <script type="text/javascript">
         function recargarTablaUsuarios() {
+            //Carga de la tabla de usuarios mediante data table.
             if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
                 //$("#table_report").DataTable().clear().draw();
                 $("#dataTableUsuarios").dataTable().fnDestroy();
