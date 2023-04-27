@@ -128,76 +128,15 @@
             })
         }
     </script>
+
     <script type="text/javascript">
-        //Mostar modal de Editar registro DE TEXTO    
         $(document).on("click", ".btnEditarRol", function(){		            
             fila = $(this).closest("tr");	        
-            id = parseInt(fila.find('td:eq(0)').text());
-            descripcion = fila.find('td:eq(1)').text(); 
-            $("#idRegistro").val(id);
-            $("#descripcion").val(descripcion);          
-            $(".modal-title-text").text("Editar Artículo");
+            idUsuario = parseInt(fila.find('td:eq(0)').text());
+            $("#idUsuario").val(idUsuario);        
+            $(".modal-title-text").text("Editar Rol");
             mostrarModalRol()
         });
-    </script>
-
-<script type="text/javascript">
-    //Mostar modal de Editar registro DE TEXTO    
-    $(document).on("click", ".btnEditarText", function(){		            
-        fila = $(this).closest("tr");	        
-        id = parseInt(fila.find('td:eq(0)').text());
-        $("#modalRol").val(id);
-        $("idUsuario").val(id);    
-        mostrarModalRol()
-    });
-</script>
-
-<script type="text/javascript">
-    //Mostrar modal text   
-    function mostrarModalRol(){   
-        $("#modalRol").css("display", "block");
-    }
-</script>
-
-
-    <!-- <script type="text/javascript">
-        $(document).on("click", ".btnEditarRol", function () {
-            fila = $(this).closest("tr");
-            id = parseInt(fila.find('td:eq(0)').text());
-            const { value: eleccion } = Swal.fire({
-                title: 'Selecciona el Rol:',
-                input: 'select',
-                inputOptions: {
-                    'Rol': {
-                        1: 'Administrador',
-                        2: 'Agente',
-                        3: 'Usuario'
-                    }
-                },
-                showCancelButton: true,
-                inputValidator: (value) => {
-                    return new Promise((resolve) => {
-                        if (value) {
-                            resolve()
-                        } else {
-                            resolve('Selecciona una opción disponible.')
-                        }
-                    })
-                }
-            }).then((result) => {          
-                    if (result) {
-                        $.ajax({
-                            url: '/lista/actualizar/'+id+result.value,
-                            method: 'put',  
-                        });
-                        Swal.fire('¡El rol ha sido modificado!')
-                        recargarTablaUsuarios();
-                    } 
-                    
-                })
-            
-        }); -->
-
     </script>
 
     <style>

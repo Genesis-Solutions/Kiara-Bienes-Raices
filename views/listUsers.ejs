@@ -77,15 +77,49 @@
     <%- include("partials/listaUsuarios/datatable.ejs") %>
 
     <div id="modalRol" style="display:none" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title-text" role="dialog" aria-modal="true">
-        <form action = "/dashboard/modificarRol" method="POST">
+        <form id="formRol" name="formRol">
             <label>Modificar rol</label>
-            <input type="hidden" name="idUsuario" id="idUsuario">
+            <input id="idUsuario" id="idUsuario" type="text" readonly>
             <select name="nuevoRol" id="nuevoRol">
                 <option value = "1">Administrador</option>
             </select>
             <button type="submit">Modificar</button>
         </form>
     </div>
+
+    <script type="text/javascript">
+        //Mostrar modal text   
+        function mostrarModalRol(){   
+            $("#modalRol").css("display", "block");
+        }
+    </script>
+
+    <script type="text/javascript">
+        //Esconder modal media   
+        function esconderModalRol(){   
+            $("#modalRol").css("display", "none");
+        }
+    </script>
+
+    <script type="text/javascript">
+        //Editar registro - Text
+        $('#formRol').submit(function(e){                                     
+            e.preventDefault();
+            idUsuario = $.trim($('#idUsuario').val());
+            nuevoRol = $.trim($('#nuevoRol').val());
+            $.ajax({                    
+                url: '/dashboard/modificarRol/usuario/'+idUsuario,
+                method: 'PUT',                                        
+                contentType: 'application/json',  
+                data:  JSON.stringify({
+                    idUsuario:idUsuario,
+                    nuevoRol:nuevoRol
+                }),
+            });
+            recargarTablaUsuarios()
+            esconderModalRol()
+        });   
+    </script>
 
     <%- include("partials/footer") %>
 
