@@ -49,7 +49,7 @@
     </script>
 
     <script type="text/javascript">
-        function recargarTablaUsuarios() {
+        function recargarTablaUsuarios() {  
             if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
                 //$("#table_report").DataTable().clear().draw();
                 $("#dataTableUsuarios").dataTable().fnDestroy();
@@ -115,13 +115,19 @@
                     {
                         data: null,
                         render: function (data, type, row) {
+                            if(data.nombreRol=='administrador'){
+                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'    
+                            }
                             return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
                         }
                     },
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                                if(data.nombreRol=='administrador'){
+                                    return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>' 
+                                }
+                                return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
                         }
                     },
                 ]
@@ -186,7 +192,7 @@
                     Swal.fire('Usuario Eliminado!')
                 } 
             })
-        });   
+        });
     </script>
 
     <style>
