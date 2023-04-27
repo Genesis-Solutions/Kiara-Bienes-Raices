@@ -157,7 +157,7 @@
             }).then((result) => {          
                     if (result) {
                         $.ajax({
-                            url: '/lista/actualizar/'+id+result.value,
+                            url: '/dashboard/lista/actualizar/'+id+result.value,
                             method: 'put',  
                         });
                         Swal.fire('¡El rol ha sido modificado!')

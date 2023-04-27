@@ -21,8 +21,8 @@ exports.getDashboard = (req, res, next) => {
 
 exports.updateRol = async(req, res, next) => {
     const id = req.params.id;
-    const rol = req.params.rol;
-    await Dashboard.UpdateUser(id,rol);
+    console.log("Si llegó");
+    await Dashboard.UpdateUser(id);
 }
 
 exports.getUsers = async(req, res, next) => {
