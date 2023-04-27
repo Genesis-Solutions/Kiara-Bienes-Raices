@@ -4,9 +4,8 @@ const router = express.Router();
 const dashboardController = require('../controllers/dashboard.controller');
 
 // Rutas
-router.post('/modificarRol', dashboardController.updateRol);
+router.put('/modificarRol/usuario/:idUsuario', dashboardController.updateRol);
 router.get('/lista/usuarios', dashboardController.getUsers);
 router.get('/lista', dashboardController.getDashboard);
-//router.get('/lista/actualizar/:id', dashboardController.updateRol);
 
 module.exports = router;
