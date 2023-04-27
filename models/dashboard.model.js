@@ -29,7 +29,7 @@ module.exports = class Dashboard{
 
     static getLastDisabledRegisterID(){
         return db.execute(
-            'SELECT idInmueble FROM inmueble WHERE activo = 0 ORDER BY idInmueble DESC LIMIT 1'
+            'SELECT idInmueble FROM inmueble WHERE activoInmueble = 0 ORDER BY idInmueble DESC LIMIT 1'
         );
     }
 
@@ -56,6 +56,73 @@ module.exports = class Dashboard{
         return db.execute(
             'INSERT INTO inmueble(idFoto,idInmueble) VALUES (?,?)',
             [idInmueble,idFoto]
+        );
+    }
+
+    static activateInmuebleCasa(
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precio,
+        m2terreno,
+        niveles,
+        mediosBanios,
+        cuotaMantenimiento,
+        fechaConstruccion,
+        usoSuelo,
+        ubicado,
+        tipoGas,
+        m2construccion,
+        recamaras,
+        estacionamientos,
+        banios,
+        desc,
+        cocina,
+        cisterna,
+        cuartoServicio,
+        salaTV,
+        estudio,
+        roofGarden,
+        areaLavado,
+        vigilancia,
+        jardin,
+        bodega,
+        idInmueble
+    ){
+        console.log("precio",precio);
+        return db.execute(
+            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=? WHERE idInmueble = ?',
+            [   
+                titulo,
+                tipoMovimiento,
+                linkVideo,
+                precio,
+                precio,
+                m2terreno,
+                niveles,
+                mediosBanios,
+                cuotaMantenimiento,
+                fechaConstruccion,
+                usoSuelo,
+                ubicado,
+                tipoGas,
+                m2construccion,
+                recamaras,
+                estacionamientos,
+                banios,
+                desc,
+                cocina,
+                cisterna,
+                cuartoServicio,
+                salaTV,
+                estudio,
+                roofGarden,
+                areaLavado,
+                vigilancia,
+                jardin,
+                bodega,
+                idInmueble
+            ]
         );
     }
 

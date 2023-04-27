@@ -56,9 +56,9 @@ exports.getCategoria = async(req,res,next) => {
         const idInmueble = await Dashboard.getLastDisabledRegisterID();
         console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
         const listaAgentes = await Dashboard.fetchAgents();
-        console.log("Lista de todos los agentes",listaAgentes[0]);
+        //console.log("Lista de todos los agentes",listaAgentes[0]);
         const listaTipoMovimientos = await Dashboard.fetchAllMovements();
-        console.log("Lista de todos los tipos de movimiento",listaTipoMovimientos[0]);
+        //console.log("Lista de todos los tipos de movimiento",listaTipoMovimientos[0]);
         res.render('formularioAltaInmueble', {
             isLogged: isLogged,
             idRol: req.session.idRol,
@@ -99,16 +99,80 @@ exports.setMainPhoto = (req,res,next) => {
 
 exports.updateBodyCasa = (req,res,next) => {
     console.log("Entrando a la ruta update body casa");
-    // const {
-    //     name,
-    //     desc,
-    //     tipoMovimiento,
-    //     precio,
-    // } = req.body;
+    const {
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precio,
+        m2terreno,
+        niveles,
+        mediosBanios,
+        cuotaMantenimiento,
+        fechaConstruccion,
+        usoSuelo,
+        ubicado,
+        tipoGas,
+        m2construccion,
+        recamaras,
+        estacionamientos,
+        banios,
+        desc
+    } = req.body;
+    const cocina = req.body.cocina ? 1 : 0;
+    const cisterna = req.body.cisterna ? 1 : 0;
+    const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
+    const salaTV = req.body.salaTV ? 1 : 0;
+    const estudio = req.body.estudio ? 1 : 0;
+    const roofGarden = req.body.roofGarden ? 1 : 0;
+    const areaLavado = req.body.areaLavado ? 1 : 0;
+    const vigilancia = req.body.vigilancia ? 1 : 0;
+    const jardin = req.body.jardin ? 1 : 0;
+    const bodega = req.body.bodega ? 1 : 0;
     console.log(req.body);
+    console.log("cocina",cocina);
+    console.log("cisterna",cisterna);
+    console.log("cuartoServicio",cuartoServicio);
+    console.log("salaTV",salaTV);
+    console.log("estudio",estudio);
+    console.log("roofGarden",roofGarden);
+    console.log("areaLavado",areaLavado);
+    console.log("vigilancia",vigilancia);
+    console.log("jardin",jardin);
+    console.log("bodega",bodega);
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
-    // Dashboard.activateInmuebleCasa(name,desc,tipoMovimiento,precio,idInmueble)
+    res.redirect("/dashboard/alta");
+    Dashboard.activateInmuebleCasa(
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precio,
+        m2terreno,
+        niveles,
+        mediosBanios,
+        cuotaMantenimiento,
+        fechaConstruccion,
+        usoSuelo,
+        ubicado,
+        tipoGas,
+        m2construccion,
+        recamaras,
+        estacionamientos,
+        banios,
+        desc,
+        cocina,
+        cisterna,
+        cuartoServicio,
+        salaTV,
+        estudio,
+        roofGarden,
+        areaLavado,
+        vigilancia,
+        jardin,
+        bodega,
+        idInmueble
+    );
+    res.redirect('/dashboard/alta');
     //     .then(() => {
     //         res.redirect("/dashboard/alta");
     //     })
