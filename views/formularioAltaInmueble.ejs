@@ -1,0 +1,289 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <%- include('partials/navbar') %>
+
+    <!-- Pictures Form -->
+
+    <div class="px-10 py-5 grid grid-cols-3">
+        <div class="col-span-2">
+            <h2 class="text-lg font-semibold">
+                Imagen Principal
+            </h2>
+
+            <!-- Main Picture Form -->
+
+            <form action="">
+                <div class="flex items-center text-center justify-center w-full p-4">
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                        <div class="flex flex-col items-center justify-center pt-8 pb-5">
+                            <i class="fa-solid fa-cloud-arrow-up fa-2xl text-gray-500"></i>
+                            <br>
+                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Selecciona o arrastra</span> la imagen principal del inmueble.</p>
+                            <p class="text-xs text-gray-500">PNG, JPG o JPEG</p>
+                        </div>
+                        <input id="dropzone-file" type="file" class="hidden"/>
+                    </label>
+                </div>
+            </form>
+
+        </div>
+        <div>
+            <h2 class="text-lg font-semibold">
+                Imágenes Secundarias
+            </h2>
+
+            <!-- Secundary Pictures Form -->
+
+            <form action="">
+                <div class="flex items-center text-center justify-center w-full p-4">
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                        <div class="flex flex-col items-center justify-center pt-8 pb-5">
+                            <i class="fa-solid fa-cloud-arrow-up fa-2xl text-gray-500"></i>
+                            <br>
+                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Selecciona o arrastra</span> las imágenes secundarias del inmueble.</p>
+                            <p class="text-xs text-gray-500">PNG, JPG o JPEG</p>
+                        </div>
+                        <input id="dropzone-file" type="file" class="hidden"/>
+                    </label>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Information Form -->
+
+    <form action="">
+
+        <!-- Información General -->
+
+        <div class="px-10 pb-5 grid grid-cols-2 space-x-8">
+            <div class="space-y-2">
+                <label for="titulo" class="text-lg font-semibold">Título</label>
+                <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                    type="text" id="nombreUsuario" name="nombreUsuario" placeholder="Casa en Álamos" maxlength="30" required/>
+            </div>
+            <div class="space-y-2">
+                <label for="tipoOperacion" class="text-lg font-semibold">Tipo de Operación</label>
+                    <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        id="tipoOperacion" name="tipoOperacion">
+                        <option value="1">Venta</option>
+                        <option value="2">Renta</option>
+                        <option value="3">Venta/Renta</option>
+                    </select>
+            </div>
+        </div>
+        <div class="px-10 pb-10">
+            <div class="space-y-2">
+                <label for="linkVideo" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
+                <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                    type="text" id="linkVideo" name="linkVideo" placeholder="www.youtube.com" required/>
+            </div>
+        </div>
+
+        <!-- Detalles -->
+
+        <div class="p-10 bg-sky-950 grid grid-cols-3 gap-5">
+            <div class="space-y-2">
+                <label for="" class="text-lg font-semibold text-white">Precio Operación</label>
+                <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                    type="number" id="nombreUsuario" name="nombreUsuario" placeholder="2,500,000" maxlength="30" required/>
+            </div>
+            <div class="col-span-2 space-y-2">
+                <label for="" class="text-lg font-semibold text-white">Amenidades Secundarias</label>
+                <div class="grid grid-cols-3 gap-7">
+
+                    <!-- Columna de Inputs -->
+
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-expand"></i><p> M2 de Terreno</p>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="nombreUsuario" name="nombreUsuario" placeholder="450" maxlength="30" required/>
+                        </div>
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-layer-group"></i><p> Piso(s)</p>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="nombreUsuario" name="nombreUsuario" placeholder="3" maxlength="30" required/>
+                        </div>
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-toilet"></i><p> 1/2 baño(s)</p>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="nombreUsuario" name="nombreUsuario" placeholder="1" maxlength="30" required/>
+                        </div>
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-dollar-to-slot"></i><p> C. de Manten.</p>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="nombreUsuario" name="nombreUsuario" placeholder="2" maxlength="30" required/>
+                        </div>
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-regular fa-calendar-days"></i><p> Año de Const.</p>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="nombreUsuario" name="nombreUsuario" placeholder="1" maxlength="30" required/>
+                        </div>
+                    </div>
+
+                    <!-- Columna de Dropdowns -->
+
+                    <div class="space-y-2">
+                        <div class="space-y-2">
+                            <label for="usoSuelo" class="text-sm text-white">Uso de Suelo</label>
+                            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                id="usoSuelo" name="usoSuelo">
+                                <option value="1">Habitacional</option>
+                                <option value="2">Comercial</option>
+                                <option value="3">Comercial y servicios</option>
+                                <option value="4">Industrial</option>
+                                <option value="5">Ejidal</option>
+                                <option value="6">Otro</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="ubicado" class="text-sm text-white">Ubicado</label>
+                            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                id="ubicado" name="ubicado">
+                                <option value="1">Sobre calle</option>
+                                <option value="2">En privada</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="tipoGas" class="text-sm text-white">Tipo de Gas</label>
+                            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                id="tipoGas" name="tipoGas">
+                                <option value="1">Natural</option>
+                                <option value="2">Cilindro</option>
+                                <option value="3">Estacionario</option>
+                                <option value="4">No tiene</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Columna de Checkbox -->
+
+                    <div class="space-y-2 text-sm text-white">
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Cocina</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Cisterna</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">C. de Servicio</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Sala de TV</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Estudio</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Roof Garden</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Área de Lavado</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Vigilancia</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Jardín</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                        <label for="default-checkbox" class="ml-1 text-base">Bodega</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amenidades Principales -->
+
+            <div class="space-y-2">
+                <label for="" class="text-lg font-semibold text-white">Amenidades Principales</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-house"></i><p> M2 de Construcción</p>
+                    </div>
+                    <div>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                            type="number" id="nombreUsuario" name="nombreUsuario" placeholder="450" maxlength="30" required/>
+                    </div>
+                    <div class="text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-bed"></i><p> Recámaras</p>
+                    </div>
+                    <div>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                            type="number" id="nombreUsuario" name="nombreUsuario" placeholder="3" maxlength="30" required/>
+                    </div>
+                    <div class="text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-car"></i><p> Estacionamiento</p>
+                    </div>
+                    <div>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                            type="number" id="nombreUsuario" name="nombreUsuario" placeholder="1" maxlength="30" required/>
+                    </div>
+                    <div class="text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-bath"></i><p> Baños</p>
+                    </div>
+                    <div>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                            type="number" id="nombreUsuario" name="nombreUsuario" placeholder="2" maxlength="30" required/>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Descripción Inmueble -->
+
+            <div class="col-span-2 space-y-2">
+                <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
+                <textarea id="message" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
+            </div>
+        </div>
+    </form>
+
+    <!-- Botón para subir -->
+
+    <div class="p-10 flex justify-center">
+        <button class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+            Registrar
+        </button>
+    </div>
+
+    <%- include("partials/footer") %>
+
+</body>
+</html>
