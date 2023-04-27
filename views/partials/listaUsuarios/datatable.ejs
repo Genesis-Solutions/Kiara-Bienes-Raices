@@ -136,6 +136,7 @@
     </script>
 
     <script type="text/javascript">
+        var contador=0;
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
@@ -152,10 +153,11 @@
                 showCancelButton: true,
                 inputValidator: (value) => {
                     return new Promise((resolve) => {
-                        if (value) {
+                        if (value=!'1' || contador==1) {
                             resolve()
                         } else {
-                            resolve('Selecciona una opción disponible.')
+                            resolve('Seleccionar el rol de administrador evitará futuros cambios en el usuario. Presione OK si desea continuar.')
+                            contador = contador + 1;
                         }
                     })
                 }
