@@ -167,6 +167,27 @@
             
         });
     </script>
+    <script type="text/javascript">
+        //Funcionalidad de botón de eliminación de usuario
+        $(document).on("click", ".btnEliminarUsuario", function(){		            
+            fila = $(this).closest("tr");	        
+            id = parseInt(fila.find('td:eq(0)').text());
+            Swal.fire({
+                title: '¿Confirma la eliminación del usuario?',                
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,                
+                }).then((result) => {               
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/dashboard/lista/eliminar/'+id,
+                        method: 'delete',  
+                    });
+                    recargarTablaUsuarios();
+                    Swal.fire('Usuario Eliminado!')
+                } 
+            })
+        });   
+    </script>
 
     <style>
         #dataTableUsuarios {

@@ -21,7 +21,12 @@ exports.getDashboard = (req, res, next) => {
 
 exports.updateRol = async(req, res, next) => {
     const id = req.params.id;
-    await Dashboard.UpdateUser(id);
+    await Dashboard.UpdateUserRol(id);
+}
+
+exports.deleteUser = async(req, res, next) => {
+    const id = req.params.id;
+    await Dashboard.DeleteUser(id);
 }
 
 exports.getUsers = async(req, res, next) => {
