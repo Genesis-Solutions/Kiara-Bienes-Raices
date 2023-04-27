@@ -5,9 +5,6 @@ const adminAuth = require('../util/adminAuth.js')
 const agenteAdminAuth = require('../util/agenteAdminAuth.js')
 
 const dashboardController = require('../controllers/dashboard.controller');
-const isLogged = require('../util/isLogged.js')
-const adminAuth = require('../util/adminAuth.js')
-const agenteAdminAuth = require('../util/agenteAdminAuth.js')
 
 // Rutas
 router.get('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.getAdminUser)
