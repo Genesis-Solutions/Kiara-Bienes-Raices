@@ -19,12 +19,12 @@ exports.getDashboard = (req, res, next) => {
     } 
 }
 
- exports.updateRol = async(req, res, next) => {
-     const idUsuario = req.body.idUsuario.toString();
-     const rolUsuario = req.body.nuevoRol.toString();
-     console.log(rolUsuario);
-     await Dashboard.UpdateUser(rolUsuario, idUsuario);
- }
+exports.updateRol = async(req, res, next) => {
+    const idUsuario = req.params.idUsuario;
+    const rolUsuario = req.body.nuevoRol;
+    console.log(rolUsuario);
+    await Dashboard.UpdateUser(rolUsuario, idUsuario);
+}
 
 exports.getUsers = async(req, res, next) => {
     const dataUsers = await Dashboard.fetchAllUsers();
