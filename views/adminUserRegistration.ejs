@@ -1,0 +1,161 @@
+<%- include('partials/head') %>
+
+    <body style="font-family: 'Montserrat', sans-serif">
+
+        <script>
+            import Swal from 'sweetalert2'
+
+            const showNotification = () => {
+                Swal.fire(
+                    '¡Usuario Registrado Exitosamente!',
+                    'El usuario ha sido registrado correctamente',
+                    'success'
+                )
+            }
+        </script>
+
+        <!-- Heading Section -->
+        <div class="bg-white">
+            <%- include("partials/navbar") %>
+        </div>
+
+        <div class="px-10 pb-5 mt-20 space-x-8 grid grid-cols-3 align-middle">
+            <div class="text-center">
+                <button
+                    class="text-center  px-5 py-2 bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                    Lista de usuarios
+                </button>
+            </div>
+            <div class="text-center">
+                <button
+                    class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">
+                    Lista de Propiedades
+                </button>
+            </div>
+            <div class="text-center">
+                <button
+                    class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">
+                    Mis Propiedades
+                </button>
+            </div>
+        </div>
+        <hr class="h-px mx-10 mt-0 bg-gray-800 border-0">
+
+        <!-- Titles -->
+        <div class="py-6 text-center">
+            <h2 class="text-4xl font-bold">
+                Dar de Alta a un Usuario
+            </h2>
+            <h2 class="py-6 text-base">
+                Puedes dar de alta un usuario y asignarle un Rol
+            </h2>
+            <hr class="h-px mx-10 mt-0 bg-gray-800 border-0">
+        </div>
+
+        <!-- Form Section -->
+        <form method="POST" action="/dashboard/usuarios/nuevoUsuario" class="space-y-2 mx-auto my-7 px-20">
+            <div class="grid lg:grid-cols-2 gap-5 mt-3">
+                <input type="text" hidden="true" id="test" name="test" value="test" />
+
+                <div>
+                    <label for="nombre">Nombre(s)</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" maxlength="40"
+                        required />
+                </div>
+                <div>
+                    <label for="apellido">Apellidos</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández"
+                        maxlength="30" required />
+                </div>
+                <div>
+                    <label for="email">Correo Electrónico</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" maxlength="60"
+                        required />
+                    <% if (typeof errorEmail !=='undefined' ) { %>
+                        <p style="color: red">
+                            <%= errorEmail %>
+                        </p>
+                        <% } %>
+                </div>
+                <div>
+                    <label for="apellido">Número de Teléfono</label>
+                    <input type="number"
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" required maxlength="10"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                </div>
+                <div>
+                    <label for="ocupacion">Ocupación</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Contador" maxlength="30" />
+                </div>
+                <div>
+                    <label for="estadoCivilUsuario"> Estado Civil</label>
+                    <select
+                        class="form-select block w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                        id="estadoCivilUsuario" name="estadoCivilUsuario">
+                        <option value="Soltero">Soltero</option>
+                        <option value="Casado">Casado</option>
+                        <option value="Casado-Bienes Mancomunados">
+                            Casado-Bienes Mancomunados
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label for="contrasenia">Contraseña</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="password" id="password" name="passwordUsuario" placeholder="********" minlength="8"
+                        required />
+                </div>
+                <div>
+                    <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="password" name="passwordUsuarioConfirmar" id="passwordUsuarioConfirmar"
+                        placeholder="********" minlength="8" required />
+                    <% if (typeof errorPassword !=='undefined' ) { %>
+                        <p style="color: red">
+                            <%= errorPassword %>
+                        </p>
+                        <% } %>
+                </div>
+                <div>
+                    <label for="rolUsuario"> Rol Usuario</label>
+                    <select
+                        class="form-select block w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                        id="rolUsuario" name="rolUsuario">
+                        <option value="1">Administrador</option>
+                        <option value="2">Agente</option>
+                        <option value="3">Cliente</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center py-8">
+                <button
+                    class="px-5 py-3 w-3/4 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700"
+                    type="submit" id="btnRegistrarUsuario">
+                    Registrar Usuario
+                </button>
+            </div>
+        </form>
+
+        <!-- <script type="text/javascript">
+            //Mostar Sweet Alert de Confirmacion de registro de nuevo usuario
+            $(document).on("click", ".btnRegistrarUsuario", function () {
+                Swal.fire(
+                    '¡Usuario Registrado Exitosamente!',
+                    'El usuario ha sido registrado correctamente',
+                    'success'
+                )
+            });   
+        </script> -->
+    </body>

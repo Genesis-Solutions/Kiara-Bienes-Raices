@@ -81,7 +81,7 @@ exports.register = (req, res, next) => {
   const activoUsuario = 1;
   const idRol = 3;
   const idFoto = 1;
-  telefonoUsuarioString = telefonoUsuario.toString();
+  // telefonoUsuarioString = telefonoUsuario.toString();
   activoUsuarioString = activoUsuario.toString();
   idRolString = idRol.toString();
   idFotoString = idFoto.toString();
@@ -102,7 +102,7 @@ exports.register = (req, res, next) => {
             nombreUsuario,
             apellidosUsuario,
             passwordUsuario,
-            telefonoUsuarioString,
+            telefonoUsuario,
             emailUsuario,
             estadoCivilUsuario,
             ocupacionUsuario,
