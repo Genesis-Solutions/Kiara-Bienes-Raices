@@ -10,7 +10,6 @@ module.exports = class Dashboard{
     static UpdateUser(idUsuario) {
         var idRol=idUsuario[1]
         var idUs=idUsuario[0]
-        console.log("Si llegó")
         return db.execute(
             'UPDATE usuario SET idRol=? WHERE idUsuario=?',[idRol, idUs]
         );
