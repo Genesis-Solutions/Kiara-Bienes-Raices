@@ -38,3 +38,7 @@ exports.getUsers = async(req, res, next) => {
     const dataUsers = await Dashboard.fetchAllUsers();
     res.status(200).json({code: 200, code: "Ok", data: dataUsers[0]});
 }
+exports.checkUser = async(req, res, next) => {
+    const cuenta = Dashboard.checkUser(req.params.id) 
+    return cuenta;
+}

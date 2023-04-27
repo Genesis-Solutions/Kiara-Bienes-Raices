@@ -15,6 +15,7 @@ router.get('/lista', dashboardController.getDashboard);
 // Actualizar el rol del usuario escogido
 router.put('/lista/actualizar/:id', dashboardController.updateRol);
 // Eliminar usuario previamente escogido
-router.delete('/lista/eliminar/:id', dashboardController.deleteUser);
-
+router.put('/lista/eliminar/:id', dashboardController.deleteUser);
+// Asegurar que el usuario previamente escogido no tiene procesos pendientes
+router.get('/lista/eliminar/asegurar/:id', dashboardController.checkUser);
 module.exports = router;

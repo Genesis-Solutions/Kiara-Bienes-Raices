@@ -31,8 +31,27 @@ module.exports = class Dashboard{
      */
     static DeleteUser(idUsuario) {
         return db.execute(
-            'DELETE FROM usuario WHERE idUsuario=?',[idUsuario]
+            'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?',[idUsuario]
         )
     }
+        /*
+     * Chequeo de trámites de usuario
+     * @param idUsuario: String -> Id del usuario que será revisado
+     */
+        static checkUser(idUsuario) {
+            //Revisión del agente
+            var count_1= db.execute(
+                'SELECT COUNT(idAgenteAsignado) FROM inmueble where idAgenteAsignado=?',[idUsuario]
+            )
+            //Revisión del cliente
+            var count_2= db.execute(
+                'SELECT COUNT(idCliente) FROM tramite where idCliente=?',[idUsuario]
+            )
+            //Revisión del arrendador
+            var count_3= db.execute(
+                'SELECT COUNT(idArrendador) FROM tramite where idArrendador=?',[idUsuario]
+            )         
+            return count_1+count_2+count_3
+        }
 
 }
