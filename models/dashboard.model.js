@@ -34,18 +34,21 @@ module.exports = class Dashboard {
             'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?', [idUsuario]
         )
     }
-    /*
- * Chequeo de trámites de usuario
+/*
+ * Revisión de cantidad de inmuebles asignados 
  * @param idUsuario: String -> Id del usuario que será revisado
  */
     static checkUser(idUsuario) {
-        //Revisión del agente
         return db.execute(
             'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where idAgenteAsignado=?', [idUsuario]
         ).then(([rows, fielData]) => {
              return rows[0].primera
         })
     }
+    /*
+ * Revisión de cantidad de trámites de cliente
+ * @param idUsuario: String -> Id del usuario que será revisado
+ */
     static checkUser2(idUsuario){
         return db.execute(
             'SELECT COUNT(idCliente) as segunda FROM tramite where idCliente=?', [idUsuario]
@@ -53,7 +56,10 @@ module.exports = class Dashboard {
             return rows[0].segunda
         })
     }
-
+    /*
+ * Revisión de cantidad de trámites de arrendador
+ * @param idUsuario: String -> Id del usuario que será revisado
+ */
     static checkUser3(idUsuario){
         return db.execute(
             'SELECT COUNT(idArrendador) as tercera FROM tramite where idArrendador=?', [idUsuario]

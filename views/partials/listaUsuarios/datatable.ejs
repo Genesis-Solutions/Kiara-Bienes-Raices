@@ -49,6 +49,10 @@
     </script>
 
     <script type="text/javascript">
+/*
+ * Carga de la data table que renderiza los datos de los usuarios.
+ */
+     
         function recargarTablaUsuarios() {
             //Carga de la tabla de usuarios mediante data table.
             if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
@@ -139,12 +143,15 @@
     </script>
 
     <script type="text/javascript">
-        //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
+/*
+* Acción del botón de edición de rol. Despliega un modal con un dropdown de las opciones disponibles para modificar
+*/
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
             var contador = 0;
             const { value: eleccion } = Swal.fire({
+                //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
                 title: 'Selecciona el Rol:',
                 input: 'select',
                 inputOptions: {
@@ -170,7 +177,9 @@
         });
     </script>
     <script type="text/javascript">
-        //Funcionalidad de botón de eliminación de usuario
+/*
+* Funcionalidad de botón de eliminación de usuario. Despliega un modal que verifica la decisión del usuario para posteriormente asegurar la inexistencia de procesos del mismo.
+*/
         $(document).on("click", ".btnEliminarUsuario", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
@@ -180,18 +189,18 @@
                 showCancelButton: true,
                 confirmButtonText: `Confirmar`,
             }).then((result) => {
-                //Ejecución de la query y recarga de la página.                                   
+                //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
                 if (result.isConfirmed) {
                     $.ajax({
                         url: '/dashboard/lista/eliminar/' + id,
                         method: 'put',
                         success: function (choice) {
                             if (choice.comprobacionEliminado == false) {
-                                    Swal.fire('Usuario Eliminado!')
-                                    recargarTablaUsuarios();
-                                    } else {
-                                    Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
-                                    }   
+                                Swal.fire('Usuario Eliminado!')
+                                recargarTablaUsuarios();
+                            } else {
+                                Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
+                            }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             alert("Status: " + textStatus); alert("Error: " + errorThrown);
