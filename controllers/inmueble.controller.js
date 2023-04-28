@@ -63,7 +63,7 @@ exports.getEditarInmueble = async(req, res, next) => {
         arregloFotos.push(imgSrcFilename);
     }
     //console.log(arregloFotos);
-    res.render('inmueble', {
+    res.render('editarInmueble', {
         fotos: arregloFotos,
         inmuebles : inmueble,
         agente : agente,

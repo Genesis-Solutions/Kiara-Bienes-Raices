@@ -1,0 +1,146 @@
+<div class="p-10 bg-sky-950 grid grid-cols-3 gap-8">
+    <div class="space-y-4">
+        <label for="tipoOperacion" class="text-lg font-semibold text-white">Tipo de Operación</label>
+        <div class="flex flex-row">
+            <fieldset>
+                <input id="draft" class="peer/venta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="status" class="form-checkbox"/>
+                <label for="draft" class="ml-1 text-base text-white">Venta</label>
+                <input id="published" class="ml-8 peer/renta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="status" class="form-checkbox" />
+                <label for="published" class="ml-1 text-base text-white">Renta</label>
+                <div class="mt-4 hidden peer-checked/venta:block space-y-2">
+                    <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
+                    <input
+                        class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        type="number" id="precioVenta" name="precioVenta" placeholder="3,000,000" maxlength="30" required/>
+                </div>
+                <div class="mt-4 hidden peer-checked/renta:block space-y-2">
+                    <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
+                    <input
+                        class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        type="number" id="precioRenta" name="precioRenta" placeholder="15,000" maxlength="30" required/>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="col-span-2 space-y-2">
+        <label for="" class="text-lg font-semibold text-white">Amenidades Secundarias</label>
+        <div class="grid grid-cols-3 gap-7">
+
+            <!-- Columna de Inputs -->
+
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <div class="text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-ruler-combined"></i><p>Medidas Frente</p>
+                </div>
+                <div class="flex items-center">
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        type="number" id="medidaFrente" name="medidaFrente" placeholder="1" maxlength="30" required/>
+                </div>
+                <div class="text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-ruler-combined"></i><p>Medidas Fondo</p>
+                </div>
+                <div class="flex items-center">
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        type="number" id="medidaFondo" name="medidaFondo" placeholder="1" maxlength="30" required/>
+                </div>
+                <div class="text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-dollar-to-slot"></i><p> Cuota de Mantenimieno</p>
+                </div>
+                <div class="flex items-center">
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        type="number" id="cuotaMantenimiento" name="cuotaMantenimiento" placeholder="1" maxlength="30" required/>
+                </div>
+            </div>
+
+            <!-- Columna de Dropdowns -->
+
+            <div class="space-y-2">
+                <div class="space-y-2">
+                    <label for="usoSuelo" class="text-sm text-white">Uso de Suelo</label>
+                    <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        id="usoSuelo" name="usoSuelo">
+                        <option value="Habitacional">Habitacional</option>
+                        <option value="Comercial">Comercial</option>
+                        <option value="Comercial y servicios">Comercial y servicios</option>
+                        <option value="Industrial">Industrial</option>
+                        <option value="Ejidal">Ejidal</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label for="ubicado" class="text-sm text-white">Ubicado</label>
+                    <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        id="ubicado" name="ubicado">
+                        <option value="0">Sobre calle</option>
+                        <option value="1">En privada</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label for="ubicado" class="text-sm text-white">Tipo de Suelo</label>
+                    <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        id="tipoSuelo" name="tipoSuelo">
+                        <option value="Plano">Plano</option>
+                        <option value="Descendente">Descendente</option>
+                        <option value="Ascendente">Ascendente</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Columna de Checkbox -->
+
+            <div class="space-y-2 text-sm text-white">
+                <div>
+                    <input type="checkbox" id="servicoAgua" name="servicioAgua" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                    <label for="default-checkbox" class="ml-1 text-base">Servicio de Agua</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="servicioLuz" name="servicioLuz" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                    <label for="default-checkbox" class="ml-1 text-base">Servicio de Luz</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="servicioDrenaje" name="servicioDrenaje" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                    <label for="default-checkbox" class="ml-1 text-base">Servicio de Drenaje</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="vigilancia" name="vigilancia" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                    <label for="default-checkbox" class="ml-1 text-base">Vigilancia</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amenidades Principales -->
+
+    <div class="space-y-2">
+        <label for="" class="text-lg font-semibold text-white">Amenidades Principales</label>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="text-white flex items-center space-x-2">
+                <i class="fa-solid fa-house"></i><p> M2 de Construcción</p>
+            </div>
+            <div>
+                <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                    type="number" id="mConstruccion" name="m2Construccion" placeholder="450" maxlength="30" required/>
+            </div>
+            <div class="text-white flex items-center space-x-2">
+                <i class="fa-solid fa-expand"></i><p> M2 de Terreno</p>
+            </div>
+            <div>
+                <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                    type="number" id="m2Terreno" name="m2Terreno" placeholder="450" maxlength="30" required/>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Descripción Inmueble -->
+
+    <div class="col-span-2 space-y-2">
+        <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
+        <textarea id="desc" name="desc" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
+    </div>
+</div>
