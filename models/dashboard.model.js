@@ -22,8 +22,8 @@ module.exports = class Dashboard{
 
     static insertDisabledRegister(idCategoria,idUsuario) {
         return db.execute(
-            'INSERT INTO inmueble(idAgenteAlta,idAgenteAsignado,idCategoria,idTipoMovimiento,nombreInmueble,descInmueble,precioVentaInmueble,precioRentaInmueble,coordXInmueble,coordYInmueble,activoInmueble) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-            [idUsuario,idUsuario,idCategoria,1,"Registro vacio","Registro vacio",0,0,0,0,0]
+            'INSERT INTO inmueble(idAgenteAlta,idAgenteAsignado,idCategoria,idTipoMovimiento,nombreInmueble,descInmueble,precioVentaInmueble,precioRentaInmueble,activoInmueble) VALUES (?,?,?,?,?,?,?,?,?)',
+            [idUsuario,idUsuario,idCategoria,1,"Registro vacio","Registro vacio",0,0,0]
         )
     }
 
@@ -40,22 +40,23 @@ module.exports = class Dashboard{
     }
 
     static insertPhoto(photoKey){
+        const fullImage = "s3://kiarabienesraices/"+photoKey; 
         return db.execute(
             'INSERT INTO foto(archivoFoto) VALUES (?)',
-            [photoKey]
+            [fullImage]
         );
     }
 
     static getLastPhotoId(){
         return db.execute(
-            'SELECT idFoto FROM foto ORDER BY idInmueble DESC LIMIT 1'
+            'SELECT idFoto FROM foto ORDER BY idFoto DESC LIMIT 1'
         );
     }
 
     static insertFotoInmueble(idInmueble,idFoto){
         return db.execute(
-            'INSERT INTO inmueble(idFoto,idInmueble) VALUES (?,?)',
-            [idInmueble,idFoto]
+            'INSERT INTO fotoinmueble(idFoto,idInmueble) VALUES (?,?)',
+            [idFoto,idInmueble]
         );
     }
 
@@ -63,7 +64,8 @@ module.exports = class Dashboard{
         titulo,
         tipoMovimiento,
         linkVideo,
-        precio,
+        precioVenta,
+        precioRenta,
         m2terreno,
         niveles,
         mediosBanios,
@@ -87,17 +89,18 @@ module.exports = class Dashboard{
         vigilancia,
         jardin,
         bodega,
+        direccion,
+        linkMaps,
         idInmueble
     ){
-        console.log("precio",precio);
         return db.execute(
-            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=? WHERE idInmueble = ?',
+            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?,activoInmueble=1 WHERE idInmueble = ?',
             [   
                 titulo,
                 tipoMovimiento,
                 linkVideo,
-                precio,
-                precio,
+                precioVenta,
+                precioRenta,
                 m2terreno,
                 niveles,
                 mediosBanios,
@@ -121,6 +124,79 @@ module.exports = class Dashboard{
                 vigilancia,
                 jardin,
                 bodega,
+                direccion,
+                linkMaps,
+                idInmueble
+            ]
+        );
+    }
+
+    static activateInmuebleDepartamento(
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precioVenta,
+        precioRenta,
+        m2terreno,
+        niveles,
+        mediosBanios,
+        cuotaMantenimiento,
+        fechaConstruccion,
+        usoSuelo,
+        ubicado,
+        tipoGas,
+        m2construccion,
+        recamaras,
+        estacionamientos,
+        banios,
+        desc,
+        cocina,
+        cisterna,
+        cuartoServicio,
+        salaTV,
+        estudio,
+        roofGarden,
+        areaLavado,
+        vigilancia,
+        jardin,
+        bodega,
+        direccion,
+        linkMaps,
+        idInmueble
+    ){
+        return db.execute(
+            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?,activoInmueble=1 WHERE idInmueble = ?',
+            [   
+                titulo,
+                tipoMovimiento,
+                linkVideo,
+                precioVenta,
+                precioRenta,
+                m2terreno,
+                niveles,
+                mediosBanios,
+                cuotaMantenimiento,
+                fechaConstruccion,
+                usoSuelo,
+                ubicado,
+                tipoGas,
+                m2construccion,
+                recamaras,
+                estacionamientos,
+                banios,
+                desc,
+                cocina,
+                cisterna,
+                cuartoServicio,
+                salaTV,
+                estudio,
+                roofGarden,
+                areaLavado,
+                vigilancia,
+                jardin,
+                bodega,
+                direccion,
+                linkMaps,
                 idInmueble
             ]
         );
