@@ -18,7 +18,7 @@ exports.getDashboard = (req, res, next) => {
         isLogged = true;
         res.render('listUsers', {
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
         });
     } 
 }
@@ -30,16 +30,21 @@ exports.updateRol = async(req, res, next) => {
 
 // Tomar el id del usuario a eliminar y enviarlo al delete.
 exports.deleteUser = async(req, res, next) => {
-    const id = req.params.id;
-    await Dashboard.DeleteUser(id);
+    const count_1 = await Dashboard.checkUser(req.params.id)
+    const count_2 = await Dashboard.checkUser2(req.params.id)
+    const count_3 = await Dashboard.checkUser3(req.params.id)
+    tramites_activos=count_1+count_2+count_3
+    console.log("Si llegó y su valor es: ",tramites_activos)
+    if (tramites_activos==0){
+        await Dashboard.DeleteUser(req.params.id);
+    }
+    else{
+        
+    }
+    
 }
 // Obtener lista de usuarios disponibles en el sistema.
 exports.getUsers = async(req, res, next) => {
     const dataUsers = await Dashboard.fetchAllUsers();
     res.status(200).json({code: 200, code: "Ok", data: dataUsers[0]});
-}
-//Obtener la cantidad de trámites del usuario
-exports.checkUser = async(req, res, next) => {
-    const cuenta = Dashboard.checkUser(req.params.id) 
-    return cuenta;
 }

@@ -179,23 +179,19 @@
                 title: '¿Confirma la eliminación del usuario?',
                 showCancelButton: true,
                 confirmButtonText: `Confirmar`,
-            }).then((result) => {                                      
+            }).then((result) => {     
+                //Ejecución de la query y recarga de la página.                                   
                 if(result.isConfirmed){
-                    var tramites_activos=$.ajax({
-                        url: '/dashboard/lista/eliminar/asegurar' + id,
-                        method: 'get',
-                    });
-                }
-                //Ejecución de la query y recarga de la página.  
-                console.log('Trámites activos: ',tramites_activos.data)
-                if (tramites_activos==0) {
-                    $.ajax({
+                        $.ajax({
                         url: '/dashboard/lista/eliminar/' + id,
                         method: 'put',
                     });
                     Swal.fire('Usuario Eliminado!')
+                    Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
                     recargarTablaUsuarios();
                 }
+
+                
                 else{
                     Swal.fire('El usuario tiene procesos pendientes. Favor de concretarlos o reasignarlos antes de continuar.')
                 }
