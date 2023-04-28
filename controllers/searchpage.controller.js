@@ -73,3 +73,72 @@ exports.getImgFromBucket = ( req,res,next ) => {
         res.send(data.Body);
     });
 }
+
+exports.getInmueblesFiltrados = async ( req, res, next ) => {
+    parameters = req.body;
+
+    function buildConditions(params) {
+        var conditions = [];
+        var values = [];
+        var conditionsStr;
+        console.log(parameters.direccionInmueble)
+        if (typeof params.direccionInmueble !== 'undefined') {
+            conditions.push("direccionInmueble LIKE ?");
+            values.push("%" + params.direccionInmueble + "%");
+        };
+
+        if (typeof params.idTipoMovimiento !== 'undefined') {
+            conditions.push("idTipoMovimiento LIKE ?");
+            values.push("%" + params.idTipoMovimiento + "%");
+        };
+
+        if (typeof params.idCategoria !== 'undefined') {
+            conditions.push("idCategoria LIKE ?");
+            values.push("%" + params.idCategoria + "%");
+        };
+
+        if (typeof params.precioInmueble !== 'undefined') {
+            conditions.push("precioVentaInmueble OR precioRentaInmueble BETWEEN ?");
+            values.push("%" + params.precioVentaInmueble + "%");
+        };
+
+        if (typeof params.recamarasInmueble !== 'undefined') {
+            conditions.push("recamarasInmueble LIKE ?");
+            values.push("%" + params.recamarasInmueble + "%");
+        };
+
+        if (typeof params.baniosInmueble !== 'undefined') {
+            conditions.push("baniosInmueble LIKE ?");
+            values.push("%" + params.baniosInmueble + "%");
+        };
+
+        if (typeof params.estacionamientosInmueble !== 'undefined') {
+            conditions.push("estacionamientosInmueble LIKE ?");
+            values.push("%" + params.estacionamientosInmueble + "%");
+        };
+
+        if (typeof params.m2TerrenoInmueble !== 'undefined') {
+            conditions.push("m2TerrenoInmueble LIKE ?");
+            values.push("%" + params.m2TerrenoInmueble + "%");
+        };
+
+        return {
+            where: conditions.length ?
+                    conditions.join(' AND ') : '1',
+            values: values
+        };
+    };
+
+    var conditions = buildConditions(parameters);
+    var builtQuery = 'SELECT * FROM propiedad WHERE ' + conditions.where;
+    var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where;
+    console.log(builtQuery);
+    console.log(conditions.values)
+
+    console.log("prueba filtrada")
+    const filtered = await SearchPage.inmueblesFiltrados(builtQuery, conditions.values);
+    const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values)
+    console.log(filtered)
+    console.log(countFiltered)
+
+}
