@@ -202,4 +202,74 @@ module.exports = class Dashboard{
         );
     }
 
+
+    static activateInmuebleLocal(
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precioVenta,
+        precioRenta,
+        m2terreno,
+        m2construccion,
+        medidaFrente,
+        medidaFondo,
+        niveles,
+        cuartosPrivadosInmueble,
+        mediosBanios,
+        estacionamientos,
+        usoSuelo,
+        ubicado,
+        cuotaMantenimiento,
+        cocina,
+        cisterna,
+        cuartoServicio,
+        fechaConstruccion,
+        vigilancia,
+        tipoGas,
+        estacionamientos,
+        banios,
+        desc,
+        idInmueble
+    ){
+        return db.execute(
+            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,m2ConstruidosInmueble=?,medidaFrenteInmueble=?,medidaFondoInmueble=?,nivelesInmueble=?,cuartosPrivadosInmueble=?,mediosBaniosInmueble=?,estacionamientosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?,cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=? WHERE idInmueble = ?',
+            [   
+                titulo,
+                tipoMovimiento,
+                linkVideo,
+                precioVenta,
+                precioRenta,
+                m2terreno,
+                m2construccion,
+                medidaFrente,
+                medidaFondo,
+                niveles,
+                cuartosPrivadosInmueble,
+                mediosBanios,
+                cuotaMantenimiento,
+                fechaConstruccion,
+                usoSuelo,
+                ubicado,
+                tipoGas,
+                m2construccion,
+                recamaras,
+                estacionamientos,
+                banios,
+                desc,
+                cocina,
+                cisterna,
+                cuartoServicio,
+                salaTV,
+                estudio,
+                roofGarden,
+                areaLavado,
+                vigilancia,
+                jardin,
+                bodega,
+                idInmueble
+            ]
+        );
+    }
+
+
 }
