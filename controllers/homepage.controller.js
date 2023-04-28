@@ -29,8 +29,8 @@ exports.root = async (req, res, next) => {
     };
 }
 
-exports.getAltaInmueble = async(req, res) => {
-    res.render('formularioAltaInmueble', {
-        isLogged: req.session.isLoggedIn
-    });
-}
+// exports.getAltaInmueble = async(req, res) => {
+//     res.render('formularioAltaInmueble', {
+//         isLogged: req.session.isLoggedIn
+//     });
+// }
