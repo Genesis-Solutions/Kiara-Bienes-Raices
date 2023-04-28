@@ -41,16 +41,19 @@
                             <option value="6">Oficina</option>
                             <option value="7">Otro</option>
                         </select>
-                        <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                            <option disabled selected>Precio</option>
-                            <option value="Venta">10-20</option>
-                            <option value="Renta">20-30</option>
-                        </select>                        
-                        <div>
-                            <a class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle" @click="open = ! open">
-                                Más filtros
-                            </a>
-                        </div>
+                            <a id="toggle-slider" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Precio</a>
+                            <div id="slider" class="hidden">
+                                <div class="mt-1">
+                                    <input type="range" name="price-range" id="price-range" min="0" max="100" step="1" class="slider">
+                                </div>
+                                <div class="flex justify-between mt-4">
+                                    <span class="font-medium text-gray-700">$0</span>
+                                    <span class="font-medium text-gray-700">$100</span>
+                                </div>
+                            </div>                      
+                        <a class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle cursor-pointer" @click="open = ! open">
+                            Más filtros
+                        </a>
                     </div>
                 </div>
                 <div x-show="open"   x-transition:enter="transition ease-out duration-300"
@@ -61,86 +64,42 @@
                 x-transition:leave-end="opacity-0 translate-y-0" class="flex gap-6">
                     <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
                         <option disabled selected>Recámaras</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <!-- Aqui lo que se haria seria que en la consulta dices que si el avlue es >5 muestre las propiedades -->
+                        <option value="6">5+</option>
                     </select>
                     <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
                         <option disabled selected>Baños</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <!-- Aqui lo que se haria seria igual que arriba -->
+                        <option value="4">3+</option>
                     </select> 
                     <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
                         <option disabled selected>Estacionamientos</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <!-- Aqui lo que se haria seria igual que en los de arriba -->
+                        <option value="4">3+</option>
                     </select> 
                     <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
                         <option disabled selected>Metros cuadrados</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
+                        <option value="100">1-100</option>
+                        <option value="200">101-200</option>
+                        <option value="300">201-300</option>
+                        <option value="400">301-400</option>
+                        <option value="500">500+</option>
                     </select>  
                 </div>
             </div>
         </form>
 
-
-        <!-- <form>
-            <div class="py-6 flex flex-col items-center justify-center relative gap-5">
-                <div class="flex items-center justify-between flex-col gap-6 mt-5">
-                    <div class="flex gap-6">
-                        <input type="text" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ubicación">
-                        <button type="submit" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Search</button>
-                    </div>
-                    <div class="flex gap-6">
-                        <select name="operacionInmueble" id="operacionInmueble" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                            <option disabled selected>Tipo de operación</option>
-                            <option value="Venta">Venta</option>
-                            <option value="Renta">Renta</option>
-                        </select>
-                        <select name="tipoInmueble" id="tipoInmueble" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                            <option disabled selected>Tipo de inmueble</option>
-                            <option value="Venta">Casa</option>
-                            <option value="Renta">Departamento</option>
-                        </select>
-                        <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                            <option disabled selected>Precio</option>
-                            <option value="Venta">10-20</option>
-                            <option value="Renta">20-30</option>
-                        </select>                        
-                        <div>
-                            <label class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 peer/masFiltros" id="masFiltros" >
-                                Más filtros
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="hidden peer-checked/masFiltros:flex">
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Recámaras</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
-                    </select>
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Baños</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
-                    </select> 
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Estacionamientos</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
-                    </select> 
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Metros cuadrados</option>
-                        <option value="Venta">10-20</option>
-                        <option value="Renta">20-30</option>
-                    </select>  
-                </div>
-            </div>
-        </form> -->
-
-    <!-- </div> -->
-    
     <!-- Desplegar elementos del catalogo -->
     
         <% if(inmuebles.length > 0){ %>
@@ -185,6 +144,32 @@
     <%- include("partials/footer") %>
 
     <script src="//unpkg.com/alpinejs" defer></script>
+
+    <script>
+        const toggleSlider = document.getElementById('toggle-slider');
+        const slider = document.getElementById('slider');
+        
+        toggleSlider.addEventListener('click', () => {
+            slider.classList.toggle('hidden');
+        });
+
+        const priceRange = document.getElementById('price-range');
+        const minValue = document.getElementById('min-value');
+        const maxValue = document.getElementById('max-value');
+
+        priceRange.addEventListener('input', () => {
+            const min = parseFloat(priceRange.min);
+            const max = parseFloat(priceRange.max);
+            const value = parseFloat(priceRange.value);
+            const range = max - min;
+            const percentage = (value - min) / range;
+            const width = priceRange.offsetWidth;
+            const left = percentage * width;
+
+            minValue.textContent = `$${value}`;
+            maxValue.textContent = `$${max}`;
+        });
+    </script>
 
 </body>
 </html>
