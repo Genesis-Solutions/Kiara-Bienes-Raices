@@ -7,6 +7,7 @@ const bucket = require("../util/awsBucket.js");
 exports.getSearchPage = async( req,res,next ) => {
     //Obtener la cantidad de inmuebles
     const totalInmuebles = await SearchPage.totalInmuebles();
+    console.log(totalInmuebles)
     //Cantidad de resultados por pagina
     const resultadosPorPagina = 1;
     //Establecer la cantidad de resultados por pagina
@@ -25,12 +26,14 @@ exports.getSearchPage = async( req,res,next ) => {
     var limInferior = limiteInferior.toString();
     //Construir la lista de inmuebles
     const inmuebles = await SearchPage.inmueblesPaginados(limInferior,limSuperior);
+    
     for (let i=0; i < inmuebles[0].length; i++) {
         const imgId = await SearchPage.idFotoPortada((inmuebles[0][i].idInmueble.toString()));
         const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
         const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
         inmuebles[0][i].img = imgSrcFilename;
     }
+    console.log(inmuebles[0]);
     //Obtener la información necesaria de la lista
     if (pagina <= 3) {
         iterador = 1;
@@ -81,46 +84,65 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         var conditions = [];
         var values = [];
         var conditionsStr;
+
         console.log(parameters.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
             conditions.push("direccionInmueble LIKE ?");
             values.push("%" + params.direccionInmueble + "%");
         };
 
-        if (typeof params.idTipoMovimiento !== 'undefined') {
-            conditions.push("idTipoMovimiento LIKE ?");
-            values.push("%" + params.idTipoMovimiento + "%");
-        };
+        if (params.idCategoria == "1" || params.idCategoria == "2") {
+            var catCasa = "1"
+            var catDept = "2"
+            conditions.push("idCategoria = ? OR ?")
+            values.push(catCasa);
+            values.push(catDept);
+            if (typeof params.baniosInmueble !== 'undefined') {
+                conditions.push("baniosInmueble >= ?");
+                values.push(params.baniosInmueble);
+            };
+    
+            if (typeof params.recamarasInmueble !== 'undefined') {
+                conditions.push("recamarasInmueble >= ?");
+                values.push(params.recamarasInmueble);
+            };
 
-        if (typeof params.idCategoria !== 'undefined') {
-            conditions.push("idCategoria LIKE ?");
-            values.push("%" + params.idCategoria + "%");
-        };
+            if (typeof params.estacionamientosInmueble !== 'undefined') {
+                conditions.push("estacionamientosInmueble LIKE ?");
+                values.push("%" + params.estacionamientosInmueble + "%");
+            };
+        }
 
-        if (typeof params.precioInmueble !== 'undefined') {
-            conditions.push("precioVentaInmueble OR precioRentaInmueble BETWEEN ?");
-            values.push("%" + params.precioVentaInmueble + "%");
-        };
+        if (params.idCategoria == "3" || params.idCategoria == "4") {
+            var catLocal = "3"
+            var catTerreno = "4"
+            conditions.push("idCategoria = ? OR ?")
+            values.push(catLocal);
+            values.push(catTerreno);
 
-        if (typeof params.recamarasInmueble !== 'undefined') {
-            conditions.push("recamarasInmueble LIKE ?");
-            values.push("%" + params.recamarasInmueble + "%");
-        };
+            if (typeof params.m2ConstruidosInmueble !== 'undefined') {
+                conditions.push("m2ConstruidosInmueble >= ?");
+                values.push(params.m2ConstruidosInmueble);
+            };
+        }
 
-        if (typeof params.baniosInmueble !== 'undefined') {
-            conditions.push("baniosInmueble LIKE ?");
-            values.push("%" + params.baniosInmueble + "%");
-        };
+        // venta
+        if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
+            if (typeof params.precioLimInf !== 'undefined') {
+                conditions.push("precioVenta BETWEEN ? AND ?");
+                values.push(params.precioLimInf);
+                values.push(params.precioLimSup);
+            };
+        }
 
-        if (typeof params.estacionamientosInmueble !== 'undefined') {
-            conditions.push("estacionamientosInmueble LIKE ?");
-            values.push("%" + params.estacionamientosInmueble + "%");
-        };
-
-        if (typeof params.m2TerrenoInmueble !== 'undefined') {
-            conditions.push("m2TerrenoInmueble LIKE ?");
-            values.push("%" + params.m2TerrenoInmueble + "%");
-        };
+        // renta
+        if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
+            if (typeof params.precioLimInf !== 'undefined') {
+                conditions.push("precioVenta BETWEEN ? AND ?");
+                values.push(params.precioLimInf);
+                values.push(params.precioLimSup);
+            };
+        }
 
         return {
             where: conditions.length ?
@@ -130,7 +152,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     };
 
     var conditions = buildConditions(parameters);
-    var builtQuery = 'SELECT * FROM propiedad WHERE ' + conditions.where;
+    var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where;
     var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where;
     console.log(builtQuery);
     console.log(conditions.values)
