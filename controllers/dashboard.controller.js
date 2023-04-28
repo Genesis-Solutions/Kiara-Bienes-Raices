@@ -20,31 +20,34 @@ exports.getDashboard = (req, res, next) => {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
         });
-    } 
+    }
 }
 // Tomar el id del usuario y el id del rol, concatenados dentro del parámetro, y enviarlos a la query de actualización.
-exports.updateRol = async(req, res, next) => {
+exports.updateRol = async (req, res, next) => {
     const id = req.params.id;
     await Dashboard.UpdateUserRol(id);
 }
 
 // Tomar el id del usuario a eliminar y enviarlo al delete.
-exports.deleteUser = async(req, res, next) => {
-    const count_1 = await Dashboard.checkUser(req.params.id)
-    const count_2 = await Dashboard.checkUser2(req.params.id)
-    const count_3 = await Dashboard.checkUser3(req.params.id)
-    tramites_activos=count_1+count_2+count_3
-    console.log("Si llegó y su valor es: ",tramites_activos)
-    if (tramites_activos==0){
+exports.deleteUser = async (req, res, next) => {
+    const primeraComprobacion = await Dashboard.checkUser(req.params.id)
+    const segundaComprobacion = await Dashboard.checkUser2(req.params.id)
+    const terceraComprobacion = await Dashboard.checkUser3(req.params.id)
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion
+    if (tramites_activos == 0) {
         await Dashboard.DeleteUser(req.params.id);
     }
-    else{
-        
+    else {
+        res.status(200).json({
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            comprobacionEliminado: true
+        });
     }
-    
+
 }
 // Obtener lista de usuarios disponibles en el sistema.
-exports.getUsers = async(req, res, next) => {
+exports.getUsers = async (req, res, next) => {
     const dataUsers = await Dashboard.fetchAllUsers();
-    res.status(200).json({code: 200, code: "Ok", data: dataUsers[0]});
+    res.status(200).json({ code: 200, code: "Ok", data: dataUsers[0] });
 }

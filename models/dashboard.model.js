@@ -41,24 +41,24 @@ module.exports = class Dashboard {
     static checkUser(idUsuario) {
         //Revisión del agente
         return db.execute(
-            'SELECT COUNT(idAgenteAsignado) as primero FROM inmueble where idAgenteAsignado=?', [idUsuario]
+            'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where idAgenteAsignado=?', [idUsuario]
         ).then(([rows, fielData]) => {
-             return rows[0].primero
+             return rows[0].primera
         })
     }
     static checkUser2(idUsuario){
         return db.execute(
-            'SELECT COUNT(idCliente) as segundo FROM tramite where idCliente=?', [idUsuario]
+            'SELECT COUNT(idCliente) as segunda FROM tramite where idCliente=?', [idUsuario]
         ).then(([rows, fielData]) => {
-            return rows[0].segundo
+            return rows[0].segunda
         })
     }
 
     static checkUser3(idUsuario){
         return db.execute(
-            'SELECT COUNT(idArrendador) as tercero FROM tramite where idArrendador=?', [idUsuario]
+            'SELECT COUNT(idArrendador) as tercera FROM tramite where idArrendador=?', [idUsuario]
         ).then(([rows, fielData]) => {
-            return rows[0].tercero
+            return rows[0].tercera
         })
     }
 

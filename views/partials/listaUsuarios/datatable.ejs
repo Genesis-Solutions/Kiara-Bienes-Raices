@@ -155,7 +155,7 @@
                     }
                 },
                 showCancelButton: true,
-            }).then((result) => {              
+            }).then((result) => {
                 if (result) {
                     $.ajax({
                         url: '/dashboard/lista/actualizar/' + id + result.value,
@@ -179,21 +179,25 @@
                 title: '¿Confirma la eliminación del usuario?',
                 showCancelButton: true,
                 confirmButtonText: `Confirmar`,
-            }).then((result) => {     
+            }).then((result) => {
                 //Ejecución de la query y recarga de la página.                                   
-                if(result.isConfirmed){
-                        $.ajax({
+                if (result.isConfirmed) {
+                    $.ajax({
                         url: '/dashboard/lista/eliminar/' + id,
                         method: 'put',
-                    });
-                    Swal.fire('Usuario Eliminado!')
-                    Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
-                    recargarTablaUsuarios();
-                }
+                        success: function (choice) {
+                            if (choice.comprobacionEliminado == false) {
+                                    Swal.fire('Usuario Eliminado!')
+                                    recargarTablaUsuarios();
+                                    } else {
+                                    Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
+                                    }   
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
 
-                
-                else{
-                    Swal.fire('El usuario tiene procesos pendientes. Favor de concretarlos o reasignarlos antes de continuar.')
+                    });
                 }
             })
         });
