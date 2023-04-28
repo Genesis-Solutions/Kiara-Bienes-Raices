@@ -216,7 +216,6 @@ module.exports = class Dashboard{
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
-        estacionamientos,
         usoSuelo,
         ubicado,
         cuotaMantenimiento,

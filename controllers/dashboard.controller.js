@@ -90,11 +90,11 @@ exports.setMainPhoto = (req,res,next) => {
                     .then(([rows2, fieldData]) => {
                         console.log("FotoInmueble - idInmueble: ",idInmueble);
                         console.log("FotoInmueble - idFoto: ",rows2[0].idFoto);
-                        Dashboard.insertFotoInmueble(idInmueble,rows2[0].idFoto);
-                            // .then(([rows3, fieldData]) => {
-                            //     res.redirect('/dashboard/alta');
-                            // })
-                            // .catch(error => { console.log(error) });
+                        Dashboard.insertFotoInmueble(idInmueble,rows2[0].idFoto)
+                            .then(([rows3, fieldData]) => {
+                                res.status(200).json({code: 200, msg:"Ok"})
+                            })
+                            .catch(error => { console.log(error) });
                     })
                     .catch(error => { console.log(error) });
             })
@@ -202,7 +202,7 @@ exports.updateBodyCasa = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.redirect('/dashboard/alta');
+    res.status(200).json({code: 200, msg:"Ok"})
 };
 
 exports.updateBodyLocal = (req,res,next) => {
