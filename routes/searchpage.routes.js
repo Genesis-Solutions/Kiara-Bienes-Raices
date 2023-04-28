@@ -11,5 +11,6 @@ const searchPageController = require('../controllers/searchpage.controller.js');
 router.get('/get_bucket_img',searchPageController.getImgFromBucket);
 //Desplegar catalogo y obtener query(?pagina=) de paginación.
 router.get('/',searchPageController.getSearchPage);
+router.post('/search', searchPageController.getInmueblesFiltrados);
 
 module.exports = router;
