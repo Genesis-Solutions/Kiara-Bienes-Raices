@@ -173,12 +173,6 @@ exports.updateBodyCasa = (req,res,next) => {
         idInmueble
     );
     res.redirect('/dashboard/alta');
-    //     .then(() => {
-    //         res.redirect("/dashboard/alta");
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
 };
 
 exports.updateBodyLocal = (req,res,next) => {
@@ -241,12 +235,6 @@ exports.updateBodyLocal = (req,res,next) => {
         idInmueble
     );
     res.redirect('/dashboard/alta');
-    //     .then(() => {
-    //         res.redirect("/dashboard/alta");
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
 };
 
 exports.updateBodyTerreno = (req,res,next) => {
