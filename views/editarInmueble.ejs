@@ -6,52 +6,64 @@
     
     <% for (let inmueble of inmuebles) { %>
 
-        <!-- Pictures Form -->
-
-        <div class="px-10 py-5 grid grid-cols-3">
-            <div class="col-span-2">
-                <h2 class="text-lg font-semibold">
-                    Imagen Principal
-                </h2>
-
-                <!-- Main Picture Form -->
-
-                <form action="">
-                    <div class="flex items-center text-center justify-center w-full p-4">
-                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                            <div class="flex flex-col items-center justify-center pt-8 pb-5">
-                                <i class="fa-solid fa-cloud-arrow-up fa-2xl text-gray-500"></i>
-                                <br>
-                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Selecciona</span> la imagen principal del inmueble.</p>
-                                <p class="text-xs text-gray-500">PNG, JPG o JPEG</p>
-                            </div>
-                            <input id="dropzone-file" type="file" class="hidden"/>
-                        </label>
+        <div class="py-5 lg:py-10 px-8">
+            <h1 class="text-4xl font-bold"><%= inmueble.nombreInmueble %></h1>
+            <hr class="h-px my-3 bg-gray-800 border-0">
+            <!-- Photo Carousel sm screens -->
+            <div id="controls-carousel" class="relative w-full mt-4 md:hidden" data-carousel="static">
+                <!-- Carousel wrapper -->
+                <div class="relative rounded-lg h-72 overflow-hidden">
+                    <div class="duration-700 ease-in-out" data-carousel-item="active">
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
                     </div>
-                </form>
-
+                    <% for (let i=1; i < fotos.length; i++) { %>
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
+                        </div>
+                    <%}%>
+                    <!-- Item 5 -->
+                    <div class="flex items-center justify-center duration-700 ease-in-out" data-carousel-item>
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full brightness-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="img5">
+                        <a href="<%=inmueble.linkVideoInmueble%>" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
+                            <i class="fa-solid fa-play"></i> 
+                            Video
+                        </a>
+                    </div>
+                </div>
+                <!-- Slider controls -->
+                <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
             </div>
-            <div>
-                <h2 class="text-lg font-semibold">
-                    Imágenes Secundarias
-                </h2>
-
-                <!-- Secundary Pictures Form -->
-
-                <form action="">
-                    <div class="flex items-center text-center justify-center w-full p-4">
-                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                            <div class="flex flex-col items-center justify-center pt-8 pb-5">
-                                <i class="fa-solid fa-cloud-arrow-up fa-2xl text-gray-500"></i>
-                                <br>
-                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Selecciona</span> las imágenes secundarias del inmueble.</p>
-                                <p class="text-xs text-gray-500">PNG, JPG o JPEG</p>
-                            </div>
-                            <input id="dropzone-file" type="file" class="hidden"/>
-                        </label>
+            
+            <!-- Photo Album md and lg screens -->
+            <div class="md:mt-5 lg:mt-10 md:grid md:grid-cols-2 h-96 md:gap-2 hidden">
+                <div class="cursor-pointer hover:scale-105 transition duration-150 h-96 w-full">
+                    <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="rounded-l-lg object-cover h-full w-full " alt="Imagen principal">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <% for (let i=1; i < 4; i++) { %>
+                        <div class="cursor-pointer hover:scale-105 transition duration-150 h-48">
+                            <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="object-cover h-full w-full" alt="Imagen de inmueble 4">
+                        </div>
+                    <%}%>
+                    <div class="flex items-center justify-center cursor-pointer hover:scale-105 transition duration-150">
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="-z-10 brightness-50 relative rounded-br-lg object-none h-48 w-full" alt="Imagen de inmueble 5">
+                        <a href="<%=inmueble.linkVideoInmueble%>" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
+                            <i class="fa-solid fa-play"></i> 
+                            Video
+                        </a>
                     </div>
-                </form>
-
+                </div>
             </div>
         </div>
 
@@ -66,32 +78,32 @@
                     <label for="titulo" class="text-lg font-semibold">Título</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="text" id="titulo" name="titulo" placeholder="Casa en Álamos" maxlength="30" required/>
+                        type="text" id="titulo" name="titulo" value="<%=inmueble.nombreInmueble%>" placeholder="<%=inmueble.nombreInmueble%>" maxlength="30" required/>
                 </div>
                 <div class="space-y-2">
                     <label for="linkVideo" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="text" id="linkVideo" name="linkVideo" placeholder="www.youtube.com" required/>
+                        type="text" id="linkVideo" name="linkVideo" value="<%=inmueble.linkVideoInmueble%>" placeholder="<%=inmueble.linkVideoInmueble%>" required/>
                 </div>
             </div>
 
             <!-- Detalles -->
 
             <% if (inmueble.idCategoria == 1) { %>
-                <%- include('partials/formsInmuebles/casaDepartamento') %>
+                <%- include('partials/formsInmuebles/modificarCasaDepartamento', {inmueble: inmueble}) %>
             <% } else if (inmueble.idCategoria == 2) { %>
-                <%- include('partials/formsInmuebles/casaDepartamento') %>
+                <%- include('partials/formsInmuebles/modificarCasaDepartamento', {inmueble: inmueble}) %>
             <% } else if (inmueble.idCategoria == 3) { %>
-                <%- include('partials/formsInmuebles/local') %>
+                <%- include('partials/formsInmuebles/modificarLocal', {inmueble: inmueble}) %>
             <% } else if (inmueble.idCategoria == 4) { %>
-                <%- include('partials/formsInmuebles/terreno') %>
+                <%- include('partials/formsInmuebles/modificarTerreno', {inmueble: inmueble}) %>
             <% } else if (inmueble.idCategoria == 5) { %>
-                <%- include('partials/formsInmuebles/bodega') %>
+                <%- include('partials/formsInmuebles/modificarBodega', {inmueble: inmueble}) %>
             <% } else if (inmueble.idCategoria == 6) { %>
-                <%- include('partials/formsInmuebles/oficina') %>
+                <%- include('partials/formsInmuebles/modificarOficina', {inmueble: inmueble}) %>
             <% } else if (inmueble.idCategoria == 7) { %>
-                <%- include('partials/formsInmuebles/otro') %>
+                <%- include('partials/formsInmuebles/modificarOtro', {inmueble: inmueble}) %>
             <% } %>  
 
             <!-- Dirección Inmueble -->
@@ -160,6 +172,7 @@
     </script>
 
     <%- include("partials/footer") %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
 </body>
 </html>
