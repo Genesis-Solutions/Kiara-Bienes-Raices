@@ -82,8 +82,41 @@
             $('#dataTableUsuarios').append(tfooter);
             $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
             dataTable = $("#dataTableUsuarios").dataTable({
-                language: {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            processing : true,
+            lengthMenu : [5, 10, 20, 25, 30],
+            order      : [[0,'asc']],
+            deferRender: true,
+            ajax       : '/dashboard/usuarios',
+            columns    : [
+                {
+                    data: "idUsuario"
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return '<span class="badge badge-success">'+data.nombreUsuario+'</span>'
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return '<span class="badge badge-success">'+data.apellidosUsuario+'</span>'
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return '<span class="badge badge-success">'+data.nombreRol+'</span>'
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
+                    }
                 },
                 processing: true,
                 lengthMenu: [5, 10, 20, 25, 30],

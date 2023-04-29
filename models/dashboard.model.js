@@ -1,6 +1,7 @@
 const db = require('../util/database.js');
+const bcrypt = require("bcryptjs");
 
-module.exports = class Dashboard{
+module.exports = class Dashboard {
 
     static fetchAllUsers() {
         return db.execute(
@@ -14,5 +15,47 @@ module.exports = class Dashboard{
             'UPDATE usuario SET idRol=? WHERE idUsuario=?',[idRol, idUs]
         );
     }
+
+    static findOne(emailUsuario) {
+        return db.execute("SELECT * FROM usuario WHERE emailUsuario=?", [
+            emailUsuario,
+        ]);
+    }
+
+    static adminInsertUser(
+        nombreUsuario,
+        apellidosUsuario,
+        passwordUsuario,
+        telefonoUsuarioString,
+        emailUsuario,
+        estadoCivilUsuario,
+        ocupacionUsuario,
+        activoUsuarioString,
+        idRolString,
+        idFotoString
+    ) {
+        return bcrypt.hash(passwordUsuario, 12).then((passwordCifrado) => {
+            return db
+                .execute(
+                    "INSERT INTO usuario(nombreUsuario, apellidosUsuario,passwordUsuario,telefonoUsuario, emailUsuario,estadoCivilUsuario, ocupacionUsuario,activoUsuario ,idRol, idFoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    [
+                        nombreUsuario,
+                        apellidosUsuario,
+                        passwordCifrado,
+                        telefonoUsuarioString,
+                        emailUsuario,
+                        estadoCivilUsuario,
+                        ocupacionUsuario,
+                        activoUsuarioString,
+                        idRolString,
+                        idFotoString,
+                    ]
+                )
+                .catch((error) => {
+                    console.log(error);
+                });
+        });
+    }
+
 
 }
