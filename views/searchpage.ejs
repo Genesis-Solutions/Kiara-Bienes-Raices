@@ -41,16 +41,23 @@
                             <option value="6">Oficina</option>
                             <option value="7">Otro</option>
                         </select>
-                            <a id="toggle-slider" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Precio</a>
-                            <div id="slider" class="hidden">
-                                <div class="mt-1">
-                                    <input type="range" name="price-range" id="price-range" min="0" max="100" step="1" class="slider">
+                            <!-- <a id="toggle-slider" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 cursor-pointer">Precio</a>
+                            <div id="slider" class="hidden"> -->
+                                <div class="flex justify-center space-x-4">
+                                    <div>
+                                        <label class="block text-gray-700 font-bold mb-2" for="precio-minimo">
+                                            Precio mínimo
+                                        </label>
+                                        <input id="precioMinimo" name="precioMinimo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-minimo" type="number" placeholder="0">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 font-bold mb-2" for="precio-maximo">
+                                            Precio máximo
+                                        </label>
+                                        <input id="precioMaximo" name="precioMaximo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-maximo" type="number" placeholder="0">
+                                    </div>
                                 </div>
-                                <div class="flex justify-between mt-4">
-                                    <span class="font-medium text-gray-700">$0</span>
-                                    <span class="font-medium text-gray-700">$100</span>
-                                </div>
-                            </div>                      
+                            <!-- </div>                       -->
                         <a class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle cursor-pointer" @click="open = ! open">
                             Más filtros
                         </a>
@@ -145,7 +152,7 @@
 
     <script src="//unpkg.com/alpinejs" defer></script>
 
-    <script>
+<!--     <script>
         const toggleSlider = document.getElementById('toggle-slider');
         const slider = document.getElementById('slider');
         
@@ -169,7 +176,7 @@
             minValue.textContent = `$${value}`;
             maxValue.textContent = `$${max}`;
         });
-    </script>
+    </script> -->
 
 </body>
 </html>
