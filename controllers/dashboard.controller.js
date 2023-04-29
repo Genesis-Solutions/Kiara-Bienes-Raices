@@ -176,13 +176,14 @@ exports.updateBodyCasa = (req,res,next) => {
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
     res.redirect("/dashboard/alta");
-    Dashboard.activateInmuebleCasa(
+    Dashboard.changeInmuebleCasa(
         titulo,
         tipoMovimiento,
         linkVideo,
         precioVenta,
         precioRenta,
         m2terreno,
+        m2construccion,
         niveles,
         mediosBanios,
         cuotaMantenimiento,
@@ -190,7 +191,6 @@ exports.updateBodyCasa = (req,res,next) => {
         usoSuelo,
         ubicado,
         tipoGas,
-        m2construccion,
         recamaras,
         estacionamientos,
         banios,
@@ -231,6 +231,8 @@ exports.updateBodyLocal = (req,res,next) => {
         tipoGas,
         estacionamientos,
         banios,
+        direccion,
+        linkMaps,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -255,7 +257,7 @@ exports.updateBodyLocal = (req,res,next) => {
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
     res.redirect("/dashboard/alta");
-    Dashboard.activateInmuebleLocal(
+    Dashboard.changeInmuebleLocal(
         titulo,
         tipoMovimiento,
         linkVideo,
@@ -281,6 +283,8 @@ exports.updateBodyLocal = (req,res,next) => {
         estacionamientos,
         banios,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.redirect('/dashboard/alta');
@@ -299,6 +303,8 @@ exports.updateBodyTerreno = (req,res,next) => {
         ubicado,
         tipoSuelo,
         cuotaMantenimiento,
+        direccion,
+        linkMaps,
         desc
     } = req.body;
     let tipoMovimiento = 0;
@@ -322,7 +328,7 @@ exports.updateBodyTerreno = (req,res,next) => {
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
     res.redirect("/dashboard/alta");
-    Dashboard.activateInmuebleTerreno(
+    Dashboard.changeInmuebleTerreno(
         titulo,
         tipoMovimiento,
         linkVideo,
@@ -341,6 +347,8 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         vigilancia,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.redirect('/dashboard/alta');
@@ -368,6 +376,8 @@ exports.updateBodyBodega = (req,res,next) => {
         tipoLuz,
         estacionamientos,
         banios,
+        direccion,
+        linkMaps,
         desc
     } = req.body;
     let tipoMovimiento = 0;
@@ -394,7 +404,7 @@ exports.updateBodyBodega = (req,res,next) => {
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
     res.redirect("/dashboard/alta");
-    Dashboard.activateInmuebleBodega(
+    Dashboard.changeInmuebleBodega(
         titulo,
         tipoMovimiento,
         linkVideo,
@@ -426,6 +436,8 @@ exports.updateBodyBodega = (req,res,next) => {
         estacionamientos,
         banios,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.redirect('/dashboard/alta');
@@ -447,6 +459,8 @@ exports.updateBodyOficina = (req,res,next) => {
         fechaConstruccion,
         estacionamientos,
         banios,
+        direccion,
+        linkMaps,
         desc
     } = req.body;
     let tipoMovimiento = 0;
@@ -469,7 +483,7 @@ exports.updateBodyOficina = (req,res,next) => {
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
     res.redirect("/dashboard/alta");
-    Dashboard.activateInmuebleOficina(
+    Dashboard.changeInmuebleOficina(
         titulo,
         tipoMovimiento,
         linkVideo,
@@ -489,7 +503,8 @@ exports.updateBodyOficina = (req,res,next) => {
         vigilancia,
         estacionamientos,
         banios,
-        desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.redirect('/dashboard/alta');
@@ -511,6 +526,8 @@ exports.updateBodyOtra = (req,res,next) => {
         cuotaMantenimiento,
         estacionamientos,
         banios,
+        direccion,
+        linkMaps,
         desc
     } = req.body;
     let tipoMovimiento = 0;
@@ -533,7 +550,7 @@ exports.updateBodyOtra = (req,res,next) => {
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
     res.redirect("/dashboard/alta");
-    Dashboard.activateInmuebleOtra(
+    Dashboard.changeInmuebleOtra(
         titulo,
         tipoMovimiento,
         linkVideo,
@@ -550,11 +567,12 @@ exports.updateBodyOtra = (req,res,next) => {
         cuotaMantenimiento,
         cocina,
         cisterna,
-        fechaConstruccion,
         vigilancia,
         estacionamientos,
         banios,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.redirect('/dashboard/alta');
