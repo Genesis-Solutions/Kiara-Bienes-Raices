@@ -433,7 +433,6 @@ exports.updateBodyBodega = (req,res,next) => {
         altura,
         tipoPiso,
         tipoLuz,
-        estacionamientos,
         banios,
         desc,
         direccion,
@@ -504,6 +503,7 @@ exports.updateBodyOficina = (req,res,next) => {
         estacionamientos,
         banios,
         direccion,
+        desc,
         linkMaps,
         idInmueble
     );
