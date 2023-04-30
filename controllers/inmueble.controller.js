@@ -293,7 +293,8 @@ exports.updateBodyTerreno = (req,res,next) => {
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
+    console.log("idInmueble", idInmueble);
+    console.log(req.body);
     Inmueble.changeInmuebleTerreno(
         titulo,
         tipoMovimiento,

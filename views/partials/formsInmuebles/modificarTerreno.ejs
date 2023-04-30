@@ -11,7 +11,7 @@
                     <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
                     <input
                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="number" id="precioVenta" name="precioVenta" value="<%=inmueble.precioVentaInmueble%>" placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" required/>
+                        type="number" id="precioVenta" name="precioVenta" placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" required/>
                 </div>
                 <div class="mt-4 hidden peer-checked/renta:block space-y-2">
                     <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
@@ -126,32 +126,32 @@
 
             <div class="space-y-2 text-sm text-white">
                 <div>
-                    <input type="checkbox" id="servicoAgua" name="servicioAgua" value=""
-                    <% if (inmueble.servicioAguaInmueble == '1') { %> 
+                    <input type="checkbox" id="servicoAgua" name="servicioAgua" value="0"
+                    <% if (inmueble.servicioAguaInmueble == 1) { %> 
                         checked
                     <% } %>
                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Servicio de Agua</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="servicioLuz" name="servicioLuz" value=""
-                    <% if (inmueble.servicioLuzInmueble == '1') { %> 
+                    <input type="checkbox" id="servicioLuz" name="servicioLuz" value="0"
+                    <% if (inmueble.servicioLuzInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Servicio de Luz</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="servicioDrenaje" name="servicioDrenaje" value=""
-                    <% if (inmueble.servicioDrenajeInmueble == '1') { %> 
+                    <input type="checkbox" id="servicioDrenaje" name="servicioDrenaje" value="0"
+                    <% if (inmueble.servicioDrenajeInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Servicio de Drenaje</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="vigilancia" name="vigilancia" value=""
-                    <% if (inmueble.vigilanciaInmueble == '1') { %> 
+                    <input type="checkbox" id="vigilancia" name="vigilancia" value="0"
+                    <% if (inmueble.vigilanciaInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
