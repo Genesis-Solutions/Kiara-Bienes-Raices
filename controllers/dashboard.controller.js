@@ -12,7 +12,7 @@ exports.getDashboard = (req, res, next) => {
             idRol: req.session.idRol,
         });
     } else if (req.session.idRol == 2) {
-        res.render("listPropiedades", {
+        res.render("dashboardListaPropiedades", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
         });
