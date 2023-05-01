@@ -37,23 +37,16 @@
 
             <!-- Secundary Pictures Form -->
 
-            <!-- <form id="imagenesSecundarias" name="imagenesSecundarias" action="" method="POST" enctype="multipart/form-data">
-                <div class="flex items-center text-center justify-center w-full p-4">
-                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                        <div class="flex flex-col items-center justify-center pt-8 pb-5">
-                            <i class="fa-solid fa-cloud-arrow-up fa-2xl text-gray-500"></i>
-                            <br>
-                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Selecciona</span> las imágenes secundarias del inmueble.</p>
-                            <p class="text-xs text-gray-500">PNG, JPG o JPEG</p>
-                        </div>
-                        <input id="dropzone-file" type="file" class="hidden"/>
-                        <input id="dropzone-file" type="file"/>
-                    </label>
+            <form action="/dashboard/alta/inmueble/imagenesSecundarias/<%=idInmueble%>" id="imagenesSecundarias" name="imagenesSecundarias"
+                enctype="multipart/form-data" method="POST">
+                <div class="dropzone dz-clickable" id="uploadDropzone">
+                    <div class="dz-default dz-message" data-dz-message="">
+                        <span>Drop files here to upload</span>
+                    </div>
                 </div>
-            </form> -->
-            <form action="" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" />
+                <br />
             </form>
+
         </div>
     </div>
 
@@ -64,6 +57,7 @@
     <!-- Buttons Section -->
 
     <div class="px-10 pb-12 flex justify-evenly">
+        <input type="hidden" id="id_inmueble" name="id_inmueble" value="<%=idInmueble%>">
         <button type="submit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
             Cancelar
         </button>
@@ -77,9 +71,11 @@
     <!-- jQuery form plug in -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
     <script src="https://malsup.github.io/jquery.form.js"></script> 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+    <!-- Enlazar con la biblioteca de Dropzone -->
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 
     <script>
         function enviarFormulario(e){
@@ -100,21 +96,17 @@
             $.ajax({
                 url: $(this).attr('action'),
                 type: 'POST',
-                //data: new FormData(this),
                 data: $( this ).serializeArray(),
-                //processData: false,
-                //contentType: false,
                 success: function() {
                     console.log("Dentro del succes de form 1");
-                    $('#imagenPrincipal').submit();
-                    $('#imagenPrincipal').submit(function(e) {
+                    $('#imagenesSecundarias').submit();
+                    $('#imagenesSecundarias').submit(function(e) {
                         e.preventDefault();
-                        console.log("Submit de fotoPrincipal");
+                        console.log("Submit de fotosSecundarias");
                         $.ajax({
                             url: $(this).attr('action'),
                             type: 'POST',
                             data: new FormData(this),
-                            //data: $( this ).serializeArray(),
                             processData: false,
                             contentType: false,
                             success: function() {
@@ -126,6 +118,34 @@
             })
         });
     </script>
+
+        <!-- Configuración de dropzone -->
+        <script type="text/javascript">
+            Dropzone.autoDiscover = false;
+            function paramNameForSend() {
+                return "media";
+            }
+            var idInmueble = $("#id_inmueble").val();
+            console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
+            $("#uploadDropzone").dropzone({ 
+                url: '/dashboard/alta/inmueble/imagenesSecundarias/<%=idInmueble%>',
+                maxFilesize: 15, // MB
+                maxFiles: 25,
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                paramName: paramNameForSend,
+                method: 'post',
+                parallelUploads: 25,
+                init: function() {
+                    var myDropzone = this;
+                    $("#imagenesSecundarias").submit(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                    }); 
+                }
+            });
+        </script>
 
     <script type="text/javascript">
         $(document).ready(function(){

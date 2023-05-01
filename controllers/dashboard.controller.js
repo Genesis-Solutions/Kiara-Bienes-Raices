@@ -74,8 +74,6 @@ exports.setMainPhoto = (req,res,next) => {
     console.log("Entrando a la ruta de imagen principal");
     var upload = storage.array('mainPhoto',1);
     upload(req,res,function(err) {
-        //console.log(req.body);
-        //console.log(req.files);
         if(err) {
             console.log(err)
             return res.end("Error uploading file.");
@@ -92,7 +90,7 @@ exports.setMainPhoto = (req,res,next) => {
                         console.log("FotoInmueble - idFoto: ",rows2[0].idFoto);
                         Dashboard.insertFotoInmueble(idInmueble,rows2[0].idFoto)
                             .then(([rows3, fieldData]) => {
-                                res.status(200).json({code: 200, msg:"Ok"})
+                                res.status(200).json({code: 200, msg:"Ok"});
                             })
                             .catch(error => { console.log(error) });
                     })
@@ -100,6 +98,40 @@ exports.setMainPhoto = (req,res,next) => {
             })
             .catch(error => { console.log(error) });
     })
+};
+
+exports.setSecondaryPhotos = (req,res,next) => {
+    console.log("Entrando a la ruta de las imagenes secundarias");
+    var upload = storage.array('media',25);
+    upload(req, res, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            req.files.forEach(function(file) {
+                console.log("Key del archivo: " + file.key);
+                const idInmueble = req.params.inmueble;
+                const mediaName = file.key;
+                console.log("Id del inmueble: ",idInmueble);
+                console.log("Key del archivo: ",mediaName);
+                Dashboard.insertPhoto(mediaName)
+                    .then(([rows, fieldData]) => {
+                        Dashboard.getLastPhotoId()
+                            .then(([rows2, fieldData]) => {
+                                console.log("FotoInmueble - idInmueble: ",idInmueble);
+                                console.log("FotoInmueble - idFoto: ",rows2[0].idFoto);
+                                Dashboard.insertFotoInmueble(idInmueble,rows2[0].idFoto)
+                                    .then(([rows3, fieldData]) => {
+                                        res.status(200).json({code: 200, msg:"Ok"});
+                                    })
+                                    .catch(error => { console.log(error) });
+                            })
+                            .catch(error => { console.log(error) });
+                    })
+                    .catch(error => { console.log(error) });
+            });
+        res.send("Archivo(s) subido(s) exitosamente");
+        }
+    });
 };
 
 exports.updateBodyCasa = (req,res,next) => {
@@ -125,8 +157,8 @@ exports.updateBodyCasa = (req,res,next) => {
         linkMaps
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
-    const venta = req.body.cocina ? 1 : 0;
-    const renta = req.body.cisterna ? 1 : 0;
+    const venta = req.body.venta ? 1 : 0;
+    const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -137,9 +169,11 @@ exports.updateBodyCasa = (req,res,next) => {
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta;
+        precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta;
+        precioVenta = 0;
     }
     //Obtener amenidades adicionales
     const cocina = req.body.cocina ? 1 : 0;
@@ -202,17 +236,14 @@ exports.updateBodyCasa = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({code: 200, msg:"Ok"});
 };
 
 exports.updateBodyLocal = (req,res,next) => {
     console.log("Entrando a la ruta update body local");
     const {
         titulo,
-        tipoMovimiento,
         linkVideo,
-        precioVenta,
-        precioRenta,
         m2terreno,
         m2construccion,
         medidaFrente,
@@ -229,13 +260,31 @@ exports.updateBodyLocal = (req,res,next) => {
         banios,
         desc
     } = req.body;
+    //Obtener el tipo de movimiento y los respectivos precios
+    const venta = req.body.venta ? 1 : 0;
+    const renta = req.body.renta ? 1 : 0;
+    let tipoMovimiento = 0;
+    let precioVenta = 0;
+    let precioRenta = 0;
+    if(venta === 1 && renta === 1) {
+        tipoMovimiento = 3
+        precioVenta = req.body.precioVenta;
+        precioRenta = req.body.precioRenta;
+    } else if (venta === 1 && renta === 0) {
+        tipoMovimiento = 1
+        precioVenta = req.body.precioVenta;
+        precioRenta = 0;
+    }else if (venta === 0 && renta === 1) {
+        tipoMovimiento = 2
+        precioRenta = req.body.precioRenta;
+        precioVenta = 0;
+    }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
-    res.redirect("/dashboard/alta");
     Dashboard.activateInmuebleLocal(
         titulo,
         tipoMovimiento,
@@ -264,17 +313,14 @@ exports.updateBodyLocal = (req,res,next) => {
         desc,
         idInmueble
     );
-    res.redirect('/dashboard/alta');
+    res.status(200).json({code: 200, msg:"Ok"})
 };
 
 exports.updateBodyTerreno = (req,res,next) => {
     console.log("Entrando a la ruta update body terreno");
     const {
         titulo,
-        tipoMovimiento,
         linkVideo,
-        precioVenta,
-        precioRenta,
         m2terreno,
         m2construccion,
         medidaFrente,
@@ -285,13 +331,31 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         desc
     } = req.body;
+    //Obtener el tipo de movimiento y los respectivos precios
+    const venta = req.body.venta ? 1 : 0;
+    const renta = req.body.renta ? 1 : 0;
+    let tipoMovimiento = 0;
+    let precioVenta = 0;
+    let precioRenta = 0;
+    if(venta === 1 && renta === 1) {
+        tipoMovimiento = 3
+        precioVenta = req.body.precioVenta;
+        precioRenta = req.body.precioRenta;
+    } else if (venta === 1 && renta === 0) {
+        tipoMovimiento = 1
+        precioVenta = req.body.precioVenta;
+        precioRenta = 0;
+    }else if (venta === 0 && renta === 1) {
+        tipoMovimiento = 2
+        precioRenta = req.body.precioRenta;
+        precioVenta = 0;
+    }
     const servicioAgua = req.body.servicioAgua ? 1 : 0;
     const servicioLuz = req.body.servicioLuz ? 1 : 0;
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
-    res.redirect("/dashboard/alta");
     Dashboard.activateInmuebleTerreno(
         titulo,
         tipoMovimiento,
@@ -313,17 +377,14 @@ exports.updateBodyTerreno = (req,res,next) => {
         desc,
         idInmueble
     );
-    res.redirect('/dashboard/alta');
+    res.status(200).json({code: 200, msg:"Ok"})
 };
 
 exports.updateBodyBodega = (req,res,next) => {
     console.log("Entrando a la ruta update body bodega");
     const {
         titulo,
-        tipoMovimiento,
         linkVideo,
-        precioVenta,
-        precioRenta,
         m2terreno,
         m2construccion,
         medidaFrente,
@@ -343,6 +404,25 @@ exports.updateBodyBodega = (req,res,next) => {
         banios,
         desc
     } = req.body;
+    //Obtener el tipo de movimiento y los respectivos precios
+    const venta = req.body.venta ? 1 : 0;
+    const renta = req.body.renta ? 1 : 0;
+    let tipoMovimiento = 0;
+    let precioVenta = 0;
+    let precioRenta = 0;
+    if(venta === 1 && renta === 1) {
+        tipoMovimiento = 3
+        precioVenta = req.body.precioVenta;
+        precioRenta = req.body.precioRenta;
+    } else if (venta === 1 && renta === 0) {
+        tipoMovimiento = 1
+        precioVenta = req.body.precioVenta;
+        precioRenta = 0;
+    }else if (venta === 0 && renta === 1) {
+        tipoMovimiento = 2
+        precioRenta = req.body.precioRenta;
+        precioVenta = 0;
+    }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
@@ -352,7 +432,6 @@ exports.updateBodyBodega = (req,res,next) => {
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
-    res.redirect("/dashboard/alta");
     Dashboard.activateInmuebleBodega(
         titulo,
         tipoMovimiento,
@@ -387,17 +466,14 @@ exports.updateBodyBodega = (req,res,next) => {
         desc,
         idInmueble
     );
-    res.redirect('/dashboard/alta');
+    res.status(200).json({code: 200, msg:"Ok"})
 };
 
 exports.updateBodyOficina = (req,res,next) => {
     console.log("Entrando a la ruta update body oficina");
     const {
         titulo,
-        tipoMovimiento,
         linkVideo,
-        precioVenta,
-        precioRenta,
         m2terreno,
         m2construccion,
         niveles,
@@ -411,12 +487,30 @@ exports.updateBodyOficina = (req,res,next) => {
         banios,
         desc
     } = req.body;
+        //Obtener el tipo de movimiento y los respectivos precios
+        const venta = req.body.venta ? 1 : 0;
+        const renta = req.body.renta ? 1 : 0;
+        let tipoMovimiento = 0;
+        let precioVenta = 0;
+        let precioRenta = 0;
+        if(venta === 1 && renta === 1) {
+            tipoMovimiento = 3
+            precioVenta = req.body.precioVenta;
+            precioRenta = req.body.precioRenta;
+        } else if (venta === 1 && renta === 0) {
+            tipoMovimiento = 1
+            precioVenta = req.body.precioVenta;
+            precioRenta = 0;
+        }else if (venta === 0 && renta === 1) {
+            tipoMovimiento = 2
+            precioRenta = req.body.precioRenta;
+            precioVenta = 0;
+        }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
-    res.redirect("/dashboard/alta");
     Dashboard.activateInmuebleOficina(
         titulo,
         tipoMovimiento,
@@ -440,5 +534,5 @@ exports.updateBodyOficina = (req,res,next) => {
         desc,
         idInmueble
     );
-    res.redirect('/dashboard/alta');
+    res.status(200).json({code: 200, msg:"Ok"})
 };
