@@ -164,15 +164,15 @@ exports.updateBodyCasa = (req,res,next) => {
     let precioRenta = 0;
     if(venta === 1 && renta === 1) {
         tipoMovimiento = 3
-        precioVenta = req.body.precioVenta;
-        precioRenta = req.body.precioRenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
-        precioVenta = req.body.precioVenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
-        precioRenta = req.body.precioRenta;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
     //Obtener amenidades adicionales
@@ -202,7 +202,6 @@ exports.updateBodyCasa = (req,res,next) => {
     console.log("bodega",bodega);
     const idInmueble = req.params.inmueble;
     console.log("idInmueble",idInmueble);
-    res.redirect("/dashboard/alta");
     Dashboard.activateInmuebleCasa(
         titulo,
         tipoMovimiento,
@@ -268,15 +267,15 @@ exports.updateBodyLocal = (req,res,next) => {
     let precioRenta = 0;
     if(venta === 1 && renta === 1) {
         tipoMovimiento = 3
-        precioVenta = req.body.precioVenta;
-        precioRenta = req.body.precioRenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
-        precioVenta = req.body.precioVenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
-        precioRenta = req.body.precioRenta;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
     const cocina = req.body.cocina ? 1 : 0;
@@ -339,15 +338,15 @@ exports.updateBodyTerreno = (req,res,next) => {
     let precioRenta = 0;
     if(venta === 1 && renta === 1) {
         tipoMovimiento = 3
-        precioVenta = req.body.precioVenta;
-        precioRenta = req.body.precioRenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
-        precioVenta = req.body.precioVenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
-        precioRenta = req.body.precioRenta;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
     const servicioAgua = req.body.servicioAgua ? 1 : 0;
@@ -412,15 +411,15 @@ exports.updateBodyBodega = (req,res,next) => {
     let precioRenta = 0;
     if(venta === 1 && renta === 1) {
         tipoMovimiento = 3
-        precioVenta = req.body.precioVenta;
-        precioRenta = req.body.precioRenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
-        precioVenta = req.body.precioVenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
-        precioRenta = req.body.precioRenta;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
     const cocina = req.body.cocina ? 1 : 0;
@@ -486,26 +485,26 @@ exports.updateBodyOficina = (req,res,next) => {
         estacionamientos,
         banios,
         desc
-    } = req.body;
-        //Obtener el tipo de movimiento y los respectivos precios
-        const venta = req.body.venta ? 1 : 0;
-        const renta = req.body.renta ? 1 : 0;
-        let tipoMovimiento = 0;
-        let precioVenta = 0;
-        let precioRenta = 0;
-        if(venta === 1 && renta === 1) {
-            tipoMovimiento = 3
-            precioVenta = req.body.precioVenta;
-            precioRenta = req.body.precioRenta;
-        } else if (venta === 1 && renta === 0) {
-            tipoMovimiento = 1
-            precioVenta = req.body.precioVenta;
-            precioRenta = 0;
-        }else if (venta === 0 && renta === 1) {
-            tipoMovimiento = 2
-            precioRenta = req.body.precioRenta;
-            precioVenta = 0;
-        }
+    } = req.body;    
+    //Obtener el tipo de movimiento y los respectivos precios
+    const venta = req.body.venta ? 1 : 0;
+    const renta = req.body.renta ? 1 : 0;
+    let tipoMovimiento = 0;
+    let precioVenta = 0;
+    let precioRenta = 0;
+    if(venta === 1 && renta === 1) {
+        tipoMovimiento = 3
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
+    } else if (venta === 1 && renta === 0) {
+        tipoMovimiento = 1
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = 0;
+    }else if (venta === 0 && renta === 1) {
+        tipoMovimiento = 2
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
+        precioVenta = 0;
+    }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
