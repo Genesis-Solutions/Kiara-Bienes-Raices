@@ -111,7 +111,7 @@ exports.register = (req, res, next) => {
             idFotoString
           )
             .then(() => {
-              res.redirect("/");
+              res.redirect("/login");
             })
             .catch((error) => {
               console.log(error);
