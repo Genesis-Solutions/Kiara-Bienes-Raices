@@ -2,11 +2,11 @@
     <div>
         <ul class="space-y-2">
             <% if (inmueble.m2TerrenoInmueble != null) { %>
-                <li>● <%= inmueble.m2TerrenoInmueble %>m2 </li>
+                <li>● <%= inmueble.m2TerrenoInmueble %> m2 </li>
             <% } %>
             
             <% if (inmueble.m2ConstruidosInmueble != null) { %>
-                <li>● <%= inmueble.m2ConstruidosInmueble %>m2 </li>
+                <li>● <%= inmueble.m2ConstruidosInmueble %> m2 </li>
             <% } %>
             
             <% if (inmueble.medidasFrenteInmueble != null) { %>
@@ -45,15 +45,15 @@
                 <li>● En Privada </li>
             <% } %>
             
-            <% if (inmueble.servicioAguaInmueble != null) { %>
+            <% if (inmueble.servicioAguaInmueble != 0 && inmueble.servicioAguaInmueble != null) { %>
                 <li>● Servicio de Agua </li>
             <% } %>
             
-            <% if (inmueble.servicioLuzInmueble != null) { %>
+            <% if (inmueble.servicioLuzInmueble != 0 && inmueble.servicioLuzInmueble != null) { %>
                 <li>● Servicio de Luz </li>
             <% } %>
             
-            <% if (inmueble.servicioDrenajeInmueble != null) { %>
+            <% if (inmueble.servicioDrenajeInmueble != 0 && inmueble.servicioDrenajeInmueble != null) { %>
                 <li>● Servicio de Drenaje </li>
             <% } %>
         </ul>
@@ -68,19 +68,19 @@
                 <li>● Cuota Mantenimiento $<%= inmueble.cuotaMantenimientoInmueble %> </li>
             <% } %>
             
-            <% if (inmueble.cocinaInmueble != null) { %>
+            <% if (inmueble.cocinaInmueble != 0 && inmueble.cocinaInmueble != null) { %>
                 <li>● Cocina</li>
             <% } %>
             
-            <% if (inmueble.cisternaInmueble != null) { %>
+            <% if (inmueble.cisternaInmueble != 0 && inmueble.cisternaInmueble != null) { %>
                 <li>● Cisterna</li>
             <% } %>
             
-            <% if (inmueble.cuartoServicioInmueble != null) { %>
+            <% if (inmueble.cuartoServicioInmueble != 0 && inmueble.cuartoServicioInmueble != null) { %>
                 <li>● Cuarto de Servicio</li>
             <% } %>
             
-            <% if (inmueble.salaTVInmueble != null) { %>
+            <% if (inmueble.salaTVInmueble != 0 && inmueble.salaTVInmueble != null) { %>
                 <li>● Sala de TV </li>
             <% } %>
             
@@ -88,23 +88,23 @@
                 <li>● Construcción: <%= inmueble.fechaConstruccionInmueble %> </li>
             <% } %>
             
-            <% if (inmueble.estudioInmueble != null) { %>
+            <% if (inmueble.estudioInmueble != 0 && inmueble.estudioInmueble != null) { %>
                 <li>● Estudio</li>
             <% } %>
             
-            <% if (inmueble.roofGardenInmueble != null) { %>
+            <% if (inmueble.roofGardenInmueble != 0 && inmueble.roofGardenInmueble != null) { %>
                 <li>● Roof Garden </li>
             <% } %>
             
-            <% if (inmueble.areaLavadoInmueble != null) { %>
+            <% if (inmueble.areaLavadoInmueble != 0 && inmueble.areaLavadoInmueble != null) { %>
                 <li>● Area de Lavado </li>
             <% } %>
             
-            <% if (inmueble.vigilanciaInmueble != null) { %>
+            <% if (inmueble.vigilanciaInmueble != 0 && inmueble.vigilanciaInmueble != null) { %>
                 <li>● Vigilancia </li>
             <% } %>
             
-            <% if (inmueble.jardinInmueble != null) { %>
+            <% if (inmueble.jardinInmueble != 0 && inmueble.jardinInmueble != null) { %>
                 <li>● Jardín </li>
             <% } %>
             
@@ -112,11 +112,11 @@
                 <li>● Gas <%= inmueble.tipoGasInmueble %></li>
             <% } %>
             
-            <% if (inmueble.bodegaInmueble != null) { %>
+            <% if (inmueble.bodegaInmueble != 0 && inmueble.bodegaInmueble != null) { %>
                 <li>● Bodega </li>
             <% } %>
             
-            <% if (inmueble.generadorElectricoInmueble != null) { %>
+            <% if (inmueble.generadorElectricoInmueble != 0 && inmueble.generadorElectricoInmueble != null) { %>
                 <li>● Generador Eléctrico</li>
             <% } %>
         </ul>
@@ -127,7 +127,7 @@
                 <li>● Tipo Piso: $<%= tipoPisoValue.tipoPiso %> </li>
             <% } %>
             
-            <% if (inmueble.andenCargaInmueble != null) { %>
+            <% if (inmueble.andenCargaInmueble != 0 && inmueble.andenCargaInmueble != null) { %>
                 <li>● Anden de Carga</li>
             <% } %>
             
@@ -143,7 +143,7 @@
                 <li>● Oficina </li>
             <% } %>
             
-            <% if (inmueble.patioManiobrasInmueble != null) { %>
+            <% if (inmueble.patioManiobrasInmueble != 0 && inmueble.patioManiobrasInmueble != null ) { %>
                 <li>● Patio Maniobras </li>
             <% } %>
             
