@@ -103,14 +103,16 @@ exports.updateBodyCasa = (req,res,next) => {
     let precioRenta = 0;
     if(venta === 1 && renta === 1) {
         tipoMovimiento = 3
-        precioVenta = req.body.precioVenta;
-        precioRenta = req.body.precioRenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta;
+        precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta;
+        precioVenta = 0;
     }
     //Obtener amenidades adicionales
     const cocina = req.body.cocina ? 1 : 0;
@@ -319,7 +321,7 @@ exports.updateBodyTerreno = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.redirect('/inmueble/'+idInmueble);
+    res.redirect('/inmueble/' + idInmueble);
 };
 
 exports.updateBodyBodega = (req,res,next) => {
