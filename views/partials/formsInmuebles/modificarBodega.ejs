@@ -11,13 +11,13 @@
                     <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
                     <input
                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="number" id="precioVenta" name="precioVenta" placeholder="3,000,000" maxlength="30" required/>
+                        type="number" id="precioVenta" name="precioVenta" placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" required/>
                 </div>
                 <div class="mt-4 hidden peer-checked/renta:block space-y-2">
                     <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
                     <input
                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="number" id="precioRenta" name="precioRenta" placeholder="15,000" maxlength="30" required/>
+                        type="number" id="precioRenta" name="precioRenta" placeholder="<%=inmueble.precioRentaInmueble%>" maxlength="30" required/>
                 </div>
             </fieldset>
         </div>
@@ -35,7 +35,7 @@
                 <div class="flex items-center">
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="number" id="m2terreno" name="m2terreno" value="<%=inmueble.m2TerrenoInmueble%>" placeholder="<%=inmueble.m2TerrenoInmueble%>" maxlength="30" required/>
+                        type="number" id="m2Terreno" name="m2Terreno" value="<%=inmueble.m2TerrenoInmueble%>" placeholder="<%=inmueble.m2TerrenoInmueble%>" maxlength="30" required/>
                 </div>
                 <div class="text-white flex items-center space-x-2">
                     <i class="fa-solid fa-ruler-combined"></i><p>Medidas Frente</p>

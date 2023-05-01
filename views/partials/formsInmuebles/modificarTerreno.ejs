@@ -7,23 +7,23 @@
                 <label for="draft" class="ml-1 text-base text-white">Venta</label>
                 <input id="published" class="ml-8 peer/renta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="renta" class="form-checkbox" />
                 <label for="published" class="ml-1 text-base text-white">Renta</label>
-                <div class="mt-4 hidden peer-checked/venta:block space-y-2">
+                <div class="mt-4 hidden peer-checked/venta:block space-y-2 ">
                     <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
                     <input
                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="number" id="precioVenta" name="precioVenta" placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" required/>
+                        type="number" id="precioVenta" name="precioVenta" value="<%=inmueble.precioVentaInmueble%>" placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" required/>
                 </div>
                 <div class="mt-4 hidden peer-checked/renta:block space-y-2">
                     <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
                     <input
                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="number" id="precioRenta" name="<%=inmueble.precioRentaInmueble%>" placeholder="<%=inmueble.precioRentaInmueble%>" maxlength="30" required/>
+                        type="number" id="precioRenta" name="precioRenta" value="<%=inmueble.precioRentaInmueble%>" placeholder="<%=inmueble.precioRentaInmueble%>" maxlength="30" required/>
                 </div>
             </fieldset>
         </div>
     </div>
     <div class="col-span-2 space-y-2">
-        <label for="" class="text-lg font-semibold text-white">Asmenidades Secundarias</label>
+        <label for="" class="text-lg font-semibold text-white">Amenidades Secundarias</label>
         <div class="grid grid-cols-3 gap-7">
 
             <!-- Columna de Inputs -->
@@ -190,6 +190,6 @@
 
     <div class="col-span-2 space-y-2">
         <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
-        <textarea id="desc" name="desc" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
+        <input id="desc" name="desc" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" value="<%=inmueble.descInmueble%>" placeholder="<%=inmueble.descInmueble%>"></input>
     </div>
 </div>

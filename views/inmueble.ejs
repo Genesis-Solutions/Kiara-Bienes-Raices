@@ -23,13 +23,13 @@
             
             <div class="md:hidden grid grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
-                    <% if ((inmueble.precioVenta && inmueble.precioRentaInmueble) != null) { %>
-                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
+                    <% if ((inmueble.precioVenta && inmueble.precioRentaInmueble) != 0) { %>
+                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %> /mes</h3>
                         <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
-                    <% } else if(inmueble.precioRenta != null) { %>
-                        <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioRentaInmueble %>/mes</h3>
-                    <% } else if(inmueble.precioVenta != null) { %>  
-                        <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioVentaInmueble %></h3>
+                    <% } else if(inmueble.precioRenta != 0) { %>
+                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %> /mes</h3>
+                    <% } else if(inmueble.precioVenta != 0) { %>  
+                        <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
                     <% } %>
                     <div class="flex text-black text-center justify-evenly">
                         <div class="px-5 py-2 rounded-full bg-white">
@@ -80,13 +80,13 @@
             <div class="hidden md:grid md:grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
                     <div class="flex flex-col justify-center space-y-2">
-                        <% if ((inmueble.precioVentaInmueble && inmueble.precioRentaInmueble) != null) { %>
+                        <% if ((inmueble.precioVentaInmueble && inmueble.precioRentaInmueble) != 0) { %>
                             <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
                             <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
-                        <% } else if(inmueble.precioRentaInmueble != null) { %>
-                            <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioRentaInmueble %>/mes</h3>
-                        <% } else if(inmueble.precioVentaInmueble != null) { %>  
-                            <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioVentaInmueble %></h3>
+                        <% } else if(inmueble.precioRentaInmueble != 0) { %>
+                            <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
+                        <% } else if(inmueble.precioVentaInmueble != 0) { %>  
+                            <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
                         <% } %>
                         <div class="flex text-black text-center md:justify-evenly lg:space-x-12 lg:justify-center">
                             <div class="px-5 py-2 md:w-32 lg:w-40 rounded-full bg-white">

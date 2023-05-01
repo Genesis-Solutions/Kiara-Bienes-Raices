@@ -79,7 +79,7 @@ exports.updateBodyCasa = (req,res,next) => {
     const {
         titulo,
         linkVideo,
-        m2terreno,
+        m2Terreno,
         niveles,
         mediosBanios,
         cuotaMantenimiento,
@@ -87,7 +87,7 @@ exports.updateBodyCasa = (req,res,next) => {
         usoSuelo,
         ubicado,
         tipoGas,
-        m2construccion,
+        m2Construccion,
         recamaras,
         estacionamientos,
         banios,
@@ -145,8 +145,8 @@ exports.updateBodyCasa = (req,res,next) => {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         niveles,
         mediosBanios,
         cuotaMantenimiento,
@@ -180,8 +180,8 @@ exports.updateBodyLocal = (req,res,next) => {
     const {
         titulo,
         linkVideo,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         medidaFrente,
         medidaFondo,
         niveles,
@@ -228,8 +228,8 @@ exports.updateBodyLocal = (req,res,next) => {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         medidaFrente,
         medidaFondo,
         niveles,
@@ -259,8 +259,8 @@ exports.updateBodyTerreno = (req,res,next) => {
     const {
         titulo,
         linkVideo,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         medidaFrente,
         medidaFondo,
         usoSuelo,
@@ -277,14 +277,14 @@ exports.updateBodyTerreno = (req,res,next) => {
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
-    if(venta === 1 && renta === 1) {
+    if(venta == 1 && renta == 1) {
         tipoMovimiento = 3
         precioVenta = req.body.precioVenta;
         precioRenta = req.body.precioRenta;
-    } else if (venta === 1 && renta === 0) {
+    } else if (venta == 1 && renta == 0) {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta;
-    }else if (venta === 0 && renta === 1) {
+    }else if (venta == 0 && renta == 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta;
     }
@@ -295,14 +295,15 @@ exports.updateBodyTerreno = (req,res,next) => {
     const idInmueble = req.params.idInmueble;
     console.log("idInmueble", idInmueble);
     console.log(req.body);
+    console.log(tipoMovimiento);
     Inmueble.changeInmuebleTerreno(
         titulo,
         tipoMovimiento,
         linkVideo,
         precioVenta,
         precioRenta,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         medidaFrente,
         medidaFondo,
         usoSuelo,
@@ -326,8 +327,8 @@ exports.updateBodyBodega = (req,res,next) => {
     const {
         titulo,
         linkVideo,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         medidaFrente,
         medidaFondo,
         niveles,
@@ -379,8 +380,8 @@ exports.updateBodyBodega = (req,res,next) => {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         medidaFrente,
         medidaFondo,
         niveles,
@@ -416,8 +417,8 @@ exports.updateBodyOficina = (req,res,next) => {
     const {
         titulo,
         linkVideo,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
@@ -459,8 +460,8 @@ exports.updateBodyOficina = (req,res,next) => {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
@@ -486,8 +487,8 @@ exports.updateBodyOtra = (req,res,next) => {
     const {
         titulo,
         linkVideo,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         niveles,
         recamaras,
         cuartosPrivadosInmueble,
@@ -529,8 +530,8 @@ exports.updateBodyOtra = (req,res,next) => {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2terreno,
-        m2construccion,
+        m2Terreno,
+        m2Construccion,
         niveles,
         recamaras,
         cuartosPrivadosInmueble,
