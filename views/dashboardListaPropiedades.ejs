@@ -1,0 +1,27 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Heading Section -->
+    <div class="bg-white">
+        <%- include("partials/navbar") %>
+    </div>
+    
+   <% if (req.session.idRol == 1) { %>
+        <div class="px-10 pt-10">
+            <div class="space-x-5 space-y-3">
+                <a href="/dashboard" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Lista de Usuarios</a>
+                <a href="/dashboard/propiedades" class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Lista Propiedades</a>
+                <a href="" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Mis Propiedades</a>
+            </div>
+            <hr class="h-px my-4 bg-gray-800 border-0">
+        </div>
+    <% } else if (req.session.idRol ==2){ %> 
+        <div class="px-10 pt-10">
+            <div class="space-x-5 space-y-3">
+                <a href="/dashboard/propiedades" class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Lista Propiedades</a>
+                <a href="" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Mis Propiedades</a>
+            </div>
+            <hr class="h-px my-4 bg-gray-800 border-0">
+        </div>
+    <% } %>

@@ -11,9 +11,10 @@ const dashboardController = require('../controllers/dashboard.controller');
 router.put('/modificarRol/usuario/:idUsuario', dashboardController.updateRol);
 router.put('/lista/actualizar/:id', dashboardController.updateRol);
 
+router.get('/propiedades',isLogged, agenteAdminAuth, dashboardController.getPropiedades)
 router.get('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.getAdminUser)
 router.post('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.postAdminUser)
 router.get('/usuarios',isLogged, adminAuth, dashboardController.getUsers);
-router.get('/', isLogged, adminAuth, dashboardController.getDashboard);
+router.get('/', isLogged, agenteAdminAuth, dashboardController.getDashboard);
 
 module.exports = router;
