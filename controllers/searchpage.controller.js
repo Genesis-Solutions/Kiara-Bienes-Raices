@@ -222,8 +222,8 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
     var builtQueryLimits = builtQuery + limits;
 
-    //console.log(builtQuery);
-    //console.log(conditions.values)
+    console.log(builtQuery);
+    console.log(conditions.values)
     //console.log(countFiltered[0][0].total)
 
     //Construir la lista de inmuebles filtrados
