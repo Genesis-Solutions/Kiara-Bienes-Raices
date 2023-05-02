@@ -7,7 +7,6 @@ const bucket = require("../util/awsBucket.js");
 exports.getSearchPage = async( req,res,next ) => {
     //Obtener la cantidad de inmuebles
     const totalInmuebles = await SearchPage.totalInmuebles();
-    console.log(totalInmuebles)
     //Cantidad de resultados por pagina
     const resultadosPorPagina = 1;
     //Establecer la cantidad de resultados por pagina
@@ -26,14 +25,12 @@ exports.getSearchPage = async( req,res,next ) => {
     var limInferior = limiteInferior.toString();
     //Construir la lista de inmuebles
     const inmuebles = await SearchPage.inmueblesPaginados(limInferior,limSuperior);
-    
     for (let i=0; i < inmuebles[0].length; i++) {
         const imgId = await SearchPage.idFotoPortada((inmuebles[0][i].idInmueble.toString()));
         const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
         const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
         inmuebles[0][i].img = imgSrcFilename;
     }
-    console.log(inmuebles[0]);
     //Obtener la información necesaria de la lista
     if (pagina <= 3) {
         iterador = 1;
@@ -50,13 +47,15 @@ exports.getSearchPage = async( req,res,next ) => {
     else { 
         linkFinal = pagina;
     }
+
     res.render('searchpage', {
         inmuebles: inmuebles[0],
         pagina: pagina,
         iterador: iterador,
         linkFinal: linkFinal,
         numeroPaginas: numeroPaginas,
-        isLogged: req.session.isLogged
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol
     }); 
 }
 
@@ -128,19 +127,19 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
         // venta
         if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
-            if (typeof params.precioLimInf !== 'undefined') {
-                conditions.push("precioVenta BETWEEN ? AND ?");
-                values.push(params.precioLimInf);
-                values.push(params.precioLimSup);
+            if (typeof params.precioMinimo !== 'undefined') {
+                conditions.push("precioVentaInmueble BETWEEN ? AND ?");
+                values.push(params.precioMinimo);
+                values.push(params.precioMaximo);
             };
         }
 
         // renta
         if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
-            if (typeof params.precioLimInf !== 'undefined') {
-                conditions.push("precioVenta BETWEEN ? AND ?");
-                values.push(params.precioLimInf);
-                values.push(params.precioLimSup);
+            if (typeof params.precioMinimo !== 'undefined') {
+                conditions.push("precioRentaInmueble BETWEEN ? AND ?");
+                values.push(params.precioMinimo);
+                values.push(params.precioMaximo);
             };
         }
 
@@ -152,15 +151,70 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     };
 
     var conditions = buildConditions(parameters);
-    var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where;
     var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where;
+    
+    //Obtener la cantidad de inmuebles filtrados:
+    const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values)
+
+    //Cantidad de resultados por pagina
+    const resultadosPorPagina = 1;
+    //Establecer la cantidad de resultados por pagina
+    const numeroResultados = countFiltered[0][0].total;
+    const numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
+    //Solicitar la cantidad de resultados por pagina
+    const pagina = req.query.pagina ? Number(req.query.pagina) : 1;
+    if (pagina>numeroPaginas) {
+        res.redirect('/catalogo?pagina='+encodeURIComponent(numeroPaginas));
+    } else if (pagina<1) {
+        res.redirect('/catalogo?pagina='+encodeURIComponent('1'));
+    }
+
+    //Determinar los limites
+    const limiteInferior = (pagina-1)*resultadosPorPagina;
+    var limSuperior = resultadosPorPagina.toString();
+    var limInferior = limiteInferior.toString();
+    var limits = ' LIMIT ' + limInferior + ',' + limSuperior;
+
+    var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where + limits;
     console.log(builtQuery);
     console.log(conditions.values)
-
-    console.log("prueba filtrada")
-    const filtered = await SearchPage.inmueblesFiltrados(builtQuery, conditions.values);
-    const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values)
-    console.log(filtered)
     console.log(countFiltered)
+
+    //Construir la lista de inmuebles filtrados
+    const inmuebles = await SearchPage.inmueblesFiltrados(builtQuery, conditions.values);
+    console.log(inmuebles)
+    for (let i=0; i < inmuebles.length; i++) {
+        const imgId = await SearchPage.idFotoPortada((inmuebles[i].idInmueble.toString()));
+        const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
+        const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
+        inmuebles[i].img = imgSrcFilename;
+    }
+
+    //Obtener la información necesaria de la lista
+    if (pagina <= 3) {
+        iterador = 1;
+    }
+    else {
+        iterador = pagina-2;
+    }
+    if(pagina <= numeroPaginas-2) {
+        linkFinal = pagina+2;
+    }
+    else if(pagina <= numeroPaginas-1) {
+        linkFinal = pagina+1;
+    }
+    else { 
+        linkFinal = pagina;
+    }
+
+    res.render('searchpage', {
+        inmuebles: inmuebles,
+        pagina: pagina,
+        iterador: iterador,
+        linkFinal: linkFinal,
+        numeroPaginas: numeroPaginas,
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol
+    }); 
 
 }
