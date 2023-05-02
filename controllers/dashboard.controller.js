@@ -91,23 +91,7 @@ exports.setMainPhoto = (req,res,next) => {
         }
         const idInmueble = req.params.inmueble;
         const mediaName = req.files[0].key;
-        console.log("Id del inmueble: ",idInmueble);
-        console.log("Key del archivo: ",mediaName);
-        Dashboard.insertPhoto(mediaName)
-            .then(([rows, fieldData]) => {
-                Dashboard.getLastPhotoId()
-                    .then(([rows2, fieldData]) => {
-                        console.log("FotoInmueble - idInmueble: ",idInmueble);
-                        console.log("FotoInmueble - idFoto: ",rows2[0].idFoto);
-                        Dashboard.insertFotoInmueble(idInmueble,rows2[0].idFoto)
-                            .then(([rows3, fieldData]) => {
-                                res.status(200).json({code: 200, msg:"Ok"});
-                            })
-                            .catch(error => { console.log(error) });
-                    })
-                    .catch(error => { console.log(error) });
-            })
-            .catch(error => { console.log(error) });
+        Dashboard.registerImage(idInmueble,mediaName);
     })
 };
 
@@ -119,30 +103,13 @@ exports.setSecondaryPhotos = (req,res,next) => {
             console.log(err);
         } else {
             req.files.forEach(function(file) {
-                console.log("Key del archivo: " + file.key);
                 const idInmueble = req.params.inmueble;
                 const mediaName = file.key;
-                console.log("Id del inmueble: ",idInmueble);
-                console.log("Key del archivo: ",mediaName);
-                Dashboard.insertPhoto(mediaName)
-                    .then(([rows, fieldData]) => {
-                        Dashboard.getLastPhotoId()
-                            .then(([rows2, fieldData]) => {
-                                console.log("FotoInmueble - idInmueble: ",idInmueble);
-                                console.log("FotoInmueble - idFoto: ",rows2[0].idFoto);
-                                Dashboard.insertFotoInmueble(idInmueble,rows2[0].idFoto)
-                                    .then(([rows3, fieldData]) => {
-                                        res.status(200).json({code: 200, msg:"Ok"});
-                                    })
-                                    .catch(error => { console.log(error) });
-                            })
-                            .catch(error => { console.log(error) });
-                    })
-                    .catch(error => { console.log(error) });
+                Dashboard.registerImage(idInmueble,mediaName);
             });
-        res.send("Archivo(s) subido(s) exitosamente");
         }
     });
+    res.status(200).json({code: 200, msg:"Ok"});
 };
 
 exports.updateBodyCasa = (req,res,next) => {

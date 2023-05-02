@@ -39,24 +39,11 @@ module.exports = class Dashboard{
         );
     }
 
-    static insertPhoto(photoKey){
-        const fullImage = "s3://kiarabienesraices/"+photoKey; 
+    static registerImage(idInmueble,photoKey){
+        const fullImage = "s3://kiarabienesraices/"+photoKey;
         return db.execute(
-            'INSERT INTO foto(archivoFoto) VALUES (?)',
-            [fullImage]
-        );
-    }
-
-    static getLastPhotoId(){
-        return db.execute(
-            'SELECT idFoto FROM foto ORDER BY idFoto DESC LIMIT 1'
-        );
-    }
-
-    static insertFotoInmueble(idInmueble,idFoto){
-        return db.execute(
-            'INSERT INTO fotoinmueble(idFoto,idInmueble) VALUES (?,?)',
-            [idFoto,idInmueble]
+            'CALL registerImage (?,?)',
+            [fullImage,idInmueble]
         );
     }
 
