@@ -205,6 +205,7 @@ exports.updateBodyLocal = (req,res,next) => {
     console.log("Entrando a la ruta update body local");
     const {
         titulo,
+        id_agente,
         linkVideo,
         m2terreno,
         medidaFrente,
@@ -249,6 +250,7 @@ exports.updateBodyLocal = (req,res,next) => {
     console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleLocal(
         titulo,
+        id_agente,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -284,6 +286,7 @@ exports.updateBodyTerreno = (req,res,next) => {
     console.log("Entrando a la ruta update body terreno");
     const {
         titulo,
+        id_agente,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -322,6 +325,7 @@ exports.updateBodyTerreno = (req,res,next) => {
     console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleTerreno(
         titulo,
+        id_agente,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -400,6 +404,7 @@ exports.updateBodyBodega = (req,res,next) => {
     console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleBodega(
         titulo,
+        id_agente,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -441,6 +446,7 @@ exports.updateBodyOficina = (req,res,next) => {
     console.log("Entrando a la ruta update body oficina");
     const {
         titulo,
+        id_agente,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -481,6 +487,7 @@ exports.updateBodyOficina = (req,res,next) => {
     console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleOficina(
         titulo,
+        id_agente,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -511,6 +518,7 @@ exports.updateBodyOtro = (req,res,next) => {
     console.log("Entrando a la ruta update body otro");
     const {
         titulo,
+        id_agente,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -553,6 +561,7 @@ exports.updateBodyOtro = (req,res,next) => {
     console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleOtro(
         titulo,
+        id_agente,
         linkVideo,
         tipoMovimiento,
         precioVenta,
