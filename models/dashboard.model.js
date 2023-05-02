@@ -274,7 +274,6 @@ module.exports = class Dashboard{
         altura,
         tipoPiso,
         tipoLuz,
-        estacionamientos,
         banios,
         desc,
         direccion,

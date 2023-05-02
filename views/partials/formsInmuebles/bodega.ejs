@@ -1,4 +1,24 @@
 <form id="cuerpoInmueble" name="cuerpoInmueble" action="/dashboard/alta/inmueble/cuerpoBodega/<%=idInmueble%>" method="POST">
+    
+    <!-- Información General -->
+
+    <div class="px-10 pb-12 grid grid-cols-2 space-x-8">
+        <div class="space-y-2">
+            <label for="titulo" class="text-lg font-semibold">Título</label>
+            <input
+                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                type="text" id="titulo" name="titulo" placeholder="Casa en Álamos" maxlength="30" required/>
+        </div>
+        <div class="space-y-2">
+            <label for="linkVideo" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
+            <input
+                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                type="text" id="linkVideo" name="linkVideo" placeholder="www.youtube.com" required/>
+        </div>
+    </div>
+
+    <!-- Detalles -->
+    
     <div class="p-10 bg-sky-950 grid grid-cols-3 gap-8">
         <div class="space-y-4">
             <label for="tipoOperacion" class="text-lg font-semibold text-white">Tipo de Operación</label>
