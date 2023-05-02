@@ -48,6 +48,12 @@ exports.getSearchPage = async( req,res,next ) => {
         linkFinal = pagina;
     }
 
+    if (req.session.searchParams != null){
+        delete req.session.searchParams;
+        delete req.session.countParams;
+        delete req.session.searchValues;
+    }
+
     res.render('searchpage', {
         inmuebles: inmuebles[0],
         pagina: pagina,
@@ -77,6 +83,12 @@ exports.getImgFromBucket = ( req,res,next ) => {
 }
 
 exports.getInmueblesFiltrados = async ( req, res, next ) => {
+    if (req.body.newSearch == 1){
+        delete req.session.searchParams;
+        delete req.session.countParams;
+        delete req.session.searchValues;
+    }
+    
     parameters = req.body;
 
     function buildConditions(params) {
@@ -84,16 +96,17 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         var values = [];
         var conditionsStr;
 
-        console.log(parameters.direccionInmueble)
+        console.log(params.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
             conditions.push("direccionInmueble LIKE ?");
             values.push("%" + params.direccionInmueble + "%");
         };
 
         if (params.idCategoria == "1" || params.idCategoria == "2") {
+            console.log(params.idCategoria)
             var catCasa = "1"
             var catDept = "2"
-            conditions.push("idCategoria = ? OR ?")
+            conditions.push("idCategoria = ? OR idCategoria = ?")
             values.push(catCasa);
             values.push(catDept);
             if (typeof params.baniosInmueble !== 'undefined') {
@@ -107,15 +120,15 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             };
 
             if (typeof params.estacionamientosInmueble !== 'undefined') {
-                conditions.push("estacionamientosInmueble LIKE ?");
-                values.push("%" + params.estacionamientosInmueble + "%");
+                conditions.push("estacionamientosInmueble >= ?");
+                values.push(params.estacionamientosInmueble);
             };
         }
 
         if (params.idCategoria == "3" || params.idCategoria == "4") {
             var catLocal = "3"
             var catTerreno = "4"
-            conditions.push("idCategoria = ? OR ?")
+            conditions.push("idCategoria = ? OR idCategoria = ?")
             values.push(catLocal);
             values.push(catTerreno);
 
@@ -150,12 +163,23 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         };
     };
 
-    var conditions = buildConditions(parameters);
-    var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where;
+    if (req.session.searchValues != null){
+        var conditions = req.session.searchValues;
+        //console.log("condiciones en cookie: " + conditions);
+    } else {
+        var conditions = buildConditions(parameters);
+        //console.log("condiciones sin cookie: " + conditions);
+    }
     
-    //Obtener la cantidad de inmuebles filtrados:
-    const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values)
+    if (req.session.countParams != null) {
+        var countQuery = req.session.countParams;
+    } else {
+        var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where;
+    }
 
+    //console.log(countQuery)
+    //Obtener la cantidad de inmuebles filtrados:
+    const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values);
     //Cantidad de resultados por pagina
     const resultadosPorPagina = 1;
     //Establecer la cantidad de resultados por pagina
@@ -164,9 +188,9 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     //Solicitar la cantidad de resultados por pagina
     const pagina = req.query.pagina ? Number(req.query.pagina) : 1;
     if (pagina>numeroPaginas) {
-        res.redirect('/catalogo?pagina='+encodeURIComponent(numeroPaginas));
+        res.redirect('/search?pagina='+encodeURIComponent(numeroPaginas));
     } else if (pagina<1) {
-        res.redirect('/catalogo?pagina='+encodeURIComponent('1'));
+        res.redirect('/search?pagina='+encodeURIComponent('1'));
     }
 
     //Determinar los limites
@@ -174,15 +198,25 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     var limSuperior = resultadosPorPagina.toString();
     var limInferior = limiteInferior.toString();
     var limits = ' LIMIT ' + limInferior + ',' + limSuperior;
+    //console.log("límites " + limits)
 
-    var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where + limits;
-    console.log(builtQuery);
-    console.log(conditions.values)
-    console.log(countFiltered)
+    if (req.session.searchParams != null) {
+        //console.log("parametros de búsqueda: " + req.session.searchParams)
+        //console.log(req.session.searchValues)
+        var builtQuery = req.session.searchParams;
+    } else {
+        var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where;
+    }
+
+    var builtQueryLimits = builtQuery + limits;
+
+    //console.log(builtQuery);
+    //console.log(conditions.values)
+    //console.log(countFiltered[0][0].total)
 
     //Construir la lista de inmuebles filtrados
-    const inmuebles = await SearchPage.inmueblesFiltrados(builtQuery, conditions.values);
-    console.log(inmuebles)
+    const inmuebles = await SearchPage.inmueblesFiltrados(builtQueryLimits, conditions.values);
+    //console.log(inmuebles)
     for (let i=0; i < inmuebles.length; i++) {
         const imgId = await SearchPage.idFotoPortada((inmuebles[i].idInmueble.toString()));
         const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
@@ -207,14 +241,20 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         linkFinal = pagina;
     }
 
-    res.render('searchpage', {
+    req.session.countParams = countQuery;
+    req.session.searchParams = builtQuery;
+    req.session.searchValues = conditions;
+
+    res.render('searchPageFiltrada', {
         inmuebles: inmuebles,
         pagina: pagina,
         iterador: iterador,
         linkFinal: linkFinal,
         numeroPaginas: numeroPaginas,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
+        idRol: req.session.idRol,
+        builtQuery : req.session.searchParams,
+        countQuery : req.session.countParams
     }); 
 
 }
