@@ -4,21 +4,21 @@
             <label for="tipoOperacion" class="text-lg font-semibold text-white">Tipo de Operación</label>
             <div class="flex flex-row">
                 <fieldset>
-                    <input id="draft" class="peer/venta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="status" class="form-checkbox"/>
+                    <input id="venta" name="venta" class="peer/venta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" class="form-checkbox"/>
                     <label for="draft" class="ml-1 text-base text-white">Venta</label>
-                    <input id="published" class="ml-8 peer/renta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="status" class="form-checkbox" />
+                    <input id="renta" name="renta" class="ml-8 peer/renta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" class="form-checkbox" />
                     <label for="published" class="ml-1 text-base text-white">Renta</label>
                     <div class="mt-4 hidden peer-checked/venta:block space-y-2">
                         <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
                         <input
                             class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="precio" name="precio" placeholder="3,000,000" maxlength="30" required/>
+                            type="number" id="precioVenta" name="precioVenta" placeholder="3,000,000" maxlength="30" required/>
                     </div>
                     <div class="mt-4 hidden peer-checked/renta:block space-y-2">
                         <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
                         <input
                             class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="precio" name="precio" placeholder="15,000" maxlength="30" required/>
+                            type="number" id="precioRenta" name="precioRenta" placeholder="15,000" maxlength="30" required/>
                     </div>
                 </fieldset>
             </div>
@@ -52,7 +52,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="niveles" name="cuartosPrivadosInmueble" placeholder="3" maxlength="30" required/>
+                            type="number" id="cuartosPrivados" name="cuartosPrivados" placeholder="3" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-bath"></i><p> Baños</p>
@@ -60,7 +60,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="mediosBanios" name="mediosBanios" placeholder="1" maxlength="30" required/>
+                            type="number" id="banios" name="banios" placeholder="1" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-toilet"></i><p> Medios Baños</p>
@@ -68,7 +68,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="cuotaMantenimiento" name="cuotaMantenimiento" placeholder="2" maxlength="30" required/>
+                            type="number" id="mediosBanios" name="mediosBanios" placeholder="2" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-car"></i><p> Estac.</p>
@@ -76,7 +76,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="fechaConstruccion" name="fechaConstruccion" placeholder="1" maxlength="30" required/>
+                            type="number" id="estacionamientos" name="estacionamientos" placeholder="1" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-circle-dollar-to-slot"></i><p> C. de Manten.</p>
@@ -84,7 +84,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="fechaConstruccion" name="fechaConstruccion" placeholder="1" maxlength="30" required/>
+                            type="number" id="cuotaMantenimiento" name="cuotaMantenimiento" placeholder="1" maxlength="30" required/>
                     </div>
                 </div>
 
@@ -163,5 +163,28 @@
             <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
             <textarea id="desc" name="desc" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
         </div>
+
+        <!-- Dirección Inmueble -->
+
+        <div class="p-10 flex justify-center">
+            <div class="grid grid-cols-2 space-x-5 gap-8">
+                <div class="space-y-5">
+                    <div class="space-y-2">
+                        <label for="direccion" class="text-lg font-semibold">Dirección de la Propiedad</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                            type="text" id="direccion" name="direccion" placeholder="Condesa de Barry 305" maxlength="30" required/>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label for="direccion" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        type="text" id="linkMaps" name="linkMaps" placeholder="iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12617.262388400684!2d-100.4082022221727!3d20.611509759670554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35ae83751a45d%3A0x4fa6ee69f6b64f3a!2sTecnol%C3%B3gico%20de%20Monterrey!5e0!3m2!1ses-419!2smx!4v1682632411233!5m2!1ses-419!2smx'" maxlength="400" required/>
+                </div>
+                
+            </div>
+        </div>
+
     </div>
 </form>

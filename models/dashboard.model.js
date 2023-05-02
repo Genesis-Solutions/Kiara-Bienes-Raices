@@ -270,5 +270,61 @@ module.exports = class Dashboard{
         );
     }
 
+    static activateInmuebleOtro(
+        titulo,
+        linkVideo,
+        tipoMovimiento,
+        precioVenta,
+        precioRenta,
+        m2terreno,
+        m2construccion,
+        niveles,
+        numRecamaras,
+        cuartosPrivados,
+        mediosBanios,
+        usoSuelo,
+        ubicado,
+        cuotaMantenimiento,
+        estacionamientos,
+        banios,
+        desc,
+        direccion,
+        cocina,
+        cisterna,
+        vigilancia,
+        linkMaps,
+        idInmueble
+    ){
+        return db.execute(
+            "UPDATE inmueble SET nombreInmueble=?, linkVideoInmueble=?, idTipoMovimiento=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=? WHERE idInmueble=?",
+            [   
+                titulo,
+                linkVideo,
+                tipoMovimiento,
+                precioVenta,
+                precioRenta,
+                m2terreno,
+                m2construccion,
+                niveles,
+                numRecamaras,
+                cuartosPrivados,
+                mediosBanios,
+                usoSuelo,
+                ubicado,
+                cuotaMantenimiento,
+                direccion,
+                cocina,
+                cisterna,
+                vigilancia,
+                estacionamientos,
+                banios,
+                desc,
+                direccion,
+                linkMaps,
+                idInmueble
+            ]
+        );
+    }
+
 
 }

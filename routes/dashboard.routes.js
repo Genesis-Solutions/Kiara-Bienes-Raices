@@ -8,11 +8,9 @@ const dashboardController = require('../controllers/dashboard.controller');
 router.post('/alta/inmueble/imagenesSecundarias/:inmueble', dashboardController.setSecondaryPhotos);
 //Registrar imagen principal de una casa
 router.post('/alta/inmueble/imagenPrincipal/:inmueble', dashboardController.setMainPhoto);
+
 //Actulizar el cuerpo de una casa
 router.post('/alta/inmueble/cuerpoCasa/:inmueble', dashboardController.updateBodyCasa);
-
-//Actualizar el cuerpo de un departamento
-router.post('/alta/inmueble/cuerpoDepartamento/:inmueble', dashboardController.updateBodyCasa);
 //Actualizar el cuerpo de una bodega
 router.post('/alta/inmueble/cuerpoBodega/:inmueble', dashboardController.updateBodyBodega);
 //Actualizar el cuerpo de un terreno
@@ -23,7 +21,6 @@ router.post('/alta/inmueble/cuerpoLocal/:inmueble', dashboardController.updateBo
 router.post('/alta/inmueble/cuerpoOficina/:inmueble', dashboardController.updateBodyOficina);
 //Actualizar el cuerpo de un otro
 router.post('/alta/inmueble/cuerpoOtro/:inmueble', dashboardController.updateBodyOtro);
-//Poner el resto de inmuebles....
 
 //Ver el formulario dependiendo de la categoria
 router.get('/alta/inmueble/:categoria', dashboardController.getCategoria);

@@ -2,7 +2,6 @@ const path = require('path');
 const Dashboard = require('../models/dashboard.model');
 const { storage } = require('../util/awsMediaMulter');
 
-// -- LIST USERS -- //
 exports.getDashboard = (req, res, next) => {
     //Revisar que tenga el rol de administrador
     if (req.session.idRol != 1) {
@@ -531,6 +530,78 @@ exports.updateBodyOficina = (req,res,next) => {
         estacionamientos,
         banios,
         desc,
+        idInmueble
+    );
+    res.status(200).json({code: 200, msg:"Ok"})
+};
+
+exports.updateBodyOtro = (req,res,next) => {
+    console.log("Entrando a la ruta update body otro");
+    const {
+        titulo,
+        linkVideo,
+        m2terreno,
+        m2construccion,
+        niveles,
+        numRecamaras,
+        cuartosPrivados,
+        mediosBanios,
+        usoSuelo,
+        ubicado,
+        cuotaMantenimiento,
+        estacionamientos,
+        banios,
+        desc,
+        direccion,
+        linkMaps
+    } = req.body;    
+    //Obtener el tipo de movimiento y los respectivos precios
+    const venta = req.body.venta ? 1 : 0;
+    const renta = req.body.renta ? 1 : 0;
+    let tipoMovimiento = 0;
+    let precioVenta = 0;
+    let precioRenta = 0;
+    if(venta === 1 && renta === 1) {
+        tipoMovimiento = 3
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
+    } else if (venta === 1 && renta === 0) {
+        tipoMovimiento = 1
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = 0;
+    }else if (venta === 0 && renta === 1) {
+        tipoMovimiento = 2
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
+        precioVenta = 0;
+    }
+    const cocina = req.body.cocina ? 1 : 0;
+    const cisterna = req.body.cisterna ? 1 : 0;
+    const vigilancia = req.body.vigilancia ? 1 : 0;
+    const idInmueble = req.params.inmueble;
+    console.log("idInmueble",idInmueble);
+    Dashboard.activateInmuebleOtro(
+        titulo,
+        linkVideo,
+        tipoMovimiento,
+        precioVenta,
+        precioRenta,
+        m2terreno,
+        m2construccion,
+        niveles,
+        numRecamaras,
+        cuartosPrivados,
+        mediosBanios,
+        usoSuelo,
+        ubicado,
+        cuotaMantenimiento,
+        estacionamientos,
+        banios,
+        desc,
+        direccion,
+        cocina,
+        cisterna,
+        vigilancia,
+        linkMaps,
         idInmueble
     );
     res.status(200).json({code: 200, msg:"Ok"})
