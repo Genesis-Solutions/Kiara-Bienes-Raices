@@ -22,6 +22,9 @@ router.post('/alta/inmueble/cuerpoOficina/:inmueble', dashboardController.update
 //Actualizar el cuerpo de un otro
 router.post('/alta/inmueble/cuerpoOtro/:inmueble', dashboardController.updateBodyOtro);
 
+//Eliminar inmueble por su id
+router.get('/baja/inmueble/:idInmueble', dashboardController.deleteInmueble);
+
 //Ver el formulario dependiendo de la categoria
 router.get('/alta/inmueble/:categoria', dashboardController.getCategoria);
 //Ver menu de inmuebles

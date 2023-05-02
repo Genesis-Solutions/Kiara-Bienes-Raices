@@ -24,7 +24,7 @@ exports.getUsers = async(req, res, next) => {
 
 exports.getRegisterpage = async(req, res, next) => {
     //Revisar que tenga el rol de administrador
-    if (req.session.idRol != 1) {
+    if (req.session.idRol != 1 && req.session.idRol != 2) {
         return res.status(403).send("No tiene autorizado acceder a esta página")
     }
     // Renderizar la vista del panel de administrador
@@ -41,7 +41,7 @@ exports.getRegisterpage = async(req, res, next) => {
 
 exports.getCategoria = async(req,res,next) => {
     //Revisar que tenga el rol de administrador
-    if (req.session.idRol != 1) {
+    if (req.session.idRol != 1 && req.session.idRol != 2) {
         return res.status(403).send("No tiene autorizado acceder a esta página")
     }
     // Renderizar la vista del panel de administrador
@@ -64,9 +64,21 @@ exports.getCategoria = async(req,res,next) => {
             idInmueble: idInmueble[0][0].idInmueble,
             categoria: idCategoria,
             listaAgentes: listaAgentes[0],
-            listaTipoMovimientos: listaTipoMovimientos[0]
+            listaTipoMovimientos: listaTipoMovimientos[0],
+            idUsuario: idUsuario
         });
     } 
+};
+
+exports.deleteInmueble = (req,res,next) => {
+    const idInmueble = req.params.idInmueble;
+    console.log("idInmueble del inmueble a eliminar",idInmueble);
+    Dashboard.deleteInmuebleById(idInmueble)
+        .then(([rows, fieldData]) => {
+            console.log("Inmueble eliminado");
+            res.status(200).json({code: 200, msg:"Ok"});
+        })
+        .catch(error => { console.log(error) });
 };
 
 exports.setMainPhoto = (req,res,next) => {
@@ -138,6 +150,7 @@ exports.updateBodyCasa = (req,res,next) => {
     //Elementos obligatorios del formulario
     const {
         titulo,
+        id_agente,
         linkVideo,
         m2terreno,
         niveles,
@@ -203,6 +216,7 @@ exports.updateBodyCasa = (req,res,next) => {
     console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleCasa(
         titulo,
+        id_agente,
         tipoMovimiento,
         linkVideo,
         precioVenta,

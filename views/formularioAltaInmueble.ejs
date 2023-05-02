@@ -30,9 +30,9 @@
             </form> -->
 
         <!-- </div> -->
-        <div>
+        <div class="col-span-3">
             <h2 class="text-lg font-semibold">
-                Imágenes Secundarias
+                Imágenes del inmueble
             </h2>
 
             <!-- Secundary Pictures Form -->
@@ -53,20 +53,18 @@
     <!-- Information Form -->
 
     <!-- Cambiar dependiendo del id del tipo de inmueble (categoria es el idCategoria) -->
-    
-    <!-- Es inmueble.idCategoría? idCategoria? o solo categoria? -->
     <% if(categoria == 1 || categoria == 2){ %>
-        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble}) %>
+        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <% } else if (categoria == 3){ %>
-        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble}) %>        
+        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>        
     <% } else if (categoria == 4){ %>
-        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble}) %>       
+        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>       
     <% } else if (categoria == 5){ %>
-        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble}) %>
+        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <% } else if (categoria == 6){ %>
-        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble}) %>
+        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <% } else if (categoria == 7){ %>
-        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble}) %>
+        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <%}%>
 
     <!-- Buttons Section -->
@@ -80,6 +78,10 @@
             Registrar
         </button>
     </div>
+
+    <form id="deleteInmueble" action="/dashboard/baja/inmueble/<%=idInmueble%>" method="POST" hidden>
+        <input type="hidden" id="id_inmueble" name="id_inmueble" value="<%=idInmueble%>">
+    </form>
 
     <!-- Enlazar con la biblioteca de jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -102,6 +104,29 @@
         $(document).on("click", ".btnSubmit", function(){	
             $('#cuerpoInmueble').submit();
         })
+    </script>
+
+    <script type="text/javascript">   
+        $(document).on("click", ".btnCancelar", function(){	
+            eliminarInmueble();
+        })
+    </script>
+
+    <script type="text/javascript">   
+        function eliminarInmueble() {
+            var idInmueble = $("#id_inmueble").val();
+            console.log("Hola desde el boton de eliminar");
+            console.log("idInmueble",idInmueble);
+            $.ajax({
+                url: '/dashboard/baja/inmueble/<%=idInmueble%>',
+                type: 'GET',
+                dataType: 'json',
+                success: function() {
+                    console.log("On succes desde el eliminar");
+                    window.location.replace('/dashboard/alta');
+                }
+            });
+        }
     </script>
 
     <script>
@@ -141,7 +166,7 @@
                 return "media";
             }
             var idInmueble = $("#id_inmueble").val();
-            console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
+            //console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
             $("#uploadDropzone").dropzone({ 
                 url: '/dashboard/alta/inmueble/imagenesSecundarias/<%=idInmueble%>',
                 maxFilesize: 15, // MB

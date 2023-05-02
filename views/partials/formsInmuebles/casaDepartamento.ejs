@@ -42,6 +42,19 @@
                     </div>
                 </fieldset>
             </div>
+            <% if (idRol === 2) { %>
+                <input type="hidden" id="id_agente" name="id_agente" value="<%=idusuario%>">
+            <% } else if (idRol === 1) { %>
+                <div class="space-y-2">
+                    <label for="id_agente" class="text-sm text-white">Agentes y administradores disponibles</label>
+                    <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        id="id_agente" name="id_agente">
+                        <% listaAgentes.forEach(agente=>{ %>
+                            <option value="<%=agente.idUsuario%>"><%=agente.nombreUsuario%> <%=agente.apellidosUsuario%></option>
+                        <% }); %>
+                    </select>
+                </div>
+            <% } %>
         </div>
         <div class="col-span-2 space-y-2">
             <label for="" class="text-lg font-semibold text-white">Amenidades Secundarias</label>

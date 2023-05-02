@@ -60,8 +60,17 @@ module.exports = class Dashboard{
         );
     }
 
+    static deleteInmuebleById(idInmueble){
+        console.log("Este es el modelo de eliminar: IdInmueble = ",idInmueble);
+        return db.execute(
+            'DELETE FROM inmueble WHERE idInmueble = ?',
+            [idInmueble]
+        );
+    }
+
     static activateInmuebleCasa(
         titulo,
+        id_agente,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -94,9 +103,10 @@ module.exports = class Dashboard{
         idInmueble
     ){
         return db.execute(
-            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?,activoInmueble=1 WHERE idInmueble = ?',
+            'UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?,activoInmueble=1 WHERE idInmueble = ?',
             [   
                 titulo,
+                id_agente,
                 tipoMovimiento,
                 linkVideo,
                 precioVenta,
@@ -130,78 +140,6 @@ module.exports = class Dashboard{
             ]
         );
     }
-
-    static activateInmuebleDepartamento(
-        titulo,
-        tipoMovimiento,
-        linkVideo,
-        precioVenta,
-        precioRenta,
-        m2terreno,
-        niveles,
-        mediosBanios,
-        cuotaMantenimiento,
-        fechaConstruccion,
-        usoSuelo,
-        ubicado,
-        tipoGas,
-        m2construccion,
-        recamaras,
-        estacionamientos,
-        banios,
-        desc,
-        cocina,
-        cisterna,
-        cuartoServicio,
-        salaTV,
-        estudio,
-        roofGarden,
-        areaLavado,
-        vigilancia,
-        jardin,
-        bodega,
-        direccion,
-        linkMaps,
-        idInmueble
-    ){
-        return db.execute(
-            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?,activoInmueble=1 WHERE idInmueble = ?',
-            [   
-                titulo,
-                tipoMovimiento,
-                linkVideo,
-                precioVenta,
-                precioRenta,
-                m2terreno,
-                niveles,
-                mediosBanios,
-                cuotaMantenimiento,
-                fechaConstruccion,
-                usoSuelo,
-                ubicado,
-                tipoGas,
-                m2construccion,
-                recamaras,
-                estacionamientos,
-                banios,
-                desc,
-                cocina,
-                cisterna,
-                cuartoServicio,
-                salaTV,
-                estudio,
-                roofGarden,
-                areaLavado,
-                vigilancia,
-                jardin,
-                bodega,
-                direccion,
-                linkMaps,
-                idInmueble
-            ]
-        );
-    }
-
 
     static activateInmuebleLocal(
         titulo,
