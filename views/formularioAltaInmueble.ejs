@@ -7,14 +7,14 @@
     <!-- Pictures Form -->
 
     <div class="px-10 py-5 grid grid-cols-3">
-        <div class="col-span-2">
+        <!-- <div class="col-span-2">
             <h2 class="text-lg font-semibold">
                 Imagen Principal
-            </h2>
+            </h2> -->
 
             <!-- Main Picture Form -->
 
-            <form id="imagenPrincipal" name="imagenPrincipal" action="/dashboard/alta/inmueble/imagenPrincipal/<%=idInmueble%>" method="POST" enctype="multipart/form-data">
+            <!-- <form id="imagenPrincipal" name="imagenPrincipal" action="/dashboard/alta/inmueble/imagenPrincipal/<%=idInmueble%>" method="POST" enctype="multipart/form-data">
                 <div class="flex items-center text-center justify-center w-full p-4">
                     <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                         <div class="flex flex-col items-center justify-center pt-8 pb-5">
@@ -23,13 +23,13 @@
                             <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Selecciona</span> la imagen principal del inmueble.</p>
                             <p class="text-xs text-gray-500">PNG, JPG o JPEG</p>
                         </div>
-                        <!-- <input id="mainPhoto" name="mainPhoto" type="file" class="hidden"/> -->
+                        <input id="mainPhoto" name="mainPhoto" type="file" class="hidden"/> // Esto ya estaba comentado
                         <input id="mainPhoto" name="mainPhoto" type="file"/>
                     </label>
                 </div>
-            </form>
+            </form> -->
 
-        </div>
+        <!-- </div> -->
         <div>
             <h2 class="text-lg font-semibold">
                 Imágenes Secundarias
@@ -53,7 +53,24 @@
     <!-- Information Form -->
 
     <!-- Cambiar dependiendo del id del tipo de inmueble (categoria es el idCategoria) -->
-    <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble}) %>
+    
+    <!-- Es inmueble.idCategoría? idCategoria? o solo categoria? -->
+    <% if(categoria == 1 || categoria == 2){ %>
+        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble}) %>
+    <% } else if (categoria == 3){ %>
+        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble}) %>        
+    <% } else if (categoria == 4){ %>
+        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble}) %>       
+    <% } else if (categoria == 5){ %>
+        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble}) %>
+    <% } else if (categoria == 6){ %>
+        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble}) %>
+    <% } else if (categoria == 7){ %>
+        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble}) %>
+    <%}%>
+<% }); %>
+
+
 
     <!-- Buttons Section -->
 
