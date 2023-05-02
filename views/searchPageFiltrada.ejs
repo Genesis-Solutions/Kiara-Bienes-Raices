@@ -18,6 +18,7 @@
         </div>
 
         <form action="/catalogo/search" method="POST">
+            <input type="hidden" name="newSearch" id="newSearch" value="1">
             <div class="py-6 flex flex-col items-center justify-center  gap-5" x-data="{ open: false }">
                 <div class="flex items-center justify-between flex-col gap-6 mt-5">
                     <div class="flex gap-6">
@@ -134,16 +135,16 @@
     <div class="flex justify-center">
         <div>
             <% if(pagina > 1) { %> 
-                    <a href="catalogo?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
+                    <a href="search?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
             <% } %>
             <% for(let i = iterador; i <= linkFinal; i++) { %>
                 <% if(i === pagina) { %>
                     <b> <%=i%> </b>
                 <% } else { %>
-                    <a href="catalogo?pagina=<%=i%>"> <%=i%> </a>
+                    <a href="search?pagina=<%=i%>"> <%=i%> </a>
                 <% } %> 
             <% } %>
-            <% if(pagina < numeroPaginas) { %> <a href="catalogo?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
+            <% if(pagina < numeroPaginas) { %> <a href="search?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
         </div>
     </div>
     </div>
