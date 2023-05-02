@@ -101,6 +101,7 @@ exports.updateBodyCasa = (req,res,next) => {
     const {
         titulo,
         id_agente,
+        id_arrendador,
         linkVideo,
         m2terreno,
         niveles,
@@ -167,6 +168,7 @@ exports.updateBodyCasa = (req,res,next) => {
     Dashboard.activateInmuebleCasa(
         titulo,
         id_agente,
+        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -206,6 +208,7 @@ exports.updateBodyLocal = (req,res,next) => {
     const {
         titulo,
         id_agente,
+        id_arrendador,
         linkVideo,
         m2terreno,
         medidaFrente,
@@ -251,6 +254,7 @@ exports.updateBodyLocal = (req,res,next) => {
     Dashboard.activateInmuebleLocal(
         titulo,
         id_agente,
+        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -287,6 +291,7 @@ exports.updateBodyTerreno = (req,res,next) => {
     const {
         titulo,
         id_agente,
+        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -326,6 +331,7 @@ exports.updateBodyTerreno = (req,res,next) => {
     Dashboard.activateInmuebleTerreno(
         titulo,
         id_agente,
+        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -354,6 +360,8 @@ exports.updateBodyBodega = (req,res,next) => {
     console.log("Entrando a la ruta update body bodega");
     const {
         titulo,
+        id_agente,
+        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -405,6 +413,7 @@ exports.updateBodyBodega = (req,res,next) => {
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
+        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -447,6 +456,7 @@ exports.updateBodyOficina = (req,res,next) => {
     const {
         titulo,
         id_agente,
+        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -488,6 +498,7 @@ exports.updateBodyOficina = (req,res,next) => {
     Dashboard.activateInmuebleOficina(
         titulo,
         id_agente,
+        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -519,6 +530,7 @@ exports.updateBodyOtro = (req,res,next) => {
     const {
         titulo,
         id_agente,
+        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -562,6 +574,7 @@ exports.updateBodyOtro = (req,res,next) => {
     Dashboard.activateInmuebleOtro(
         titulo,
         id_agente,
+        id_arrendador,
         linkVideo,
         tipoMovimiento,
         precioVenta,
