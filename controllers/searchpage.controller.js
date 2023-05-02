@@ -252,9 +252,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         linkFinal: linkFinal,
         numeroPaginas: numeroPaginas,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol,
-        builtQuery : req.session.searchParams,
-        countQuery : req.session.countParams
+        idRol: req.session.idRol
     }); 
 
 }
