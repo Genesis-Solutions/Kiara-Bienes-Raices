@@ -6,28 +6,39 @@
         </table>
     </div>
 
-    
+
     <!-- Enlazar con la biblioteca de jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <!-- Enlazar con el archivo de DataTables JS -->
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
 
-    <script crossorigin="anonymous" type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+    <script crossorigin="anonymous" type="text/javascript"
+        src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
 
-    <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-    <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-    <script crossorigin="anonymous" type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
 
     <script type="text/javascript">
         var log = console.log;
-        $(document).ready(function(e){
+        $(document).ready(function (e) {
             recargarTablaUsuarios();
             fixedHeader: {
                 header: true;
@@ -38,37 +49,37 @@
     </script>
 
     <script type="text/javascript">
-        function recargarTablaUsuarios(){
+        function recargarTablaUsuarios() {
             if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
-            //$("#table_report").DataTable().clear().draw();
-            $("#dataTableUsuarios").dataTable().fnDestroy();
-            //$("#table_report").dataTable();
-            $('#dataTableUsuarios').empty();
+                //$("#table_report").DataTable().clear().draw();
+                $("#dataTableUsuarios").dataTable().fnDestroy();
+                //$("#table_report").dataTable();
+                $('#dataTableUsuarios').empty();
             }
             var thead = ""
             var tfooter = ""
             thead += '<thead class="bg-gray-300 text-gray-600">'
-                thead += '<tr>'
-                thead += '<th>Id</th>'
-                thead += '<th>Nombre</th>'
-                thead += '<th>Apellidos</th>'
-                thead += '<th>Rol</th>'
-                thead += '<th>Modificar rol</th>'
-                thead += '<th>Eliminar usuario</th>'
-                thead += '</tr>'
+            thead += '<tr>'
+            thead += '<th>Id</th>'
+            thead += '<th>Nombre</th>'
+            thead += '<th>Apellidos</th>'
+            thead += '<th>Rol</th>'
+            thead += '<th>Modificar rol</th>'
+            thead += '<th>Eliminar usuario</th>'
+            thead += '</tr>'
             thead += '</thead>'
             tfooter += '<tfoot>'
-                tfooter += '<tr>'
-                tfooter += '<th>Id</th>'   
-                tfooter += '<th>Nombre</th>'
-                tfooter += '<th>Apellidos</th>'
-                tfooter += '<th>Rol</th>'
-                tfooter += '<th>Modificar rol</th>'
-                tfooter += '<th>Eliminar usuario</th>'
-                tfooter += '</tr>'
+            tfooter += '<tr>'
+            tfooter += '<th>Id</th>'
+            tfooter += '<th>Nombre</th>'
+            tfooter += '<th>Apellidos</th>'
+            tfooter += '<th>Rol</th>'
+            tfooter += '<th>Modificar rol</th>'
+            tfooter += '<th>Eliminar usuario</th>'
+            tfooter += '</tr>'
             tfooter += '</tfoot>'
             $('#dataTableUsuarios').append(thead);
-            $('#dataTableUsuarios').append(tfooter);
+            // $('#dataTableUsuarios').append(tfooter);
             $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
             dataTable = $("#dataTableUsuarios").dataTable({
             language: {
@@ -109,14 +120,54 @@
                 },
                 {
                     data: null,
-                    render: function(data, type, row) {
-                        return '<button type="button" id="button" dataId='+data.idUsuario+' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                    render: function (data, type, row) {
+                        return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
                     }
                 },
-                ] 
+            ]
             })
         }
     </script>
+
+    <script type="text/javascript">
+        $(document).on("click", ".btnEditarRol", function () {
+            fila = $(this).closest("tr");
+            id = parseInt(fila.find('td:eq(0)').text());
+            const { value: eleccion } = Swal.fire({
+                title: 'Selecciona el Rol:',
+                input: 'select',
+                inputOptions: {
+                    'Rol': {
+                        1: 'Administrador',
+                        2: 'Agente',
+                        3: 'Usuario'
+                    }
+                },
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    return new Promise((resolve) => {
+                        if (value) {
+                            resolve()
+                        } else {
+                            resolve('Selecciona una opción disponible.')
+                        }
+                    })
+                }
+            }).then((result) => {          
+                    if (result) {
+                        $.ajax({
+                            url: '/dashboard/lista/actualizar/'+id+result.value,
+                            method: 'put',  
+                        });
+                        Swal.fire('¡El rol ha sido modificado!')
+                        recargarTablaUsuarios();
+                    } 
+                    
+                })
+            
+        });
+    </script>
+
     <style>
         #dataTableUsuarios {
             border-style: solid;
@@ -126,5 +177,5 @@
             margin-bottom: 2%;
         }
     </style>
-    
+
 </main>
