@@ -6,10 +6,17 @@ const { info } = require("console");
 // -- LIST USERS -- //
 exports.getDashboard = (req, res, next) => {
     // Renderizar la vista de registro
-    res.render("listUsers", {
-        isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol,
-    });
+    if (req.session.idRol == 1) {
+        res.render("listUsers", {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+        });
+    } else if (req.session.idRol == 2) {
+        res.render("dashboardListaPropiedades", {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+        });
+    };
 };
 
 exports.getUsers = async (req, res, next) => {
@@ -112,4 +119,16 @@ exports.postAdminUser = (req, res, next) => {
         .catch((error) => {
             console.log(error);
         });
+};
+
+// -- LIST ALL PROPERTIES--//
+
+exports.getPropiedades = (req, res, next) => {
+    if (req.session.isLoggedIn == true) {
+        isLogged = true;
+        res.render("dashboardListaPropiedades", {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+        });
+    }
 };
