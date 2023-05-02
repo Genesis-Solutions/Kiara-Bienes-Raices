@@ -54,6 +54,7 @@ module.exports = class Dashboard{
         );
     }
 
+    // Listo
     static activateInmuebleCasa(
         titulo,
         id_agente,
@@ -89,7 +90,7 @@ module.exports = class Dashboard{
         idInmueble
     ){
         return db.execute(
-            'UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?,activoInmueble=1 WHERE idInmueble = ?',
+            'UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble = ?',
             [   
                 titulo,
                 id_agente,
@@ -127,9 +128,10 @@ module.exports = class Dashboard{
         );
     }
 
+    // Listo
     static activateInmuebleLocal(
         titulo,
-        tipoMovimiento,
+        tipoMovimiento, 
         linkVideo,
         precioVenta,
         precioRenta,
@@ -152,13 +154,15 @@ module.exports = class Dashboard{
         estacionamientos,
         banios,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     ){
         return db.execute(
-            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,m2ConstruidosInmueble=?,medidaFrenteInmueble=?,medidaFondoInmueble=?,nivelesInmueble=?,cuartosPrivadosInmueble=?,mediosBaniosInmueble=?,estacionamientosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?,cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=? WHERE idInmueble = ?',
+            'UPDATE inmueble SET nombreInmueble=?,idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,m2ConstruidosInmueble=?,medidaFrenteInmueble=?,medidaFondoInmueble=?,nivelesInmueble=?,cuartosPrivadosInmueble=?,mediosBaniosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?,cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble = ?',
             [   
                 titulo,
-                tipoMovimiento,
+                tipoMovimiento, 
                 linkVideo,
                 precioVenta,
                 precioRenta,
@@ -169,30 +173,217 @@ module.exports = class Dashboard{
                 niveles,
                 cuartosPrivadosInmueble,
                 mediosBanios,
-                cuotaMantenimiento,
-                fechaConstruccion,
                 usoSuelo,
                 ubicado,
-                tipoGas,
-                m2construccion,
-                recamaras,
-                estacionamientos,
-                banios,
-                desc,
+                cuotaMantenimiento,
                 cocina,
                 cisterna,
                 cuartoServicio,
-                salaTV,
-                estudio,
-                roofGarden,
-                areaLavado,
+                fechaConstruccion,
                 vigilancia,
-                jardin,
-                bodega,
-                idInmueble
+                tipoGas,
+                estacionamientos,
+                banios,
+                desc,
+                direccion,
+                linkMaps,
+                idInmueble               
             ]
         );
     }
+
+    // Listo   
+    static changeInmuebleTerreno(
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precioVenta,
+        precioRenta,
+        m2Terreno,
+        m2Construccion,
+        medidaFrente,
+        medidaFondo,
+        usoSuelo,
+        ubicado,
+        servicioAgua,
+        servicioLuz,
+        servicioDrenaje,
+        tipoSuelo,
+        cuotaMantenimiento,
+        vigilancia,
+        desc,
+        direccion,
+        linkMaps,
+        idInmueble
+      ) {
+        return db.execute(
+          "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?, servicioDrenajeInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?, vigilanciaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=? WHERE idInmueble = ?",
+          [
+            titulo,
+            tipoMovimiento,
+            linkVideo,
+            precioVenta,
+            precioRenta,
+            m2Terreno,
+            m2Construccion,
+            medidaFrente,
+            medidaFondo,
+            usoSuelo,
+            ubicado,
+            servicioAgua,
+            servicioLuz,
+            servicioDrenaje,
+            tipoSuelo,
+            cuotaMantenimiento,
+            vigilancia,
+            desc,
+            direccion,
+            linkMaps,
+            idInmueble
+        ]
+        );
+    }
+
+
+    static changeInmuebleBodega(
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precioVenta,
+        precioRenta,
+        m2Terreno,
+        m2Construccion,
+        medidaFrente,
+        medidaFondo,
+        niveles,
+        cuartosPrivadosInmueble,
+        mediosBanios,
+        estacionamientos,
+        usoSuelo,
+        ubicado,
+        cuotaMantenimiento,
+        cocina,
+        cisterna,
+        fechaConstruccion,
+        vigilancia,
+        generadorElectrico,
+        andenCarga,
+        oficina,
+        patioManiobras,
+        muros,
+        altura,
+        tipoPiso,
+        tipoLuz,
+        estacionamientos,
+        banios,
+        desc,
+        direccion,
+        linkMaps,
+        idInmueble
+        ){
+        return db.execute(
+            "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, estacionamientosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, generadorElectricoInmueble=?, andenCargaInmueble=?, oficinaInmueble=?, patioManiobrasInmueble=?, murosInmueble=?, alturaInmueble=?, tipoPisoInmueble=?, tipoLuzInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            [
+            titulo,
+            tipoMovimiento,
+            linkVideo,
+            precioVenta,
+            precioRenta,
+            m2Terreno,
+            m2Construccion,
+            medidaFrente,
+            medidaFondo,
+            niveles,
+            cuartosPrivadosInmueble,
+            mediosBanios,
+            estacionamientos,
+            usoSuelo,
+            ubicado,
+            cuotaMantenimiento,
+            cocina,
+            cisterna,
+            fechaConstruccion,
+            vigilancia,
+            generadorElectrico,
+            andenCarga,
+            oficina,
+            patioManiobras,
+            muros,
+            altura,
+            tipoPiso,
+            tipoLuz,
+            banios,
+            desc,
+            direccion,
+            linkMaps,
+            idInmueble
+        ]
+        );
+    }
+
+
+
+    static changeInmuebleOficina(
+        titulo,
+        tipoMovimiento,
+        linkVideo,
+        precioVenta,
+        precioRenta,
+        m2Terreno,
+        m2Construccion,
+        niveles,
+        cuartosPrivadosInmueble,
+        mediosBanios,
+        usoSuelo,
+        ubicado,
+        cuotaMantenimiento,
+        cocina,
+        cisterna,
+        fechaConstruccion,
+        vigilancia,
+        estacionamientos,
+        banios,
+        desc,
+        direccion,
+        linkMaps,
+        idInmueble
+      ) {
+        return db.execute(
+            "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+        [
+            titulo,
+            tipoMovimiento,
+            linkVideo,
+            precioVenta,
+            precioRenta,
+            m2Terreno,
+            m2Construccion,
+            niveles,
+            cuartosPrivadosInmueble,
+            mediosBanios,
+            usoSuelo,
+            ubicado,
+            cuotaMantenimiento,
+            cocina,
+            cisterna,
+            fechaConstruccion,
+            vigilancia,
+            estacionamientos,
+            banios,
+            desc,
+            direccion,
+            linkMaps,
+            idInmueble,
+        ]
+        );
+    }
+    
+
+
+
+
+
+
 
     static activateInmuebleOtro(
         titulo,
@@ -209,13 +400,13 @@ module.exports = class Dashboard{
         usoSuelo,
         ubicado,
         cuotaMantenimiento,
+        cocina,
+        cisterna,
+        vigilancia,
         estacionamientos,
         banios,
         desc,
         direccion,
-        cocina,
-        cisterna,
-        vigilancia,
         linkMaps,
         idInmueble
     ){
@@ -236,7 +427,6 @@ module.exports = class Dashboard{
                 usoSuelo,
                 ubicado,
                 cuotaMantenimiento,
-                direccion,
                 cocina,
                 cisterna,
                 vigilancia,

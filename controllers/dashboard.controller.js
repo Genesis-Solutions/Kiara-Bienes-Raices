@@ -207,17 +207,17 @@ exports.updateBodyLocal = (req,res,next) => {
         titulo,
         linkVideo,
         m2terreno,
-        m2construccion,
         medidaFrente,
         medidaFondo,
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
-        usoSuelo,
-        ubicado,
         cuotaMantenimiento,
         fechaConstruccion,
+        usoSuelo,
+        ubicado,
         tipoGas,
+        m2construccion,
         estacionamientos,
         banios,
         desc
@@ -273,6 +273,8 @@ exports.updateBodyLocal = (req,res,next) => {
         estacionamientos,
         banios,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.status(200).json({code: 200, msg:"Ok"})
@@ -337,6 +339,8 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         vigilancia,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.status(200).json({code: 200, msg:"Ok"})
@@ -426,6 +430,8 @@ exports.updateBodyBodega = (req,res,next) => {
         estacionamientos,
         banios,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.status(200).json({code: 200, msg:"Ok"})
@@ -494,6 +500,8 @@ exports.updateBodyOficina = (req,res,next) => {
         estacionamientos,
         banios,
         desc,
+        direccion,
+        linkMaps,
         idInmueble
     );
     res.status(200).json({code: 200, msg:"Ok"})
