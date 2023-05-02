@@ -48,7 +48,6 @@ module.exports = class Dashboard{
     }
 
     static deleteInmuebleById(idInmueble){
-        console.log("Este es el modelo de eliminar: IdInmueble = ",idInmueble);
         return db.execute(
             'DELETE FROM inmueble WHERE idInmueble = ?',
             [idInmueble]

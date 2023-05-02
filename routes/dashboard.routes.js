@@ -4,10 +4,8 @@ const router = express.Router();
 const dashboardController = require('../controllers/dashboard.controller');
 
 // Rutas
-//Registrar imagenes secundarias de una casa
-router.post('/alta/inmueble/imagenesSecundarias/:inmueble', dashboardController.setSecondaryPhotos);
-//Registrar imagen principal de una casa
-router.post('/alta/inmueble/imagenPrincipal/:inmueble', dashboardController.setMainPhoto);
+//Registrar imagenes de un inmueble
+router.post('/alta/inmueble/imagenes/:inmueble', dashboardController.setPhotos);
 
 //Actulizar el cuerpo de una casa
 router.post('/alta/inmueble/cuerpoCasa/:inmueble', dashboardController.updateBodyCasa);

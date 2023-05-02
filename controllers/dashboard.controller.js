@@ -49,11 +49,11 @@ exports.getCategoria = async(req,res,next) => {
         isLogged = true;
         const idCategoria = req.params.categoria;
         const idUsuario = req.session.idUsuario;
-        console.log("Categoria del inmueble creado",idCategoria);
-        console.log("Id del usuario",idCategoria);
+        //console.log("Categoria del inmueble creado",idCategoria);
+        //console.log("Id del usuario",idCategoria);
         const inmueble = await Dashboard.insertDisabledRegister(idCategoria.toString(),idUsuario.toString());
         const idInmueble = await Dashboard.getLastDisabledRegisterID();
-        console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
+        //console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
         const listaAgentes = await Dashboard.fetchAgents();
         //console.log("Lista de todos los agentes",listaAgentes[0]);
         const listaTipoMovimientos = await Dashboard.fetchAllMovements();
@@ -72,31 +72,14 @@ exports.getCategoria = async(req,res,next) => {
 
 exports.deleteInmueble = (req,res,next) => {
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble del inmueble a eliminar",idInmueble);
     Dashboard.deleteInmuebleById(idInmueble)
         .then(([rows, fieldData]) => {
-            console.log("Inmueble eliminado");
             res.status(200).json({code: 200, msg:"Ok"});
         })
         .catch(error => { console.log(error) });
 };
 
-exports.setMainPhoto = (req,res,next) => {
-    console.log("Entrando a la ruta de imagen principal");
-    var upload = storage.array('mainPhoto',1);
-    upload(req,res,function(err) {
-        if(err) {
-            console.log(err)
-            return res.end("Error uploading file.");
-        }
-        const idInmueble = req.params.inmueble;
-        const mediaName = req.files[0].key;
-        Dashboard.registerImage(idInmueble,mediaName);
-    })
-};
-
-exports.setSecondaryPhotos = (req,res,next) => {
-    console.log("Entrando a la ruta de las imagenes secundarias");
+exports.setPhotos = (req,res,next) => {
     var upload = storage.array('media',25);
     upload(req, res, function(err) {
         if (err) {
