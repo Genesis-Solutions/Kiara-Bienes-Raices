@@ -127,25 +127,26 @@
                     <%- include('tarjetasCatalogo/tarjetaOtro', {data: inmueble}) %>
                 <%}%>
             <% }); %>
+            <div class="break"></div>
+            <!--Display the links to the pages-->
+            <div class="flex justify-center">
+                <div>
+                    <% if(pagina > 1) { %> 
+                            <a href="search?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
+                    <% } %>
+                    <% for(let i = iterador; i <= linkFinal; i++) { %>
+                        <% if(i === pagina) { %>
+                            <b> <%=i%> </b>
+                        <% } else { %>
+                            <a href="search?pagina=<%=i%>"> <%=i%> </a>
+                        <% } %> 
+                    <% } %>
+                    <% if(pagina < numeroPaginas) { %> <a href="search?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
+                </div>
         <% } else { %>
             <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
         <% } %>
-    <div class="break"></div>
-    <!--Display the links to the pages-->
-    <div class="flex justify-center">
-        <div>
-            <% if(pagina > 1) { %> 
-                    <a href="search?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
-            <% } %>
-            <% for(let i = iterador; i <= linkFinal; i++) { %>
-                <% if(i === pagina) { %>
-                    <b> <%=i%> </b>
-                <% } else { %>
-                    <a href="search?pagina=<%=i%>"> <%=i%> </a>
-                <% } %> 
-            <% } %>
-            <% if(pagina < numeroPaginas) { %> <a href="search?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
-        </div>
+    
     </div>
     </div>
     <!-- Footer Section -->
