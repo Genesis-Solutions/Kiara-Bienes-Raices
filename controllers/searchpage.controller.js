@@ -96,14 +96,14 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         var values = [];
         var conditionsStr;
 
-        console.log(params.direccionInmueble)
+        //console.log(params.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
             conditions.push("direccionInmueble LIKE ?");
             values.push("%" + params.direccionInmueble + "%");
         };
 
         if (params.idCategoria == "1" || params.idCategoria == "2") {
-            console.log(params.idCategoria)
+            //console.log(params.idCategoria)
             var catCasa = "1"
             var catDept = "2"
             conditions.push("idCategoria = ? OR idCategoria = ?")
@@ -140,28 +140,38 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
         // venta
         if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
+            //console.log("dentro del precio equisde")
             if (typeof params.precioMinimo !== 'undefined') {
-                conditions.push("precioVentaInmueble BETWEEN ? AND ?");
-                values.push(params.precioMinimo);
-                values.push(params.precioMaximo);
+
+                if (params.precioMaximo != ''){
+                    conditions.push("precioVentaInmueble BETWEEN ? AND ?");
+                    values.push(params.precioMinimo);
+                    values.push(params.precioMaximo);
+                }
+                
             };
         }
 
         // renta
         if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
             if (typeof params.precioMinimo !== 'undefined') {
-                conditions.push("precioRentaInmueble BETWEEN ? AND ?");
-                values.push(params.precioMinimo);
-                values.push(params.precioMaximo);
+                //console.log("dentro del precio equisde")
+                if (params.precioMaximo != '') {
+                    conditions.push("precioRentaInmueble BETWEEN ? AND ?");
+                    values.push(params.precioMinimo);
+                    values.push(params.precioMaximo);
+                }
             };
         }
-
         return {
             where: conditions.length ?
                     conditions.join(' AND ') : '1',
             values: values
         };
     };
+
+    var statusActive = 1
+    var isActive = ' AND activoInmueble = ' + statusActive.toString();
 
     if (req.session.searchValues != null){
         var conditions = req.session.searchValues;
@@ -174,7 +184,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     if (req.session.countParams != null) {
         var countQuery = req.session.countParams;
     } else {
-        var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where;
+        var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where + isActive;
     }
 
     //console.log(countQuery)
@@ -187,10 +197,12 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     const numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
     //Solicitar la cantidad de resultados por pagina
     const pagina = req.query.pagina ? Number(req.query.pagina) : 1;
-    if (pagina>numeroPaginas) {
-        res.redirect('/search?pagina='+encodeURIComponent(numeroPaginas));
+    if (pagina>numeroPaginas && numeroPaginas != 0) {
+        res.redirect('/catalogo/search?pagina='+encodeURIComponent(numeroPaginas));
     } else if (pagina<1) {
-        res.redirect('/search?pagina='+encodeURIComponent('1'));
+        res.redirect('/catalogo/search?pagina='+encodeURIComponent('1'));
+    } else if (numeroPaginas == 0){
+        res.redirect('/catalogo/search?pagina='+encodeURIComponent('1'));
     }
 
     //Determinar los limites
@@ -205,7 +217,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         //console.log(req.session.searchValues)
         var builtQuery = req.session.searchParams;
     } else {
-        var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where;
+        var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where + isActive;
     }
 
     var builtQueryLimits = builtQuery + limits;
@@ -254,5 +266,4 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol
     }); 
-
 }
