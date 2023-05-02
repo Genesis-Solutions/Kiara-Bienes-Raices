@@ -84,17 +84,17 @@
             tfooter += '</tr>'
             tfooter += '</tfoot>'
             $('#dataTableUsuarios').append(thead);
-            $('#dataTableUsuarios').append(tfooter);
+            // $('#dataTableUsuarios').append(tfooter);
             $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
             dataTable = $("#dataTableUsuarios").dataTable({
-                language: {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                },
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
                 processing: true,
                 lengthMenu: [5, 10, 20, 25, 30],
                 order: [[0, 'asc']],
                 deferRender: true,
-                ajax: '/dashboard/lista/usuarios',
+                ajax: '/dashboard/usuarios',
                 columns: [
                     {
                         data: "idUsuario"

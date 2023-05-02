@@ -18,6 +18,14 @@ module.exports = class SearchPage {
     }
 
     /*
+     * Obtener la cantidad total de inmuebles filtrados dentro de la entidad inmueble.
+     * @return JSON -> Cantidad total de inmuebles filtrados.
+     */
+    static totalInmueblesFiltrados(builtQuery, values) {
+        return db.execute(builtQuery, values);
+    }
+
+    /*
      * Obtener los inmuebles dependiendo de los limites de la paginación.
      * @param limInferior: String -> Limite inferior (piso) de la paginación.
      * @param limSuperior: String -> Limite superior (techo) de la paginación.
@@ -54,4 +62,19 @@ module.exports = class SearchPage {
         );
     }
 
+    /*
+     * Obtener los inmuebles que cumplan con las características.
+     * @param id: String -> Id de una foto. 
+     * @return JSON -> Lista de los inmuebles que cumplan con las características.
+     */
+
+    static inmueblesFiltrados(builtQuery, values) {
+        return db.execute(builtQuery, values).then(([rows, fieldData]) => {
+            return rows;
+        })
+        .catch((error) => {
+            console.log(error);
+            return 0;
+        });
+    };
 }
