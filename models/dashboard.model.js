@@ -14,6 +14,14 @@ module.exports = class Dashboard {
     ]);
   }
 
+  static UpdateUser(idUsuario) {
+        var idRol=idUsuario[1]
+        var idUs=idUsuario[0]
+        return db.execute(
+            'UPDATE usuario SET idRol=? WHERE idUsuario=?',[idRol, idUs]
+        );
+    }
+
   static adminInsertUser(
     nombreUsuario,
     apellidosUsuario,

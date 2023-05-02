@@ -28,6 +28,12 @@ exports.getAdminUser = (req, res, next) => {
         });
     }
 };
+
+exports.updateRol = async(req, res, next) => {
+    const id = req.params.id;
+    await Dashboard.UpdateUser(id);
+}
+
 exports.postAdminUser = (req, res, next) => {
     const {
         nombreUsuario,
@@ -40,7 +46,7 @@ exports.postAdminUser = (req, res, next) => {
         ocupacionUsuario,
         rolUsuario,
     } = req.body;
-
+    
     const activoUsuario = 1;
     const idFoto = 1;
 
