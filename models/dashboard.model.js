@@ -48,7 +48,7 @@ module.exports = class Dashboard {
  */
     static checkUser(idUsuario) {
         return db.execute(
-            'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where idAgenteAsignado=?', [idUsuario]
+            'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where activoInmueble=1 AND (idAgenteAsignado=? OR idArrendador=?)', [idUsuario,idUsuario]
         ).then(([rows, fielData]) => {
              return rows[0].primera
         })
@@ -59,7 +59,7 @@ module.exports = class Dashboard {
  */
     static checkUser2(idUsuario){
         return db.execute(
-            'SELECT COUNT(idCliente) as segunda FROM tramite where idCliente=?', [idUsuario]
+            'SELECT COUNT(idCliente) as segunda FROM tramite where idCliente=? AND activoTramite=1', [idUsuario]
         ).then(([rows, fielData]) => {
             return rows[0].segunda
         })
@@ -70,7 +70,7 @@ module.exports = class Dashboard {
  */
     static checkUser3(idUsuario){
         return db.execute(
-            'SELECT COUNT(idArrendador) as tercera FROM tramite where idArrendador=?', [idUsuario]
+            'SELECT COUNT(idArrendador) as tercera FROM tramite where idArrendador=? AND activoTramite=1', [idUsuario]
         ).then(([rows, fielData]) => {
             return rows[0].tercera
         })
