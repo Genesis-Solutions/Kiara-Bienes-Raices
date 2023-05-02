@@ -163,7 +163,7 @@
                 },
                 showCancelButton: true,
             }).then((result) => {
-                if (result) {
+                if (result.value>= 1 && result.value<=3) {
                     $.ajax({
                         url: '/dashboard/lista/actualizar/' + id + result.value,
                         method: 'put',
