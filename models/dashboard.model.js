@@ -14,6 +14,15 @@ module.exports = class Dashboard {
             'SELECT U.idUsuario,U.nombreUsuario,U.apellidosUsuario,R.nombreRol FROM usuario U JOIN rol R ON U.idRol = R.idRol WHERE U.activoUsuario=1'
         )
     }
+        /*
+     * Obtener la lista total de propiedades del sistema para la lista.
+     * @return JSON -> Lista de propiedades
+     */
+        static fetchAllPropiedades() {
+          return db.execute(
+              'SELECT I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador'
+          )
+      }
     
     static findOne(emailUsuario) {
     return db.execute("SELECT * FROM usuario WHERE emailUsuario=?", [

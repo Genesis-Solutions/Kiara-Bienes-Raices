@@ -1,8 +1,8 @@
-<!-- List Users -->
+<!-- List Propiedades -->
 <main class="text-center mb-20 mx-32">
     <!-- Inicio de la DataTable lista usuarios -->
     <div class="table-responsive text-center">
-        <table class="table table-bordered text-center " id="dataTableUsuarios" width="100%" cellspacing="0">
+        <table class="table table-bordered text-center " id="dataTablePropiedades" width="100%" cellspacing="0">
         </table>
     </div>
     <!-- Enlazar con la biblioteca de jQuery -->
@@ -13,7 +13,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
-
     <script crossorigin="anonymous" type="text/javascript"
         src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
 
@@ -37,7 +36,7 @@
     <script type="text/javascript">
         var log = console.log;
         $(document).ready(function (e) {
-            recargarTablaUsuarios();
+            recargarTablaPropiedades();
             fixedHeader: {
                 header: true;
                 footer: true;
@@ -51,40 +50,40 @@
  * Carga de la data table que renderiza los datos de los usuarios.
  */
      
-        function recargarTablaUsuarios() {
+        function recargarTablaPropiedades() {
             //Carga de la tabla de usuarios mediante data table.
-            if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
+            if ($.fn.DataTable.isDataTable("#dataTablePropiedades")) {
                 //$("#table_report").DataTable().clear().draw();
-                $("#dataTableUsuarios").dataTable().fnDestroy();
+                $("#dataTablePropiedades").dataTable().fnDestroy();
                 //$("#table_report").dataTable();
-                $('#dataTableUsuarios').empty();
+                $('#dataTablePropiedades').empty();
             }
             var thead = ""
             var tfooter = ""
             thead += '<thead class="bg-gray-300 text-gray-600">'
             thead += '<tr>'
-            thead += '<th>Id</th>'
-            thead += '<th>Nombre</th>'
-            thead += '<th>Apellidos</th>'
-            thead += '<th>Rol</th>'
-            thead += '<th>Modificar rol</th>'
-            thead += '<th>Eliminar usuario</th>'
+            thead += '<th>Propiedad</th>'
+            thead += '<th>Dueño</th>'
+            thead += '<th>Operación</th>'
+            thead += '<th>Agente</th>'
+            thead += '<th>Modificar agente asignado</th>'
+            thead += '<th>Estatus</th>'
             thead += '</tr>'
             thead += '</thead>'
             tfooter += '<tfoot>'
             tfooter += '<tr>'
-            tfooter += '<th>Id</th>'
-            tfooter += '<th>Nombre</th>'
-            tfooter += '<th>Apellidos</th>'
+            tfooter += '<th>Propiedad</th>'
+            tfooter += '<th>Dueño</th>'
+            tfooter += '<th>Operación</th>'
             tfooter += '<th>Rol</th>'
-            tfooter += '<th>Modificar rol</th>'
-            tfooter += '<th>Eliminar usuario</th>'
+            tfooter += '<th>Modificar agente asignado</th>'
+            tfooter += '<th>Estatus</th>'
             tfooter += '</tr>'
             tfooter += '</tfoot>'
-            $('#dataTableUsuarios').append(thead);
+            $('#dataTablePropiedades').append(thead);
             // $('#dataTableUsuarios').append(tfooter);
             $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
-            dataTable = $("#dataTableUsuarios").dataTable({
+            dataTable = $("#dataTablePropiedades").dataTable({
             language: {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
@@ -92,47 +91,59 @@
                 lengthMenu: [5, 10, 20, 25, 30],
                 order: [[0, 'asc']],
                 deferRender: true,
-                ajax: '/dashboard/usuarios',
+                ajax: '/dashboard/propiedades',
                 columns: [
                     {
-                        data: "idUsuario"
-                    },
-                    {
                         data: null,
                         render: function (data, type, row) {
-                            return '<span class="badge badge-success">' + data.nombreUsuario + '</span>'
+                            return '<span class="badge badge-success">' + data.nombreInmueble + '</span>'
                         }
                     },
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return '<span class="badge badge-success">' + data.apellidosUsuario + '</span>'
+                            var arrendador = data.nombresArrendador + data.apellidosArrendador
+                            return '<span class="badge badge-success">' + arrendador + '</span>'
                         }
                     },
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return '<span class="badge badge-success">' + data.nombreRol + '</span>'
+                            if (data.idTipoMovimiento==1){
+                                var movimiento='Venta'
+                            }
+                            else if (data.idTipoMovimiento==2){
+                                var movimiento='Renta'
+                            }
+                            else if (data.idTipoMovimiento==3){
+                                var movimiento='Venta/Renta'
+                            }
+                            return '<span class="badge badge-success">' + movimiento + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            var agente = data.nombresAgente + data.apellidosAgente
+                            return '<span class="badge badge-success">' + agente + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return '<button type="button" id="button" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarEncargado my-2">Modificar Agente Encargado</button>'
                         }
                     },
                     {
                         data: null,
                         render: function (data, type, row) {
                             //Si el usuario es administrador, ocultar el botón.
-                            if (data.nombreRol == 'administrador') {
-                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
+                            if (data.activoInmueble == 1) {
+                                return '<i class="fa-solid fa-square-check"></i>'
                             }
-                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            //Si el usuario es administrador, ocultar el botón.
-                            if (data.nombreRol == 'administrador') {
-                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                            else{
+                                return '<i class="fa-solid fa-square-x"></i>'
                             }
-                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
                         }
                     },
                 ]
@@ -140,78 +151,8 @@
         }
     </script>
 
-    <script type="text/javascript">
-/*
-* Acción del botón de edición de rol. Despliega un modal con un dropdown de las opciones disponibles para modificar
-*/
-        $(document).on("click", ".btnEditarRol", function () {
-            fila = $(this).closest("tr");
-            id = parseInt(fila.find('td:eq(0)').text());
-            var contador = 0;
-            const { value: eleccion } = Swal.fire({
-                //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
-                title: 'Selecciona el Rol:',
-                input: 'select',
-                inputOptions: {
-                    'Rol': {
-                        1: 'Administrador',
-                        2: 'Agente',
-                        3: 'Usuario'
-                    }
-                },
-                showCancelButton: true,
-            }).then((result) => {
-                if (result.value>= 1 && result.value<=3) {
-                    $.ajax({
-                        url: '/dashboard/lista/actualizar/' + id + result.value,
-                        method: 'put',
-                    });
-                    Swal.fire('¡El rol ha sido modificado!')
-                    recargarTablaUsuarios();
-                }
-
-            })
-
-        });
-    </script>
-    <script type="text/javascript">
-/*
-* Funcionalidad de botón de eliminación de usuario. Despliega un modal que verifica la decisión del usuario para posteriormente asegurar la inexistencia de procesos del mismo.
-*/
-        $(document).on("click", ".btnEliminarUsuario", function () {
-            fila = $(this).closest("tr");
-            id = parseInt(fila.find('td:eq(0)').text());
-            //Modal de confirmación.
-            Swal.fire({
-                title: '¿Confirma la eliminación del usuario?',
-                showCancelButton: true,
-                confirmButtonText: `Confirmar`,
-            }).then((result) => {
-                //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/dashboard/lista/eliminar/' + id,
-                        method: 'put',
-                        success: function (choice) {
-                            if (choice.comprobacionEliminado == false) {
-                                Swal.fire('Usuario Eliminado!')
-                                recargarTablaUsuarios();
-                            } else {
-                                Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
-                            }
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
-                        }
-
-                    });
-                }
-            })
-        });
-    </script>
-
     <style>
-        #dataTableUsuarios {
+        #dataTablePropiedades {
             border-style: solid;
             border-width: 1px;
             border-color: #5c5c5c;

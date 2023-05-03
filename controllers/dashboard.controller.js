@@ -33,6 +33,14 @@ exports.getUsers = async (req, res, next) => {
     res.status(200).json({ code: 200, code: "Ok", data: dataUsers[0] });
 }
 
+/*
+ * Llamada de query que regresa un json con los datos de las propiedades del sistema.
+ */
+exports.getPropiedades = async (req, res, next) => {
+    const dataProps = await Dashboard.fetchAllPropiedades();
+    res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
+}
+
 // -- REGISTER A NEW USER FROM A ROLE ADMIN --//
 
 exports.getAdminUser = (req, res, next) => {
@@ -157,16 +165,4 @@ exports.postAdminUser = (req, res, next) => {
         .catch((error) => {
             console.log(error);
         });
-};
-
-// -- LIST ALL PROPERTIES--//
-
-exports.getPropiedades = (req, res, next) => {
-    if (req.session.isLoggedIn == true) {
-        isLogged = true;
-        res.render("dashboardListaPropiedades", {
-            isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol,
-        });
-    }
 };
