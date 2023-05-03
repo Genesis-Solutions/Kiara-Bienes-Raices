@@ -32,6 +32,7 @@
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
     <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
         var log = console.log;
@@ -67,7 +68,7 @@
             thead += '<th>Operación</th>'
             thead += '<th>Agente</th>'
             thead += '<th>Modificar agente asignado</th>'
-            thead += '<th>Estatus</th>'
+            thead += '<th>¿En proceso?</th>'
             thead += '</tr>'
             thead += '</thead>'
             tfooter += '<tfoot>'
@@ -77,7 +78,7 @@
             tfooter += '<th>Operación</th>'
             tfooter += '<th>Rol</th>'
             tfooter += '<th>Modificar agente asignado</th>'
-            tfooter += '<th>Estatus</th>'
+            tfooter += '<th>¿En proceso?</th>'
             tfooter += '</tr>'
             tfooter += '</tfoot>'
             $('#dataTablePropiedades').append(thead);
@@ -102,7 +103,7 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            var arrendador = data.nombresArrendador + data.apellidosArrendador
+                            var arrendador = data.nombresArrendador + ' ' + data.apellidosArrendador
                             return '<span class="badge badge-success">' + arrendador + '</span>'
                         }
                     },
@@ -124,7 +125,7 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            var agente = data.nombresAgente + data.apellidosAgente
+                            var agente = data.nombresAgente + ' ' + data.apellidosAgente
                             return '<span class="badge badge-success">' + agente + '</span>'
                         }
                     },
@@ -139,10 +140,10 @@
                         render: function (data, type, row) {
                             //Si el usuario es administrador, ocultar el botón.
                             if (data.activoInmueble == 1) {
-                                return '<i class="fa-solid fa-square-check"></i>'
+                                return '<svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 896 1024"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm79 143c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>'
                             }
                             else{
-                                return '<i class="fa-solid fa-square-x"></i>'
+                                return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 896 1024"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'
                             }
                         }
                     },

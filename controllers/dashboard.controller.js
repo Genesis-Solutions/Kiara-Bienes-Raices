@@ -11,18 +11,20 @@ const { info } = require('console');
  */
 // -- LIST USERS -- //
 exports.getDashboard = (req, res, next) => {
-    // Renderizar la vista de registro
-    if (req.session.idRol == 1) {
+    // Renderizar la vista de la lista de Usuarios
         res.render("listUsers", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
         });
-    } else if (req.session.idRol == 2) {
-        res.render("dashboardListaPropiedades", {
-            isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol,
-        });
-    };
+
+};
+
+exports.getDashboardProps = (req, res, next) => {
+    // Renderizar la vista de la lista de Propiedades
+    res.render("dashboardListaPropiedades", {
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+    });
 };
 
 /*

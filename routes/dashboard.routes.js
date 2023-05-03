@@ -20,6 +20,7 @@ router.get('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.get
 router.post('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.postAdminUser)
 router.get('/usuarios',isLogged, adminAuth, dashboardController.getUsers);
 router.get('/', isLogged, agenteAdminAuth, dashboardController.getDashboard);
+router.get('/props', isLogged, agenteAdminAuth, dashboardController.getDashboardProps);
 
 
 module.exports = router;
