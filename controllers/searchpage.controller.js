@@ -137,10 +137,11 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
                 values.push(params.m2ConstruidosInmueble);
             };
         }
-
+        //console.log(params.idTipoMovimiento)
         // venta
         if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
             //console.log("dentro del precio equisde")
+            conditions.push("idTipoMovimiento = 1 OR idTipoMovimiento = 3")
             if (typeof params.precioMinimo !== 'undefined') {
 
                 if (params.precioMaximo != ''){
@@ -155,6 +156,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         // renta
         if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
             if (typeof params.precioMinimo !== 'undefined') {
+                conditions.push("idTipoMovimiento = 2 OR idTipoMovimiento = 3")
                 //console.log("dentro del precio equisde")
                 if (params.precioMaximo != '') {
                     conditions.push("precioRentaInmueble BETWEEN ? AND ?");
