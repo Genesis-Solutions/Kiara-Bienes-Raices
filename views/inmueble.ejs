@@ -1,4 +1,5 @@
 <%- include("partials/head") %>
+
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- NavBar Section -->
@@ -9,77 +10,26 @@
 
     <!-- Heading Section -->
     <% for (let inmueble of inmuebles) { %>
-        <div class="py-5 lg:py-10 px-8">
-            <h1 class="text-4xl font-bold"><%= inmueble.nombreInmueble %></h1>
-            <hr class="h-px my-3 bg-gray-800 border-0">
-            <!-- Photo Carousel sm screens -->
-            <div id="controls-carousel" class="relative w-full mt-4 md:hidden" data-carousel="static">
-                <!-- Carousel wrapper -->
-                <div class="relative rounded-lg h-72 overflow-hidden">
-                    <div class="duration-700 ease-in-out" data-carousel-item="active">
-                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
-                    </div>
-                    <% for (let i=1; i < fotos.length; i++) { %>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
-                        </div>
-                    <%}%>
-                    <!-- Item 5 -->
-                    <div class="flex items-center justify-center duration-700 ease-in-out" data-carousel-item>
-                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full brightness-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="img5">
-                        <a href="<%=inmueble.linkVideoInmueble%>" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
-                            <i class="fa-solid fa-play"></i> 
-                            Video
-                        </a>
-                    </div>
-                </div>
-                <!-- Slider controls -->
-                <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                        <span class="sr-only">Previous</span>
-                    </span>
-                </button>
-                <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        <span class="sr-only">Next</span>
-                    </span>
-                </button>
-            </div>
-            
-            <!-- Photo Album md and lg screens -->
-            <div class="md:mt-5 lg:mt-10 md:grid md:grid-cols-2 h-96 md:gap-2 hidden">
-                <div class="cursor-pointer hover:scale-105 transition duration-150 h-96 w-full">
-                    <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="rounded-l-lg object-cover h-full w-full " alt="Imagen principal">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <% for (let i=1; i < 4; i++) { %>
-                        <div class="cursor-pointer hover:scale-105 transition duration-150 h-48">
-                            <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="object-cover h-full w-full" alt="Imagen de inmueble 4">
-                        </div>
-                    <%}%>
-                    <div class="flex items-center justify-center cursor-pointer hover:scale-105 transition duration-150">
-                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="-z-10 brightness-50 relative rounded-br-lg object-none h-48 w-full" alt="Imagen de inmueble 5">
-                        <a href="<%=inmueble.linkVideoInmueble%>" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
-                            <i class="fa-solid fa-play"></i> 
-                            Video
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- Details Section -->
         <div class="p-12 bg-sky-950 text-white space-y-6">
+            <% if (idRol == 1 || idRol == 2) { %>
+                <a href="/inmueble/editarInmueble/<%=inmueble.idInmueble%>" class="flex flex-col items-end justify-center">
+                    <div class="bg-white text-sky-950 py-2 px-2 flex items-center justify-center rounded-full w-auto h-8 hover:scale-105 transition duration-150">
+                        <h3>Editar Propiedad</h3><i class="fa-solid fa-pencil px-2"></i>
+                    </div>
+                </a>
+            <% } %>
+            
             <div class="md:hidden grid grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
-                    <% if ((inmueble.precioVenta && inmueble.precioRentaInmueble) != null) { %>
-                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
+                    <% if ((inmueble.precioVenta && inmueble.precioRentaInmueble) != 0) { %>
+                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %> /mes</h3>
                         <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
-                    <% } else if(inmueble.precioRenta != null) { %>
-                        <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioRentaInmueble %>/mes</h3>
-                    <% } else if(inmueble.precioVenta != null) { %>  
-                        <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioVentaInmueble %></h3>
+                    <% } else if(inmueble.precioRenta != 0) { %>
+                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %> /mes</h3>
+                    <% } else if(inmueble.precioVenta != 0) { %>  
+                        <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
                     <% } %>
                     <div class="flex text-black text-center justify-evenly">
                         <div class="px-5 py-2 rounded-full bg-white">
@@ -130,13 +80,13 @@
             <div class="hidden md:grid md:grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
                     <div class="flex flex-col justify-center space-y-2">
-                        <% if ((inmueble.precioVentaInmueble && inmueble.precioRentaInmueble) != null) { %>
+                        <% if ((inmueble.precioVentaInmueble && inmueble.precioRentaInmueble) != 0) { %>
                             <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
                             <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
-                        <% } else if(inmueble.precioRentaInmueble != null) { %>
-                            <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioRentaInmueble %>/mes</h3>
-                        <% } else if(inmueble.precioVentaInmueble != null) { %>  
-                            <h3 class="text-lg font-semibold text-center">$<%= inmueble.precioVentaInmueble %></h3>
+                        <% } else if(inmueble.precioRentaInmueble != 0) { %>
+                            <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
+                        <% } else if(inmueble.precioVentaInmueble != 0) { %>  
+                            <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
                         <% } %>
                         <div class="flex text-black text-center md:justify-evenly lg:space-x-12 lg:justify-center">
                             <div class="px-5 py-2 md:w-32 lg:w-40 rounded-full bg-white">
@@ -215,7 +165,6 @@
     </div>
 
     <!-- Footer Section -->
-    
 
     <%- include("partials/footer") %>
 

@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
+const isLogged = require('../util/isLogged.js')
+const adminAuth = require('../util/adminAuth.js')
+const agenteAdminAuth = require('../util/agenteAdminAuth.js')
+
 const dashboardController = require('../controllers/dashboard.controller');
 
 // Rutas
 //Registrar imagenes de un inmueble
 router.post('/alta/inmueble/imagenes/:inmueble', dashboardController.setPhotos);
-
 //Actulizar el cuerpo de una casa
 router.post('/alta/inmueble/cuerpoCasa/:inmueble', dashboardController.updateBodyCasa);
 //Actualizar el cuerpo de una bodega
@@ -19,17 +22,25 @@ router.post('/alta/inmueble/cuerpoLocal/:inmueble', dashboardController.updateBo
 router.post('/alta/inmueble/cuerpoOficina/:inmueble', dashboardController.updateBodyOficina);
 //Actualizar el cuerpo de un otro
 router.post('/alta/inmueble/cuerpoOtro/:inmueble', dashboardController.updateBodyOtro);
-
 //Eliminar inmueble por su id
 router.get('/baja/inmueble/:idInmueble', dashboardController.deleteInmueble);
-
 //Ver el formulario dependiendo de la categoria
 router.get('/alta/inmueble/:categoria', dashboardController.getCategoria);
 //Ver menu de inmuebles
 router.get('/alta', dashboardController.getRegisterpage);
-//Obtener lista de usuarios
-router.get('/lista/usuarios', dashboardController.getUsers);
-//Render de la pagina de la lista de usuarios
-router.get('/lista', dashboardController.getDashboard);
+
+/*
+* Rutas de la lista de usuarios
+*/
+// Actualizar el rol del usuario escogido
+router.put('/lista/actualizar/:id', dashboardController.updateRol);
+// Comprobar y eliminar usuario previamente escogido
+router.put('/lista/eliminar/:id', dashboardController.deleteUser);
+
+router.get('/propiedades',isLogged, agenteAdminAuth, dashboardController.getPropiedades)
+router.get('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.getAdminUser)
+router.post('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.postAdminUser)
+router.get('/usuarios',isLogged, adminAuth, dashboardController.getUsers);
+router.get('/', isLogged, agenteAdminAuth, dashboardController.getDashboard);
 
 module.exports = router;
