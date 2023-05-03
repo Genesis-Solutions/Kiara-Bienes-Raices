@@ -47,7 +47,7 @@
                 <input type="hidden" id="id_agente" name="id_agente" value="<%=idusuario%>">
             <% } else if (idRol === 1) { %>
                 <div class="space-y-2">
-                    <label for="id_agente" class="text-sm text-white">Agentes y administradores disponibles</label>
+                    <label for="id_agente" class="text-lg font-semibold text-white">Agentes y administradores disponibles</label>
                     <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         id="id_agente" name="id_agente">
                         <% listaAgentes.forEach(agente=>{ %>
@@ -195,6 +195,13 @@
         <div class="col-span-2 space-y-2">
             <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
             <textarea id="desc" name="desc" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
+            <label for="id_arrendador" class="text-lg font-semibold text-white">Lista de usuarios</label>
+            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                id="id_arrendador" name="id_arrendador">
+                <% listaClientes.forEach(cliente=>{ %>
+                    <option value="<%=cliente.idUsuario%>"><%=cliente.nombreUsuario%> <%=cliente.apellidosUsuario%></option>
+                <% }); %>
+            </select>
         </div>
     </div>
 

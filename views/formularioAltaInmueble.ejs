@@ -27,17 +27,17 @@
     <!-- Information Form -->
     <!-- Cambiar dependiendo del id del tipo de inmueble -->
     <% if(categoria == 1 || categoria == 2){ %>
-        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
+        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
     <% } else if (categoria == 3){ %>
-        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>        
+        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>        
     <% } else if (categoria == 4){ %>
-        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>       
+        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>       
     <% } else if (categoria == 5){ %>
-        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
+        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
     <% } else if (categoria == 6){ %>
-        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
+        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
     <% } else if (categoria == 7){ %>
-        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
+        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
     <%}%>
 
     <!-- Buttons Section -->

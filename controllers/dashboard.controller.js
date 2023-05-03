@@ -56,6 +56,8 @@ exports.getCategoria = async(req,res,next) => {
         //console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
         const listaAgentes = await Dashboard.fetchAgents();
         //console.log("Lista de todos los agentes",listaAgentes[0]);
+        const listaClientes = await Dashboard.fetchClients();
+        //console.log("Lista de todos los agentes",listaClientes[0]);
         const listaTipoMovimientos = await Dashboard.fetchAllMovements();
         //console.log("Lista de todos los tipos de movimiento",listaTipoMovimientos[0]);
         res.render('formularioAltaInmueble', {
@@ -64,6 +66,7 @@ exports.getCategoria = async(req,res,next) => {
             idInmueble: idInmueble[0][0].idInmueble,
             categoria: idCategoria,
             listaAgentes: listaAgentes[0],
+            listaClientes: listaClientes[0],
             listaTipoMovimientos: listaTipoMovimientos[0],
             idUsuario: idUsuario
         });

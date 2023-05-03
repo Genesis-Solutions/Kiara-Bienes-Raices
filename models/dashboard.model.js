@@ -20,6 +20,12 @@ module.exports = class Dashboard{
         )
     }
 
+    static fetchClients() {
+        return db.execute(
+            'SELECT * FROM usuario WHERE idRol=3'
+        )
+    }
+
     static insertDisabledRegister(idCategoria,idUsuario) {
         return db.execute(
             'INSERT INTO inmueble(idAgenteAlta,idAgenteAsignado,idCategoria,idTipoMovimiento,nombreInmueble,descInmueble,precioVentaInmueble,precioRentaInmueble,activoInmueble,fechaRegistroInmueble) VALUES (?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())',
