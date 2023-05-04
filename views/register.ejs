@@ -59,8 +59,13 @@
                         <label for="apellido">Número de Teléfono</label> <label class="text-red-500">*</label>
                         <input type="number"
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" required maxlength="10"
+                            , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required
                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                            <% if (typeof errorTelefono !=='undefined' ) { %>
+                                <p style="color: red">
+                                    <%= errorTelefono %>
+                                </p>
+                                <% } %>
                     </div>
                     <div>
                         <label for="ocupacion">Ocupación</label>
