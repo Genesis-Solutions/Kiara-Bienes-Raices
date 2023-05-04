@@ -15,6 +15,23 @@ module.exports = class Inmueble {
       });
   }
 
+  static getActivoTramite(idInmueble) {
+    return db
+      .execute("SELECT activoTramite FROM tramite WHERE idInmueble=?", [idInmueble])
+      .then(([rows, data]) => {
+        return rows;
+      })
+      .catch((error) => {
+        console.log(error);
+        return 0;
+      });
+  }
+
+  static eliminarPropiedad(activoInmueble, idInmueble) {
+    return db
+    .execute("UPDATE inmueble SET activoInmueble=? WHERE idInmueble=?", [activoInmueble, idInmueble]);
+  }
+
   static updateOne(
     titulo,
     desc,

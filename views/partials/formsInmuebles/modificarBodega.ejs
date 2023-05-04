@@ -295,4 +295,10 @@
         <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
         <textarea id="desc" name="desc" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
     </div>
+    <% if (inmueble.activoInmueble == 0) { %>
+        <div class="text-white">
+            <input type="checkbox" id="servicioLuz" name="servicioLuz" value="0" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+            <label for="default-checkbox" class="ml-1 text-base">Activo Inmueble</label>
+        </div>
+    <% } %>
 </div>

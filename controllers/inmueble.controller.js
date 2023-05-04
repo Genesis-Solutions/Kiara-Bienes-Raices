@@ -8,7 +8,17 @@ const bucket = require("../util/awsBucket.js");
 exports.getInmueble = async (req, res, next) => {
     //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
+    // activoInmueble ya viene en inmueble
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
+    //console.log("Este es el id del inmueble ", req.params.idInmueble);
+    const aTramite = await Inmueble.getActivoTramite(req.params.idInmueble);
+    let tramite = 0;
+    if (aTramite.length <= 0 ){
+        tramite = 0;
+    } else {
+        tramite = aTramite[0].activoTramite;
+    }
+    //console.log("Este es el activo tramite 2",tramite);
     const agente = Inmueble.getInfoAgente(idAgente);
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
@@ -26,9 +36,17 @@ exports.getInmueble = async (req, res, next) => {
         inmuebles : inmueble,
         agente : agente,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
+        idRol: req.session.idRol,
+        idInmueble: req.params.idInmueble,
+        tramite: tramite
     })
 };
+
+exports.eliminarPropiedad = (req, res, next) => {
+    const idInmueble = req.params.idInmueble;
+    const activoInmueble = 0;
+    Inmueble.eliminarPropiedad(idInmueble, activoInmueble);
+}
 
 /*
 * Obtener la imagen del bucket.
