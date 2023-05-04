@@ -209,13 +209,17 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             };
         }
 
+        //console.log(params.idTipoMovimiento)
+        // venta
+
         /**
         * En caso de buscar inmuebles en venta y seleccionar un rango de
         * precio, utiliza precioVentaInmueble para generar la query
         */
-        
+
         if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
             //console.log("dentro del precio equisde")
+            conditions.push("idTipoMovimiento = 1 OR idTipoMovimiento = 3")
             if (typeof params.precioMinimo !== 'undefined') {
 
                 if (params.precioMaximo != ''){
@@ -234,6 +238,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         
         if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
             if (typeof params.precioMinimo !== 'undefined') {
+                conditions.push("idTipoMovimiento = 2 OR idTipoMovimiento = 3")
                 //console.log("dentro del precio equisde")
                 if (params.precioMaximo != '') {
                     conditions.push("precioRentaInmueble BETWEEN ? AND ?");
@@ -323,8 +328,8 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
     var builtQueryLimits = builtQuery + limits;
 
-    //console.log(builtQuery);
-    //console.log(conditions.values)
+    console.log(builtQuery);
+    console.log(conditions.values)
     //console.log(countFiltered[0][0].total)
 
     /** 
