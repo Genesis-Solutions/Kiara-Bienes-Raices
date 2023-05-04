@@ -21,9 +21,15 @@
 
         <div class="px-10 pt-10">
             <div class="space-x-5 space-y-3">
-                <a href="/dashboard" class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Lista de Usuarios</a>
-                <a href="" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Lista de Propiedades</a>
-                <a href="" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Mis Propiedades</a>
+                <a href="/dashboard"
+                    class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Lista
+                    de Usuarios</a>
+                <a href=""
+                    class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Lista
+                    de Propiedades</a>
+                <a href=""
+                    class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Mis
+                    Propiedades</a>
             </div>
             <hr class="h-px my-4 bg-gray-800 border-0">
         </div>
@@ -45,21 +51,21 @@
                 <input type="text" hidden="true" id="test" name="test" value="test" />
 
                 <div>
-                    <label for="nombre">Nombre(s)</label>
+                    <label for="nombre">Nombre(s)</label> <label class="text-red-500">*</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" maxlength="40"
                         required />
                 </div>
                 <div>
-                    <label for="apellido">Apellidos</label>
+                    <label for="apellido">Apellidos</label> <label class="text-red-500">*</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández"
                         maxlength="30" required />
                 </div>
                 <div>
-                    <label for="email">Correo Electrónico</label>
+                    <label for="email">Correo Electrónico</label> <label class="text-red-500">*</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" maxlength="60"
@@ -71,10 +77,10 @@
                         <% } %>
                 </div>
                 <div>
-                    <label for="apellido">Número de Teléfono</label>
-                    <input type="number"
+                    <label for="apellido">Número de Teléfono</label> <label class="text-red-500">*</label>
+                    <input type="tel"
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" required maxlength="10"
+                        , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                 </div>
                 <div>
@@ -88,6 +94,7 @@
                     <select
                         class="form-select block w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
                         id="estadoCivilUsuario" name="estadoCivilUsuario">
+                        <option value="N/A">Escoger una opción</option>
                         <option value="Soltero">Soltero</option>
                         <option value="Casado">Casado</option>
                         <option value="Casado-Bienes Mancomunados">
@@ -96,14 +103,14 @@
                     </select>
                 </div>
                 <div>
-                    <label for="contrasenia">Contraseña</label>
+                    <label for="contrasenia">Contraseña</label> <label class="text-red-500">*</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         type="password" id="password" name="passwordUsuario" placeholder="********" minlength="8"
                         required />
                 </div>
                 <div>
-                    <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label>
+                    <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label> <label class="text-red-500">*</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         type="password" name="passwordUsuarioConfirmar" id="passwordUsuarioConfirmar"
@@ -119,12 +126,15 @@
                     <select
                         class="form-select block w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
                         id="rolUsuario" name="rolUsuario">
-                        <option value="1">Administrador</option>
-                        <option value="2">Agente</option>
-                        <option value="3">Cliente</option>
+                        <% listRoles.forEach(roles=>{ %>
+                            <option value="<%=roles.nombreRol%>"><%=roles.nombreRol%></option>
+                        <% }); %>
                     </select>
                 </div>
             </div>
+
+            <span class="ml-2 text-gray-500 text-sm">Solo aquellos campos con * son obligatorios</span>
+
 
             <div class="flex flex-col items-center py-8">
                 <button

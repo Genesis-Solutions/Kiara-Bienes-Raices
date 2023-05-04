@@ -33,20 +33,20 @@
                 <div class="grid lg:grid-cols-2 gap-5 mt-3">
                     <input type="text" hidden="true" id="test" name="test" value="test" />
                     <div>
-                        <label for="nombre">Nombre(s)</label>
+                        <label for="nombre">Nombre(s)</label> <label class="text-red-500">*</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             type="text" id="nombreUsuario" name="nombreUsuario" placeholder="María Regina" maxlength="30" required/>
                     </div>
                     <div>
-                        <label for="apellido">Apellidos</label>
+                        <label for="apellido">Apellidos</label> <label class="text-red-500">*</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             type="text" id="apellidosUsuario" name="apellidosUsuario" placeholder="Portillo Hernández" maxlength="30"
                             required/>
                     </div>
                     <div>
-                        <label for="email">Correo Electrónico</label>
+                        <label for="email">Correo Electrónico</label> <label class="text-red-500">*</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" maxlength="60" required />
@@ -57,11 +57,16 @@
                             <% } %>
                     </div>
                     <div>
-                        <label for="apellido">Número de Teléfono</label>
-                        <input type="number"
+                        <label for="apellido">Número de Teléfono</label> <label class="text-red-500">*</label>
+                        <input type="tel"
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" required maxlength="10"
+                            , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required
                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                            <% if (typeof errorTelefono !=='undefined' ) { %>
+                                <p style="color: red">
+                                    <%= errorTelefono %>
+                                </p>
+                                <% } %>
                     </div>
                     <div>
                         <label for="ocupacion">Ocupación</label>
@@ -73,20 +78,21 @@
                         <label for="estadoCivilUsuario"> Estado Civil</label>
                         <select class="form-select block w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
                             id="estadoCivilUsuario" name="estadoCivilUsuario">
+                            <option value="N/A">Escoger una opción</option>
                             <option value="Soltero">Soltero</option>
                             <option value="Casado">Casado</option>
                             <option value="Casado-Bienes Mancomunados">Casado-Bienes Mancomunados</option>
                         </select>
                     </div>
                     <div>
-                        <label for="contrasenia">Contraseña</label>
+                        <label for="contrasenia">Contraseña</label> <label class="text-red-500">*</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             type="password" id="password" name="passwordUsuario" placeholder="********" minlength="8"
                             required />
                     </div>
                     <div>
-                        <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label>
+                        <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label> <label class="text-red-500">*</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             type="password" name="passwordUsuarioConfirmar" id="passwordUsuarioConfirmar"
@@ -98,8 +104,10 @@
                             <% } %>
                     </div>
                 </div>
+                <span class="ml-2 text-gray-500 text-sm">Solo aquellos campos con * son obligatorios</span>
 
                 <div class="flex flex-col items-center py-14">
+
                     <button
                         class="px-5 py-3 w-3/4 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700"
                         type="submit">
