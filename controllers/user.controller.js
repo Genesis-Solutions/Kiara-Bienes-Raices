@@ -26,7 +26,8 @@ exports.login = (req, res, next) => {
 
       //Si no existe el correo, redirige a la pantalla de login
       if (rows.length < 1) {
-        return res.redirect("/login");
+        const errorLogin = "Credenciales inválidas";
+        return res.render("login", { errorLogin });
     };
 
       // Información del usuario:
@@ -51,7 +52,8 @@ exports.login = (req, res, next) => {
             // console.log('success login');
             return res.redirect("./");
           } else {
-            return res.redirect("/login");
+            const errorLoginPassword = "Credenciales inválidas";
+            return res.render("login", { errorLoginPassword });
           }
         });
     })
@@ -104,6 +106,7 @@ exports.register = (req, res, next) => {
             const errorTelefono = "El número de teléfono debe contener 10 dígitos";
             res.render("register", { errorTelefono });
           }
+          // console.log("Las contraseñas coinciden.");
           // Si todo fue validado correctamente, se inserta el usuario en la base de datos
           User.insertUser(
             nombreUsuario,

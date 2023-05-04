@@ -14,8 +14,20 @@
                     </div>
                     <h2 class="font-bold text-4xl mt-2 text-[#131C1B]">Bienvenido a Kiara, <br> <span class="text-base font-normal">inicia sesión para continuar</span></h2>
                     <form method="POST" action="/login" class="flex flex-col gap-4 ">
-                        <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 mt-5" name="emailUsuario" id="emailUsuario" type="email" placeholder="E-mail">
-                        <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" name="passwordUsuario" id="passwordUsuario" type="password" placeholder="Contraseña">
+                        <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 
+                        focus:ring-gray-800 mt-5" name="emailUsuario" id="emailUsuario" type="email" placeholder="E-mail" required maxlength="40">
+                        <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 
+                        focus:ring-gray-800" name="passwordUsuario" id="passwordUsuario" type="password" placeholder="Contraseña" required maxlength="40">
+                        <% if (typeof errorLogin !=='undefined' ) { %>
+                            <p style="color: red">
+                                <%= errorLogin %>
+                            </p>
+                        <% } %>
+                        <% if (typeof errorLoginPassword !=='undefined' ) { %>
+                            <p style="color: red">
+                                <%= errorLoginPassword %>
+                            </p>
+                        <% } %>
                         <button class="bg-[#131C1B] rounded-xl text-base text-white font-medium py-2">Inicia sesión</button>
                     </form>
                     <a href="">
