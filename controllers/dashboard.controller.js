@@ -38,12 +38,26 @@ exports.getUsers = async (req, res, next) => {
 
 // -- REGISTER A NEW USER FROM A ROLE ADMIN --//
 
-exports.getAdminUser = (req, res, next) => {
+/**
+ * Renderiza la vista de registro de usuario administrador si el usuario tiene sesión iniciada y es un usuario administrador.
+ * @param req - La solicitud HTTP recibida.
+ * @param res - La respuesta HTTP que se enviará.
+ * @param next - La función middleware para pasar el control al siguiente middleware.
+ * @returns {Promise<void>} - Una promesa que se resuelve cuando se completa el renderizado de la vista de registro de usuario administrador.
+ */
+
+exports.getAdminUser = async (req, res, next) => {
+    // Obtiene la lista de roles a través de un método asíncrono del modelo Dashboard.
+    const listRoles = await Dashboard.fetchAllRoles();
+    // Si el usuario tiene sesión iniciada, la variable isLogged se establece como verdadera y
+    //se renderiza la vista de registro de usuario administrador con los parámetros proporcionados.
+
     if (req.session.isLoggedIn == true) {
         isLogged = true;
         res.render("adminUserRegistration", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
+            listRoles: listRoles[0]
         });
     }
  }
