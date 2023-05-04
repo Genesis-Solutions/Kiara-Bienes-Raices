@@ -70,6 +70,13 @@ module.exports = class Inmueble {
     ]);
   }
 
+  // Obtener a los usuarios que son dueños de inmuebles
+  static fetchPropietarios() {
+    return db.execute(
+      "SELECT * FROM usuario WHERE idRol = 4"
+    );
+  }
+
   static changeInmuebleCasa(
     titulo,
     desc,
@@ -452,3 +459,4 @@ module.exports = class Inmueble {
     );
   }
 };
+
