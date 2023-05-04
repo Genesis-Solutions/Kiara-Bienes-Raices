@@ -71,9 +71,9 @@ module.exports = class Inmueble {
   }
 
   // Obtener a los usuarios que son dueños de inmuebles
-  static fetchPropietarios() {
+  static fetchClientes() {
     return db.execute(
-      "SELECT * FROM usuario WHERE idRol = 4"
+      "SELECT * FROM usuario WHERE idRol = 3"
     );
   }
 
@@ -108,7 +108,7 @@ module.exports = class Inmueble {
     bodega,
     direccion,
     linkMaps,
-    arrendador,
+    idPropietario,
     idInmueble
   ) {
     return db.execute(
@@ -144,7 +144,7 @@ module.exports = class Inmueble {
         bodega,
         direccion,
         linkMaps,
-        arrendador,
+        idPropietario,
         idInmueble,
       ]
     );
@@ -177,7 +177,7 @@ module.exports = class Inmueble {
     desc,
     direccion,
     linkMaps,
-    arrendador,
+    idPropietario,
     idInmueble
   ) {
     return db.execute(
@@ -209,7 +209,7 @@ module.exports = class Inmueble {
         desc,
         direccion,
         linkMaps,
-        arrendador,
+        idPropietario,
         idInmueble,
       ]
     );
@@ -236,7 +236,7 @@ module.exports = class Inmueble {
     desc,
     direccion,
     linkMaps,
-    arrendador,
+    idPropietario,
     idInmueble
   ) {
     return db.execute(
@@ -262,7 +262,7 @@ module.exports = class Inmueble {
         desc,
         direccion,
         linkMaps,
-        arrendador,
+        idPropietario,
         idInmueble,
       ]
     );
@@ -301,7 +301,7 @@ module.exports = class Inmueble {
     desc,
     direccion,
     linkMaps,
-    arrendador,
+    idPropietario,
     idInmueble
   ) {
     return db.execute(
@@ -339,7 +339,7 @@ module.exports = class Inmueble {
         desc,
         direccion,
         linkMaps,
-        arrendador,
+        idPropietario,
         idInmueble,
       ]
     );
@@ -368,7 +368,7 @@ module.exports = class Inmueble {
     direccion,
     desc,
     linkMaps,
-    arrendador,
+    idPropietario,
     idInmueble
   ) {
     return db.execute(
@@ -396,7 +396,7 @@ module.exports = class Inmueble {
         direccion,
         desc,
         linkMaps,
-        arrendador,
+        idPropietario,
         idInmueble,
       ]
     );
@@ -425,7 +425,7 @@ module.exports = class Inmueble {
     desc,
     direccion,
     linkMaps,
-    arrendador,
+    idPropietario,
     idInmueble
   ) {
     return db.execute(
@@ -453,7 +453,7 @@ module.exports = class Inmueble {
         desc,
         direccion,
         linkMaps,
-        arrendador,
+        idPropietario,
         idInmueble,
       ]
     );

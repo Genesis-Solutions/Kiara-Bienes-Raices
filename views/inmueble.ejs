@@ -156,10 +156,10 @@
             <div class="flex flex-col md:grid md:grid-cols-2 space-y-3 md:space-x-8">
                 <div class="order-last md:order-first pt-3">
                     <% const link = inmueble.linkGoogleMaps %>
-                    <% let startIndex = link.indexOf('src="') + 5 %>
-                    <% let endIndex = link.indexOf('>', startIndex) + 1 %>
-                    <% let result = link.slice(startIndex, endIndex);%> 
-                    <iframe src="<%= result %>" class="w-full rounded-lg h-80 md:h-96" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" ></iframe>
+                    <% let startIndex = link.indexOf('src="') + 5;
+                    let endIndex = link.indexOf('>', startIndex) + 1;
+                    let result = link.slice(startIndex, endIndex); %>
+                    <iframe src="<%= result %>" class="w-full rounded-lg h-80 md:h-96" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div>
                     <p>
