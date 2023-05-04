@@ -60,8 +60,15 @@ exports.getAdminUser = (req, res, next) => {
  * @param id: String -> Id del usuario que será actualizado
  */
 exports.updateRol = async(req, res, next) => {
-    const id = req.params.id;
-    await Dashboard.UpdateUserRol(id);
+    await Dashboard.UpdateUserRol(req.params.idUsuario,req.params.idRol);
+}
+/*
+ * Llamada de query que actualiza el encargado de la propiedad
+ * @param idAgente: String -> Id del nuevo encargado de la propiedad 
+ * @param idPropiedad: String -> Id de la propiedad a modificar
+ */
+exports.updateEncargado = async(req, res, next) => {
+    await Dashboard.UpdateEncargadoPropiedad(req.params.idAgente,req.params.idPropiedad);
 }
 
 
@@ -87,6 +94,15 @@ exports.deleteUser = async (req, res, next) => {
         });
     }
 
+}
+
+exports.getAgentes = async (req, res, next) => {
+const agentesArray = await Dashboard.getAgentes()
+    res.status(200).json({
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+        agentesArray: agentesArray
+    });    
 }
 
 exports.postAdminUser = (req, res, next) => {

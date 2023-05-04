@@ -47,10 +47,10 @@
     </script>
 
     <script type="text/javascript">
-/*
- * Carga de la data table que renderiza los datos de los usuarios.
- */
-     
+        /*
+         * Carga de la data table que renderiza los datos de los usuarios.
+         */
+
         function recargarTablaPropiedades() {
             //Carga de la tabla de usuarios mediante data table.
             if ($.fn.DataTable.isDataTable("#dataTablePropiedades")) {
@@ -63,6 +63,7 @@
             var tfooter = ""
             thead += '<thead class="bg-gray-300 text-gray-600">'
             thead += '<tr>'
+            thead += '<th>Id del Inmueble</th>'
             thead += '<th>Propiedad</th>'
             thead += '<th>Dueño</th>'
             thead += '<th>Operación</th>'
@@ -73,6 +74,7 @@
             thead += '</thead>'
             tfooter += '<tfoot>'
             tfooter += '<tr>'
+            tfooter += '<th>Id del Inmueble</th>'
             tfooter += '<th>Propiedad</th>'
             tfooter += '<th>Dueño</th>'
             tfooter += '<th>Operación</th>'
@@ -85,9 +87,9 @@
             // $('#dataTableUsuarios').append(tfooter);
             $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
             dataTable = $("#dataTablePropiedades").dataTable({
-            language: {
-                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-            },
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
                 processing: true,
                 lengthMenu: [5, 10, 20, 25, 30],
                 order: [[0, 'asc']],
@@ -95,9 +97,12 @@
                 ajax: '/dashboard/propiedades',
                 columns: [
                     {
+                        data: "idInmueble"
+                    },    
+                    {
                         data: null,
                         render: function (data, type, row) {
-                            return '<span class="badge badge-success">' + data.nombreInmueble + '</span>'
+                            return '<a href="../inmueble/' + data.idInmueble + '" class="badge badge-success">' + data.nombreInmueble + '</a>'
                         }
                     },
                     {
@@ -110,14 +115,14 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            if (data.idTipoMovimiento==1){
-                                var movimiento='Venta'
+                            if (data.idTipoMovimiento == 1) {
+                                var movimiento = 'Venta'
                             }
-                            else if (data.idTipoMovimiento==2){
-                                var movimiento='Renta'
+                            else if (data.idTipoMovimiento == 2) {
+                                var movimiento = 'Renta'
                             }
-                            else if (data.idTipoMovimiento==3){
-                                var movimiento='Venta/Renta'
+                            else if (data.idTipoMovimiento == 3) {
+                                var movimiento = 'Venta/Renta'
                             }
                             return '<span class="badge badge-success">' + movimiento + '</span>'
                         }
@@ -140,10 +145,12 @@
                         render: function (data, type, row) {
                             //Si el usuario es administrador, ocultar el botón.
                             if (data.activoInmueble == 1) {
-                                return '<svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 896 1024"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm79 143c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>'
+                                return '<span class="badge badge-success">' + 'No' + '</span>'
+                                //return '<svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 896 1024"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm79 143c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>'
                             }
-                            else{
-                                return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 896 1024"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'
+                            else {
+                                return '<span class="badge badge-success">' + 'Si' + '</span>'
+                                //return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 896 1024"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'
                             }
                         }
                     },
@@ -151,6 +158,59 @@
             })
         }
     </script>
+
+    <script type="text/javascript">
+        /*
+        * Acción del botón de edición de rol. Despliega un modal con un dropdown de las opciones disponibles para modificar
+        */
+        $(document).on("click", ".btnEditarEncargado", function () {
+            var agentes = {}
+            fila = $(this).closest("tr");
+            id = parseInt(fila.find('td:eq(0)').text());
+                <%if (idRol == 2) {%>
+                    Swal.fire('No tienes permisos administrativos para la modificación.');
+                    <%} else if (idRol == 1) {%>
+                        $.ajax({
+                            url: '/dashboard/agentes',
+                            method: 'get',
+                            success: function (choice) {
+                                for (var i = 0; i < choice.agentesArray.length; i = i + 1) {
+                                    var nombre = choice.agentesArray[i].nombresAgente + ' ' + choice.agentesArray[i].apellidosAgente
+
+                                    //agentes.push({choice.agentesArray[i].idUsuario,nombre})
+                                    agentes[choice.agentesArray[i].idUsuario] = nombre
+                                    /*                                   agentes.push({
+                                                                         key: choice.agentesArray[i].idUsuario,
+                                                                         value: nombre
+                                                                         }) */
+                                }
+                                const { value: eleccion } = Swal.fire({
+                                    //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
+                                    title: 'Selecciona al Encargado Nuevo:',
+                                    input: 'select',
+                                    inputOptions: agentes,
+                                    showCancelButton: true,
+                                }).then((result) => {
+                                    if (result.value >= 1) {
+                                        $.ajax({
+                                            url: '/dashboard/props/actualizar/' + result.value+'/'+id,
+                                            method: 'put',
+                                        });
+                                        Swal.fire('¡El encargado ha sido modificado!')
+                                        recargarTablaPropiedades();
+                                    }
+
+                                })
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                            }
+
+                        });
+                            <%}%>   
+        });
+    </script>
+
 
     <style>
         #dataTablePropiedades {

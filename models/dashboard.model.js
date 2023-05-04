@@ -20,7 +20,7 @@ module.exports = class Dashboard {
      */
         static fetchAllPropiedades() {
           return db.execute(
-              'SELECT I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador'
+              'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador'
           )
       }
     
@@ -34,14 +34,23 @@ module.exports = class Dashboard {
  * Actualizar rol del usuario en cuestión.
  * @param idUsuario: String -> Concatenación del id del usuario y del rol que este futuramente tendrá
  */
-    static UpdateUserRol(idUsuario) {
+    static UpdateUserRol(idUsuario,idRol) {
         //Separación del id en dos variables para ejecutar la query.
-        var idRol = idUsuario[1]
-        var idUs = idUsuario[0]
         return db.execute(
-            'UPDATE usuario SET idRol=? WHERE idUsuario=?', [idRol, idUs]
+            'UPDATE usuario SET idRol=? WHERE idUsuario=?', [idRol, idUsuario]
         );
     }
+    /*
+ * Actualizar encargado de la propiedad elegida.
+ * @param idAgente: String -> Agente escogido para la propiedad.
+ * @param idPropiedad: String -> Propiedad escogida para actualizar su encargado.
+ */
+    static UpdateEncargadoPropiedad(idAgente, idPropiedad) {
+      return db.execute(
+          'UPDATE inmueble SET idAgenteAsignado=? WHERE idInmueble=?', [idAgente, idPropiedad]
+      );
+  }
+    
     /*
      * Borrado del usuario solicitado.
      * @param idUsuario: String -> Id del usuario que será eliminado
@@ -84,6 +93,16 @@ module.exports = class Dashboard {
             return rows[0].tercera
         })
     }
+    /*
+ * Obtención de agentes disponibles
+ */
+    static getAgentes(){
+      return db.execute(
+          'SELECT U.idUsuario, U.nombreUsuario as nombresAgente, U.apellidosUsuario as apellidosAgente FROM usuario U where U.idRol=1 OR U.idRol=2'
+      ).then(([rows, fielData]) => {
+          return rows
+      })
+  }
 
   static adminInsertUser(
     nombreUsuario,
