@@ -1,0 +1,66 @@
+<%- include('partials/head') %>
+
+    <!-- CLI Tailwind -->
+    <!-- <link href="/style.css" rel="stylesheet"> -->
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+   
+    <title>Kiara Bienes Raíces</title>
+    <link rel="icon" type="image/png" href="img/kiarabr_logo.png">
+</head>
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Heading Section -->
+
+    <%- include('partials/navbar') %>
+
+
+       <!-- First Section -->
+
+    <div class="lg:grid lg:grid-cols-2 md:flex md:flex-col">
+        <div class="px-16">
+            <h2 class="py-10 text-4xl font-bold">
+                Somos una agencia inmobiliaria especializada en la compra y renta de inmuebles. Contamos con certificación y licencia inmobiliaria.
+            </h2>
+        </div>
+        <div class="px-16 py-4">
+            <p class="py-4 text-base">
+                Nuestro interés es dar la mayor exposición comercial posible a los inmuebles que clientes como tu ponen en nuestras manos a fin de lograr su comercialización. Esto lo acompañamos de asesoría especializada desde el momento en que tomamos el inmueble hasta el momento en que es entregado al comprador/arrendatario final.
+            </p>
+            <p class="text-base">
+                Usamos la tecnología para que nuestros clientes tengan acceso a su panel personal en línea donde pueden visualizar en tiempo real el seguimiento del proceso completo ya sea de venta o de renta.
+            </p>
+        </div>
+    </div>
+
+    <!-- Second Section -->
+
+    <div class="hidden lg:flex">
+        <img class="h-96 object-cover w-full" src="img/about_img.jpeg">
+    </div>
+    
+
+       <!-- Third Section -->
+
+    <div class="md:flex md:flex-col">
+        <div class="px-16 py-2">
+            <h2 class="py-6 text-2xl font-bold">
+                Sabemos que para ti el tiempo es muy importante
+            </h2>
+            <p class="py-2 text-base">
+                Parte de nuestro servicio es ofrecerte rastreabilidad de cada una de tus operaciones de venta y renta mediante nuestra pagina web para que sepas en todo momento en que parte del proceso esta tu inmueble.
+            </p>
+            <p class="py-2 text-base">
+                Es importante que sepas que nuestra gran pasión es el servicio y esto lo acompañamos de un genuino interés por brindarlo de forma ética, responsable y comprometida, ya que nosotros entendemos completamente el valor de tu patrimonio.
+            </p>
+            <p class="py-2 text-base">
+                Gran parte de nuestro éxito es también que contamos con una red nacional de aliados lo cual hace exponencial nuestro alcance.
+            </p>
+        </div>
+    </div>
+
+    <%- include("partials/footer") %>
+
+</body>
+</html>
