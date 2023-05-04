@@ -35,12 +35,14 @@ exports.getUsers = async (req, res, next) => {
 
 // -- REGISTER A NEW USER FROM A ROLE ADMIN --//
 
-exports.getAdminUser = (req, res, next) => {
+exports.getAdminUser = async (req, res, next) => {
+    const listRoles = await Dashboard.fetchAllRoles();
     if (req.session.isLoggedIn == true) {
         isLogged = true;
         res.render("adminUserRegistration", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
+            listRoles: listRoles[0]
         });
     }
  }
