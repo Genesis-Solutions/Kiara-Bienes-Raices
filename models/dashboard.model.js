@@ -54,6 +54,7 @@ module.exports = class Dashboard {
         ).then(([rows, fielData]) => {
              return rows[0].primera
         })
+    }
     
  /*
  * Revisión de cantidad de trámites de cliente
