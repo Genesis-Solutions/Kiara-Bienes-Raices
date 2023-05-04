@@ -14,13 +14,19 @@ module.exports = class Dashboard {
       'SELECT U.idUsuario,U.nombreUsuario,U.apellidosUsuario,R.nombreRol FROM usuario U JOIN rol R ON U.idRol = R.idRol WHERE U.activoUsuario=1'
     )
   }
-
+  /*
+   * Obtener la lista total de roles del sistema para la lista.
+   * @return JSON -> Lista de roles
+   */
   static fetchAllRoles() {
     return db.execute(
       'SELECT * FROM rol'
     )
   }
-
+ /*
+   * Encontrar un correo de usuario en la base de datos.
+   * @param emailUsuario: String -> Correo del usuario que se desea encontrar
+   */
   static findOne(emailUsuario) {
     return db.execute("SELECT * FROM usuario WHERE emailUsuario=?", [
       emailUsuario,
@@ -81,6 +87,20 @@ module.exports = class Dashboard {
       return rows[0].tercera
     })
   }
+
+   /*
+* Registrar un nuevo usuario en el sistema por parte del administrador.
+* @param nombreUsuario: String -> Nombre del usuario
+* @param apellidosUsuario: String -> Apellidos del usuario
+* @param passwordUsuario: String -> Contraseña del usuario
+* @param telefonoUsuarioString: String -> Teléfono del usuario
+* @param emailUsuario: String -> Correo electrónico del usuario
+* @param estadoCivilUsuario: String -> Estado civil del usuario
+* @param ocupacionUsuario: String -> Ocupación del usuario
+* @param activoUsuarioString: String -> Estado de activo del usuario
+* @param idRolString: String -> Id del rol del usuario
+* @param idFotoString: String -> Id de la foto del usuario
+*/
 
   static adminInsertUser(
     nombreUsuario,
