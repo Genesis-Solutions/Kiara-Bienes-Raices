@@ -34,7 +34,7 @@ module.exports = class Dashboard {
  * Actualizar rol del usuario en cuestión.
  * @param idUsuario: String -> Concatenación del id del usuario y del rol que este futuramente tendrá
  */
-    static UpdateUserRol(idUsuario,idRol) {
+    static updateUserRol(idUsuario,idRol) {
         //Separación del id en dos variables para ejecutar la query.
         return db.execute(
             'UPDATE usuario SET idRol=? WHERE idUsuario=?', [idRol, idUsuario]
@@ -45,7 +45,7 @@ module.exports = class Dashboard {
  * @param idAgente: String -> Agente escogido para la propiedad.
  * @param idPropiedad: String -> Propiedad escogida para actualizar su encargado.
  */
-    static UpdateEncargadoPropiedad(idAgente, idPropiedad) {
+    static updateEncargadoPropiedad(idAgente, idPropiedad) {
       return db.execute(
           'UPDATE inmueble SET idAgenteAsignado=? WHERE idInmueble=?', [idAgente, idPropiedad]
       );
@@ -55,7 +55,7 @@ module.exports = class Dashboard {
      * Borrado del usuario solicitado.
      * @param idUsuario: String -> Id del usuario que será eliminado
      */
-    static DeleteUser(idUsuario) {
+    static deleteUser(idUsuario) {
         return db.execute(
             'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?', [idUsuario]
         )
