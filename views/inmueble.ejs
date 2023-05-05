@@ -1,4 +1,17 @@
-<%- include("partials/head") %>
+<%- include("partials/headMeta") %>
+
+    <!-- Datos del Metadata -->
+    <meta name="description" content="Encuentra ésta y muchas otras propiedades en Kiara Bienes Raíces." />
+
+    <% for (let inmueble of inmuebles) { %>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="https://compracasa.com.mx/" />
+        <meta name="twitter:title" content="<%- inmueble.nombreInmueble %>" />
+        <meta name="twitter:description" content="<%- inmueble.descInmueble %>" />
+        <meta name="twitter:image" content="<%- "s3://kiarabienesraices/"+fotoPortada %>" />
+    <% } %>
+
+</head>
 
 <body style="font-family: 'Montserrat', sans-serif">
 
@@ -59,13 +72,14 @@
             
             <div class="md:hidden grid grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
-                    <% if ((inmueble.precioVenta && inmueble.precioRentaInmueble) != 0) { %>
-                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %> /mes</h3>
-                        <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
-                    <% } else if(inmueble.precioRenta != 0) { %>
-                        <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %> /mes</h3>
-                    <% } else if(inmueble.precioVenta != 0) { %>  
-                        <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
+                    <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}) %>
+                    <% if (inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble != 0) { %>
+                        <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
+                        <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
+                    <% } else if(inmueble.precioRentaInmueble != 0 && inmueble.precioVentaInmueble == 0) { %>
+                        <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
+                    <% } else if(inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble == 0) { %>  
+                        <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
                     <% } %>
                     <div class="flex text-black text-center justify-evenly">
                         <div class="px-5 py-2 rounded-full bg-white">
@@ -116,13 +130,13 @@
             <div class="hidden md:grid md:grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
                     <div class="flex flex-col justify-center space-y-2">
-                        <% if ((inmueble.precioVentaInmueble && inmueble.precioRentaInmueble) != 0) { %>
-                            <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
-                            <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
-                        <% } else if(inmueble.precioRentaInmueble != 0) { %>
-                            <h3 class="text-lg font-semibold text-center">Renta: $<%= inmueble.precioRentaInmueble %>/mes</h3>
-                        <% } else if(inmueble.precioVentaInmueble != 0) { %>  
-                            <h3 class="text-lg font-semibold text-center">Venta: $<%= inmueble.precioVentaInmueble %></h3>
+                        <% if (inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble != 0) { %>
+                            <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
+                            <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
+                        <% } else if(inmueble.precioRentaInmueble != 0 && inmueble.precioVentaInmueble == 0) { %>
+                            <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
+                        <% } else if(inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble == 0) { %>  
+                            <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
                         <% } %>
                         <div class="flex text-black text-center md:justify-evenly lg:space-x-12 lg:justify-center">
                             <div class="px-5 py-2 md:w-32 lg:w-40 rounded-full bg-white">
@@ -190,17 +204,21 @@
             </h2>
             <div class="flex flex-col md:grid md:grid-cols-2 space-y-3 md:space-x-8">
                 <div class="order-last md:order-first pt-3">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3734.3812706725193!2d-100.41015993714005!3d20.613310384832868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35ae83751a45d%3A0x4fa6ee69f6b64f3a!2sTecnol%C3%B3gico%20de%20Monterrey!5e0!3m2!1ses-419!2smx!4v1681958955130!5m2!1ses-419!2smx" class="w-full rounded-lg h-80 md:h-96" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                    <% const link = inmueble.linkGoogleMaps %>
+                    <% let startIndex = link.indexOf('src="') + 5;
+                    let endIndex = link.indexOf('>', startIndex) + 1;
+                    let result = link.slice(startIndex, endIndex); %>
+                    <iframe src="<%= result %>" class="w-full rounded-lg h-80 md:h-96" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div>
-                    <button id="hola">
+                    <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum blanditiis eveniet reiciendis nihil nemo, odit nulla amet distinctio numquam, libero doloribus. Tempore quasi doloribus corrupti nesciunt ea, eos perferendis in sunt provident hic distinctio rem beatae dicta porro accusantium eius!
-                    </button>
+                    </p>
                 </div>
             </div>
         </div>
-        <div id="idInmueble" class="hidden"><%= inmueble.idInmueble %></div>
-        <!-- Footer Section -->
+    <% } %>
 
         <%- include("partials/footer") %>
 

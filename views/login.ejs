@@ -1,39 +1,85 @@
 <%- include('partials/head') %>
+
 <body style="font-family: 'Montserrat', sans-serif">
-    <div class="lg:grid lg:grid-cols-3">
+    <div class="grid lg:grid-cols-2 h-full">
+
+        <!-- Picture Section -->
+
         <div class="hidden lg:flex">
-            <img class="object-cover h-full" src="img/casaLogin.png" alt="">
+            <img class="object-cover w-full h-screen" src="img/casaLogin.png" alt="">
         </div>
-        <section class="bg-white min-h-screen flex items-center justify-center col-span-2">
-            <div class="bg-white flex flex-col lg:flex-row rounded-2xl max-w-7xl p-5">
-                <div class=" px-16 flex flex-col items-center justify-center">
-                    <div>
-                        <a href="./">
-                            <img src="img/kiarabr_logo.png" class="w-40 h-45 hidden md:block mb-5" alt="">
-                        </a>  
-                    </div>
-                    <h2 class="font-bold text-4xl mt-2 text-[#131C1B]">Bienvenido a Kiara, <br> <span class="text-base font-normal">inicia sesión para continuar</span></h2>
-                    <form method="POST" action="/login" class="flex flex-col gap-4 ">
-                        <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 mt-5" name="emailUsuario" id="emailUsuario" type="email" placeholder="E-mail">
-                        <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" name="passwordUsuario" id="passwordUsuario" type="password" placeholder="Contraseña">
-                        <button class="bg-[#131C1B] rounded-xl text-base text-white font-medium py-2">Inicia sesión</button>
-                    </form>
-                    <a href="">
-                        <p class="text-sm mt-4 text-[#131C1B] underline">¿Olvidaste tu Contraseña?</p>
+
+        <!-- Heading Section -->
+
+        <div class="h-full">
+            <div class="flex justify-end px-16 pt-8 pb-3 md:pb-5 md:pt-10">
+                <a href="/">
+                    <img class="h-16 w-16" src="img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces" />
+                </a>
+            </div>
+            <div class="px-16 py-2">
+                <h1 class="text-4xl font-extrabold py-5">
+                    Bienvenido a Kiara, inicia sesión para continuar
+                </h1>
+                <h2 class="text-base">
+                    ¿No tienes una cuenta?
+                    <a href="/register" class="underline">Regístrate</a>
+                </h2>
+            </div>
+
+            <!-- Form Section -->
+
+            <form method="POST" action="/login" class="flex flex-col space-y-5 px-16 py-4">
+                <div class="space-y-2">
+                    <label for="emailUsuario">Correo electrónico</label>
+                    <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 
+                    focus:ring-gray-800 mt-5" name="emailUsuario" id="emailUsuario" type="email" placeholder="E-mail" required maxlength="40">
+                    <% if (typeof errorLogin !=='undefined' ) { %>
+                        <p style="color: red">
+                            <%= errorLogin %>
+                        </p>
+                    <% } %>
+                </div>
+                <div class="space-y-2">
+                    <label for="passwordUsuario">Contraseña</label>
+                    <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 
+                    focus:ring-gray-800" name="passwordUsuario" id="passwordUsuario" type="password" placeholder="Contraseña" required maxlength="40">
+                    <% if (typeof errorLoginPassword !=='undefined' ) { %>
+                        <p style="color: red">
+                            <%= errorLoginPassword %>
+                        </p>
+                    <% } %>
+                </div>
+                <div class="flex flex-col items-center py-10">
+                    <button class="px-5 py-3 w-3/4 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                        Inicia sesión
+                    </button>
+                </div>
+            </form>
+
+            <div class="px-16 text-center space-y-5">
+                <a href="">
+                    <p class="text-base underline">
+                        ¿Olvidaste tu Contraseña?
+                    </p>
+                </a>
+                <p class="text-base">
+                    Síguenos en
+                </p>
+                <div class="flex justify-center space-x-5">
+                    <a href="#">
+                        <i class="fa-brands fa-facebook fa-2xl hover:text-blue-600 hover:scale-110 transition duration-150"></i>
                     </a>
-                    <p class="text-sm mt-4 text-[#131C1B]">¿No tienes una cuenta? <a href="/register" class="underline">Regístrate</a> </p>
-                    <p class="text-sm mt-10 text-[#131C1B]">Síguenos en</p>
-                    <div class="flex gap-5">
-                        <a href="#">
-                            <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
-                        </a>
-                        <a href="#">
-                            <svg class="mt-5 h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-                        </a>
-                    </div>
+                    <a href="#">
+                        <i class="fa-brands fa-youtube fa-2xl hover:text-red-600 hover:scale-110 transition duration-150"></i>
+                    </a>
+
+                    <a href="">
+                        <i class="fa-brands fa-instagram fa-2xl hover:text-pink-500 hover:scale-110 transition duration-150"></i>
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
     
 </body>
