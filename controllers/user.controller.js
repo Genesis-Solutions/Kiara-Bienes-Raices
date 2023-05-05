@@ -137,3 +137,12 @@ exports.register = (req, res, next) => {
       console.log(error);
     });
 };
+
+// -- CONTACTO -- //
+// - Getter de la vista Contacto
+exports.getContacto = (req, res, next) => {
+  res.render('contacto', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
