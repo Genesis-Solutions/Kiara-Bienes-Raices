@@ -149,9 +149,11 @@
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
-            var contador = 0;
+            nombreRol = id = parseInt(fila.find('td:eq(3)').text());
             const { value: eleccion } = Swal.fire({
-                //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
+                /*
+                *Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
+                */
                 title: 'Selecciona el Rol:',
                 input: 'select',
                 inputOptions: {
@@ -163,7 +165,8 @@
                 },
                 showCancelButton: true,
             }).then((result) => {
-                if (result.value>= 1) {
+                if (result.value>=1){
+                if ((result.value==1)||(result.value==2 && (nombreRol=='agente'||nombreRol=='usuario'))||(result.value==3 && nombreRol=='usuario')) {
                     $.ajax({
                         url: '/dashboard/lista/actualizar/' + id + '/'+result.value,
                         method: 'put',
@@ -171,7 +174,24 @@
                     Swal.fire('¡El rol ha sido modificado!')
                     recargarTablaUsuarios();
                 }
-
+                else{
+                    $.ajax({
+                        url: '/dashboard/comprobar/actualizar/' + id + '/'+result.value,
+                        method: 'put',
+                        success: function (choice) {
+                            if (choice.comprobacionCambio != true) {
+                                Swal.fire('¡El rol ha sido modificado!')
+                                recargarTablaUsuarios();
+                            } else {
+                                Swal.fire('El usuario tiene procesos pendientes de concluir que no pueden ser heredados al rol elegido. Reasignelos o complételos para continuar.')
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+                    });
+                    }
+            }
             })
 
         });
@@ -195,7 +215,7 @@
                         url: '/dashboard/lista/eliminar/' + id,
                         method: 'put',
                         success: function (choice) {
-                            if (choice.comprobacionEliminado == false) {
+                            if (choice.comprobacionEliminado != true) {
                                 Swal.fire('Usuario Eliminado!')
                                 recargarTablaUsuarios();
                             } else {

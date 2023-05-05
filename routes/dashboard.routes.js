@@ -32,12 +32,15 @@ router.get('/alta', dashboardController.getRegisterpage);
 /*
 * Rutas de la lista de usuarios
 */
+
 // Actualizar el rol del usuario escogido
 router.put('/lista/actualizar/:idUsuario/:idRol', dashboardController.updateRol);
 // Comprobar y eliminar usuario previamente escogido
 router.put('/lista/eliminar/:id', dashboardController.deleteUser);
 // Actualizar el encargado de una determinada propiedad
 router.put('/props/actualizar/:idAgente/:idPropiedad', dashboardController.updateEncargado);
+// Comprobar la actualización del rol para evitar conflictos
+router.put('/comprobar/actualizar/:idUsuario/:idRol', dashboardController.comprobarUpdateRol);
 
 router.get('/propiedades',isLogged, agenteAdminAuth, dashboardController.getPropiedades)
 router.get('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.getAdminUser)
