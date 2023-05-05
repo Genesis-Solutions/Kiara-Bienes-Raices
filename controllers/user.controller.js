@@ -138,6 +138,16 @@ exports.register = (req, res, next) => {
     });
 };
 
+
+// -- CONTACTO -- //
+// - Getter de la vista Contacto
+exports.getContacto = (req, res, next) => {
+  res.render('contacto', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
+
 // -- POLITICAS -- //
 // - Getter de la vista Politicas
 exports.getPoliticas = (req, res, next) => {
