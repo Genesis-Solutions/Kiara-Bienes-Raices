@@ -22,7 +22,7 @@ exports.getSearchPage = async( req,res,next ) => {
     * de 1 para probar la paginación 
     */
     
-    const resultadosPorPagina = 1;
+    const resultadosPorPagina = 4;
     
     /** 
     * Establece la cantidad de resultados por pagina
@@ -286,7 +286,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     * de 1 para probar la paginación 
     */
 
-    const resultadosPorPagina = 1;
+    const resultadosPorPagina = 4;
 
     /** 
     * Establece la cantidad de resultados por pagina
