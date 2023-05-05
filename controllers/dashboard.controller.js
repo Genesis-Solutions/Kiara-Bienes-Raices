@@ -55,10 +55,14 @@ exports.getPropiedades = async(req,res,next) => {
  */
 
 exports.getAdminUser = async(req,res,next) => {
-    // Obtiene la lista de roles a través de un método asíncrono del modelo Dashboard.
+    /*
+    *Obtiene la lista de roles a través de un método asíncrono del modelo Dashboard.
+    */
     const listRoles = await Dashboard.fetchAllRoles();
-    // Si el usuario tiene sesión iniciada, la variable isLogged se establece como verdadera y
-    //se renderiza la vista de registro de usuario administrador con los parámetros proporcionados.
+    /*
+    *Si el usuario tiene sesión iniciada, la variable isLogged se establece como verdadera y
+    *se renderiza la vista de registro de usuario administrador con los parámetros proporcionados.
+    */
     if (req.session.isLoggedIn == true) {
         isLogged = true;
         res.render("adminUserRegistration", {
@@ -354,7 +358,9 @@ Los inmuebles de tipo "Casa" y "Departamento" almacenan los mismos datos.
 */
 exports.updateBodyCasa = (req,res,next) => {
     //console.log("Entrando a la ruta update body casa");
-    //Elementos obligatorios del formulario
+    /*
+    *Elementos obligatorios del formulario
+    */
     const {
         titulo,
         id_agente,
@@ -376,7 +382,9 @@ exports.updateBodyCasa = (req,res,next) => {
         direccion,
         linkMaps
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios.
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
@@ -395,7 +403,9 @@ exports.updateBodyCasa = (req,res,next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
-    //Obtener amenidades adicionales
+    /*
+    *Obtener amenidades adicionales
+    */
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
@@ -477,7 +487,9 @@ exports.updateBodyLocal = (req,res,next) => {
         banios,
         desc
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
@@ -562,7 +574,9 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         desc
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
@@ -649,7 +663,9 @@ exports.updateBodyBodega = (req,res,next) => {
         banios,
         desc
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
@@ -746,7 +762,9 @@ exports.updateBodyOficina = (req,res,next) => {
         banios,
         desc
     } = req.body;    
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
@@ -831,7 +849,9 @@ exports.updateBodyOtro = (req,res,next) => {
         direccion,
         linkMaps
     } = req.body;    
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
