@@ -52,6 +52,7 @@ exports.getEditarInmueble = async(req, res, next) => {
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
+    const listaPropietarios = await Inmueble.fetchClientes();
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
@@ -68,7 +69,8 @@ exports.getEditarInmueble = async(req, res, next) => {
         inmuebles : inmueble,
         agente : agente,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
+        idRol: req.session.idRol,
+        listaPropietarios: listaPropietarios[0]
     })
 }
 
@@ -93,6 +95,7 @@ exports.updateBodyCasa = (req,res,next) => {
         banios,
         desc,
         direccion,
+        idPropietario,
         linkMaps,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -103,14 +106,16 @@ exports.updateBodyCasa = (req,res,next) => {
     let precioRenta = 0;
     if(venta === 1 && renta === 1) {
         tipoMovimiento = 3
-        precioVenta = req.body.precioVenta;
-        precioRenta = req.body.precioRenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta;
+        precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta;
+        precioVenta = 0;
     }
     //Obtener amenidades adicionales
     const cocina = req.body.cocina ? 1 : 0;
@@ -170,6 +175,7 @@ exports.updateBodyCasa = (req,res,next) => {
         bodega,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -196,6 +202,7 @@ exports.updateBodyLocal = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -249,6 +256,7 @@ exports.updateBodyLocal = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -269,6 +277,7 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         direccion,
         linkMaps,
+        idPropietario,
         desc,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -317,9 +326,10 @@ exports.updateBodyTerreno = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
-    res.redirect('/inmueble/'+idInmueble);
+    res.redirect('/inmueble/' + idInmueble);
 };
 
 exports.updateBodyBodega = (req,res,next) => {
@@ -346,6 +356,7 @@ exports.updateBodyBodega = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -407,6 +418,7 @@ exports.updateBodyBodega = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -430,6 +442,7 @@ exports.updateBodyOficina = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -477,6 +490,7 @@ exports.updateBodyOficina = (req,res,next) => {
         direccion,
         desc,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -500,6 +514,7 @@ exports.updateBodyOtra = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -547,6 +562,7 @@ exports.updateBodyOtra = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
