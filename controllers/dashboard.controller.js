@@ -119,6 +119,35 @@ exports.deleteUser = async (req, res, next) => {
 
 }
 
+/*
+ * Comprobación de trámites activos del usuario para posteriormente proceder a su cambio de rol
+ * @param idUsuario: String -> Id del usuario que será checado y su rol cambiado si es pertinente.
+ * @param idRol: String -> Rol del usuario que posteriormente será aplicado
+ */
+exports.comprobarUpdateRol = async (req, res, next) => {
+    /*
+    * Triple chequeo de posibles inmuebles, trámite de cliente y trámite de arrendador posibles en el usuario.
+    */
+    const primeraComprobacion = await Dashboard.checkUser(req.params.idUsuario)
+    const segundaComprobacion = await Dashboard.checkUser2(req.params.idUsuario)
+    const terceraComprobacion = await Dashboard.checkUser3(req.params.idUsuario)
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion
+    /*
+    * Si los trámites activos son 0, cambiar rol de usuario; si esto no es así, regresar un json que avise la existencia de procesos.
+    */
+    if (tramites_activos == 0) {
+        await Dashboard.updateUserRol(req.params.idUsuario,req.params.idRol);
+    }
+    else {
+        res.status(200).json({
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            comprobacionCambio: true
+        });
+    }
+
+}
+
 exports.getAgentes = async (req, res, next) => {
 const agentesArray = await Dashboard.getAgentes()
     res.status(200).json({
