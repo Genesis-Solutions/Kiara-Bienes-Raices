@@ -7,26 +7,58 @@ const agenteAdminAuth = require('../util/agenteAdminAuth.js')
 
 const dashboardController = require('../controllers/dashboard.controller');
 
-// Rutas
-//Registrar imagenes de un inmueble
+/**
+* Rutas
+*/
+
+/**
+* Registrar imagenes de un inmueble
+*/
+
 router.post('/alta/inmueble/imagenes/:inmueble', dashboardController.setPhotos);
-//Actualizar el cuerpo de una casa
+/**
+*Actualizar el cuerpo de una casa
+*/
 router.post('/alta/inmueble/cuerpoCasa/:inmueble', dashboardController.updateBodyCasa);
-//Actualizar el cuerpo de una bodega
+
+/** 
+* Actualizar el cuerpo de una bodega
+*/
 router.post('/alta/inmueble/cuerpoBodega/:inmueble', dashboardController.updateBodyBodega);
-//Actualizar el cuerpo de un terreno
+
+/**
+* Actualizar el cuerpo de un terreno
+*/
 router.post('/alta/inmueble/cuerpoTerreno/:inmueble', dashboardController.updateBodyTerreno);
-//Actualizar el cuerpo de un local
+
+/**
+* Actualizar el cuerpo de un local
+*/
 router.post('/alta/inmueble/cuerpoLocal/:inmueble', dashboardController.updateBodyLocal);
-//Actualizar el cuerpo de un oficina
+
+/**
+* Actualizar el cuerpo de un oficina
+*/
 router.post('/alta/inmueble/cuerpoOficina/:inmueble', dashboardController.updateBodyOficina);
-//Actualizar el cuerpo de un otro
+
+/** 
+* Actualizar el cuerpo de un otro
+*/
 router.post('/alta/inmueble/cuerpoOtro/:inmueble', dashboardController.updateBodyOtro);
-//Eliminar inmueble por su id
+
+/** 
+* Eliminar inmueble por su id
+*/
 router.get('/baja/inmueble/:idInmueble', dashboardController.deleteInmueble);
-//Ver el formulario dependiendo de la categoria
+
+/**
+* Ver el formulario dependiendo de la categoria
+*/
 router.get('/alta/inmueble/:categoria', dashboardController.getCategoria);
-//Ver menu de inmuebles
+
+/**
+* Ver menu de inmuebles
+*/
 router.get('/alta', dashboardController.getRegisterpage);
 
 /*
