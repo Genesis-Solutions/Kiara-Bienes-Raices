@@ -163,9 +163,9 @@
                 },
                 showCancelButton: true,
             }).then((result) => {
-                if (result.value>= 1 && result.value<=3) {
+                if (result.value>= 1) {
                     $.ajax({
-                        url: '/dashboard/lista/actualizar/' + id + result.value,
+                        url: '/dashboard/lista/actualizar/' + id + '/'+result.value,
                         method: 'put',
                     });
                     Swal.fire('¡El rol ha sido modificado!')
