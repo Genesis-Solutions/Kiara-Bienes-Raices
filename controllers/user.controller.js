@@ -146,3 +146,12 @@ exports.getPoliticas = (req, res, next) => {
     idRol: req.session.idRol
   });
 };
+
+// -- NOSOTROS -- //
+// - Getter de la vista Nosotros
+exports.getNosotros = (req, res, next) => {
+  res.render('nosotros', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
