@@ -17,16 +17,15 @@
             </p>
         </div>
 
-        <hr class="h-px my-10 bg-gray-800 border-0">
-
         <form action="/catalogo/search" method="POST">
-            <div class="flex flex-col items-center justify-center gap-5" x-data="{ open: false }">
-                <div class="flex items-center justify-between flex-col gap-6">
+            <input type="hidden" name="newSearch" id="newSearch" value="1">
+            <div class="py-6 flex flex-col items-center justify-center  gap-5" x-data="{ open: false }">
+                <div class="flex items-center justify-between flex-col gap-6 mt-5">
                     <!-- <div class="flex gap-6">
                         <input type="text" name="direccionInmueble" id="direccionInmueble" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ubicación">
                         <button type="submit" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700"> <i class="fas fa-search px-2"></i> Search</button>
                     </div> -->
-
+                    
                     <div class="flex justify-center w-3/5">
                         <select name="idCategoria" id="idCategoria" class="px-3 py-2 w-1/6 rounded-l-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700">
                             <option disabled selected>Tipo</option>
@@ -124,6 +123,7 @@
                         <option value="500">500+</option>
                     </select>  
                 </div>
+            </div>
         </form>
 
     <!-- Desplegar elementos del catalogo -->
@@ -147,26 +147,28 @@
             <% }); %>
         <% } else { %>
             <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-        <% }; %>
+        <% } %>
 
-        <div class="break"></div>
-        <!--Display the links to the pages-->
-        <div class="flex justify-center">
-            <div>
-                <% if(pagina > 1) { %> 
-                        <a href="catalogo?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
-                <% } %>
-                <% for(let i = iterador; i <= linkFinal; i++) { %>
-                    <% if(i === pagina) { %>
-                        <b> <%=i%> </b>
-                    <% } else { %>
-                        <a href="catalogo?pagina=<%=i%>"> <%=i%> </a>
-                    <% } %> 
-                <% } %>
-                <% if(pagina < numeroPaginas) { %> <a href="catalogo?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
+        <% if (resultsExist == true) { %>
+            <div class="break"></div>
+            <!--Display the links to the pages-->
+            <div class="flex justify-center">
+                <div>
+                    <% if(pagina > 1) { %> 
+                            <a href="search?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
+                    <% } %>
+                    <% for(let i = iterador; i <= linkFinal; i++) { %>
+                        <% if(i === pagina) { %>
+                            <b> <%=i%> </b>
+                        <% } else { %>
+                            <a href="search?pagina=<%=i%>"> <%=i%> </a>
+                        <% } %> 
+                    <% } %>
+                    <% if(pagina < numeroPaginas) { %> <a href="search?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
+                </div>
             </div>
-        </div>
-        </div>
+            </div>
+        <% }; %>
     <!-- Footer Section -->
     <%- include("partials/footer") %>
 

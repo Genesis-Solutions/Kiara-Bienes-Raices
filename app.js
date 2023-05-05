@@ -1,10 +1,12 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const port = 3000;
-const app = express();
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+
+const port = 3000;
+
+const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -30,9 +32,9 @@ const rutasInmueble = require('./routes/inmueble.routes.js');
 const rutasDashboard = require('./routes/dashboard.routes.js');
 const rutasSearchpage = require('./routes/searchpage.routes.js');
 
-app.use('/dashboard', rutasDashboard);
 app.use('/inmueble', rutasInmueble)
 app.use('/catalogo', rutasSearchpage); //Historia de usuario 2.7 - Ver lista de inmuebles
+app.use('/dashboard', rutasDashboard); //Historia de usuario 2.1 - Publicar inmueble
 app.use('/', rutasHome);
 
 //app.use("/public",express.static(dirname + '/public')); 

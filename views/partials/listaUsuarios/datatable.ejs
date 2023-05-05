@@ -49,7 +49,12 @@
     </script>
 
     <script type="text/javascript">
+/*
+ * Carga de la data table que renderiza los datos de los usuarios.
+ */
+     
         function recargarTablaUsuarios() {
+            //Carga de la tabla de usuarios mediante data table.
             if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
                 //$("#table_report").DataTable().clear().draw();
                 $("#dataTableUsuarios").dataTable().fnDestroy();
@@ -80,6 +85,7 @@
             tfooter += '</tr>'
             tfooter += '</tfoot>'
             $('#dataTableUsuarios').append(thead);
+            // $('#dataTableUsuarios').append(tfooter);
             $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
             dataTable = $("#dataTableUsuarios").dataTable({
             language: {
@@ -115,12 +121,20 @@
                     {
                         data: null,
                         render: function (data, type, row) {
+                            //Si el usuario es administrador, ocultar el botón.
+                            if (data.nombreRol == 'administrador') {
+                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
+                            }
                             return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
                         }
                     },
                     {
                         data: null,
                         render: function (data, type, row) {
+                            //Si el usuario es administrador, ocultar el botón.
+                            if (data.nombreRol == 'administrador') {
+                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                            }
                             return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
                         }
                     },
@@ -130,10 +144,15 @@
     </script>
 
     <script type="text/javascript">
+/*
+* Acción del botón de edición de rol. Despliega un modal con un dropdown de las opciones disponibles para modificar
+*/
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
+            var contador = 0;
             const { value: eleccion } = Swal.fire({
+                //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
                 title: 'Selecciona el Rol:',
                 input: 'select',
                 inputOptions: {
@@ -144,27 +163,53 @@
                     }
                 },
                 showCancelButton: true,
-                inputValidator: (value) => {
-                    return new Promise((resolve) => {
-                        if (value) {
-                            resolve()
-                        } else {
-                            resolve('Selecciona una opción disponible.')
-                        }
-                    })
+            }).then((result) => {
+                if (result.value>= 1) {
+                    $.ajax({
+                        url: '/dashboard/lista/actualizar/' + id + '/'+result.value,
+                        method: 'put',
+                    });
+                    Swal.fire('¡El rol ha sido modificado!')
+                    recargarTablaUsuarios();
                 }
-            }).then((result) => {          
-                    if (result) {
-                        $.ajax({
-                            url: '/dashboard/lista/actualizar/'+id+result.value,
-                            method: 'put',  
-                        });
-                        Swal.fire('¡El rol ha sido modificado!')
-                        recargarTablaUsuarios();
-                    } 
-                    
-                })
-            
+
+            })
+
+        });
+    </script>
+    <script type="text/javascript">
+/*
+* Funcionalidad de botón de eliminación de usuario. Despliega un modal que verifica la decisión del usuario para posteriormente asegurar la inexistencia de procesos del mismo.
+*/
+        $(document).on("click", ".btnEliminarUsuario", function () {
+            fila = $(this).closest("tr");
+            id = parseInt(fila.find('td:eq(0)').text());
+            //Modal de confirmación.
+            Swal.fire({
+                title: '¿Confirma la eliminación del usuario?',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/dashboard/lista/eliminar/' + id,
+                        method: 'put',
+                        success: function (choice) {
+                            if (choice.comprobacionEliminado == false) {
+                                Swal.fire('Usuario Eliminado!')
+                                recargarTablaUsuarios();
+                            } else {
+                                Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+
+                    });
+                }
+            })
         });
     </script>
 
