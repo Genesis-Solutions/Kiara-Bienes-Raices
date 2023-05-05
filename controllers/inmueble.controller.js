@@ -10,6 +10,7 @@ exports.getInmueble = async (req, res, next) => {
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
+    const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
@@ -28,7 +29,9 @@ exports.getInmueble = async (req, res, next) => {
         inmuebles : inmueble,
         agente : agente,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
+        idUsuario: req.session.idUsuario,
+        idRol: req.session.idRol,
+        listaAttributesInmueble: listaAttributesInmueble[0]
     })
 };
 

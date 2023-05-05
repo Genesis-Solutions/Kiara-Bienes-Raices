@@ -135,6 +135,18 @@ Obtiene la información de los clientes que son propietarios de inmuebles.
     );
   }
 
+   /*
+
+Obtiene la información de los clientes que son propietarios de inmuebles.
+@return Un objeto que contiene la información de los clientes que son propietarios de inmuebles.
+*/
+static fetchAttritubutesInmueble(idInmueble) {
+  return db.execute(
+    "SELECT * FROM inmueble WHERE idInmueble=?",
+    [idInmueble]	
+  );
+}
+
 /*
 Actualiza un inmueble de tipo Casa en la base de datos
 @param titulo el título del inmueble

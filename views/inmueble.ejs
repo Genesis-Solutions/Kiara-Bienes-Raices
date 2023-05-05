@@ -26,7 +26,7 @@
         
         <!-- Details Section -->
         <div class="p-12 bg-sky-950 text-white space-y-6">
-            <% if (idRol == 1 || idRol == 2) { %>
+            <% if (idRol == 1 || listaAttributesInmueble.idAgenteAsignado == idUsuario) { %>
                 <a href="/inmueble/editarInmueble/<%=inmueble.idInmueble%>" class="flex flex-col items-end justify-center">
                     <div class="bg-white text-sky-950 py-2 px-2 flex items-center justify-center rounded-full w-auto h-8 hover:scale-105 transition duration-150">
                         <h3>Editar Propiedad</h3><i class="fa-solid fa-pencil px-2"></i>
