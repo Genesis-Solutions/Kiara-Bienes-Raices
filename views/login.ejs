@@ -34,16 +34,16 @@
                     <label for="emailUsuario">Correo electrónico</label>
                     <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 
                     focus:ring-gray-800 mt-5" name="emailUsuario" id="emailUsuario" type="email" placeholder="E-mail" required maxlength="40">
-                    <% if (typeof errorLogin !=='undefined' ) { %>
-                        <p style="color: red">
-                            <%= errorLogin %>
-                        </p>
-                    <% } %>
                 </div>
                 <div class="space-y-2">
                     <label for="passwordUsuario">Contraseña</label>
                     <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 
                     focus:ring-gray-800" name="passwordUsuario" id="passwordUsuario" type="password" placeholder="Contraseña" required maxlength="40">
+                    <% if (typeof errorLogin !=='undefined' ) { %>
+                        <p style="color: red">
+                            <%= errorLogin %>
+                        </p>
+                    <% } %>
                     <% if (typeof errorLoginPassword !=='undefined' ) { %>
                         <p style="color: red">
                             <%= errorLoginPassword %>
