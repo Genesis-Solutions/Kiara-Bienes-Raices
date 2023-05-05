@@ -1,15 +1,24 @@
-// Base controlador
+/**
+* Base controlador
+*
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
 
-// Obtiene los datos del inmueble
+/**
+* Obtiene los datos del inmueble
+*/
 
 exports.getInmueble = async (req, res, next) => {
-    //Info de agente e inmueblee
+    /**
+    * Info de agente e inmueble
+    */
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
-    //Imagenes
+    
+    //** 
+    * Imágenes
+    */
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
     arregloFotos = [];
@@ -47,11 +56,16 @@ exports.getImgFromBucket = ( req,res,next ) => {
 }
 
 exports.getEditarInmueble = async(req, res, next) => {
-    //Info de agente e inmueblee
+    /**
+    + Info de agente e inmueble
+    */
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
-    //Imagenes
+    
+    /**
+    * Imágenes
+    */
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
     arregloFotos = [];
