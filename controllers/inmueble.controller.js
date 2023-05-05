@@ -1,5 +1,4 @@
 // Base controlador
-const path = require('path');
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
 
