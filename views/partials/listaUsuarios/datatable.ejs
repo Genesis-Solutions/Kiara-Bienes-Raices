@@ -1,8 +1,8 @@
 <!-- List Users -->
 <main class="text-center mb-20 mx-32">
     <!-- Inicio de la DataTable lista usuarios -->
-    <div class="table-responsive text-center">
-        <table class="table table-bordered text-center " id="dataTableUsuarios" width="100%" cellspacing="0">
+    <div class="table-responsive text-center cell-border">
+        <table class="table table-bordered text-center" id="dataTableUsuarios" width="100%" cellspacing="0">
         </table>
     </div>
 
@@ -65,7 +65,8 @@
             var tfooter = ""
             thead += '<thead class="bg-gray-300 text-gray-600">'
             thead += '<tr>'
-            thead += '<th>Id</th>'
+            thead +=  '<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTableUsuarios" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" style="width: 71px;" aria-sort="ascending">Id</th>'
+            // thead += '<th>Id</th>'
             thead += '<th>Nombre</th>'
             thead += '<th>Apellidos</th>'
             thead += '<th>Rol</th>'
@@ -163,9 +164,9 @@
                 },
                 showCancelButton: true,
             }).then((result) => {
-                if (result.value>= 1 && result.value<=3) {
+                if (result.value>= 1) {
                     $.ajax({
-                        url: '/dashboard/lista/actualizar/' + id + result.value,
+                        url: '/dashboard/lista/actualizar/' + id + '/'+result.value,
                         method: 'put',
                     });
                     Swal.fire('¡El rol ha sido modificado!')

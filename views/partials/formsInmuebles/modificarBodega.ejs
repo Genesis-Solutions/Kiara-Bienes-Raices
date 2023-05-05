@@ -23,6 +23,18 @@
             </fieldset>
         </div>
     </div>
+
+    <% if (idRol === 1 || idRol === 2){ %>
+        <div class="space-y-2">
+            <label for="idPropietario" class="text-lg font-semibold text-white">Lista de clientes disponibles (Seleccionar Dueño del inmueble)</label>
+            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                id="idPropietario" name="idPropietario">
+                <% listaPropietarios.forEach(propietario=>{ %>
+                    <option value="<%=propietario.idUsuario%>"><%=propietario.nombreUsuario%> <%=propietario.apellidosUsuario%></option>
+                <% }); %>
+            </select>
+        </div>
+    <% } %>
     <div class="col-span-2 space-y-2">
         <label for="" class="text-lg font-semibold text-white">Amenidades Secundarias</label>
         <div class="grid grid-cols-3 gap-7">

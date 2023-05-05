@@ -21,19 +21,14 @@
             <input type="hidden" name="newSearch" id="newSearch" value="1">
             <div class="py-6 flex flex-col items-center justify-center  gap-5" x-data="{ open: false }">
                 <div class="flex items-center justify-between flex-col gap-6 mt-5">
-                    <div class="flex gap-6">
+                    <!-- <div class="flex gap-6">
                         <input type="text" name="direccionInmueble" id="direccionInmueble" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ubicación">
                         <button type="submit" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700"> <i class="fas fa-search px-2"></i> Search</button>
-                    </div>
-                    <div class="flex gap-6">
-                        <select name="idTipoMovimiento" id="idTipoMovimiento" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                            <option disabled selected>Tipo de operación</option>
-                            <option value="1">Venta</option>
-                            <option value="2">Renta</option>
-                            <option value="3">Venta/Renta</option>
-                        </select>
-                        <select name="idCategoria" id="idCategoria" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                            <option disabled selected>Tipo de Inmueble</option>
+                    </div> -->
+                    
+                    <div class="flex justify-center w-3/5">
+                        <select name="idCategoria" id="idCategoria" class="px-3 py-2 w-1/6 rounded-l-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700">
+                            <option disabled selected>Tipo</option>
                             <option value="1">Casa</option>
                             <option value="2">Departamento</option>
                             <option value="3">Local</option>
@@ -42,27 +37,50 @@
                             <option value="6">Oficina</option>
                             <option value="7">Otro</option>
                         </select>
-                            <!-- <a id="toggle-slider" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 cursor-pointer">Precio</a>
-                            <div id="slider" class="hidden"> -->
-                                <div class="flex justify-center space-x-4">
-                                    <div>
-                                        <label class="block text-gray-700 font-bold mb-2" for="precio-minimo">
-                                            Precio mínimo
-                                        </label>
-                                        <input id="precioMinimo" name="precioMinimo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-minimo" type="number" placeholder="0">
-                                    </div>
-                                    <div>
-                                        <label class="block text-gray-700 font-bold mb-2" for="precio-maximo">
-                                            Precio máximo
-                                        </label>
-                                        <input id="precioMaximo" name="precioMaximo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-maximo" type="number" placeholder="0">
-                                    </div>
-                                </div>
-                            <!-- </div>                       -->
-                        <a class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle cursor-pointer" @click="open = ! open">
-                            Más filtros
-                        </a>
+                        <input type="text" name="direccionInmueble" id="direccionInmueble" class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ingresa tu búsqueda (ej: Juriquilla)">
+                        <button id="dropdown-button" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-[#345087] rounded-r-lg hover:font-semibold hover:bg-gray-700" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                     </div>
+                    
+
+                    <div class="space-y-0">
+                        <div class=" w-full grid grid-cols-4 space-x-8">
+                            <div></div>
+                            <div></div>
+                            <div class="col-start-2">
+                                <label class="text-gray-700 font-bold mb-2" for="precio-minimo">
+                                    Precio mínimo
+                                </label>
+                            </div>
+                            <div class="col-start-3">
+                                <label class="text-gray-700 font-bold mb-2" for="precio-maximo">
+                                    Precio máximo
+                                </label>
+                            </div>
+                            <div></div>
+                        </div>
+    
+                        <div class="grid grid-cols-4 space-x-8">
+                            <div class="text-center">
+                                <select name="idTipoMovimiento" id="idTipoMovimiento" class="px-3 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                    <option value="1">Venta</option>
+                                    <option value="2">Renta</option>
+                                    <option value="3">Venta/Renta</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input id="precioMinimo" name="precioMinimo" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-minimo" type="number" placeholder="0">
+                            </div>
+                            <div>
+                                <input id="precioMaximo" name="precioMaximo" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-maximo" type="number" placeholder="0">
+                            </div>
+                            <div class="px-5 py-2 w-fit rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle cursor-pointer" @click="open = ! open">
+                                Más filtros
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div x-show="open"   x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-0"
@@ -127,6 +145,11 @@
                     <%- include('tarjetasCatalogo/tarjetaOtro', {data: inmueble}) %>
                 <%}%>
             <% }); %>
+        <% } else { %>
+            <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
+        <% } %>
+
+        <% if (resultsExist == true) { %>
             <div class="break"></div>
             <!--Display the links to the pages-->
             <div class="flex justify-center">
@@ -143,12 +166,9 @@
                     <% } %>
                     <% if(pagina < numeroPaginas) { %> <a href="search?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
                 </div>
-        <% } else { %>
-            <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-        <% } %>
-    
-    </div>
-    </div>
+            </div>
+            </div>
+        <% }; %>
     <!-- Footer Section -->
     <%- include("partials/footer") %>
 
