@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const isLogged = require('../util/isLogged.js')
-const adminAuth = require('../util/adminAuth.js')
-const agenteAdminAuth = require('../util/agenteAdminAuth.js')
+const isLogged = require('../util/isLogged.util');
+const adminAuth = require('../util/adminAuth.util');
+const agenteAdminAuth = require('../util/agenteAdminAuth.util');
 
 const dashboardController = require('../controllers/dashboard.controller');
 
@@ -28,7 +28,6 @@ router.get('/baja/inmueble/:idInmueble', dashboardController.deleteInmueble);
 router.get('/alta/inmueble/:categoria', dashboardController.getCategoria);
 //Ver menu de inmuebles
 router.get('/alta', dashboardController.getRegisterpage);
-
 /*
 * Rutas de la lista de usuarios
 */

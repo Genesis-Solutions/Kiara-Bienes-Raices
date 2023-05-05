@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const isLogged = require('../util/isLogged.js')
-const adminAuth = require('../util/adminAuth.js')
-const agenteAdminAuth = require('../util/agenteAdminAuth.js')
+const isLogged = require('../util/isLogged.util');
+const agenteAdminAuth = require('../util/agenteAdminAuth.util');
 
 const inmuebleController = require('../controllers/inmueble.controller.js');
 

@@ -1,4 +1,4 @@
-const db = require("../util/database");
+const db = require("../util/database.util");
 
 module.exports = class Inmueble {
   // Obtener la informacion de un inmueble utilizando su id

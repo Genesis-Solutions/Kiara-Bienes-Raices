@@ -1,5 +1,5 @@
 const Dashboard = require('../models/dashboard.model');
-const { storage } = require('../util/awsMediaMulter');
+const { storage } = require('../util/awsMediaMulter.util');
 
 /*
 * Historia de usuario 1.5, 1.6 y 1.9 - Ver lista de usuarios, modificar rol y eliminar usuario.
