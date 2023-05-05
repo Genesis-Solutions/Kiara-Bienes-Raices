@@ -138,8 +138,16 @@ exports.register = (req, res, next) => {
     });
 };
 
-// -- NOSOTROS -- //
+// -- POLITICAS -- //
+// - Getter de la vista Politicas
+exports.getPoliticas = (req, res, next) => {
+  res.render('politicas', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
 
+// -- NOSOTROS -- //
 // - Getter de la vista Nosotros
 exports.getNosotros = (req, res, next) => {
   res.render('nosotros', {
