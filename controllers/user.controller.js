@@ -127,3 +127,13 @@ exports.register = (req, res, next) => {
       console.log(error);
     });
 };
+
+// -- NOSOTROS -- //
+
+// - Getter de la vista Nosotros
+exports.getNosotros = (req, res, next) => {
+  res.render('nosotros', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
