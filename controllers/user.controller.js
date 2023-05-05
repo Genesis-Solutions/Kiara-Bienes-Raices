@@ -165,3 +165,12 @@ exports.getNosotros = (req, res, next) => {
     idRol: req.session.idRol
   });
 };
+
+// -- SERVICIOS -- //
+// - Getter de la vista Servicios
+exports.getServicios = (req, res, next) => {
+  res.render('servicios', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
