@@ -3,7 +3,8 @@ const path = require('path');
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
 
-// Obtiene los datos del inmueble
+//  Controlador para obtener la información de un inmueble y renderizar su vista
+
 
 exports.getInmueble = async (req, res, next) => {
     //Info de agente e inmueblee
@@ -41,12 +42,13 @@ exports.getInmueble = async (req, res, next) => {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
         idInmueble: req.params.idInmueble,
-        tramite: tramite
+        tramite: tramite,
         idUsuario: req.session.idUsuario,
         listaAttributesInmueble: listaAttributesInmueble[0]
     })
 };
 
+//Controlador para eliminar una propiedad.
 exports.eliminarPropiedad = (req, res, next) => {
     console.log("Adentro de controlador eliminar");
     const idInmueble = req.params.idInmueble;
@@ -55,7 +57,7 @@ exports.eliminarPropiedad = (req, res, next) => {
 }
 
 /*
-* Obtener la imagen del bucket.
+* Controlador para obtener la imagen del bucket.
 */
 exports.getImgFromBucket = ( req,res,next ) => {
     var img = req.query.image;
@@ -99,6 +101,8 @@ exports.getEditarInmueble = async(req, res, next) => {
 }
 
 // -- MODIFY A PROPERTY AGENT OR ADMIN --//
+
+//Controlador para actualizar los datos de una propiedad de tipo "Casa"
 exports.updateBodyCasa = (req,res,next) => {
     console.log("Entrando a la ruta update body casa");
     //Elementos obligatorios del formulario
@@ -205,6 +209,8 @@ exports.updateBodyCasa = (req,res,next) => {
     res.redirect('/inmueble/'+idInmueble);
 };
 
+//Controlador para actualizar los datos de una propiedad de tipo "Local"
+
 exports.updateBodyLocal = (req,res,next) => {
     console.log("Entrando a la ruta update body local");
     const {
@@ -286,6 +292,8 @@ exports.updateBodyLocal = (req,res,next) => {
     res.redirect('/inmueble/'+idInmueble);
 };
 
+//Controlador para actualizar los datos de una propiedad de tipo "Terreno"
+
 exports.updateBodyTerreno = (req,res,next) => {
     console.log("Entrando a la ruta update body terreno");
     const {
@@ -355,6 +363,8 @@ exports.updateBodyTerreno = (req,res,next) => {
     );
     res.redirect('/inmueble/' + idInmueble);
 };
+
+//Controlador para actualizar los datos de una propiedad de tipo "Bodega"
 
 exports.updateBodyBodega = (req,res,next) => {
     console.log("Entrando a la ruta update body bodega");
@@ -448,6 +458,8 @@ exports.updateBodyBodega = (req,res,next) => {
     res.redirect('/inmueble/'+idInmueble);
 };
 
+//Controlador para actualizar los datos de una propiedad de tipo "Oficina"
+
 exports.updateBodyOficina = (req,res,next) => {
     console.log("Entrando a la ruta update body oficina");
     const {
@@ -519,6 +531,8 @@ exports.updateBodyOficina = (req,res,next) => {
     );
     res.redirect('/inmueble/'+idInmueble);
 };
+
+//Controlador para actualizar los datos de una propiedad de tipo "Otra"
 
 exports.updateBodyOtra = (req,res,next) => {
     console.log("Entrando a la ruta update body otra");
