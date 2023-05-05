@@ -1,4 +1,6 @@
-// Base controlador
+/**
+* Base controlador
+*/
 exports.root = async(req,res,next) => {
     var isLogged = false;
     const idUsuario = req.session.idUsuario;
