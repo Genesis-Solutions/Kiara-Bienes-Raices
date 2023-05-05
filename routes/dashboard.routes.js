@@ -10,7 +10,7 @@ const dashboardController = require('../controllers/dashboard.controller');
 // Rutas
 //Registrar imagenes de un inmueble
 router.post('/alta/inmueble/imagenes/:inmueble', dashboardController.setPhotos);
-//Actulizar el cuerpo de una casa
+//Actualizar el cuerpo de una casa
 router.post('/alta/inmueble/cuerpoCasa/:inmueble', dashboardController.updateBodyCasa);
 //Actualizar el cuerpo de una bodega
 router.post('/alta/inmueble/cuerpoBodega/:inmueble', dashboardController.updateBodyBodega);
@@ -33,21 +33,34 @@ router.get('/alta', dashboardController.getRegisterpage);
 * Rutas de la lista de usuarios
 */
 
-// Actualizar el rol del usuario escogido
+/*
+* Actualizar el rol del usuario escogido
+*/
 router.put('/lista/actualizar/:idUsuario/:idRol', dashboardController.updateRol);
-// Comprobar y eliminar usuario previamente escogido
+/* 
+* Comprobar y eliminar usuario previamente escogido
+*/
 router.put('/lista/eliminar/:id', dashboardController.deleteUser);
-// Actualizar el encargado de una determinada propiedad
-router.put('/props/actualizar/:idAgente/:idPropiedad', dashboardController.updateEncargado);
-// Comprobar la actualización del rol para evitar conflictos
+/*
+* Comprobar la actualización del rol para evitar conflictos
+*/
 router.put('/comprobar/actualizar/:idUsuario/:idRol', dashboardController.comprobarUpdateRol);
 
-router.get('/propiedades',isLogged, agenteAdminAuth, dashboardController.getPropiedades)
+
 router.get('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.getAdminUser)
 router.post('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.postAdminUser)
 router.get('/usuarios',isLogged, adminAuth, dashboardController.getUsers);
 router.get('/', isLogged, agenteAdminAuth, dashboardController.getDashboard);
+
+/*
+* Rutas de la lista de propiedades
+*/
+router.get('/propiedades',isLogged, agenteAdminAuth, dashboardController.getPropiedades)
 router.get('/props', isLogged, agenteAdminAuth, dashboardController.getDashboardProps);
 router.get('/agentes', isLogged, agenteAdminAuth, dashboardController.getAgentes);
+/*
+* Actualizar el encargado de una determinada propiedad
+*/
+router.put('/props/actualizar/:idAgente/:idPropiedad', dashboardController.updateEncargado);
 
 module.exports = router;

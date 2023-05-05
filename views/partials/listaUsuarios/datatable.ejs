@@ -165,6 +165,9 @@
                 },
                 showCancelButton: true,
             }).then((result) => {
+                /*
+                * Comprobación que evita que un usuario cambie de rol erróneamente con procesos pendientes, perdiendo los permisos para seguir sus procesos adecuadamente.
+                */
                 if (result.value>=1){
                 if ((result.value==1)||(result.value==2 && (nombreRol=='agente'||nombreRol=='usuario'))||(result.value==3 && nombreRol=='usuario')) {
                     $.ajax({
@@ -203,13 +206,17 @@
         $(document).on("click", ".btnEliminarUsuario", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
-            //Modal de confirmación.
+            /*
+            *Modal de confirmación.
+            */
             Swal.fire({
                 title: '¿Confirma la eliminación del usuario?',
                 showCancelButton: true,
                 confirmButtonText: `Confirmar`,
             }).then((result) => {
-                //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                /*
+                * Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                */
                 if (result.isConfirmed) {
                     $.ajax({
                         url: '/dashboard/lista/eliminar/' + id,
