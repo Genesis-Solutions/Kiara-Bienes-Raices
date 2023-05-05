@@ -167,11 +167,54 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         * parámetros de la vista searchpage.ejs para filtrar
         */
 
-        //console.log(params.direccionInmueble)
+        /**
+        * En caso de buscar inmuebles en venta y seleccionar un rango de
+        * precio, utiliza precioVentaInmueble para generar la query
+        * 
+        * En caso de buscar inmuebles en renta y seleccionar un rango de
+        * precio, utiliza precioRentaInmueble para generar la query
+        */
+
+        if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
+            //console.log("dentro del precio equisde")
+            conditions.push("idTipoMovimiento = 1 OR idTipoMovimiento = 3")
+            if (typeof params.precioMinimo !== 'undefined') {
+
+                if (params.precioMaximo != ''){
+                    conditions.push("precioVentaInmueble BETWEEN ? AND ?");
+                    values.push(params.precioMinimo);
+                    values.push(params.precioMaximo);
+                }
+                
+            };
+        } else if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
+            if (typeof params.precioMinimo !== 'undefined') {
+                conditions.push("idTipoMovimiento = 2 OR idTipoMovimiento = 3")
+                //console.log("dentro del precio equisde")
+                if (params.precioMaximo != '') {
+                    conditions.push("precioRentaInmueble BETWEEN ? AND ?");
+                    values.push(params.precioMinimo);
+                    values.push(params.precioMaximo);
+                }
+            };
+        };
+
+        /** 
+        * En caso de buscar por dirección agrega el filtro de LIKE a la query,
+        * al ser una expresión regular, permite buscar por texto aquellas
+        * propiedades que coincidan o se aproximen a la búsqueda
+        */
+
+        console.log(params.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
             conditions.push("direccionInmueble LIKE ?");
             values.push("%" + params.direccionInmueble + "%");
         };
+
+        /** 
+        * Agrega a la query la opción de tener baños, recámaras,
+        * estacionamientos y metros cuadrados construídos a casas y dept.
+        */
 
         if (params.idCategoria == "1" || params.idCategoria == "2") {
             //console.log(params.idCategoria)
@@ -194,13 +237,37 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
                 conditions.push("estacionamientosInmueble >= ?");
                 values.push(params.estacionamientosInmueble);
             };
+
+            if (typeof params.m2ConstruidosInmueble !== 'undefined') {
+                conditions.push("m2ConstruidosInmueble >= ?");
+                values.push(params.m2ConstruidosInmueble);
+            };
         }
 
-        if (params.idCategoria == "3" || params.idCategoria == "4") {
+        /**
+        * En caso de ser un local, únicamente agrega a la query el parámetro de
+        * metros cuadrados construídos
+        */
+
+        if (params.idCategoria == "3") {
             var catLocal = "3"
-            var catTerreno = "4"
-            conditions.push("idCategoria = ? OR idCategoria = ?")
+            conditions.push("idCategoria = ?")
             values.push(catLocal);
+
+            if (typeof params.m2ConstruidosInmueble !== 'undefined') {
+                conditions.push("m2ConstruidosInmueble >= ?");
+                values.push(params.m2ConstruidosInmueble);
+            };
+        }
+
+        /**
+        * En caso de ser un terreno, únicamente agrega a la query el parámetro de
+        * metros cuadrados construídos
+        */
+
+        if (params.idCategoria == "4") {
+            var catTerreno = "4"
+            conditions.push("idCategoria = ?")
             values.push(catTerreno);
 
             if (typeof params.m2ConstruidosInmueble !== 'undefined') {
@@ -209,44 +276,54 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             };
         }
 
-        //console.log(params.idTipoMovimiento)
-        // venta
-
         /**
-        * En caso de buscar inmuebles en venta y seleccionar un rango de
-        * precio, utiliza precioVentaInmueble para generar la query
+        * En caso de ser una bodega, únicamente agrega a la query el parámetro
+        * de metros cuadrados construídos
         */
 
-        if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
-            //console.log("dentro del precio equisde")
-            conditions.push("idTipoMovimiento = 1 OR idTipoMovimiento = 3")
-            if (typeof params.precioMinimo !== 'undefined') {
+        if (params.idCategoria == "5") {
+            var catBodega = "5"
+            conditions.push("idCategoria = ?")
+            values.push(catBodega);
 
-                if (params.precioMaximo != ''){
-                    conditions.push("precioVentaInmueble BETWEEN ? AND ?");
-                    values.push(params.precioMinimo);
-                    values.push(params.precioMaximo);
-                }
-                
+            if (typeof params.m2ConstruidosInmueble !== 'undefined') {
+                conditions.push("m2ConstruidosInmueble >= ?");
+                values.push(params.m2ConstruidosInmueble);
             };
         }
 
         /**
-        * En caso de buscar inmuebles en renta y seleccionar un rango de
-        * precio, utiliza precioRentaInmueble para generar la query
+        * En caso de ser una oficina, únicamente agrega a la query el parámetro
+        * de metros cuadrados construídos
         */
-        
-        if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
-            if (typeof params.precioMinimo !== 'undefined') {
-                conditions.push("idTipoMovimiento = 2 OR idTipoMovimiento = 3")
-                //console.log("dentro del precio equisde")
-                if (params.precioMaximo != '') {
-                    conditions.push("precioRentaInmueble BETWEEN ? AND ?");
-                    values.push(params.precioMinimo);
-                    values.push(params.precioMaximo);
-                }
+
+        if (params.idCategoria == "6") {
+            var catOficina = "6"
+            conditions.push("idCategoria = ?")
+            values.push(catOficina);
+
+            if (typeof params.m2ConstruidosInmueble !== 'undefined') {
+                conditions.push("m2ConstruidosInmueble >= ?");
+                values.push(params.m2ConstruidosInmueble);
             };
         }
+
+        /**
+        * En caso de ser categoría "otro", únicamente agrega a la query el 
+        * parámetroc de metros cuadrados construídos
+        */
+
+        if (params.idCategoria == "7") {
+            var catOtro = "7"
+            conditions.push("idCategoria = ?")
+            values.push(catOtro);
+
+            if (typeof params.m2ConstruidosInmueble !== 'undefined') {
+                conditions.push("m2ConstruidosInmueble >= ?");
+                values.push(params.m2ConstruidosInmueble);
+            };
+        }
+
         return {
             where: conditions.length ?
                     conditions.join(' AND ') : '1',
@@ -280,71 +357,106 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     */
     
     const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values);
-    
+
     /**
-    * Obtiene la cantidad de resultados por página, en este caso es
-    * de 1 para probar la paginación 
+    * Dado a que necesitamos revisar que existan inmuebles que cumplan
+    * con los filtros seleccionados, debemos crear éstas variables para que
+    * puedan ser usadas después de la verificación 
     */
 
-    const resultadosPorPagina = 1;
+    var resultsExist = false;
+    var resultadosPorPagina;
+    var numeroResultados;
+    var numeroPaginas;
+    var builtQueryLimits
 
-    /** 
-    * Establece la cantidad de resultados por pagina
-    */ 
-    
-    const numeroResultados = countFiltered[0][0].total;
-    const numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
-
-    /** 
-    * Solicita la cantidad de resultados por pagina 
+    /**
+    * Revisa si hay inmuebles existentes que cumplan con los filtros que el
+    * usuario seleccionó 
     */
+
+    if (countFiltered[0][0].total > 0) {
+        resultsExist = true;
+    };
 
     const pagina = req.query.pagina ? Number(req.query.pagina) : 1;
-    if (pagina>numeroPaginas && numeroPaginas != 0) {
-        res.redirect('/catalogo/search?pagina='+encodeURIComponent(numeroPaginas));
-    } else if (pagina<1) {
-        res.redirect('/catalogo/search?pagina='+encodeURIComponent('1'));
-    } else if (numeroPaginas == 0){
-        res.redirect('/catalogo/search?pagina='+encodeURIComponent('1'));
-    }
 
-    /** 
-    * Determina los límites para saber qué mostrar por página
+    /**
+    * Si existen inmuebles que cumplen con los filtros, genera la paginación
+    * correspondiente y construye los límites en la query para iterar entre
+    * páginas
     */
+
+    if (resultsExist == true) {
+        /**
+        * Obtiene la cantidad de resultados por página, en este caso es
+        * de 1 para probar la paginación 
+        */
+
+        resultadosPorPagina = 1;
+
+        /** 
+        * Establece la cantidad de resultados por pagina
+        */
+        
+        numeroResultados = countFiltered[0][0].total;
+        console.log("numero de pags" + numeroResultados)
+        numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
+
+        /** 
+        * Solicita la cantidad de resultados por pagina 
+        */
+        
+        if (pagina > numeroPaginas) {
+            res.redirect('/catalogo/search?pagina='+encodeURIComponent(numeroPaginas));
+        } else if (pagina < 1) {
+            res.redirect('/catalogo/search?pagina='+encodeURIComponent('1'));
+        };
+
+        /** 
+        * Determina los límites para saber qué mostrar por página
+        */
     
-    const limiteInferior = (pagina-1)*resultadosPorPagina;
-    var limSuperior = resultadosPorPagina.toString();
-    var limInferior = limiteInferior.toString();
-    var limits = ' LIMIT ' + limInferior + ',' + limSuperior;
-    //console.log("límites " + limits)
+        const limiteInferior = (pagina-1)*resultadosPorPagina;
+        var limSuperior = resultadosPorPagina.toString();
+        var limInferior = limiteInferior.toString();
+        var limits = ' LIMIT ' + limInferior + ',' + limSuperior;
+        
+        /** 
+        * Si hay parámetros de búsqueda existentes, sigue utilizándolos en las
+        * páginas 
+        */
 
-    if (req.session.searchParams != null) {
-        //console.log("parametros de búsqueda: " + req.session.searchParams)
-        //console.log(req.session.searchValues)
-        var builtQuery = req.session.searchParams;
-    } else {
-        var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where + isActive;
-    }
+        if (req.session.searchParams != null) {
+            //console.log("parametros de búsqueda: " + req.session.searchParams)
+            //console.log(req.session.searchValues)
+            var builtQuery = req.session.searchParams;
+        } else {
+            var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where + isActive;
+        }
 
-    var builtQueryLimits = builtQuery + limits;
+        builtQueryLimits = builtQuery + limits;
 
-    console.log(builtQuery);
-    console.log(conditions.values)
-    //console.log(countFiltered[0][0].total)
+        console.log(builtQuery);
+        console.log(conditions.values)
+        //console.log(countFiltered[0][0].total)
+    };
 
     /** 
     * Construye la lista de inmuebles filtrados con sus imágenes
-    * respectivas
+    * respectivas sí y sólo sí hay inmuebles existentes
     */
 
-    const inmuebles = await SearchPage.inmueblesFiltrados(builtQueryLimits, conditions.values);
-    //console.log(inmuebles)
-    for (let i=0; i < inmuebles.length; i++) {
-        const imgId = await SearchPage.idFotoPortada((inmuebles[i].idInmueble.toString()));
-        const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
-        const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
-        inmuebles[i].img = imgSrcFilename;
-    }
+    var inmuebles;
+    if (resultsExist == true) {
+        inmuebles = await SearchPage.inmueblesFiltrados(builtQueryLimits, conditions.values);
+        for (let i=0; i < inmuebles.length; i++) {
+            const imgId = await SearchPage.idFotoPortada((inmuebles[i].idInmueble.toString()));
+            const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
+            const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
+            inmuebles[i].img = imgSrcFilename;
+        }
+    };
 
     /**
     * Construye la paginación para la vista searchPageFiltrada.ejs 
@@ -378,16 +490,28 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     /** 
     * Mustra la vista searchPageFiltrada.ejs con la información respectiva
     * para mostrar los inmuebles que cumplen con la búsqueda, los datos para
-    * la paginación y las variables de sesión de isLogged y el idRol
+    * la paginación y las variables de sesión de isLogged y el idRol, en caso
+    * de que no existan inmuebles con las características que se buscaron,
+    * muestra la vista searchPageVacia.ejs
     */
 
-    res.render('searchPageFiltrada', {
-        inmuebles: inmuebles,
-        pagina: pagina,
-        iterador: iterador,
-        linkFinal: linkFinal,
-        numeroPaginas: numeroPaginas,
-        isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
-    }); 
+    console.log(resultsExist)
+    if (resultsExist == true) {
+        res.render('searchPageFiltrada', {
+            inmuebles: inmuebles,
+            pagina: pagina,
+            resultsExist: resultsExist,
+            iterador: iterador,
+            linkFinal: linkFinal,
+            numeroPaginas: numeroPaginas,
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol
+        }); 
+    } else {
+        res.render('searchPageVacia', {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol
+        })
+    };
+    
 }

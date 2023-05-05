@@ -127,48 +127,8 @@
         </form>
 
     <!-- Desplegar elementos del catalogo -->
-    
-        <% if(inmuebles.length > 0){ %>
-            <% inmuebles.forEach(inmueble=>{ %>
-                <!-- 1=casa; 2=depto; 3=local; 4=terreno; 5=bodega; 6=oficina; 7=otro -->
-                <% if(inmueble.idCategoria == 1 || inmueble.idCategoria == 2){ %>
-                    <%- include('tarjetasCatalogo/tarjetaCasa', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 3){ %>
-                    <%- include('tarjetasCatalogo/tarjetaLocal', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 4){ %>
-                    <%- include('tarjetasCatalogo/tarjetaTerreno', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 5){ %>
-                    <%- include('tarjetasCatalogo/tarjetaBodega', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 6){ %>
-                    <%- include('tarjetasCatalogo/tarjetaOficina', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 7){ %>
-                    <%- include('tarjetasCatalogo/tarjetaOtro', {data: inmueble}) %>
-                <%}%>
-            <% }); %>
-        <% } else { %>
-            <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-        <% } %>
-
-        <% if (resultsExist == true) { %>
-            <div class="break"></div>
-            <!--Display the links to the pages-->
-            <div class="flex justify-center">
-                <div>
-                    <% if(pagina > 1) { %> 
-                            <a href="search?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
-                    <% } %>
-                    <% for(let i = iterador; i <= linkFinal; i++) { %>
-                        <% if(i === pagina) { %>
-                            <b> <%=i%> </b>
-                        <% } else { %>
-                            <a href="search?pagina=<%=i%>"> <%=i%> </a>
-                        <% } %> 
-                    <% } %>
-                    <% if(pagina < numeroPaginas) { %> <a href="search?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
-                </div>
-            </div>
-            </div>
-        <% }; %>
+    <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
+    <br>
     <!-- Footer Section -->
     <%- include("partials/footer") %>
 
