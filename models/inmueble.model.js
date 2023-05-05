@@ -29,6 +29,34 @@ module.exports = class Inmueble {
   }
 
   /*
+  Devuelve el estado del trámite activo para un inmueble determinado.
+  @param idInmueble El identificador del inmueble para el cual se quiere consultar el trámite activo.
+  @return Un objeto con el estado del trámite activo para el inmueble especificado.
+  @throws SQLException Si hay un error al ejecutar la consulta en la base de datos.
+  */
+  static getActivoTramite(idInmueble) {
+    return db
+      .execute("SELECT activoTramite FROM tramite WHERE idInmueble=?", [idInmueble])
+      .then(([rows, data]) => {
+        return rows;
+      })
+      .catch((error) => {
+        console.log(error);
+        return 0;
+      });
+  }
+
+  /*
+  Elimina una propiedad de la base de datos.
+  @param activoInmueble El estado de la propiedad que se desea eliminar.
+  @param idInmueble El identificador de la propiedad que se desea eliminar.
+  @throws SQLException Si hay un error al ejecutar la actualización en la base de datos.
+  */
+  static eliminarPropiedad(activoInmueble, idInmueble) {
+    return db
+    .execute("UPDATE inmueble SET activoInmueble=? WHERE idInmueble=?", [activoInmueble, idInmueble]);
+  }
+  /*
 
 Actualiza un inmueble existente en la base de datos.
 @static
@@ -41,6 +69,7 @@ Actualiza un inmueble existente en la base de datos.
 @param {number} idInmueble - El id del inmueble a actualizar.
 @returns {Promise} Una promesa que se resuelve a un objeto que indica si la actualizacion fue exitosa o no.
 */
+
 
   static updateOne(
     titulo,

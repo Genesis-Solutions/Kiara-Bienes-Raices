@@ -15,6 +15,33 @@
 
 <body style="font-family: 'Montserrat', sans-serif">
 
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- Enlazar con el archivo de DataTables JS -->
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+
+    <script crossorigin="anonymous" type="text/javascript"
+        src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
     <!-- NavBar Section -->
 
     <div class="bg-white">
@@ -27,11 +54,20 @@
         <!-- Details Section -->
         <div class="p-12 bg-sky-950 text-white space-y-6">
             <% if (idRol == 1 || listaAttributesInmueble.idAgenteAsignado == idUsuario) { %>
-                <a href="/inmueble/editarInmueble/<%=inmueble.idInmueble%>" class="flex flex-col items-end justify-center">
-                    <div class="bg-white text-sky-950 py-2 px-2 flex items-center justify-center rounded-full w-auto h-8 hover:scale-105 transition duration-150">
-                        <h3>Editar Propiedad</h3><i class="fa-solid fa-pencil px-2"></i>
-                    </div>
-                </a>
+                <div class="flex flex-row space-x-5 justify-end">
+                    <a href="/inmueble/editarInmueble/<%=inmueble.idInmueble%>" class="flex flex-col items-end justify-center">
+                        <div class="bg-white text-sky-950 py-2 px-2 flex items-center justify-center rounded-full w-auto h-8 text-sm md:text-base hover:scale-105 transition duration-150">
+                            <h3>Editar Propiedad</h3><i class="fa-solid fa-pencil px-2"></i>
+                        </div>
+                    </a>
+                    <% if (inmueble.activoInmueble == 1 && tramite == 0) { %>
+                        <button id="btnEliminarPropiedad" class="btnEliminarPropiedad flex flex-col items-end justify-center">
+                            <div class="bg-red-500 text-white py-2 px-2 flex items-center justify-center rounded-full w-auto text-sm md:text-base h-8 hover:scale-105 transition duration-150">
+                                Eliminar Propiedad<i class="fa-solid fa-trash px-2"></i>
+                            </div>
+                        </button>
+                    <% } %>
+                </div>
             <% } %>
             
             <div class="md:hidden grid grid-cols-2">
@@ -168,6 +204,7 @@
             </h2>
             <div class="flex flex-col md:grid md:grid-cols-2 space-y-3 md:space-x-8">
                 <div class="order-last md:order-first pt-3">
+
                     <% const link = inmueble.linkGoogleMaps %>
                     <% let startIndex = link.indexOf('src="') + 5;
                     let endIndex = link.indexOf('>', startIndex) + 1;
@@ -183,11 +220,36 @@
         </div>
     <% } %>
 
-    <!-- Footer Section -->
+        <%- include("partials/footer") %>
 
-    <%- include("partials/footer") %>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+        <script type="text/javascript">
+            const btnEliminar = document.getElementById('btnEliminarPropiedad');
+            const idInmueble = document.getElementById('idInmueble').innerText;
+            btnEliminar.addEventListener('click', (event) => {
+            
+                Swal.fire({
+                    title: '¿Estas seguro que deseas eliminar esta propiedad ?',
+                    showCancelButton: true,
+                    cancelButtonText: "Cancelar",
+                    confirmButtonColor: "#212121",
+                    confirmButtonText: `Confirmar`
+                }).then((result) => {
+                    console.log("Esete es el console log idInmueble " + idInmueble);
+                    //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/inmueble/eliminarPropiedad/' + idInmueble,
+                            method: 'put'
+                        })
+                        console.log("ELIMINADA EXITOSAMENTE")
+                        Swal.fire('Propiedad Eliminada!')
+                        window.location = "/";
+                    }
+                })
+            });
+            
+        </script>
+    <% } %>
 </body>
 </html>

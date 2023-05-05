@@ -8,7 +8,17 @@ const bucket = require("../util/awsBucket.js");
 exports.getInmueble = async (req, res, next) => {
     //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
+    // activoInmueble ya viene en inmueble
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
+    //console.log("Este es el id del inmueble ", req.params.idInmueble);
+    const aTramite = await Inmueble.getActivoTramite(req.params.idInmueble);
+    let tramite = 0;
+    if (aTramite.length <= 0 ){
+        tramite = 0;
+    } else {
+        tramite = aTramite[0].activoTramite;
+    }
+    //console.log("Este es el activo tramite 2",tramite);
     const agente = Inmueble.getInfoAgente(idAgente);
     const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
     //Imagenes
@@ -29,11 +39,20 @@ exports.getInmueble = async (req, res, next) => {
         inmuebles : inmueble,
         agente : agente,
         isLogged: req.session.isLoggedIn,
-        idUsuario: req.session.idUsuario,
         idRol: req.session.idRol,
+        idInmueble: req.params.idInmueble,
+        tramite: tramite
+        idUsuario: req.session.idUsuario,
         listaAttributesInmueble: listaAttributesInmueble[0]
     })
 };
+
+exports.eliminarPropiedad = (req, res, next) => {
+    console.log("Adentro de controlador eliminar");
+    const idInmueble = req.params.idInmueble;
+    const activoInmueble = 0;
+    Inmueble.eliminarPropiedad(activoInmueble, idInmueble);
+}
 
 /*
 * Obtener la imagen del bucket.

@@ -10,6 +10,9 @@ const inmuebleController = require('../controllers/inmueble.controller.js');
 router.get('/get_bucket_img',inmuebleController.getImgFromBucket);
 router.get('/:idInmueble', inmuebleController.getInmueble);
 
+//Dar de Baja Inmueble
+router.put('/eliminarPropiedad/:idInmueble', inmuebleController.eliminarPropiedad);
+
 //Modificar Inmueble
 router.get('/editarInmueble/:idInmueble', isLogged, agenteAdminAuth, inmuebleController.getEditarInmueble);
 router.post('/editarInmueble/casaDepartamento/:idInmueble', isLogged, agenteAdminAuth, inmuebleController.updateBodyCasa);
