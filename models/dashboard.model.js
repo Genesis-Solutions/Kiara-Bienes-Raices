@@ -6,15 +6,68 @@ const bcrypt = require("bcryptjs");
 * Modelo que contiene todos las consultas a la base de datos necesarias para el despliegue de la lista de inmuebles.
 */
 module.exports = class Dashboard {
-  /*
-   * Obtener la lista total de usuarios del sistema para la lista.
-   * @return JSON -> Lista de usuarios
-   */
-  static fetchAllUsers() {
-    return db.execute(
-      'SELECT U.idUsuario,U.nombreUsuario,U.apellidosUsuario,R.nombreRol FROM usuario U JOIN rol R ON U.idRol = R.idRol WHERE U.activoUsuario=1'
-    )
+
+    /*
+     * Obtener la lista total de usuarios del sistema para la lista.
+     * @return JSON -> Lista de usuarios
+     */
+    static fetchAllUsers() {
+        return db.execute(
+            'SELECT U.idUsuario,U.nombreUsuario,U.apellidosUsuario,R.nombreRol FROM usuario U JOIN rol R ON U.idRol = R.idRol WHERE U.activoUsuario=1'
+        )
+    }
+     /*
+     * Obtener la lista total de propiedades del sistema para la lista.
+     * @return JSON -> Lista de propiedades
+     */
+        static fetchAllPropiedades() {
+          return db.execute(
+              'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador'
+          )
+      }
+    
+ /*
+ * Actualizar rol del usuario en cuestión.
+ * @param idUsuario: String -> Concatenación del id del usuario y del rol que este futuramente tendrá
+ */
+    static updateUserRol(idUsuario,idRol) {
+        //Separación del id en dos variables para ejecutar la query.
+        return db.execute(
+            'UPDATE usuario SET idRol=? WHERE idUsuario=?', [idRol, idUsuario]
+        );
+    }
+    /*
+ * Actualizar encargado de la propiedad elegida.
+ * @param idAgente: String -> Agente escogido para la propiedad.
+ * @param idPropiedad: String -> Propiedad escogida para actualizar su encargado.
+ */
+    static updateEncargadoPropiedad(idAgente, idPropiedad) {
+      return db.execute(
+          'UPDATE inmueble SET idAgenteAsignado=? WHERE idInmueble=?', [idAgente, idPropiedad]
+      );
   }
+    
+    /*
+     * Borrado del usuario solicitado.
+     * @param idUsuario: String -> Id del usuario que será eliminado
+     */
+    static deleteUser(idUsuario) {
+        return db.execute(
+            'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?', [idUsuario]
+        )
+    }
+
+ /**
+ * Obtención de agentes disponibles
+ */
+    static getAgentes(){
+      return db.execute(
+          'SELECT U.idUsuario, U.nombreUsuario as nombresAgente, U.apellidosUsuario as apellidosAgente FROM usuario U where U.idRol=1 OR U.idRol=2'
+      ).then(([rows, fielData]) => {
+          return rows
+      })
+  }
+  
   /*
    * Obtener la lista total de roles del sistema para la lista.
    * @return JSON -> Lista de roles
@@ -34,27 +87,6 @@ module.exports = class Dashboard {
     ]);
   }
 
-  /*
-* Actualizar rol del usuario en cuestión.
-* @param idUsuario: String -> Concatenación del id del usuario y del rol que este futuramente tendrá
-*/
-  static UpdateUserRol(idUsuario) {
-    //Separación del id en dos variables para ejecutar la query.
-    var idRol = idUsuario[1]
-    var idUs = idUsuario[0]
-    return db.execute(
-      'UPDATE usuario SET idRol=? WHERE idUsuario=?', [idRol, idUs]
-    );
-  }
-  /*
-   * Borrado del usuario solicitado.
-   * @param idUsuario: String -> Id del usuario que será eliminado
-   */
-  static DeleteUser(idUsuario) {
-    return db.execute(
-      'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?', [idUsuario]
-    )
-  }
   /*
    * Revisión de cantidad de inmuebles asignados 
    * @param idUsuario: String -> Id del usuario que será revisado
@@ -102,6 +134,7 @@ module.exports = class Dashboard {
 * @param idRolString: String -> Id del rol del usuario
 * @param idFotoString: String -> Id de la foto del usuario
 */
+
 
   static adminInsertUser(
     nombreUsuario,
