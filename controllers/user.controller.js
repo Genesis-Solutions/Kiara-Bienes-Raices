@@ -137,3 +137,12 @@ exports.register = (req, res, next) => {
       console.log(error);
     });
 };
+
+// -- POLITICAS -- //
+// - Getter de la vista Politicas
+exports.getPoliticas = (req, res, next) => {
+  res.render('politicas', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
