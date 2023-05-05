@@ -1,4 +1,17 @@
-<%- include("partials/head") %>
+<%- include("partials/headMeta") %>
+
+    <!-- Datos del Metadata -->
+    <meta name="description" content="Encuentra ésta y muchas otras propiedades en Kiara Bienes Raíces." />
+
+    <% for (let inmueble of inmuebles) { %>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="https://compracasa.com.mx/" />
+        <meta name="twitter:title" content="<%- inmueble.nombreInmueble %>" />
+        <meta name="twitter:description" content="<%- inmueble.descInmueble %>" />
+        <meta name="twitter:image" content="<%- "s3://kiarabienesraices/"+fotoPortada %>" />
+    <% } %>
+
+</head>
 
 <body style="font-family: 'Montserrat', sans-serif">
 

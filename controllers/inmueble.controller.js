@@ -22,6 +22,8 @@ exports.getInmueble = async (req, res, next) => {
     }
     //console.log(arregloFotos);
     res.render('inmueble', {
+        tituloInmueble: inmueble.nombreInmueble,
+        fotoPortada: arregloFotos[0],
         fotos: arregloFotos,
         inmuebles : inmueble,
         agente : agente,
