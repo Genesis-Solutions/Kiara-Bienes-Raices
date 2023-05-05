@@ -6,6 +6,7 @@ const userController = require("../controllers/user.controller");
 
 // Rutas
 router.get("/", homeController.root);
+//router.get('/', homeController.getAltaInmueble);
 router.get('/login', userController.getLogin);
 router.post('/login', userController.login);
 router.get('/logout', userController.logOut);

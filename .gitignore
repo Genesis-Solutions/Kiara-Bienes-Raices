@@ -4,6 +4,10 @@ node_modules/
 #Credenciales de AWS
 util/awsBucket.js
 
+
+#package-lock.json
+package-lock.json
+
 # Generated files
 *.log
 *.pid
