@@ -138,6 +138,16 @@ exports.register = (req, res, next) => {
     });
 };
 
+
+// -- CONTACTO -- //
+// - Getter de la vista Contacto
+exports.getContacto = (req, res, next) => {
+  res.render('contacto', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
+
 // -- POLITICAS -- //
 // - Getter de la vista Politicas
 exports.getPoliticas = (req, res, next) => {
@@ -151,6 +161,15 @@ exports.getPoliticas = (req, res, next) => {
 // - Getter de la vista Nosotros
 exports.getNosotros = (req, res, next) => {
   res.render('nosotros', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
+
+// -- SERVICIOS -- //
+// - Getter de la vista Servicios
+exports.getServicios = (req, res, next) => {
+  res.render('servicios', {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol
   });

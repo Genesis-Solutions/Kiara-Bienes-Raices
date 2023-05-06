@@ -1,8 +1,8 @@
 <!-- List Users -->
 <main class="text-center mb-20 mx-32">
     <!-- Inicio de la DataTable lista usuarios -->
-    <div class="table-responsive text-center">
-        <table class="table table-bordered text-center " id="dataTableUsuarios" width="100%" cellspacing="0">
+    <div class="table-responsive text-center cell-border">
+        <table class="table table-bordered text-center" id="dataTableUsuarios" width="100%" cellspacing="0">
         </table>
     </div>
 
@@ -65,7 +65,8 @@
             var tfooter = ""
             thead += '<thead class="bg-gray-300 text-gray-600">'
             thead += '<tr>'
-            thead += '<th>Id</th>'
+            thead +=  '<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTableUsuarios" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" style="width: 71px;" aria-sort="ascending">Id</th>'
+            // thead += '<th>Id</th>'
             thead += '<th>Nombre</th>'
             thead += '<th>Apellidos</th>'
             thead += '<th>Rol</th>'
@@ -149,9 +150,11 @@
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
-            var contador = 0;
+            nombreRol = id = parseInt(fila.find('td:eq(3)').text());
             const { value: eleccion } = Swal.fire({
-                //Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
+                /*
+                *Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
+                */
                 title: 'Selecciona el Rol:',
                 input: 'select',
                 inputOptions: {
@@ -163,7 +166,11 @@
                 },
                 showCancelButton: true,
             }).then((result) => {
-                if (result.value>= 1) {
+                /*
+                * Comprobación que evita que un usuario cambie de rol erróneamente con procesos pendientes, perdiendo los permisos para seguir sus procesos adecuadamente.
+                */
+                if (result.value>=1){
+                if ((result.value==1)||(result.value==2 && (nombreRol=='agente'||nombreRol=='usuario'))||(result.value==3 && nombreRol=='usuario')) {
                     $.ajax({
                         url: '/dashboard/lista/actualizar/' + id + '/'+result.value,
                         method: 'put',
@@ -171,7 +178,24 @@
                     Swal.fire('¡El rol ha sido modificado!')
                     recargarTablaUsuarios();
                 }
-
+                else{
+                    $.ajax({
+                        url: '/dashboard/comprobar/actualizar/' + id + '/'+result.value,
+                        method: 'put',
+                        success: function (choice) {
+                            if (choice.comprobacionCambio != true) {
+                                Swal.fire('¡El rol ha sido modificado!')
+                                recargarTablaUsuarios();
+                            } else {
+                                Swal.fire('El usuario tiene procesos pendientes de concluir que no pueden ser heredados al rol elegido. Reasignelos o complételos para continuar.')
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+                    });
+                    }
+            }
             })
 
         });
@@ -183,19 +207,23 @@
         $(document).on("click", ".btnEliminarUsuario", function () {
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
-            //Modal de confirmación.
+            /*
+            *Modal de confirmación.
+            */
             Swal.fire({
                 title: '¿Confirma la eliminación del usuario?',
                 showCancelButton: true,
                 confirmButtonText: `Confirmar`,
             }).then((result) => {
-                //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                /*
+                * Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                */
                 if (result.isConfirmed) {
                     $.ajax({
                         url: '/dashboard/lista/eliminar/' + id,
                         method: 'put',
                         success: function (choice) {
-                            if (choice.comprobacionEliminado == false) {
+                            if (choice.comprobacionEliminado != true) {
                                 Swal.fire('Usuario Eliminado!')
                                 recargarTablaUsuarios();
                             } else {

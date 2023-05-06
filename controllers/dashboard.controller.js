@@ -9,7 +9,7 @@ const { storage } = require('../util/awsMediaMulter.util');
 /*
  * Renderización del dashboard tras realizar la validación de rol de usuario.
  */
-exports.getDashboard = (req,res,next) => {
+exports.getDashboard = (req, res, next) => {
     // Renderizar la vista de la lista de Usuarios
     res.render("listUsers", {
         isLogged: req.session.isLoggedIn,
@@ -20,7 +20,7 @@ exports.getDashboard = (req,res,next) => {
 /*
  * Renderización de la lista de propiedades
  */
-exports.getDashboardProps = (req,res,next) => {
+exports.getDashboardProps = (req, res, next) => {
     // Renderizar la vista de la lista de Propiedades
     res.render("dashboardListaPropiedades", {
         isLogged: req.session.isLoggedIn,
@@ -31,7 +31,7 @@ exports.getDashboardProps = (req,res,next) => {
 /*
  * Llamada de query que regresa un json con los datos de los usuarios del sistema.
  */
-exports.getUsers = async(req,res,next) => {
+exports.getUsers = async (req, res, next) => {
     const dataUsers = await Dashboard.fetchAllUsers();
     res.status(200).json({ code: 200, code: "Ok", data: dataUsers[0] });
 }
@@ -39,7 +39,7 @@ exports.getUsers = async(req,res,next) => {
 /*
  * Llamada de query que regresa un json con los datos de las propiedades del sistema.
  */
-exports.getPropiedades = async(req,res,next) => {
+exports.getPropiedades = async (req, res, next) => {
     const dataProps = await Dashboard.fetchAllPropiedades();
     res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
 }
@@ -54,7 +54,7 @@ exports.getPropiedades = async(req,res,next) => {
  * @returns {Promise<void>} - Una promesa que se resuelve cuando se completa el renderizado de la vista de registro de usuario administrador.
  */
 
-exports.getAdminUser = async(req,res,next) => {
+exports.getAdminUser = async (req, res, next) => {
     /*
     *Obtiene la lista de roles a través de un método asíncrono del modelo Dashboard.
     */
@@ -77,8 +77,8 @@ exports.getAdminUser = async(req,res,next) => {
  * Llamada de query que actualiza el rol del usuario
  * @param id: String -> Id del usuario que será actualizado
  */
-exports.updateRol = async(req,res,next) => {
-    await Dashboard.updateUserRol(req.params.idUsuario,req.params.idRol);
+exports.updateRol = async (req, res, next) => {
+    await Dashboard.updateUserRol(req.params.idUsuario, req.params.idRol);
 }
 
 /*
@@ -86,15 +86,15 @@ exports.updateRol = async(req,res,next) => {
  * @param idAgente: String -> Id del nuevo encargado de la propiedad 
  * @param idPropiedad: String -> Id de la propiedad a modificar
  */
-exports.updateEncargado = async(req,res,next) => {
-    await Dashboard.updateEncargadoPropiedad(req.params.idAgente,req.params.idPropiedad);
+exports.updateEncargado = async (req, res, next) => {
+    await Dashboard.updateEncargadoPropiedad(req.params.idAgente, req.params.idPropiedad);
 }
 
 /*
  * Comprobación de trámites activos del usuario para posteriormente proceder a su eliminación
  * @param id: String -> Id del usuario que será checado y eliminado si es pertinente.
  */
-exports.deleteUser = async(req,res,next) => {
+exports.deleteUser = async (req, res, next) => {
     /*
     * Triple chequeo de posibles inmuebles, trámite de cliente y trámite de arrendador posibles en el usuario.
     */
@@ -117,6 +117,36 @@ exports.deleteUser = async(req,res,next) => {
 }
 
 /*
+ * Comprobación de trámites activos del usuario para posteriormente proceder a su cambio de rol
+ * @param idUsuario: String -> Id del usuario que será checado y su rol cambiado si es pertinente.
+ * @param idRol: String -> Rol del usuario que posteriormente será aplicado
+ */
+exports.comprobarUpdateRol = async (req, res, next) => {
+    /*
+    * Triple chequeo de posibles inmuebles, trámite de cliente y trámite de arrendador posibles en el usuario.
+    */
+    const primeraComprobacion = await Dashboard.checkUser(req.params.idUsuario);
+    const segundaComprobacion = await Dashboard.checkUser2(req.params.idUsuario);
+    const terceraComprobacion = await Dashboard.checkUser3(req.params.idUsuario);
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion;
+    /*
+    * Si los trámites activos son 0, cambiar rol de usuario; si esto no es así, regresar un json que avise la existencia de procesos.
+    */
+    if (tramites_activos == 0) {
+        await Dashboard.updateUserRol(req.params.idUsuario, req.params.idRol);
+    }
+    else {
+        res.status(200).json({
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            comprobacionCambio: true
+        });
+    }
+
+}
+
+
+/*
 Retorna un array con los agentes registrados en el sistema.
 @param {Object} req - Objeto de solicitud de Express.
 @param {Object} res - Objeto de respuesta de Express.
@@ -124,16 +154,19 @@ Retorna un array con los agentes registrados en el sistema.
 @returns {Object} - Objeto JSON con los agentes registrados y los estados de inicio de sesión e ID de rol.
 @throws {Error} - Error de servidor.
 */
-exports.getAgentes = async(req,res,next) => {
-const agentesArray = await Dashboard.getAgentes();
-    res.status(200).json({
-        isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol,
-        agentesArray: agentesArray
-    });    
+exports.getAgentes = async (req, res, next) => {
+    const agentesArray = await Dashboard.getAgentes();
+    exports.getAgentes = async (req, res, next) => {
+        const agentesArray = await Dashboard.getAgentes()
+        res.status(200).json({
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            agentesArray: agentesArray
+        });
+    }
 }
 
-exports.postAdminUser = (req,res,next) => {
+exports.postAdminUser = (req, res, next) => {
     const {
         nombreUsuario,
         apellidosUsuario,
@@ -222,7 +255,7 @@ Renderiza la vista de la lista de propiedades del panel de administración.
 @param {Function} next - Función middleware para pasar al siguiente controlador.
 @throws {Error} Si la sesión no está iniciada, el usuario no tiene autorización para acceder.
 */
-exports.getPropiedades = (req,res,next) => {
+exports.getPropiedades = (req, res, next) => {
     if (req.session.isLoggedIn == true) {
         isLogged = true;
         res.render("dashboardListaPropiedades", {
@@ -246,7 +279,7 @@ Renderiza la vista del registro de un nuevo inmueble en el sistema.
 Esta función comprueba si el usuario tiene permisos de administrador para acceder a la página de registro de un nuevo inmueble.
 Si el usuario tiene los permisos necesarios, muestra la página de registro de un nuevo inmueble con una lista de todas las categorías disponibles.
 */
-exports.getRegisterpage = async(req,res,next) => {
+exports.getRegisterpage = async (req, res, next) => {
     //Revisar que tenga el rol de administrador
     if (req.session.idRol != 1 && req.session.idRol != 2) {
         return res.status(403).send("No tiene autorizado acceder a esta página")
@@ -260,7 +293,7 @@ exports.getRegisterpage = async(req,res,next) => {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol
         });
-    } 
+    }
 }
 
 /*
@@ -272,7 +305,7 @@ Verifica que el usuario tenga el rol de administrador o agente.
 @throws {Error} Si el usuario no tiene autorización para acceder a la página.
 @returns {void}
 */
-exports.getCategoria = async(req,res,next) => {
+exports.getCategoria = async (req, res, next) => {
     //Revisar que tenga el rol de administrador
     if (req.session.idRol != 1 && req.session.idRol != 2) {
         return res.status(403).send("No tiene autorizado acceder a esta página")
@@ -284,7 +317,7 @@ exports.getCategoria = async(req,res,next) => {
         const idUsuario = req.session.idUsuario;
         //console.log("Categoria del inmueble creado",idCategoria);
         //console.log("Id del usuario",idCategoria);
-        const inmueble = await Dashboard.insertDisabledRegister(idCategoria.toString(),idUsuario.toString());
+        const inmueble = await Dashboard.insertDisabledRegister(idCategoria.toString(), idUsuario.toString());
         const idInmueble = await Dashboard.getLastDisabledRegisterID();
         //console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
         const listaAgentes = await Dashboard.fetchAgents();
@@ -303,7 +336,7 @@ exports.getCategoria = async(req,res,next) => {
             listaTipoMovimientos: listaTipoMovimientos[0],
             idUsuario: idUsuario
         });
-    } 
+    }
 };
 
 /*
@@ -314,11 +347,11 @@ Elimina un inmueble del dashboard por su ID.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede eliminar el inmueble.
 */
-exports.deleteInmueble = (req,res,next) => {
+exports.deleteInmueble = (req, res, next) => {
     const idInmueble = req.params.idInmueble;
     Dashboard.deleteInmuebleById(idInmueble)
         .then(([rows, fieldData]) => {
-            res.status(200).json({code: 200, msg:"Ok"});
+            res.status(200).json({ code: 200, msg: "Ok" });
         })
         .catch(error => { console.log(error) });
 };
@@ -331,20 +364,20 @@ Agrega una o varias fotos al inmueble especificado en la solicitud HTTP.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede registrar la imagen del inmueble.
 */
-exports.setPhotos = (req,res,next) => {
-    var upload = storage.array('media',25);
-    upload(req, res, function(err) {
+exports.setPhotos = (req, res, next) => {
+    var upload = storage.array('media', 25);
+    upload(req, res, function (err) {
         if (err) {
             console.log(err);
         } else {
-            req.files.forEach(function(file) {
+            req.files.forEach(function (file) {
                 const idInmueble = req.params.inmueble;
                 const mediaName = file.key;
-                Dashboard.registerImage(idInmueble,mediaName);
+                Dashboard.registerImage(idInmueble, mediaName);
             });
         }
     });
-    res.status(200).json({code: 200, msg:"Ok"});
+    res.status(200).json({ code: 200, msg: "Ok" });
 };
 
 /*
@@ -356,7 +389,7 @@ Los inmuebles de tipo "Casa" y "Departamento" almacenan los mismos datos.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
 */
-exports.updateBodyCasa = (req,res,next) => {
+exports.updateBodyCasa = (req, res, next) => {
     //console.log("Entrando a la ruta update body casa");
     /*
     *Elementos obligatorios del formulario
@@ -453,7 +486,7 @@ exports.updateBodyCasa = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"});
+    res.status(200).json({ code: 200, msg: "Ok" });
 };
 
 /*
@@ -464,7 +497,7 @@ Actualiza los datos de un inmueble de tipo "Local" en el dashboard.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
 */
-exports.updateBodyLocal = (req,res,next) => {
+exports.updateBodyLocal = (req, res, next) => {
     //console.log("Entrando a la ruta update body local");
     const {
         titulo,
@@ -546,7 +579,7 @@ exports.updateBodyLocal = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
 /*
@@ -557,7 +590,7 @@ Actualiza los datos de un inmueble de tipo "Terreno" en el dashboard.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
 */
-exports.updateBodyTerreno = (req,res,next) => {
+exports.updateBodyTerreno = (req, res, next) => {
     //console.log("Entrando a la ruta update body terreno");
     const {
         titulo,
@@ -626,7 +659,7 @@ exports.updateBodyTerreno = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
 /*
@@ -637,7 +670,7 @@ Actualiza los datos de un inmueble de tipo "Bodega" en el dashboard.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
 */
-exports.updateBodyBodega = (req,res,next) => {
+exports.updateBodyBodega = (req, res, next) => {
     //console.log("Entrando a la ruta update body bodega");
     const {
         titulo,
@@ -731,7 +764,7 @@ exports.updateBodyBodega = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
 /*
@@ -742,7 +775,7 @@ Actualiza los datos de un inmueble de tipo "Oficina" en el dashboard.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
 */
-exports.updateBodyOficina = (req,res,next) => {
+exports.updateBodyOficina = (req, res, next) => {
     //console.log("Entrando a la ruta update body oficina");
     const {
         titulo,
@@ -761,7 +794,7 @@ exports.updateBodyOficina = (req,res,next) => {
         estacionamientos,
         banios,
         desc
-    } = req.body;    
+    } = req.body;
     /*
     *Obtener el tipo de movimiento y los respectivos precios
     */
@@ -815,7 +848,7 @@ exports.updateBodyOficina = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
 
@@ -827,7 +860,7 @@ Actualiza los datos de un inmueble de tipo "Otro" en el dashboard.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
 */
-exports.updateBodyOtro = (req,res,next) => {
+exports.updateBodyOtro = (req, res, next) => {
     //console.log("Entrando a la ruta update body otro");
     const {
         titulo,
@@ -848,7 +881,7 @@ exports.updateBodyOtro = (req,res,next) => {
         desc,
         direccion,
         linkMaps
-    } = req.body;    
+    } = req.body;
     /*
     *Obtener el tipo de movimiento y los respectivos precios
     */
@@ -858,15 +891,15 @@ exports.updateBodyOtro = (req,res,next) => {
     let precioVenta = 0;
     let precioRenta = 0;
     if (venta === 1 && renta === 1) {
-        tipoMovimiento = 3
+        tipoMovimiento = 3;
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
-        tipoMovimiento = 1
+        tipoMovimiento = 1;
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
     } else if (venta === 0 && renta === 1) {
-        tipoMovimiento = 2
+        tipoMovimiento = 2;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
@@ -902,5 +935,5 @@ exports.updateBodyOtro = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
