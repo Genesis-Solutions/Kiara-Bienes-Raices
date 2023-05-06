@@ -4,6 +4,26 @@
 
     <%- include('partials/navbar') %>
 
+    <!-- Titulo de la pagina -->
+    <!-- Cambiar dependiendo del id del tipo de inmueble -->
+    <div class="h-screen flex justify-center items-center">
+        <% if(categoria == 1){ %>
+            <h1 class="text-4xl text-center">Dando de alta una casa</h1>
+        <% } else if (categoria == 2){ %>
+            <h1 class="text-4xl text-center">Dando de alta un departamento</h1>
+        <% } else if (categoria == 3){ %>
+            <h1 class="text-4xl text-center">Dando de alta un local</h1>
+        <% } else if (categoria == 4){ %>
+            <h1 class="text-4xl text-center">Dando de alta un terreno</h1>
+        <% } else if (categoria == 5){ %>
+            <h1 class="text-4xl text-center">Dando de alta una bodega</h1>
+        <% } else if (categoria == 6){ %>
+            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+        <% } else if (categoria == 7){ %>
+            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+        <%}%>
+    </div>
+
     <!-- Pictures Form -->
     <div class="px-10 py-5 grid grid-cols-3">
         <!-- </div> -->

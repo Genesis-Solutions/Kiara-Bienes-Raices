@@ -1,7 +1,7 @@
-// Base controlador
-const path = require('path');
-
-exports.root = async (req, res, next) => {
+/**
+* Base controlador
+*/
+exports.root = async(req,res,next) => {
     var isLogged = false;
     const idUsuario = req.session.idUsuario;
     const nombreUsuario = req.session.nombreUsuario;
@@ -11,8 +11,7 @@ exports.root = async (req, res, next) => {
         isLogged = true;
         // console.log("logged = true");
         // console.log(nombreUsuario);
-        console.log("Id del rol del usuario en sesión: " + idRol);
-
+        //console.log("Id del rol del usuario en sesión: " + idRol);
         res.render('index', {
             isLogged: req.session.isLoggedIn,
             nombreUsuario: nombreUsuario,
@@ -28,9 +27,3 @@ exports.root = async (req, res, next) => {
         });
     };
 }
-
-// exports.getAltaInmueble = async(req, res) => {
-//     res.render('formularioAltaInmueble', {
-//         isLogged: req.session.isLoggedIn
-//     });
-// }

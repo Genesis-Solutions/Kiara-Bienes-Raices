@@ -1,5 +1,4 @@
 //Aqui va la conexion a la base de datos
-
 const { createPool } = require("mysql2");
 
 const pool = createPool({
