@@ -1,23 +1,13 @@
-/**
-* Base controlador
-*
-*/
+// Base controlador
+const path = require('path');
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
-
-
-/**
-* Obtiene los datos del inmueble
-*/
 
 //  Controlador para obtener la información de un inmueble y renderizar su vista
 
 
-
-exports.getInmueble = async(req,res,next) => {
-    /**
-    * Info de agente e inmueble
-    */
+exports.getInmueble = async (req, res, next) => {
+    //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     // activoInmueble ya viene en inmueble
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
@@ -31,9 +21,6 @@ exports.getInmueble = async(req,res,next) => {
     }
     //console.log("Este es el activo tramite 2",tramite);
     const agente = Inmueble.getInfoAgente(idAgente);
-    /* 
-    * Imágenes
-    */
     const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
@@ -87,15 +74,10 @@ exports.getImgFromBucket = ( req,res,next ) => {
 }
 
 exports.getEditarInmueble = async(req, res, next) => {
-    /*
-    * Info de agente e inmueble
-    */
+    //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
-    /*
-    * Imágenes
-    */
     const listaPropietarios = await Inmueble.fetchClientes();
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
@@ -123,9 +105,7 @@ exports.getEditarInmueble = async(req, res, next) => {
 //Controlador para actualizar los datos de una propiedad de tipo "Casa"
 exports.updateBodyCasa = (req,res,next) => {
     console.log("Entrando a la ruta update body casa");
-    /*
-    *Elementos obligatorios del formulario
-    */
+    //Elementos obligatorios del formulario
     const {
         titulo,
         linkVideo,
@@ -146,11 +126,10 @@ exports.updateBodyCasa = (req,res,next) => {
         idPropietario,
         linkMaps,
     } = req.body;
-    /*
-    *Obtener el tipo de movimiento y los respectivos precios
-    */
+    //Obtener el tipo de movimiento y los respectivos precios
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
+    const activoInmueble = req.body.activoInmueble ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -167,9 +146,7 @@ exports.updateBodyCasa = (req,res,next) => {
         precioRenta = req.body.precioRenta;
         precioVenta = 0;
     }
-    /*
-    *Obtener amenidades adicionales
-    */
+    //Obtener amenidades adicionales
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
@@ -228,6 +205,7 @@ exports.updateBodyCasa = (req,res,next) => {
         direccion,
         linkMaps,
         idPropietario,
+        activoInmueble,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -259,11 +237,11 @@ exports.updateBodyLocal = (req,res,next) => {
         idPropietario,
         desc
     } = req.body;
-    /*
-    *Obtener el tipo de movimiento y los respectivos precios
-    */
+    //Obtener el tipo de movimiento y los respectivos precios
+    //Obtener el tipo de movimiento y los respectivos precios
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
+    const activoInmueble = req.body.activoInmueble ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -312,6 +290,7 @@ exports.updateBodyLocal = (req,res,next) => {
         direccion,
         linkMaps,
         idPropietario,
+        activoInmueble,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -337,11 +316,10 @@ exports.updateBodyTerreno = (req,res,next) => {
         idPropietario,
         desc,
     } = req.body;
-    /*
-    *Obtener el tipo de movimiento y los respectivos precios
-    */
+    //Obtener el tipo de movimiento y los respectivos precios
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
+    const activoInmueble = req.body.activoInmueble ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -386,7 +364,8 @@ exports.updateBodyTerreno = (req,res,next) => {
         direccion,
         linkMaps,
         idPropietario,
-        idInmueble
+        activoInmueble,
+        idInmueble 
     );
     res.redirect('/inmueble/' + idInmueble);
 };
@@ -420,11 +399,10 @@ exports.updateBodyBodega = (req,res,next) => {
         idPropietario,
         desc
     } = req.body;
-    /*
-    *Obtener el tipo de movimiento y los respectivos precios
-    */
+    //Obtener el tipo de movimiento y los respectivos precios
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
+    const activoInmueble = req.body.activoInmueble ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -482,6 +460,7 @@ exports.updateBodyBodega = (req,res,next) => {
         direccion,
         linkMaps,
         idPropietario,
+        activoInmueble,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -510,11 +489,10 @@ exports.updateBodyOficina = (req,res,next) => {
         idPropietario,
         desc
     } = req.body;
-    /*
-    *Obtener el tipo de movimiento y los respectivos precios
-    */
+    //Obtener el tipo de movimiento y los respectivos precios
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
+    const activoInmueble = req.body.activoInmueble ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -558,6 +536,7 @@ exports.updateBodyOficina = (req,res,next) => {
         desc,
         linkMaps,
         idPropietario,
+        activoInmueble,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
@@ -586,11 +565,10 @@ exports.updateBodyOtra = (req,res,next) => {
         idPropietario,
         desc
     } = req.body;
-    /*
-    *Obtener el tipo de movimiento y los respectivos precios
-    */
+    //Obtener el tipo de movimiento y los respectivos precios
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
+    const activoInmueble = req.body.activoInmueble ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -634,6 +612,7 @@ exports.updateBodyOtra = (req,res,next) => {
         direccion,
         linkMaps,
         idPropietario,
+        activoInmueble,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
