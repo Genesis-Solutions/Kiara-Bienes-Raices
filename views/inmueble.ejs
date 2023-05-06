@@ -41,6 +41,8 @@
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script crossorigin="anonymous" type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
 
     <!-- NavBar Section -->
 
@@ -69,7 +71,6 @@
                     <% } %>
                 </div>
             <% } %>
-            
             <div class="md:hidden grid grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
                     <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}) %>
@@ -218,37 +219,39 @@
                 </div>
             </div>
         </div>
+        <div id="idInmueble" class="hidden"><%=inmueble.idInmueble%></div>
     <% } %>
 
     <%- include("partials/footer") %>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-    <script type="text/javascript">
-        const btnEliminar = document.getElementById('btnEliminarPropiedad');
-        const idInmueble = document.getElementById('idInmueble').innerText;
-        btnEliminar.addEventListener('click', (event) => {
-        
-            Swal.fire({
-                title: '¿Estas seguro que deseas eliminar esta propiedad ?',
-                showCancelButton: true,
-                cancelButtonText: "Cancelar",
-                confirmButtonColor: "#212121",
-                confirmButtonText: `Confirmar`
-            }).then((result) => {
-                console.log("Esete es el console log idInmueble " + idInmueble);
-                //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/inmueble/eliminarPropiedad/' + idInmueble,
-                        method: 'put'
-                    })
-                    console.log("ELIMINADA EXITOSAMENTE")
-                    Swal.fire('Propiedad Eliminada!')
-                    window.location = "/";
-                }
-            })
-        });
-        
-    </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+        <script type="text/javascript">
+            const btnEliminar = document.getElementById('btnEliminarPropiedad');
+            const idInmueble = document.getElementById('idInmueble').innerText;
+            btnEliminar.addEventListener('click', (event) => {
+            
+                Swal.fire({
+                    title: '¿Estás seguro que deseas eliminar esta propiedad?',
+                    showCancelButton: true,
+                    cancelButtonText: "Cancelar",
+                    confirmButtonColor: "#212121",
+                    confirmButtonText: `Confirmar`
+                }).then((result) => {
+                    //console.log("Esete es el console log idInmueble " + idInmueble);
+                    /**
+                    * Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                    */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/inmueble/eliminarPropiedad/' + idInmueble,
+                            method: 'put'
+                        })
+                        //console.log("ELIMINADA EXITOSAMENTE")
+                        Swal.fire('Propiedad Eliminada!')
+                        window.location = "/";
+                    }
+                })
+            });
+            
+        </script>
 </body>
 </html>
