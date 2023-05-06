@@ -53,7 +53,7 @@
         
         <!-- Details Section -->
         <div class="p-12 bg-sky-950 text-white space-y-6">
-            <% if (idRol == 1 || listaAttributesInmueble.idAgenteAsignado == idUsuario) { %>
+            <% if (idRol == 1 || listaAttributesInmueble[0].idAgenteAsignado == idUsuario) { %>
                 <div class="flex flex-row space-x-5 justify-end">
                     <a href="/inmueble/editarInmueble/<%=inmueble.idInmueble%>" class="flex flex-col items-end justify-center">
                         <div class="bg-white text-sky-950 py-2 px-2 flex items-center justify-center rounded-full w-auto h-8 text-sm md:text-base hover:scale-105 transition duration-150">
@@ -220,36 +220,35 @@
         </div>
     <% } %>
 
-        <%- include("partials/footer") %>
+    <%- include("partials/footer") %>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-        <script type="text/javascript">
-            const btnEliminar = document.getElementById('btnEliminarPropiedad');
-            const idInmueble = document.getElementById('idInmueble').innerText;
-            btnEliminar.addEventListener('click', (event) => {
-            
-                Swal.fire({
-                    title: '¿Estas seguro que deseas eliminar esta propiedad ?',
-                    showCancelButton: true,
-                    cancelButtonText: "Cancelar",
-                    confirmButtonColor: "#212121",
-                    confirmButtonText: `Confirmar`
-                }).then((result) => {
-                    console.log("Esete es el console log idInmueble " + idInmueble);
-                    //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '/inmueble/eliminarPropiedad/' + idInmueble,
-                            method: 'put'
-                        })
-                        console.log("ELIMINADA EXITOSAMENTE")
-                        Swal.fire('Propiedad Eliminada!')
-                        window.location = "/";
-                    }
-                })
-            });
-            
-        </script>
-    <% } %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <script type="text/javascript">
+        const btnEliminar = document.getElementById('btnEliminarPropiedad');
+        const idInmueble = document.getElementById('idInmueble').innerText;
+        btnEliminar.addEventListener('click', (event) => {
+        
+            Swal.fire({
+                title: '¿Estas seguro que deseas eliminar esta propiedad ?',
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                confirmButtonColor: "#212121",
+                confirmButtonText: `Confirmar`
+            }).then((result) => {
+                console.log("Esete es el console log idInmueble " + idInmueble);
+                //Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/inmueble/eliminarPropiedad/' + idInmueble,
+                        method: 'put'
+                    })
+                    console.log("ELIMINADA EXITOSAMENTE")
+                    Swal.fire('Propiedad Eliminada!')
+                    window.location = "/";
+                }
+            })
+        });
+        
+    </script>
 </body>
 </html>
