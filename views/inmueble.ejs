@@ -41,6 +41,8 @@
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script crossorigin="anonymous" type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
 
     <!-- NavBar Section -->
 
@@ -69,7 +71,6 @@
                     <% } %>
                 </div>
             <% } %>
-            
             <div class="md:hidden grid grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
                     <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}) %>
@@ -218,6 +219,7 @@
                 </div>
             </div>
         </div>
+        <div id="idInmueble" class="hidden"><%=inmueble.idInmueble%></div>
     <% } %>
 
         <%- include("partials/footer") %>
@@ -250,6 +252,5 @@
             });
             
         </script>
-    <% } %>
 </body>
 </html>
