@@ -20,6 +20,7 @@ exports.getInmueble = async (req, res, next) => {
     }
     //console.log("Este es el activo tramite 2",tramite);
     const agente = Inmueble.getInfoAgente(idAgente);
+    const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
@@ -41,6 +42,8 @@ exports.getInmueble = async (req, res, next) => {
         idRol: req.session.idRol,
         idInmueble: req.params.idInmueble,
         tramite: tramite
+        idUsuario: req.session.idUsuario,
+        listaAttributesInmueble: listaAttributesInmueble[0]
     })
 };
 
