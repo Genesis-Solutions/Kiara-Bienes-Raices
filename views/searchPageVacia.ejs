@@ -2,39 +2,30 @@
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- Heading Section -->
-
     <div>
-
         <!-- NavBar Section -->
-
         <%- include("partials/navbar") %>
     </div>
-
     <!-- Properties Section -->
-
-    <div class="p-10 lg:p-10 md:px-12 md:py-8 flex-col justify-center">
-        
-        <!-- Heading Section -->
-
+    <div class="lg:px-10 lg:py-10 md:px-12 md:py-8 flex-col justify-center">
         <div>
-            <h2 class="pt-3 pb-8 md:py-8 text-4xl font-bold lg:flex lg:justify-center text-center">
+            <h2 class="lg:py-10 md:py-8 text-4xl font-bold lg:flex lg:justify-center md:text-center">
                 ¡Busca tu lugar perfecto!
             </h2>
             <p class="text-4x1 font-normal text-center">
                 Navega a través de nuestro amplio catálogo de propiedades
             </p>
-            <hr class="h-px my-10 md:my-12 bg-gray-800 border-0">
         </div>
 
-        <!-- Search Section -->
-
         <form action="/catalogo/search" method="POST">
-
-            <!-- SearchBar Section -->
-
             <input type="hidden" name="newSearch" id="newSearch" value="1">
             <div class="py-6 flex flex-col items-center justify-center  gap-5" x-data="{ open: false }">
                 <div class="flex items-center justify-between flex-col gap-6 mt-5">
+                    <!-- <div class="flex gap-6">
+                        <input type="text" name="direccionInmueble" id="direccionInmueble" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ubicación">
+                        <button type="submit" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700"> <i class="fas fa-search px-2"></i> Search</button>
+                    </div> -->
+                    
                     <div class="flex justify-center w-3/5">
                         <select name="idCategoria" id="idCategoria" class="px-3 py-2 w-1/6 rounded-l-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700">
                             <option disabled selected>Tipo</option>
@@ -42,7 +33,7 @@
                             <option value="2">Departamento</option>
                             <option value="3">Local</option>
                             <option value="4">Terreno</option>
-                            <option value="5">Bodega</option>
+                            <option value="5">Bodego</option>
                             <option value="6">Oficina</option>
                             <option value="7">Otro</option>
                         </select>
@@ -52,7 +43,6 @@
                         </button>
                     </div>
                     
-                    <!-- Filters Section -->
 
                     <div class="space-y-0">
                         <div class=" w-full grid grid-cols-4 space-x-8">
@@ -74,7 +64,7 @@
                         <div class="grid grid-cols-4 space-x-8">
                             <div class="text-center">
                                 <select name="idTipoMovimiento" id="idTipoMovimiento" class="px-3 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                                    <option disabled selected>Operación</option>
+                                    <option disabled selected>Movimento</option>
                                     <option value="1">Venta</option>
                                     <option value="2">Renta</option>
                                     <option value="3">Venta/Renta</option>
@@ -137,56 +127,10 @@
             </div>
         </form>
 
-    <!-- Cards Section -->
-    
-        <% if(inmuebles.length > 0){ %>
-            <% inmuebles.forEach(inmueble=>{ %>
-                <!-- 1=casa; 2=depto; 3=local; 4=terreno; 5=bodega; 6=oficina; 7=otro -->
-                <% if(inmueble.idCategoria == 1 || inmueble.idCategoria == 2){ %>
-                    <%- include('tarjetasCatalogo/tarjetaCasa', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 3){ %>
-                    <%- include('tarjetasCatalogo/tarjetaLocal', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 4){ %>
-                    <%- include('tarjetasCatalogo/tarjetaTerreno', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 5){ %>
-                    <%- include('tarjetasCatalogo/tarjetaBodega', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 6){ %>
-                    <%- include('tarjetasCatalogo/tarjetaOficina', {data: inmueble}) %>
-                <% } else if (inmueble.idCategoria == 7){ %>
-                    <%- include('tarjetasCatalogo/tarjetaOtro', {data: inmueble}) %>
-                <%}%>
-            <% }); %>
-            <!--Pagination Section-->
-        <% } else { %>
-            <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-        <% } %>
-
-        <% if (resultsExist == true) { %>
-            <div class="break"></div>
-            <!--Display the links to the pages-->
-            <div class="flex justify-center">
-                <div>
-                    <% if(pagina > 1) { %> 
-                            <a href="search?pagina=<%=pagina-1%>" class="mr-2">Página Anterior </a> 
-                    <% } %>
-                    <% for(let i = iterador; i <= linkFinal; i++) { %>
-                        <% if(i === pagina) { %>
-                            <b> <%=i%> </b>
-                        <% } else { %>
-                            <a href="search?pagina=<%=i%>"> <%=i%> </a>
-                        <% } %> 
-                    <% } %>
-                    <% if(pagina < numeroPaginas) { %> <a href="search?pagina=<%=pagina+1%>"> Página Siguiente</a><% } %>
-                </div>
-        <% } else { %>
-            <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-        <% }; %>
-    
-    </div>
-    </div>
-
+    <!-- Desplegar elementos del catalogo -->
+    <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
+    <br>
     <!-- Footer Section -->
-
     <%- include("partials/footer") %>
 
     <script src="//unpkg.com/alpinejs" defer></script>

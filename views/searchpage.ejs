@@ -45,7 +45,7 @@
                             <option value="6">Oficina</option>
                             <option value="7">Otro</option>
                         </select>
-                        <input class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ingresa tu búsqueda (ej: Juriquilla)">
+                        <input type="text" name="direccionInmueble" id="direccionInmueble" class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ingresa tu búsqueda (ej: Juriquilla)">
                         <button id="dropdown-button" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-[#345087] rounded-r-lg hover:font-semibold hover:bg-gray-700" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -155,7 +155,7 @@
             <% }); %>
         <% } else { %>
             <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-        <% } %>
+        <% }; %>
 
         <!-- Pagination Section -->
 

@@ -3,13 +3,25 @@ const path = require('path');
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
 
-// Obtiene los datos del inmueble
+//  Controlador para obtener la información de un inmueble y renderizar su vista
+
 
 exports.getInmueble = async (req, res, next) => {
     //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
+    // activoInmueble ya viene en inmueble
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
+    //console.log("Este es el id del inmueble ", req.params.idInmueble);
+    const aTramite = await Inmueble.getActivoTramite(req.params.idInmueble);
+    let tramite = 0;
+    if (aTramite.length <= 0 ){
+        tramite = 0;
+    } else {
+        tramite = aTramite[0].activoTramite;
+    }
+    //console.log("Este es el activo tramite 2",tramite);
     const agente = Inmueble.getInfoAgente(idAgente);
+    const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
@@ -22,16 +34,30 @@ exports.getInmueble = async (req, res, next) => {
     }
     //console.log(arregloFotos);
     res.render('inmueble', {
+        tituloInmueble: inmueble.nombreInmueble,
+        fotoPortada: arregloFotos[0],
         fotos: arregloFotos,
         inmuebles : inmueble,
         agente : agente,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
+        idRol: req.session.idRol,
+        idInmueble: req.params.idInmueble,
+        tramite: tramite,
+        idUsuario: req.session.idUsuario,
+        listaAttributesInmueble: listaAttributesInmueble[0]
     })
 };
 
+//Controlador para eliminar una propiedad.
+exports.eliminarPropiedad = (req, res, next) => {
+    console.log("Adentro de controlador eliminar");
+    const idInmueble = req.params.idInmueble;
+    const activoInmueble = 0;
+    Inmueble.eliminarPropiedad(activoInmueble, idInmueble);
+}
+
 /*
-* Obtener la imagen del bucket.
+* Controlador para obtener la imagen del bucket.
 */
 exports.getImgFromBucket = ( req,res,next ) => {
     var img = req.query.image;
@@ -52,6 +78,7 @@ exports.getEditarInmueble = async(req, res, next) => {
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
+    const listaPropietarios = await Inmueble.fetchClientes();
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
@@ -68,11 +95,14 @@ exports.getEditarInmueble = async(req, res, next) => {
         inmuebles : inmueble,
         agente : agente,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
+        idRol: req.session.idRol,
+        listaPropietarios: listaPropietarios[0]
     })
 }
 
 // -- MODIFY A PROPERTY AGENT OR ADMIN --//
+
+//Controlador para actualizar los datos de una propiedad de tipo "Casa"
 exports.updateBodyCasa = (req,res,next) => {
     console.log("Entrando a la ruta update body casa");
     //Elementos obligatorios del formulario
@@ -93,6 +123,7 @@ exports.updateBodyCasa = (req,res,next) => {
         banios,
         desc,
         direccion,
+        idPropietario,
         linkMaps,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -103,14 +134,16 @@ exports.updateBodyCasa = (req,res,next) => {
     let precioRenta = 0;
     if(venta === 1 && renta === 1) {
         tipoMovimiento = 3
-        precioVenta = req.body.precioVenta;
-        precioRenta = req.body.precioRenta;
+        precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
+        precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta;
+        precioRenta = 0;
     }else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta;
+        precioVenta = 0;
     }
     //Obtener amenidades adicionales
     const cocina = req.body.cocina ? 1 : 0;
@@ -170,10 +203,13 @@ exports.updateBodyCasa = (req,res,next) => {
         bodega,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
 };
+
+//Controlador para actualizar los datos de una propiedad de tipo "Local"
 
 exports.updateBodyLocal = (req,res,next) => {
     console.log("Entrando a la ruta update body local");
@@ -196,6 +232,7 @@ exports.updateBodyLocal = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -249,10 +286,13 @@ exports.updateBodyLocal = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
 };
+
+//Controlador para actualizar los datos de una propiedad de tipo "Terreno"
 
 exports.updateBodyTerreno = (req,res,next) => {
     console.log("Entrando a la ruta update body terreno");
@@ -269,6 +309,7 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         direccion,
         linkMaps,
+        idPropietario,
         desc,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -317,10 +358,13 @@ exports.updateBodyTerreno = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
-    res.redirect('/inmueble/'+idInmueble);
+    res.redirect('/inmueble/' + idInmueble);
 };
+
+//Controlador para actualizar los datos de una propiedad de tipo "Bodega"
 
 exports.updateBodyBodega = (req,res,next) => {
     console.log("Entrando a la ruta update body bodega");
@@ -346,6 +390,7 @@ exports.updateBodyBodega = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -407,10 +452,13 @@ exports.updateBodyBodega = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
 };
+
+//Controlador para actualizar los datos de una propiedad de tipo "Oficina"
 
 exports.updateBodyOficina = (req,res,next) => {
     console.log("Entrando a la ruta update body oficina");
@@ -430,6 +478,7 @@ exports.updateBodyOficina = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -477,10 +526,13 @@ exports.updateBodyOficina = (req,res,next) => {
         direccion,
         desc,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
 };
+
+//Controlador para actualizar los datos de una propiedad de tipo "Otra"
 
 exports.updateBodyOtra = (req,res,next) => {
     console.log("Entrando a la ruta update body otra");
@@ -500,6 +552,7 @@ exports.updateBodyOtra = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
+        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -547,6 +600,7 @@ exports.updateBodyOtra = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
+        idPropietario,
         idInmueble
     );
     res.redirect('/inmueble/'+idInmueble);
