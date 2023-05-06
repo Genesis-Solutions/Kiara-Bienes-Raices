@@ -361,7 +361,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     /** 
     * Establece la cantidad de resultados por pagina
     */ 
-    const resultadosPorPagina = 4;
+    //const resultadosPorPagina = 4;
 
     
     /**
@@ -373,8 +373,8 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     const numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
     var resultsExist = false;
     var resultadosPorPagina;
-    var numeroResultados;
-    var numeroPaginas;
+    //var numeroResultados;
+    //var numeroPaginas;
     var builtQueryLimits
 
     /**

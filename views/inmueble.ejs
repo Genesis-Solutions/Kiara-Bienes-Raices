@@ -68,6 +68,10 @@
                                 Eliminar Propiedad<i class="fa-solid fa-trash px-2"></i>
                             </div>
                         </button>
+                    <% } else if (inmueble.activoInmueble == 0 && tramite == 0) { %>
+                        <h3>Inmueble Desactivado</h3>
+                    <% } else if (inmueble.activoInmueble == 0 && tramite == 1) { %>
+                        <h3>Inmueble en un Trámite</h3>
                     <% } %>
                 </div>
             <% } %>
