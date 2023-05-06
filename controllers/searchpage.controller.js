@@ -22,7 +22,7 @@ exports.getSearchPage = async( req,res,next ) => {
     * de 1 para probar la paginación 
     */
     
-    const resultadosPorPagina = 1;
+    const resultadosPorPagina = 4;
     
     /** 
     * Establece la cantidad de resultados por pagina
@@ -358,12 +358,19 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     
     const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values);
 
+    /** 
+    * Establece la cantidad de resultados por pagina
+    */ 
+    const resultadosPorPagina = 4;
+
+    
     /**
     * Dado a que necesitamos revisar que existan inmuebles que cumplan
     * con los filtros seleccionados, debemos crear éstas variables para que
     * puedan ser usadas después de la verificación 
     */
-
+    const numeroResultados = countFiltered[0][0].total;
+    const numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
     var resultsExist = false;
     var resultadosPorPagina;
     var numeroResultados;

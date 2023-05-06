@@ -1,4 +1,4 @@
-const db = require('../util/database.js');
+const db = require('../util/database.util');
 
 /*
 * Historia de usuario 2.7 - Ver lista de inmuebles.

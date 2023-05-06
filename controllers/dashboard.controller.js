@@ -1,8 +1,5 @@
-const path = require('path');
 const Dashboard = require('../models/dashboard.model');
-const User = require('../models/dashboard.model');
-const { storage } = require('../util/awsMediaMulter');
-const { info } = require('console');
+const { storage } = require('../util/awsMediaMulter.util');
 
 /*
 * Historia de usuario 1.5, 1.6 y 1.9 - Ver lista de usuarios, modificar rol y eliminar usuario.
@@ -12,15 +9,14 @@ const { info } = require('console');
 /*
  * Renderización del dashboard tras realizar la validación de rol de usuario.
  */
-// -- LIST USERS -- //
 exports.getDashboard = (req, res, next) => {
     // Renderizar la vista de la lista de Usuarios
-        res.render("listUsers", {
-            isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol,
-        });
-
+    res.render("listUsers", {
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+    });
 };
+
 /*
  * Renderización de la lista de propiedades
  */
@@ -50,7 +46,7 @@ exports.getPropiedades = async (req, res, next) => {
 
 // -- REGISTER A NEW USER FROM A ROLE ADMIN --//
 
-/**
+/* 
  * Renderiza la vista de registro de usuario administrador si el usuario tiene sesión iniciada y es un usuario administrador.
  * @param req - La solicitud HTTP recibida.
  * @param res - La respuesta HTTP que se enviará.
@@ -59,11 +55,14 @@ exports.getPropiedades = async (req, res, next) => {
  */
 
 exports.getAdminUser = async (req, res, next) => {
-    // Obtiene la lista de roles a través de un método asíncrono del modelo Dashboard.
+    /*
+    *Obtiene la lista de roles a través de un método asíncrono del modelo Dashboard.
+    */
     const listRoles = await Dashboard.fetchAllRoles();
-    // Si el usuario tiene sesión iniciada, la variable isLogged se establece como verdadera y
-    //se renderiza la vista de registro de usuario administrador con los parámetros proporcionados.
-
+    /*
+    *Si el usuario tiene sesión iniciada, la variable isLogged se establece como verdadera y
+    *se renderiza la vista de registro de usuario administrador con los parámetros proporcionados.
+    */
     if (req.session.isLoggedIn == true) {
         isLogged = true;
         res.render("adminUserRegistration", {
@@ -72,24 +71,24 @@ exports.getAdminUser = async (req, res, next) => {
             listRoles: listRoles[0]
         });
     }
- }
+}
 
 /*
  * Llamada de query que actualiza el rol del usuario
  * @param id: String -> Id del usuario que será actualizado
  */
-exports.updateRol = async(req, res, next) => {
-    await Dashboard.updateUserRol(req.params.idUsuario,req.params.idRol);
+exports.updateRol = async (req, res, next) => {
+    await Dashboard.updateUserRol(req.params.idUsuario, req.params.idRol);
 }
+
 /*
  * Llamada de query que actualiza el encargado de la propiedad
  * @param idAgente: String -> Id del nuevo encargado de la propiedad 
  * @param idPropiedad: String -> Id de la propiedad a modificar
  */
-exports.updateEncargado = async(req, res, next) => {
-    await Dashboard.updateEncargadoPropiedad(req.params.idAgente,req.params.idPropiedad);
+exports.updateEncargado = async (req, res, next) => {
+    await Dashboard.updateEncargadoPropiedad(req.params.idAgente, req.params.idPropiedad);
 }
-
 
 /*
  * Comprobación de trámites activos del usuario para posteriormente proceder a su eliminación
@@ -108,15 +107,13 @@ exports.deleteUser = async (req, res, next) => {
     */
     if (tramites_activos == 0) {
         await Dashboard.deleteUser(req.params.id);
-    }
-    else {
+    } else {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
             comprobacionEliminado: true
         });
     }
-
 }
 
 /*
@@ -128,15 +125,15 @@ exports.comprobarUpdateRol = async (req, res, next) => {
     /*
     * Triple chequeo de posibles inmuebles, trámite de cliente y trámite de arrendador posibles en el usuario.
     */
-    const primeraComprobacion = await Dashboard.checkUser(req.params.idUsuario)
-    const segundaComprobacion = await Dashboard.checkUser2(req.params.idUsuario)
-    const terceraComprobacion = await Dashboard.checkUser3(req.params.idUsuario)
-    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion
+    const primeraComprobacion = await Dashboard.checkUser(req.params.idUsuario);
+    const segundaComprobacion = await Dashboard.checkUser2(req.params.idUsuario);
+    const terceraComprobacion = await Dashboard.checkUser3(req.params.idUsuario);
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion;
     /*
     * Si los trámites activos son 0, cambiar rol de usuario; si esto no es así, regresar un json que avise la existencia de procesos.
     */
     if (tramites_activos == 0) {
-        await Dashboard.updateUserRol(req.params.idUsuario,req.params.idRol);
+        await Dashboard.updateUserRol(req.params.idUsuario, req.params.idRol);
     }
     else {
         res.status(200).json({
@@ -148,13 +145,25 @@ exports.comprobarUpdateRol = async (req, res, next) => {
 
 }
 
+
+/*
+Retorna un array con los agentes registrados en el sistema.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {function} next - Función de middleware para pasar el control al siguiente controlador.
+@returns {Object} - Objeto JSON con los agentes registrados y los estados de inicio de sesión e ID de rol.
+@throws {Error} - Error de servidor.
+*/
 exports.getAgentes = async (req, res, next) => {
-const agentesArray = await Dashboard.getAgentes()
-    res.status(200).json({
-        isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol,
-        agentesArray: agentesArray
-    });    
+    const agentesArray = await Dashboard.getAgentes();
+    exports.getAgentes = async (req, res, next) => {
+        const agentesArray = await Dashboard.getAgentes()
+        res.status(200).json({
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            agentesArray: agentesArray
+        });
+    }
 }
 
 exports.postAdminUser = (req, res, next) => {
@@ -169,7 +178,6 @@ exports.postAdminUser = (req, res, next) => {
         ocupacionUsuario,
         rolUsuario,
     } = req.body;
-    
     const activoUsuario = 1;
     const idFoto = 1;
     /*
@@ -185,20 +193,19 @@ exports.postAdminUser = (req, res, next) => {
     Dashboard.findOne(emailUsuario)
         .then(async ([rows, data]) => {
             if (rows.length >= 1) {
-                console.log("El correo electrónico ingresado ya está registrado.");
+                //console.log("El correo electrónico ingresado ya está registrado.");
                 const errorEmail = "El correo electrónico ingresado ya está registrado";
                 if (req.session.isLoggedIn == true) {
                     isLogged = true;
                     res.render("adminUserRegistration", {
                         isLogged: req.session.isLoggedIn,
                         idRol: req.session.idRol,
-                        errorEmail,
+                        errorEmail
                     });
                 }
             } else {
                 if (passwordUsuario == passwordUsuarioConfirmar) {
-                    console.log("Las contraseñas coinciden.");
-                    
+                    //console.log("Las contraseñas coinciden.");
                     /* 
                     * Si todo fue validado correctamente, se inserta el usuario en la base de datos
                     */
@@ -241,6 +248,13 @@ exports.postAdminUser = (req, res, next) => {
 
 // -- LIST ALL PROPERTIES--//
 
+/*
+Renderiza la vista de la lista de propiedades del panel de administración.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función middleware para pasar al siguiente controlador.
+@throws {Error} Si la sesión no está iniciada, el usuario no tiene autorización para acceder.
+*/
 exports.getPropiedades = (req, res, next) => {
     if (req.session.isLoggedIn == true) {
         isLogged = true;
@@ -250,9 +264,22 @@ exports.getPropiedades = (req, res, next) => {
         });
     }
 };
-   
 
-exports.getRegisterpage = async(req, res, next) => {
+/*
+* Historia de usuario 2.1 - Publicar inmueble.
+* Controlador que maneja la lógica tras el registro nuevos inmuebles de distintas categorías.
+*/
+
+/*
+Renderiza la vista del registro de un nuevo inmueble en el sistema.
+@param {object} req - Objeto de solicitud de Express.
+@param {object} res - Objeto de respuesta de Express.
+@param {function} next - Función que llama al siguiente controlador en la cadena.
+@throws {Error} Si no se puede acceder a la página debido a permisos insuficientes.
+Esta función comprueba si el usuario tiene permisos de administrador para acceder a la página de registro de un nuevo inmueble.
+Si el usuario tiene los permisos necesarios, muestra la página de registro de un nuevo inmueble con una lista de todas las categorías disponibles.
+*/
+exports.getRegisterpage = async (req, res, next) => {
     //Revisar que tenga el rol de administrador
     if (req.session.idRol != 1 && req.session.idRol != 2) {
         return res.status(403).send("No tiene autorizado acceder a esta página")
@@ -266,10 +293,19 @@ exports.getRegisterpage = async(req, res, next) => {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol
         });
-    } 
+    }
 }
 
-exports.getCategoria = async(req,res,next) => {
+/*
+Renderiza la vista del formulario de alta de un inmueble con una categoría específica.
+Verifica que el usuario tenga el rol de administrador o agente.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {function} next - Función que llama al siguiente middleware.
+@throws {Error} Si el usuario no tiene autorización para acceder a la página.
+@returns {void}
+*/
+exports.getCategoria = async (req, res, next) => {
     //Revisar que tenga el rol de administrador
     if (req.session.idRol != 1 && req.session.idRol != 2) {
         return res.status(403).send("No tiene autorizado acceder a esta página")
@@ -281,7 +317,7 @@ exports.getCategoria = async(req,res,next) => {
         const idUsuario = req.session.idUsuario;
         //console.log("Categoria del inmueble creado",idCategoria);
         //console.log("Id del usuario",idCategoria);
-        const inmueble = await Dashboard.insertDisabledRegister(idCategoria.toString(),idUsuario.toString());
+        const inmueble = await Dashboard.insertDisabledRegister(idCategoria.toString(), idUsuario.toString());
         const idInmueble = await Dashboard.getLastDisabledRegisterID();
         //console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
         const listaAgentes = await Dashboard.fetchAgents();
@@ -300,37 +336,64 @@ exports.getCategoria = async(req,res,next) => {
             listaTipoMovimientos: listaTipoMovimientos[0],
             idUsuario: idUsuario
         });
-    } 
+    }
 };
 
-exports.deleteInmueble = (req,res,next) => {
+/*
+Elimina un inmueble del dashboard por su ID.
+@param {Object} req - Objeto de solicitud de Express con el parámetro "idInmueble".
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede eliminar el inmueble.
+*/
+exports.deleteInmueble = (req, res, next) => {
     const idInmueble = req.params.idInmueble;
     Dashboard.deleteInmuebleById(idInmueble)
         .then(([rows, fieldData]) => {
-            res.status(200).json({code: 200, msg:"Ok"});
+            res.status(200).json({ code: 200, msg: "Ok" });
         })
         .catch(error => { console.log(error) });
 };
 
-exports.setPhotos = (req,res,next) => {
-    var upload = storage.array('media',25);
-    upload(req, res, function(err) {
+/*
+Agrega una o varias fotos al inmueble especificado en la solicitud HTTP.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede registrar la imagen del inmueble.
+*/
+exports.setPhotos = (req, res, next) => {
+    var upload = storage.array('media', 25);
+    upload(req, res, function (err) {
         if (err) {
             console.log(err);
         } else {
-            req.files.forEach(function(file) {
+            req.files.forEach(function (file) {
                 const idInmueble = req.params.inmueble;
                 const mediaName = file.key;
-                Dashboard.registerImage(idInmueble,mediaName);
+                Dashboard.registerImage(idInmueble, mediaName);
             });
         }
     });
-    res.status(200).json({code: 200, msg:"Ok"});
+    res.status(200).json({ code: 200, msg: "Ok" });
 };
 
-exports.updateBodyCasa = (req,res,next) => {
-    console.log("Entrando a la ruta update body casa");
-    //Elementos obligatorios del formulario
+/*
+Actualiza los datos de un inmueble de tipo "Casa" o "Departamento" en el dashboard.
+Los inmuebles de tipo "Casa" y "Departamento" almacenan los mismos datos.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
+*/
+exports.updateBodyCasa = (req, res, next) => {
+    //console.log("Entrando a la ruta update body casa");
+    /*
+    *Elementos obligatorios del formulario
+    */
     const {
         titulo,
         id_agente,
@@ -352,13 +415,15 @@ exports.updateBodyCasa = (req,res,next) => {
         direccion,
         linkMaps
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios.
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
-    if(venta === 1 && renta === 1) {
+    if (venta === 1 && renta === 1) {
         tipoMovimiento = 3
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
@@ -366,12 +431,14 @@ exports.updateBodyCasa = (req,res,next) => {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
-    }else if (venta === 0 && renta === 1) {
+    } else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
-    //Obtener amenidades adicionales
+    /*
+    *Obtener amenidades adicionales
+    */
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
@@ -382,22 +449,8 @@ exports.updateBodyCasa = (req,res,next) => {
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
-    console.log(req.body);
-    console.log("tipoMovimiento",tipoMovimiento);
-    console.log("precioVenta",precioVenta);
-    console.log("precioRenta",precioRenta);
-    console.log("cocina",cocina);
-    console.log("cisterna",cisterna);
-    console.log("cuartoServicio",cuartoServicio);
-    console.log("salaTV",salaTV);
-    console.log("estudio",estudio);
-    console.log("roofGarden",roofGarden);
-    console.log("areaLavado",areaLavado);
-    console.log("vigilancia",vigilancia);
-    console.log("jardin",jardin);
-    console.log("bodega",bodega);
     const idInmueble = req.params.inmueble;
-    console.log("idInmueble",idInmueble);
+    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleCasa(
         titulo,
         id_agente,
@@ -433,11 +486,19 @@ exports.updateBodyCasa = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"});
+    res.status(200).json({ code: 200, msg: "Ok" });
 };
 
-exports.updateBodyLocal = (req,res,next) => {
-    console.log("Entrando a la ruta update body local");
+/*
+Actualiza los datos de un inmueble de tipo "Local" en el dashboard.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
+*/
+exports.updateBodyLocal = (req, res, next) => {
+    //console.log("Entrando a la ruta update body local");
     const {
         titulo,
         id_agente,
@@ -459,13 +520,15 @@ exports.updateBodyLocal = (req,res,next) => {
         banios,
         desc
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
-    if(venta === 1 && renta === 1) {
+    if (venta === 1 && renta === 1) {
         tipoMovimiento = 3
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
@@ -473,7 +536,7 @@ exports.updateBodyLocal = (req,res,next) => {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
-    }else if (venta === 0 && renta === 1) {
+    } else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
@@ -483,7 +546,7 @@ exports.updateBodyLocal = (req,res,next) => {
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
-    console.log("idInmueble",idInmueble);
+    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleLocal(
         titulo,
         id_agente,
@@ -516,11 +579,19 @@ exports.updateBodyLocal = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
-exports.updateBodyTerreno = (req,res,next) => {
-    console.log("Entrando a la ruta update body terreno");
+/*
+Actualiza los datos de un inmueble de tipo "Terreno" en el dashboard.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
+*/
+exports.updateBodyTerreno = (req, res, next) => {
+    //console.log("Entrando a la ruta update body terreno");
     const {
         titulo,
         id_agente,
@@ -536,13 +607,15 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         desc
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
-    if(venta === 1 && renta === 1) {
+    if (venta === 1 && renta === 1) {
         tipoMovimiento = 3
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
@@ -550,7 +623,7 @@ exports.updateBodyTerreno = (req,res,next) => {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
-    }else if (venta === 0 && renta === 1) {
+    } else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
@@ -560,7 +633,7 @@ exports.updateBodyTerreno = (req,res,next) => {
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
-    console.log("idInmueble",idInmueble);
+    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleTerreno(
         titulo,
         id_agente,
@@ -586,11 +659,19 @@ exports.updateBodyTerreno = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
-exports.updateBodyBodega = (req,res,next) => {
-    console.log("Entrando a la ruta update body bodega");
+/*
+Actualiza los datos de un inmueble de tipo "Bodega" en el dashboard.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
+*/
+exports.updateBodyBodega = (req, res, next) => {
+    //console.log("Entrando a la ruta update body bodega");
     const {
         titulo,
         id_agente,
@@ -615,13 +696,15 @@ exports.updateBodyBodega = (req,res,next) => {
         banios,
         desc
     } = req.body;
-    //Obtener el tipo de movimiento y los respectivos precios
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
-    if(venta === 1 && renta === 1) {
+    if (venta === 1 && renta === 1) {
         tipoMovimiento = 3
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
@@ -629,7 +712,7 @@ exports.updateBodyBodega = (req,res,next) => {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
-    }else if (venta === 0 && renta === 1) {
+    } else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
@@ -642,7 +725,7 @@ exports.updateBodyBodega = (req,res,next) => {
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
     const idInmueble = req.params.inmueble;
-    console.log("idInmueble",idInmueble);
+    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
@@ -681,11 +764,19 @@ exports.updateBodyBodega = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
-exports.updateBodyOficina = (req,res,next) => {
-    console.log("Entrando a la ruta update body oficina");
+/*
+Actualiza los datos de un inmueble de tipo "Oficina" en el dashboard.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
+*/
+exports.updateBodyOficina = (req, res, next) => {
+    //console.log("Entrando a la ruta update body oficina");
     const {
         titulo,
         id_agente,
@@ -703,14 +794,16 @@ exports.updateBodyOficina = (req,res,next) => {
         estacionamientos,
         banios,
         desc
-    } = req.body;    
-    //Obtener el tipo de movimiento y los respectivos precios
+    } = req.body;
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
-    if(venta === 1 && renta === 1) {
+    if (venta === 1 && renta === 1) {
         tipoMovimiento = 3
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
@@ -718,7 +811,7 @@ exports.updateBodyOficina = (req,res,next) => {
         tipoMovimiento = 1
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
-    }else if (venta === 0 && renta === 1) {
+    } else if (venta === 0 && renta === 1) {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
@@ -727,7 +820,7 @@ exports.updateBodyOficina = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
-    console.log("idInmueble",idInmueble);
+    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleOficina(
         titulo,
         id_agente,
@@ -755,11 +848,20 @@ exports.updateBodyOficina = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
+    res.status(200).json({ code: 200, msg: "Ok" })
 };
 
-exports.updateBodyOtro = (req,res,next) => {
-    console.log("Entrando a la ruta update body otro");
+
+/*
+Actualiza los datos de un inmueble de tipo "Otro" en el dashboard.
+@param {Object} req - Objeto de solicitud de Express.
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede actualizar el inmueble.
+*/
+exports.updateBodyOtro = (req, res, next) => {
+    //console.log("Entrando a la ruta update body otro");
     const {
         titulo,
         id_agente,
@@ -779,23 +881,25 @@ exports.updateBodyOtro = (req,res,next) => {
         desc,
         direccion,
         linkMaps
-    } = req.body;    
-    //Obtener el tipo de movimiento y los respectivos precios
+    } = req.body;
+    /*
+    *Obtener el tipo de movimiento y los respectivos precios
+    */
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
-    if(venta === 1 && renta === 1) {
-        tipoMovimiento = 3
+    if (venta === 1 && renta === 1) {
+        tipoMovimiento = 3;
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
-        tipoMovimiento = 1
+        tipoMovimiento = 1;
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
-    }else if (venta === 0 && renta === 1) {
-        tipoMovimiento = 2
+    } else if (venta === 0 && renta === 1) {
+        tipoMovimiento = 2;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
@@ -803,7 +907,7 @@ exports.updateBodyOtro = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
-    console.log("idInmueble",idInmueble);
+    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleOtro(
         titulo,
         id_agente,
@@ -831,5 +935,5 @@ exports.updateBodyOtro = (req,res,next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({code: 200, msg:"Ok"})
- };
+    res.status(200).json({ code: 200, msg: "Ok" })
+};
