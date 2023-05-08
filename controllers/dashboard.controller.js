@@ -246,25 +246,6 @@ exports.postAdminUser = (req, res, next) => {
         });
 };
 
-// -- LIST ALL PROPERTIES--//
-
-/*
-Renderiza la vista de la lista de propiedades del panel de administración.
-@param {Object} req - Objeto de solicitud de Express.
-@param {Object} res - Objeto de respuesta de Express.
-@param {Function} next - Función middleware para pasar al siguiente controlador.
-@throws {Error} Si la sesión no está iniciada, el usuario no tiene autorización para acceder.
-*/
-exports.getPropiedades = (req, res, next) => {
-    if (req.session.isLoggedIn == true) {
-        isLogged = true;
-        res.render("dashboardListaPropiedades", {
-            isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol,
-        });
-    }
-};
-
 /*
 * Historia de usuario 2.1 - Publicar inmueble.
 * Controlador que maneja la lógica tras el registro nuevos inmuebles de distintas categorías.
