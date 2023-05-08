@@ -147,7 +147,7 @@
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
             var idUsuario = parseInt(fila.find('td:eq(0)').text());
-            var nombreRol = $(this).closest('tr').find("td").eq(3).html() //parseInt(fila.find('td:eq(0)').text());
+            var nombreRol = $(this).closest('tr').find("td").eq(3).html();
             const { value: eleccion } = Swal.fire({
                 /*
                 *Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
