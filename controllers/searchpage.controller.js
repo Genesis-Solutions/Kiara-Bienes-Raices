@@ -177,7 +177,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
         if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
             //console.log("dentro del precio equisde")
-            conditions.push("idTipoMovimiento = 1 OR idTipoMovimiento = 3")
+            conditions.push("(idTipoMovimiento = 1 OR idTipoMovimiento = 3)")
             if (typeof params.precioMinimo !== 'undefined') {
 
                 if (params.precioMaximo != ''){
@@ -189,7 +189,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             };
         } else if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
             if (typeof params.precioMinimo !== 'undefined') {
-                conditions.push("idTipoMovimiento = 2 OR idTipoMovimiento = 3")
+                conditions.push("(idTipoMovimiento = 2 OR idTipoMovimiento = 3)")
                 //console.log("dentro del precio equisde")
                 if (params.precioMaximo != '') {
                     conditions.push("precioRentaInmueble BETWEEN ? AND ?");
@@ -358,23 +358,16 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     
     const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values);
 
-    /** 
-    * Establece la cantidad de resultados por pagina
-    */ 
-    //const resultadosPorPagina = 4;
-
-    
     /**
     * Dado a que necesitamos revisar que existan inmuebles que cumplan
     * con los filtros seleccionados, debemos crear éstas variables para que
     * puedan ser usadas después de la verificación 
     */
-    const numeroResultados = countFiltered[0][0].total;
-    const numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
+
     var resultsExist = false;
     var resultadosPorPagina;
-    //var numeroResultados;
-    //var numeroPaginas;
+    var numeroResultados;
+    var numeroPaginas;
     var builtQueryLimits
 
     /**
@@ -519,6 +512,6 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol
         })
-    };
-    
+    };
+    
 }
