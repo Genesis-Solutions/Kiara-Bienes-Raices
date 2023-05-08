@@ -27,3 +27,21 @@ exports.root = async(req,res,next) => {
         });
     };
 }
+
+/*
+* Obtiene la imagen del bucket S3
+*/
+
+exports.getImgFromBucket = ( req,res,next ) => {
+    var img = req.query.image;
+    const AWS_BUCKET = "kiarabienesraices";
+    console.log('Trying to download file: ' + img);
+    var opciones = {
+        Bucket: AWS_BUCKET,
+        Key: img,
+    };
+    bucket.getObject(opciones, function(err, data) {
+        res.attachment(img);
+        res.send(data.Body);
+    });
+}
