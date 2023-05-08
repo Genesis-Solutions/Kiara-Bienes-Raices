@@ -27,9 +27,9 @@
                 <a href=""
                     class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Lista
                     de Propiedades</a>
-                <a href=""
+                <a href="/dashboard/alta"
                     class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Mis
-                    Propiedades</a>
+                    Dar de alta inmueble</a>
             </div>
             <hr class="h-px my-4 bg-gray-800 border-0">
         </div>
@@ -80,7 +80,8 @@
                     <label for="apellido">Número de Teléfono</label> <label class="text-red-500">*</label>
                     <input type="tel"
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required
+                        , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10"
+                        minlength="10" pattern="[0-9]{10}" required
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                 </div>
                 <div>
@@ -110,7 +111,8 @@
                         required />
                 </div>
                 <div>
-                    <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label> <label class="text-red-500">*</label>
+                    <label for="passwordUsuarioConfirmar">Confirmar Contraseña</label> <label
+                        class="text-red-500">*</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         type="password" name="passwordUsuarioConfirmar" id="passwordUsuarioConfirmar"
@@ -127,8 +129,10 @@
                         class="form-select block w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
                         id="rolUsuario" name="rolUsuario">
                         <% listRoles.forEach(roles=>{ %>
-                            <option value="<%=roles.idRol%>"><%=roles.nombreRol%></option>
-                        <% }); %>
+                            <option value="<%=roles.idRol%>">
+                                <%=roles.nombreRol%>
+                            </option>
+                            <% }); %>
                     </select>
                 </div>
             </div>

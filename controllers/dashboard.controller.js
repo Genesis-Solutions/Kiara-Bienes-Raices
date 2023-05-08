@@ -11,10 +11,17 @@ const { storage } = require('../util/awsMediaMulter.util');
  */
 exports.getDashboard = (req, res, next) => {
     // Renderizar la vista de la lista de Usuarios
-    res.render("listUsers", {
-        isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol,
-    });
+    if (req.session.idRol == 1) {
+        res.render("listUsers", {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+        });
+    } else if (req.session.idRol == 2) {
+        res.render("dashboardListaPropiedades", {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+        });
+    }
 };
 
 /*
@@ -166,7 +173,7 @@ exports.getAgentes = async (req, res, next) => {
     }
 }
 
-exports.postAdminUser = (req, res, next) => {
+exports.postAdminUser = async (req, res, next) => {
     const {
         nombreUsuario,
         apellidosUsuario,
@@ -178,8 +185,13 @@ exports.postAdminUser = (req, res, next) => {
         ocupacionUsuario,
         rolUsuario,
     } = req.body;
+
     const activoUsuario = 1;
     const idFoto = 1;
+    const listRoles = await Dashboard.fetchAllRoles();
+
+   
+    
     /*
     * Convertir los valores numericos a string
     */
@@ -200,7 +212,8 @@ exports.postAdminUser = (req, res, next) => {
                     res.render("adminUserRegistration", {
                         isLogged: req.session.isLoggedIn,
                         idRol: req.session.idRol,
-                        errorEmail
+                        errorEmail,
+                        listRoles: listRoles[0]
                     });
                 }
             } else {
@@ -236,6 +249,7 @@ exports.postAdminUser = (req, res, next) => {
                             isLogged: req.session.isLoggedIn,
                             idRol: req.session.idRol,
                             errorPassword,
+                            listRoles: listRoles[0]
                         });
                     }
                 }
