@@ -113,10 +113,7 @@
                         }
                     },
                     {
-                        data: null,
-                        render: function (data, type, row) {
-                            return '<span class="badge badge-success">' + data.nombreRol + '</span>'
-                        }
+                        data: "nombreRol"
                     },
                     {
                         data: null,
@@ -149,8 +146,8 @@
 */
         $(document).on("click", ".btnEditarRol", function () {
             fila = $(this).closest("tr");
-            id = parseInt(fila.find('td:eq(0)').text());
-            nombreRol = id = parseInt(fila.find('td:eq(3)').text());
+            var idUsuario = parseInt(fila.find('td:eq(0)').text());
+            var nombreRol = $(this).closest('tr').find("td").eq(3).html();
             const { value: eleccion } = Swal.fire({
                 /*
                 *Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
@@ -172,7 +169,7 @@
                 if (result.value>=1){
                 if ((result.value==1)||(result.value==2 && (nombreRol=='agente'||nombreRol=='usuario'))||(result.value==3 && nombreRol=='usuario')) {
                     $.ajax({
-                        url: '/dashboard/lista/actualizar/' + id + '/'+result.value,
+                        url: '/dashboard/lista/actualizar/' + idUsuario + '/'+result.value,
                         method: 'put',
                     });
                     Swal.fire('¡El rol ha sido modificado!')
@@ -180,7 +177,7 @@
                 }
                 else{
                     $.ajax({
-                        url: '/dashboard/comprobar/actualizar/' + id + '/'+result.value,
+                        url: '/dashboard/comprobar/actualizar/' + idUsuario + '/'+result.value,
                         method: 'put',
                         success: function (choice) {
                             if (choice.comprobacionCambio != true) {
