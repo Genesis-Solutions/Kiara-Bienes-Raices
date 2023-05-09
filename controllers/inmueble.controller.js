@@ -2,10 +2,16 @@
 const path = require('path');
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
+const { link } = require('fs');
 
-//  Controlador para obtener la información de un inmueble y renderizar su vista
 
-
+/*
+ * Obtiene información de un inmueble y renderiza la vista correspondiente.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {function} next - Función de middleware de Express.
+ * @returns {void}
+ */
 exports.getInmueble = async (req, res, next) => {
     //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
@@ -48,7 +54,13 @@ exports.getInmueble = async (req, res, next) => {
     })
 };
 
-//Controlador para eliminar una propiedad.
+/*
+ * Elimina una propiedad cambiando su estado a inactivo.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {function} next - Función de middleware de Express.
+ * @returns {void}
+ */
 exports.eliminarPropiedad = (req, res, next) => {
     console.log("Adentro de controlador eliminar");
     const idInmueble = req.params.idInmueble;
@@ -57,22 +69,36 @@ exports.eliminarPropiedad = (req, res, next) => {
 }
 
 /*
-* Controlador para obtener la imagen del bucket.
-*/
+ * Obtiene una imagen desde un bucket de Amazon S3 y la envía como respuesta en el objeto de respuesta de Express.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {function} next - Función de middleware de Express.
+ * @returns {void}
+ */
 exports.getImgFromBucket = ( req,res,next ) => {
+    //Obtiene el nombre de la imagen de la consulta
     var img = req.query.image;
     const AWS_BUCKET = "kiarabienesraices";
     //console.log('Trying to download file: ' + img);
+    //Configura las opciones de la solicitud de objeto
     var opciones = {
         Bucket: AWS_BUCKET,
         Key: img,
     };
+    //Obtiene el objeto del bucket de Amazon S3 y envía la imagen como respuesta
     bucket.getObject(opciones, function(err, data) {
         res.attachment(img);
         res.send(data.Body);
     });
 }
 
+/*
+ * Renderiza la vista de edición de un inmueble, recuperando información necesaria para su presentación.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ * @param {function} next - Función middleware para pasar el control al siguiente middleware.
+ * @returns {Promise} - Promesa que resuelve con la presentación de la vista de edición de inmueble.
+*/
 exports.getEditarInmueble = async(req, res, next) => {
     //Info de agente e inmueble
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
@@ -100,11 +126,15 @@ exports.getEditarInmueble = async(req, res, next) => {
     })
 }
 
-// -- MODIFY A PROPERTY AGENT OR ADMIN --//
-
-//Controlador para actualizar los datos de una propiedad de tipo "Casa"
+/*
+ * Actualiza los detalles de una casa en la base de datos.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.updateBodyCasa = (req,res,next) => {
-    console.log("Entrando a la ruta update body casa");
+    //console.log("Entrando a la ruta update body casa");
     //Elementos obligatorios del formulario
     const {
         titulo,
@@ -157,24 +187,11 @@ exports.updateBodyCasa = (req,res,next) => {
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
-    console.log(req.body);
-    console.log("tipoMovimiento",tipoMovimiento);
-    console.log("precioVenta",precioVenta);
-    console.log("precioRenta",precioRenta);
-    console.log("cocina",cocina);
-    console.log("cisterna",cisterna);
-    console.log("cuartoServicio",cuartoServicio);
-    console.log("salaTV",salaTV);
-    console.log("estudio",estudio);
-    console.log("roofGarden",roofGarden);
-    console.log("areaLavado",areaLavado);
-    console.log("vigilancia",vigilancia);
-    console.log("jardin",jardin);
-    console.log("bodega",bodega);
     const idInmueble = req.params.idInmueble;
     console.log("idInmueble",idInmueble);
     Inmueble.changeInmuebleCasa(
         titulo,
+        desc,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -191,7 +208,6 @@ exports.updateBodyCasa = (req,res,next) => {
         recamaras,
         estacionamientos,
         banios,
-        desc,
         cocina,
         cisterna,
         cuartoServicio,
@@ -211,10 +227,15 @@ exports.updateBodyCasa = (req,res,next) => {
     res.redirect('/inmueble/'+idInmueble);
 };
 
-//Controlador para actualizar los datos de una propiedad de tipo "Local"
-
+/*
+ * Actualiza los detalles de un Local en la base de datos.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.updateBodyLocal = (req,res,next) => {
-    console.log("Entrando a la ruta update body local");
+    //console.log("Entrando a la ruta update body local");
     const {
         titulo,
         linkVideo,
@@ -261,7 +282,6 @@ exports.updateBodyLocal = (req,res,next) => {
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
     Inmueble.changeInmuebleLocal(
         titulo,
         tipoMovimiento,
@@ -296,8 +316,13 @@ exports.updateBodyLocal = (req,res,next) => {
     res.redirect('/inmueble/'+idInmueble);
 };
 
-//Controlador para actualizar los datos de una propiedad de tipo "Terreno"
-
+/*
+ * Actualiza los detalles de un Terreno en la base de datos.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.updateBodyTerreno = (req,res,next) => {
     console.log("Entrando a la ruta update body terreno");
     const {
@@ -339,9 +364,6 @@ exports.updateBodyTerreno = (req,res,next) => {
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble", idInmueble);
-    console.log(req.body);
-    console.log(tipoMovimiento);
     Inmueble.changeInmuebleTerreno(
         titulo,
         tipoMovimiento,
@@ -370,8 +392,13 @@ exports.updateBodyTerreno = (req,res,next) => {
     res.redirect('/inmueble/' + idInmueble);
 };
 
-//Controlador para actualizar los datos de una propiedad de tipo "Bodega"
-
+/*
+ * Actualiza los detalles de una Bodega en la base de datos.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.updateBodyBodega = (req,res,next) => {
     console.log("Entrando a la ruta update body bodega");
     const {
@@ -425,7 +452,6 @@ exports.updateBodyBodega = (req,res,next) => {
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
     Inmueble.changeInmuebleBodega(
         titulo,
         tipoMovimiento,
@@ -466,8 +492,13 @@ exports.updateBodyBodega = (req,res,next) => {
     res.redirect('/inmueble/'+idInmueble);
 };
 
-//Controlador para actualizar los datos de una propiedad de tipo "Oficina"
-
+/*
+ * Actualiza los detalles de una Oficina en la base de datos.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.updateBodyOficina = (req,res,next) => {
     console.log("Entrando a la ruta update body oficina");
     const {
@@ -511,7 +542,6 @@ exports.updateBodyOficina = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
     Inmueble.changeInmuebleOficina(
         titulo,
         tipoMovimiento,
@@ -542,8 +572,13 @@ exports.updateBodyOficina = (req,res,next) => {
     res.redirect('/inmueble/'+idInmueble);
 };
 
-//Controlador para actualizar los datos de una propiedad de tipo "Otra"
-
+/*
+ * Actualiza los detalles de un Inmueble tipo Otro en la base de datos.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.updateBodyOtra = (req,res,next) => {
     console.log("Entrando a la ruta update body otra");
     const {
@@ -587,7 +622,6 @@ exports.updateBodyOtra = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
     Inmueble.changeInmuebleOtra(
         titulo,
         tipoMovimiento,

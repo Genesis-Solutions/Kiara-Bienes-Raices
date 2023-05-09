@@ -249,9 +249,10 @@ Actualiza un inmueble de tipo Casa en la base de datos
     idInmueble
   ) {
     return db.execute(
-      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?,precioRentaInmueble, m2TerrenoInmueble=?,m2ConstruidosInmueble, nivelesInmueble=?, mediosBaniosInmueble=?, cuotaMantenimientoInmueble=?, fechaConstruccionInmueble=?, usoSueloInmueble=?, ubicadoInmueble=?, tipoGasInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?, jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?, linkGoogleMaps=?, idArrendador=?, activoInmueble=? WHERE idInmueble = ?",
+      "UPDATE inmueble SET nombreInmueble=?,descInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?,precioRentaInmueble=?, m2TerrenoInmueble=?,m2ConstruidosInmueble=?, nivelesInmueble=?, mediosBaniosInmueble=?, cuotaMantenimientoInmueble=?, fechaConstruccionInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, tipoGasInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?, jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?, linkGoogleMaps=?, idArrendador=?, activoInmueble=? WHERE idInmueble = ?",
       [
         titulo,
+        desc,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -268,7 +269,6 @@ Actualiza un inmueble de tipo Casa en la base de datos
         recamaras,
         estacionamientos,
         banios,
-        desc,
         cocina,
         cisterna,
         cuartoServicio,
