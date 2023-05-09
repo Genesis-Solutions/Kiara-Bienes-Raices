@@ -74,7 +74,7 @@ exports.getImgFromBucket = ( req,res,next ) => {
 }
 
 exports.getEditarInmueble = async(req, res, next) => {
-    //Info de agente e inmueblee
+    //Info de agente e inmueble
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
