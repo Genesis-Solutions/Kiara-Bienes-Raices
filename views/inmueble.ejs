@@ -138,12 +138,12 @@
             <div class="md:hidden grid grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
                     <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}) %>
-                    <% if (inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble != 0) { %>
+                    <% if ((inmueble.precioVentaInmueble != 0 && inmueble.precioVentaInmueble != null) && (inmueble.precioRentaInmueble != 0 && inmueble.precioRentaInmueble != null)) { %>
                         <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
                         <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
-                    <% } else if(inmueble.precioRentaInmueble != 0 && inmueble.precioVentaInmueble == 0) { %>
+                    <% } else if((inmueble.precioRentaInmueble != 0 && inmueble.precioRentaInmueble != null) && (inmueble.precioVentaInmueble == null || inmueble.precioVentaInmueble == 0)) { %>
                         <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
-                    <% } else if(inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble == 0) { %>  
+                    <% } else if((inmueble.precioVentaInmueble != 0 && inmueble.precioVentaInmueble != null) && (inmueble.precioRentaInmueble == null || inmueble.precioRentaInmueble == 0)) { %>  
                         <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
                     <% } %>
                     <div class="flex text-black text-center justify-evenly">
@@ -195,12 +195,12 @@
             <div class="hidden md:grid md:grid-cols-2">
                 <div class="flex flex-col justify-center space-y-2">
                     <div class="flex flex-col justify-center space-y-2">
-                        <% if (inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble != 0) { %>
+                        <% if ((inmueble.precioVentaInmueble != 0 && inmueble.precioVentaInmueble != null) && (inmueble.precioRentaInmueble != 0 && inmueble.precioRentaInmueble != null)) { %>
                             <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
                             <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
-                        <% } else if(inmueble.precioRentaInmueble != 0 && inmueble.precioVentaInmueble == 0) { %>
+                        <% } else if((inmueble.precioRentaInmueble != 0 && inmueble.precioRentaInmueble != null) && (inmueble.precioVentaInmueble == null || inmueble.precioVentaInmueble == 0)) { %>
                             <h3 class="text-lg font-semibold text-center">Renta: <%= formatter.format(inmueble.precioRentaInmueble) %> /mes</h3>
-                        <% } else if(inmueble.precioVentaInmueble != 0 && inmueble.precioRentaInmueble == 0) { %>  
+                        <% } else if((inmueble.precioVentaInmueble != 0 && inmueble.precioVentaInmueble != null) && (inmueble.precioRentaInmueble == null || inmueble.precioRentaInmueble == 0)) { %>  
                             <h3 class="text-lg font-semibold text-center">Venta: <%= formatter.format(inmueble.precioVentaInmueble) %></h3>
                         <% } %>
                         <div class="flex text-black text-center md:justify-evenly lg:space-x-12 lg:justify-center">
