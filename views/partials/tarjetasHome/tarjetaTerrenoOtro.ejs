@@ -1,16 +1,16 @@
 <div class="w-full">
-    <a href="inmueble/1">
+    <a href="inmueble/<%=data.idInmueble%>">
         <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
-            <img src="img/casa1_main.png" class="w-full h-44 rounded-t-lg">
+            <img src="/get_bucket_img?image=<%=data.img%>" class="w-full h-44 rounded-t-lg">
             <div class="px-5 py-3 h-full">
-                <h3 class="text-lg font-semibold"> Nombre
+                <h3 class="text-lg font-semibold"> <%= data.nombreInmueble %>
                 </h3>
                 <div class="grid grid-cols-2 gap-2 py-2">
                     <div>
-                        <i class="fa-solid fa-expand"></i> N m2
+                        <i class="fa-solid fa-expand"></i> <%= data.m2TerrenoInmueble %> m2
                     </div>
                     <div>
-                        <i class="fa-solid fa-house"></i> N m2
+                        <i class="fa-solid fa-house"></i> <%= data.m2ConstruidoInmueble %> m2
                     </div>
                     <div>
                         <i class="fa-solid fa-bath invisible"></i>
@@ -19,8 +19,13 @@
                         <i class="fa-solid fa-car invisible"></i>
                     </div>
                 </div>
-                <h3 class="text-lg font-medium">$ N MXN</h3>
-                <h3 class="text-lg font-medium">$ N MXN / Mes</h3>
+                <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}); %>
+                <% if(data.precioVentaInmueble != null){ %>
+                    <h3 class="text-lg font-medium"> <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
+                <% } %>
+                <%if(data.precioRentaInmueble != null){%>
+                    <h3 class="text-lg font-medium"> <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
+                <% } %>
             </div>
         </div>
     </a>

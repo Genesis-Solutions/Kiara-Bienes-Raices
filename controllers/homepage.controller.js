@@ -3,6 +3,7 @@
 */
 
 const Inmueble = require('../models/inmueble.model.js');
+const bucket = require('../util/awsBucket.js');
 
 exports.root = async(req,res,next) => {
     var isLogged = false;
