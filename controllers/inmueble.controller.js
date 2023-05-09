@@ -134,7 +134,7 @@ exports.getEditarInmueble = async(req, res, next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyCasa = (req,res,next) => {
-    console.log("Entrando a la ruta update body casa");
+    //console.log("Entrando a la ruta update body casa");
     //Elementos obligatorios del formulario
     const {
         titulo,
@@ -235,7 +235,7 @@ exports.updateBodyCasa = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyLocal = (req,res,next) => {
-    console.log("Entrando a la ruta update body local");
+    //console.log("Entrando a la ruta update body local");
     const {
         titulo,
         linkVideo,
