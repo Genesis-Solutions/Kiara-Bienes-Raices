@@ -295,7 +295,13 @@
                     class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
                     type="text" id="linkMaps" name="linkMaps" placeholder="iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12617.262388400684!2d-100.4082022221727!3d20.611509759670554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35ae83751a45d%3A0x4fa6ee69f6b64f3a!2sTecnol%C3%B3gico%20de%20Monterrey!5e0!3m2!1ses-419!2smx!4v1682632411233!5m2!1ses-419!2smx'" maxlength="400" required/>
             </div>
-            
         </div>
+    </div>
+    <div class="px-10 pb-12 flex justify-evenly">
+        <input type="hidden" id="id_inmueble" name="id_inmueble" value="<%=idInmueble.idInmueble%>">
+        <button type="submit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
+            Cancelar
+        </button>
+        <input type="submit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700" value=" Registrar " />
     </div>
 </form>
