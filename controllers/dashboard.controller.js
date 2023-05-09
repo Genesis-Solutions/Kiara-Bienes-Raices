@@ -173,14 +173,11 @@ Retorna un array con los agentes registrados en el sistema.
 */
 exports.getAgentes = async (req, res, next) => {
     const agentesArray = await Dashboard.getAgentes();
-    exports.getAgentes = async (req, res, next) => {
-        const agentesArray = await Dashboard.getAgentes()
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
             agentesArray: agentesArray
         });
-    }
 }
 
 exports.postAdminUser = async (req, res, next) => {
