@@ -5,6 +5,10 @@ const homeController = require("../controllers/homepage.controller");
 const userController = require("../controllers/user.controller");
 
 // Rutas
+/*
+*Obtener las imagenes del bucket de S3.
+*/
+router.get('/get_bucket_img', homeController.getImgFromBucket);
 router.get("/", homeController.root);
 //router.get('/', homeController.getAltaInmueble);
 router.get('/login', userController.getLogin);
