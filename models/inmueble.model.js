@@ -781,4 +781,28 @@ Actualiza un inmueble de tipo Otro en la base de datos
     return db.execute("SELECT * from inmueble ORDER BY idInmueble DESC LIMIT 4");
   }
 
+  /*
+  * Obtener el id de la foto portada del inmueble (primer registro en la entidad fotoInmueble).
+  * @param id: String -> Id de un inmueble. 
+  * @return JSON -> Id del primer registro dentro de la entidad fotoInmueble donde este el id del inmueble.
+  */
+  static idFotoPortada(id) {
+    return db.execute(
+      'SELECT idFoto FROM fotoInmueble WHERE idInmueble = ? ORDER BY idFoto ASC LIMIT 1',
+      [id]
+    );
+  }
+
+  /*
+  * Obtener el nombre del archivo dentro del S3 de la foto portada del inmueble por su id.
+  * @param id: String -> Id de una foto. 
+  * @return JSON -> Nombre del archivo dentro del S3.
+  */
+  static srcFotoPortada(id) {
+      return db.execute(
+        'SELECT archivoFoto FROM foto WHERE idFoto = ?',
+        [id]
+      );
+  }
+
 };
