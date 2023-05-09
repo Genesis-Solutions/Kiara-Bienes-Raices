@@ -213,15 +213,44 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
         /** 
         * Agrega a la query la opción de tener baños, recámaras,
-        * estacionamientos y metros cuadrados construídos a casas y dept.
+        * estacionamientos y metros cuadrados construídos a casa.
         */
 
-        if (params.idCategoria == "1" || params.idCategoria == "2") {
+        if (params.idCategoria == "1") {
             //console.log(params.idCategoria)
             var catCasa = "1"
-            var catDept = "2"
-            conditions.push("idCategoria = ? OR idCategoria = ?")
+            conditions.push("idCategoria = ?")
             values.push(catCasa);
+            if (typeof params.baniosInmueble !== 'undefined') {
+                conditions.push("baniosInmueble >= ?");
+                values.push(params.baniosInmueble);
+            };
+    
+            if (typeof params.recamarasInmueble !== 'undefined') {
+                conditions.push("recamarasInmueble >= ?");
+                values.push(params.recamarasInmueble);
+            };
+
+            if (typeof params.estacionamientosInmueble !== 'undefined') {
+                conditions.push("estacionamientosInmueble >= ?");
+                values.push(params.estacionamientosInmueble);
+            };
+
+            if (typeof params.m2ConstruidosInmueble !== 'undefined') {
+                conditions.push("m2ConstruidosInmueble <= ?");
+                values.push(params.m2ConstruidosInmueble);
+            };
+        }
+
+        /** 
+        * Agrega a la query la opción de tener baños, recámaras,
+        * estacionamientos y metros cuadrados construídos a departamento.
+        */
+
+        if (params.idCategoria == "2") {
+            //console.log(params.idCategoria)
+            var catDept = "2"
+            conditions.push("idCategoria = ?")
             values.push(catDept);
             if (typeof params.baniosInmueble !== 'undefined') {
                 conditions.push("baniosInmueble >= ?");
@@ -239,7 +268,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             };
 
             if (typeof params.m2ConstruidosInmueble !== 'undefined') {
-                conditions.push("m2ConstruidosInmueble >= ?");
+                conditions.push("m2ConstruidosInmueble <= ?");
                 values.push(params.m2ConstruidosInmueble);
             };
         }
@@ -255,7 +284,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             values.push(catLocal);
 
             if (typeof params.m2ConstruidosInmueble !== 'undefined') {
-                conditions.push("m2ConstruidosInmueble >= ?");
+                conditions.push("m2ConstruidosInmueble <= ?");
                 values.push(params.m2ConstruidosInmueble);
             };
         }
@@ -271,7 +300,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             values.push(catTerreno);
 
             if (typeof params.m2ConstruidosInmueble !== 'undefined') {
-                conditions.push("m2ConstruidosInmueble >= ?");
+                conditions.push("m2ConstruidosInmueble <= ?");
                 values.push(params.m2ConstruidosInmueble);
             };
         }
@@ -287,7 +316,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             values.push(catBodega);
 
             if (typeof params.m2ConstruidosInmueble !== 'undefined') {
-                conditions.push("m2ConstruidosInmueble >= ?");
+                conditions.push("m2ConstruidosInmueble <= ?");
                 values.push(params.m2ConstruidosInmueble);
             };
         }
@@ -303,7 +332,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             values.push(catOficina);
 
             if (typeof params.m2ConstruidosInmueble !== 'undefined') {
-                conditions.push("m2ConstruidosInmueble >= ?");
+                conditions.push("m2ConstruidosInmueble <= ?");
                 values.push(params.m2ConstruidosInmueble);
             };
         }
@@ -319,7 +348,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             values.push(catOtro);
 
             if (typeof params.m2ConstruidosInmueble !== 'undefined') {
-                conditions.push("m2ConstruidosInmueble >= ?");
+                conditions.push("m2ConstruidosInmueble <= ?");
                 values.push(params.m2ConstruidosInmueble);
             };
         }
@@ -393,7 +422,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         * de 1 para probar la paginación 
         */
 
-        resultadosPorPagina = 1;
+        resultadosPorPagina = 4;
 
         /** 
         * Establece la cantidad de resultados por pagina
