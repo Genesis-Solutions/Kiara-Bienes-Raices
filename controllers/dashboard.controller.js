@@ -146,12 +146,17 @@ exports.comprobarUpdateRol = async (req, res, next) => {
     */
     if (tramites_activos == 0) {
         await Dashboard.updateUserRol(req.params.idUsuario, req.params.idRol);
+        res.status(200).json({
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            comprobacionCambio: true
+        });
     }
     else {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionCambio: true
+            comprobacionCambio: false
         });
     }
 
