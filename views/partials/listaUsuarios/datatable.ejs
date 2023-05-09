@@ -180,7 +180,7 @@
                         url: '/dashboard/comprobar/actualizar/' + idUsuario + '/'+result.value,
                         method: 'put',
                         success: function (choice) {
-                            if (choice.comprobacionCambio != true) {
+                            if (choice.comprobacionCambio == true) {
                                 Swal.fire('¡El rol ha sido modificado!')
                                 recargarTablaUsuarios();
                             } else {
@@ -203,7 +203,7 @@
 */
         $(document).on("click", ".btnEliminarUsuario", function () {
             fila = $(this).closest("tr");
-            id = parseInt(fila.find('td:eq(0)').text());
+            idUsuario = parseInt(fila.find('td:eq(0)').text());
             /*
             *Modal de confirmación.
             */
@@ -217,14 +217,14 @@
                 */
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/dashboard/lista/eliminar/' + id,
+                        url: '/dashboard/lista/eliminar/' + idUsuario,
                         method: 'put',
                         success: function (choice) {
-                            if (choice.comprobacionEliminado != true) {
+                            if (choice.comprobacionEliminado == false) {
+                                Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
+                            } else {
                                 Swal.fire('Usuario Eliminado!')
                                 recargarTablaUsuarios();
-                            } else {
-                                Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
