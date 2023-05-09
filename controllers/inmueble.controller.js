@@ -105,7 +105,7 @@ exports.getEditarInmueble = async(req, res, next) => {
 
 //Controlador para actualizar los datos de una propiedad de tipo "Casa"
 exports.updateBodyCasa = (req,res,next) => {
-    console.log("Entrando a la ruta update body casa");
+    //console.log("Entrando a la ruta update body casa");
     //Elementos obligatorios del formulario
     const {
         titulo,
@@ -158,7 +158,7 @@ exports.updateBodyCasa = (req,res,next) => {
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
-    console.log(req.body);
+    /*console.log(req.body);
     console.log("tipoMovimiento",tipoMovimiento);
     console.log("precioVenta",precioVenta);
     console.log("precioRenta",precioRenta);
@@ -173,7 +173,7 @@ exports.updateBodyCasa = (req,res,next) => {
     console.log("jardin",jardin);
     console.log("bodega",bodega);
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
+    console.log("idInmueble",idInmueble);*/
     Inmueble.changeInmuebleCasa(
         titulo,
         desc,
@@ -215,7 +215,7 @@ exports.updateBodyCasa = (req,res,next) => {
 //Controlador para actualizar los datos de una propiedad de tipo "Local"
 
 exports.updateBodyLocal = (req,res,next) => {
-    console.log("Entrando a la ruta update body local");
+    //console.log("Entrando a la ruta update body local");
     const {
         titulo,
         linkVideo,
@@ -243,7 +243,7 @@ exports.updateBodyLocal = (req,res,next) => {
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     const activoInmueble = req.body.activoInmueble ? 1 : 0;
-    console.log("activoInmuebleeeee: "+ activoInmueble);
+    //console.log("activoInmuebleeeee: "+ activoInmueble);
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -263,7 +263,7 @@ exports.updateBodyLocal = (req,res,next) => {
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
+    /*console.log("idInmueble",idInmueble);
     console.log("titulo: " + titulo);
     console.log("tipoMovimiento: " + tipoMovimiento);
     console.log("linkVideo: " + linkVideo);
@@ -290,7 +290,7 @@ exports.updateBodyLocal = (req,res,next) => {
     console.log("linkMaps: " + linkMaps);
     console.log("idPropietario: " + idPropietario);
     console.log("idInmueble: " + idInmueble);
-    console.log("activoInmueble: " + activoInmueble);
+    console.log("activoInmueble: " + activoInmueble);*/
     Inmueble.changeInmuebleLocal(
         titulo,
         tipoMovimiento,
