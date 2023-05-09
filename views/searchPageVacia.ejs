@@ -2,32 +2,42 @@
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- Heading Section -->
+
     <div>
+
         <!-- NavBar Section -->
+
         <%- include("partials/navbar") %>
     </div>
+
     <!-- Properties Section -->
-    <div class="lg:px-10 lg:py-10 md:px-12 md:py-8 flex-col justify-center">
+
+    <div class="p-10 lg:p-10 md:px-12 md:py-8 flex-col justify-center">
+
+        <!-- Heading Section -->
+
         <div>
-            <h2 class="lg:py-10 md:py-8 text-4xl font-bold lg:flex lg:justify-center md:text-center">
+            <h2 class="pt-3 pb-8 md:py-8 text-4xl font-bold lg:flex lg:justify-center text-center">
                 ¡Busca tu lugar perfecto!
             </h2>
             <p class="text-4x1 font-normal text-center">
                 Navega a través de nuestro amplio catálogo de propiedades
             </p>
+            <hr class="h-px my-10 md:my-12 bg-gray-800 border-0">
         </div>
 
+        <!-- Search Section -->
+
         <form action="/catalogo/search" method="POST">
+
+            <!-- SearchBar Section -->
+
             <input type="hidden" name="newSearch" id="newSearch" value="1">
-            <div class="py-6 flex flex-col items-center justify-center  gap-5" x-data="{ open: false }">
-                <div class="flex items-center justify-between flex-col gap-6 mt-5">
-                    <!-- <div class="flex gap-6">
-                        <input type="text" name="direccionInmueble" id="direccionInmueble" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ubicación">
-                        <button type="submit" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700"> <i class="fas fa-search px-2"></i> Search</button>
-                    </div> -->
-                    
-                    <div class="flex justify-center w-3/5">
-                        <select name="idCategoria" id="idCategoria" class="px-3 py-2 w-1/6 rounded-l-lg text-base text-white font-medium bg-[#345087] hover:font-medium hover:bg-gray-700">
+
+            <div class="flex flex-col items-center justify-center pb-5 md:p-5 lg:p-8" x-data="{ open: false }">
+                <div class="flex items-center justify-between flex-col space-y-5">
+                    <div class="flex justify-center w-full">
+                        <select name="idCategoria" id="idCategoria" class="px-3 py-2 w-3/12 text-center lg:w-auto rounded-l-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
                             <option disabled selected>Tipo</option>
                             <option value="1">Casa</option>
                             <option value="2">Departamento</option>
@@ -38,99 +48,105 @@
                             <option value="7">Otro</option>
                         </select>
                         <input type="text" name="direccionInmueble" id="direccionInmueble" class="w-full border border-gray-300 bg-white h-12 px-5 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" placeholder="Ingresa tu búsqueda (ej: Juriquilla)">
-                        <button id="dropdown-button" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-[#345087] rounded-r-lg hover:font-semibold hover:bg-gray-700" type="submit">
+                        <button id="dropdown-button" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-base font-semibold text-center text-white bg-gray-800 rounded-r-lg hover:font-semibold hover:bg-gray-700" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
-                    
 
-                    <div class="space-y-0">
-                        <div class=" w-full grid grid-cols-4 space-x-8">
-                            <div></div>
-                            <div></div>
-                            <div class="col-start-2">
-                                <label class="text-gray-700 font-bold mb-2" for="precio-minimo">
-                                    Precio mínimo
-                                </label>
-                            </div>
-                            <div class="col-start-3">
-                                <label class="text-gray-700 font-bold mb-2" for="precio-maximo">
-                                    Precio máximo
-                                </label>
-                            </div>
-                            <div></div>
+                    <!-- Filters Section -->
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 space-x-0 md:space-x-8 gap-5 md:gap-0">
+                        <div class="flex items-end justify-center md:justify-end order-2 md:order-first">
+                            <select name="idTipoMovimiento" id="idTipoMovimiento" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                <option disabled selected>Operación</option>
+                                <option value="1">Venta</option>
+                                <option value="2">Renta</option>
+                                <option value="3">Venta/Renta</option>
+                            </select>
                         </div>
-    
-                        <div class="grid grid-cols-4 space-x-8">
-                            <div class="text-center">
-                                <select name="idTipoMovimiento" id="idTipoMovimiento" class="px-3 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                                    <option disabled selected>Movimento</option>
-                                    <option value="1">Venta</option>
-                                    <option value="2">Renta</option>
-                                    <option value="3">Venta/Renta</option>
-                                </select>
-                            </div>
-                            <div>
-                                <input id="precioMinimo" name="precioMinimo" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-minimo" type="number" placeholder="0">
-                            </div>
-                            <div>
-                                <input id="precioMaximo" name="precioMaximo" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="precio-maximo" type="number" placeholder="0">
-                            </div>
-                            <div class="px-5 py-2 w-fit rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle cursor-pointer" @click="open = ! open">
-                                Más filtros
+                        <div class="space-y-2">
+                            <label class="font-bold" for="precio-minimo">
+                                Precio mínimo
+                            </label>
+                            <input id="precioMinimo" name="precioMinimo" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" id="precio-minimo" type="number" placeholder="0">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-bold" for="precio-maximo">
+                                Precio máximo
+                            </label>
+                            <input id="precioMaximo" name="precioMaximo" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" id="precio-maximo" type="number" placeholder="0">
+                        </div>
+                        <div class="flex items-end justify-center order-last md:justify-start">
+                            <div class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle cursor-pointer" @click="open = ! open">
+                                <i class="fa-solid fa-plus mr-2"></i>Filtros
                             </div>
                         </div>
                     </div>
 
                 </div>
+
                 <div x-show="open"   x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-0"
                 x-transition:enter-end="opacity-100 translate-y-0"
                 x-transition:leave="transition ease-in duration-300"
                 x-transition:leave-start="opacity-100 translate-y-10"
-                x-transition:leave-end="opacity-0 translate-y-0" class="flex gap-6">
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Recámaras</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <!-- Aqui lo que se haria seria que en la consulta dices que si el avlue es >5 muestre las propiedades -->
-                        <option value="6">5+</option>
-                    </select>
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Baños</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <!-- Aqui lo que se haria seria igual que arriba -->
-                        <option value="4">3+</option>
-                    </select> 
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Estacionamientos</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <!-- Aqui lo que se haria seria igual que en los de arriba -->
-                        <option value="4">3+</option>
-                    </select> 
-                    <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                        <option disabled selected>Metros cuadrados</option>
-                        <option value="100">1-100</option>
-                        <option value="200">101-200</option>
-                        <option value="300">201-300</option>
-                        <option value="400">301-400</option>
-                        <option value="500">500+</option>
-                    </select>  
+                x-transition:leave-end="opacity-0 translate-y-0" class="grid grid-cols-2 md:flex gap-5 mt-5">
+                    <div>
+                        <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full md:w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                            <option disabled selected>Recámaras</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <!-- Aqui lo que se haria seria que en la consulta dices que si el avlue es >5 muestre las propiedades -->
+                            <option value="6">5+</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full md:w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                            <option disabled selected>Baños</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <!-- Aqui lo que se haria seria igual que arriba -->
+                            <option value="4">3+</option>
+                        </select> 
+                    </div>
+                    <div>
+                        <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full md:w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                            <option disabled selected>Estacionamientos</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <!-- Aqui lo que se haria seria igual que en los de arriba -->
+                            <option value="4">3+</option>
+                        </select> 
+                    </div>
+                    <div>
+                        <select name="precioInmueble" id="precioInmueble" class="px-5 py-2 w-full md:w-auto rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                            <option disabled selected>Metros cuadrados</option>
+                            <option value="100">1-100</option>
+                            <option value="200">101-200</option>
+                            <option value="300">201-300</option>
+                            <option value="400">301-400</option>
+                            <option value="500">500+</option>
+                        </select>  
+                    </div>
                 </div>
             </div>
         </form>
+    </div>
 
-    <!-- Desplegar elementos del catalogo -->
-    <p class="text-center text-lg font-bold">No hay ningún inmueble que cumpla con sus criterios</p>
-    <br>
+    <!-- Empty List Section -->
+
+    <div class="flex justify-center items-center pt-2 pb-20 text-center">
+        <p class="text-2xl py-4">Lo siento. No hay ningún inmueble que cumpla con sus criterios de búsqueda.</p>
+        <i class="fa-solid fa-heart-crack fa-2xl text-red-600 ml-2"></i>
+    </div>
+        
     <!-- Footer Section -->
+
     <%- include("partials/footer") %>
 
     <script src="//unpkg.com/alpinejs" defer></script>

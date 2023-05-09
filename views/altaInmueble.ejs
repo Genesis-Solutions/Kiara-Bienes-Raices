@@ -3,12 +3,13 @@
 <body style="font-family: 'Montserrat', sans-serif">
 
     <%- include('partials/navbar') %>
-
     <!-- Menu Section -->
 
     <div class="px-10 pt-10">
         <div class="space-x-5 space-y-3">
-            <a href="/dashboard" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Lista de Usuarios</a>
+            <% if (idRol == 1) { %>
+                <a href="/dashboard" class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Lista de Usuarios</a>
+            <% } %>
             <a href="/dashboard/props" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white">Lista de Propiedades</a>
             <a href="/dashboard/alta" class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Dar de alta inmueble</a>
         </div>
@@ -17,7 +18,7 @@
 
     <!-- Heading Section -->
 
-    <div class="px-10 pb-10 text-center space-y-4">
+    <div class="px-10 p-10 text-center space-y-4">
         <h2 class="text-4xl font-bold">
             Dar de alta un inmueble
         </h2>
@@ -41,7 +42,7 @@
                 <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
                     <div class="flex flex-col md:grid md:grid-cols-3">
                         <div class="md:order-last">
-                            <img src="/img/casa1_main.png" class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
+                            <img src="/img/casa1_main.png" class="w-full h-60 md:h-72 rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
                         </div>
                         <div class="col-span-2 p-5 md:p-6 lg:p-10 space-y-2">
                             <div class="flex justify-between lg:flex-row flex-col">
@@ -84,7 +85,7 @@
                 <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
                     <div class="flex flex-col md:grid md:grid-cols-3">
                         <div class="md:order-last">
-                            <img src="/img/casa4_main.png" class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
+                            <img src="/img/casa4_main.png" class="w-full h-60 md:h-72 rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
                         </div>
                         <div class="col-span-2 p-5 md:p-6 lg:p-10 space-y-2">
                             <div class="flex justify-between lg:flex-row flex-col">
@@ -127,7 +128,7 @@
                 <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
                     <div class="flex flex-col md:grid md:grid-cols-3">
                         <div class="md:order-last">
-                            <img src="/img/local_img.png" class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
+                            <img src="/img/local_img.png" class="w-full h-60 md:h-72 rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
                         </div>
                         <div class="col-span-2 p-5 md:p-6 lg:p-10 space-y-2">
                             <div class="flex justify-between lg:flex-row flex-col">
@@ -170,7 +171,7 @@
                 <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
                     <div class="flex flex-col md:grid md:grid-cols-3">
                         <div class="md:order-last">
-                            <img src="/img/office_img.png" class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
+                            <img src="/img/office_img.png" class="w-full h-60 md:h-72 rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
                         </div>
                         <div class="col-span-2 p-5 md:p-6 lg:p-10 space-y-2">
                             <div class="flex justify-between lg:flex-row flex-col">
@@ -213,7 +214,7 @@
                 <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
                     <div class="flex flex-col md:grid md:grid-cols-3">
                         <div class="md:order-last">
-                            <img src="/img/bodega_img.png" class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
+                            <img src="/img/bodega_img.png" class="w-full h-60 md:h-72 rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
                         </div>
                         <div class="col-span-2 p-5 md:p-6 lg:p-10 space-y-2">
                             <div class="flex justify-between lg:flex-row flex-col">
@@ -256,7 +257,7 @@
                 <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
                     <div class="flex flex-col md:grid md:grid-cols-3">
                         <div class="md:order-last">
-                            <img src="/img/terreno_img.png" class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
+                            <img src="/img/terreno_img.png" class="w-full h-60 md:h-72 rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
                         </div>
                         <div class="col-span-2 p-5 md:p-6 lg:p-10 space-y-2">
                             <div class="flex justify-between lg:flex-row flex-col">
@@ -293,7 +294,7 @@
                 <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
                     <div class="flex flex-col md:grid md:grid-cols-3">
                         <div class="md:order-last">
-                            <img src="/img/otro_img.png" class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
+                            <img src="/img/otro_img.png" class="w-full h-60 md:h-72 rounded-t-lg md:rounded-tl-none md:rounded-r-lg" alt="">
                         </div>
                         <div class="col-span-2 p-5 md:p-6 lg:p-10 space-y-2">
                             <div class="flex justify-between lg:flex-row flex-col">
