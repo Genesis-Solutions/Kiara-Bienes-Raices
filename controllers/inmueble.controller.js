@@ -2,6 +2,7 @@
 const path = require('path');
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
+const { link } = require('fs');
 
 //  Controlador para obtener la información de un inmueble y renderizar su vista
 
@@ -175,6 +176,7 @@ exports.updateBodyCasa = (req,res,next) => {
     console.log("idInmueble",idInmueble);
     Inmueble.changeInmuebleCasa(
         titulo,
+        desc,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -191,7 +193,6 @@ exports.updateBodyCasa = (req,res,next) => {
         recamaras,
         estacionamientos,
         banios,
-        desc,
         cocina,
         cisterna,
         cuartoServicio,
@@ -242,6 +243,7 @@ exports.updateBodyLocal = (req,res,next) => {
     const venta = req.body.venta ? 1 : 0;
     const renta = req.body.renta ? 1 : 0;
     const activoInmueble = req.body.activoInmueble ? 1 : 0;
+    console.log("activoInmuebleeeee: "+ activoInmueble);
     let tipoMovimiento = 0;
     let precioVenta = 0;
     let precioRenta = 0;
@@ -262,6 +264,33 @@ exports.updateBodyLocal = (req,res,next) => {
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
     console.log("idInmueble",idInmueble);
+    console.log("titulo: " + titulo);
+    console.log("tipoMovimiento: " + tipoMovimiento);
+    console.log("linkVideo: " + linkVideo);
+    console.log("PrecioRenta: " + precioRenta);
+    console.log("PrecioVenta: " + precioVenta);
+    console.log("medidaFrente: " + medidaFrente);
+    console.log("medidaFondo: " + medidaFondo);
+    console.log("niveles: " + niveles);
+    console.log("cuartosPrivados: " + cuartosPrivadosInmueble);
+    console.log("mediosBanios: " + mediosBanios);
+    console.log("usoSuelo: " + usoSuelo);
+    console.log("ubicado: "+ubicado);
+    console.log("CuotaMantenimiento: "+ cuotaMantenimiento);
+    console.log("cocina: "+ cocina);
+    console.log("cisterna" + cisterna);
+    console.log("cuartoServicio: "+ cuartoServicio);
+    console.log("fechaConstruccion: " + fechaConstruccion);
+    console.log("vigilancia: " + vigilancia);
+    console.log("tipoGas: " + tipoGas);
+    console.log("estacionamientos: " + estacionamientos);
+    console.log("banios: " + banios);
+    console.log("desc: " + desc);
+    console.log("direccion: " + direccion);
+    console.log("linkMaps: " + linkMaps);
+    console.log("idPropietario: " + idPropietario);
+    console.log("idInmueble: " + idInmueble);
+    console.log("activoInmueble: " + activoInmueble);
     Inmueble.changeInmuebleLocal(
         titulo,
         tipoMovimiento,

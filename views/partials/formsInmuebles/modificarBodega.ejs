@@ -96,7 +96,7 @@
                 <div class="flex items-center">
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="date" id="fechaConstruccion" name="fechaConstruccion" placeholder="<%=inmueble.fechaConstruccionInmueble%>" maxlength="30" required/>
+                        type="number" id="fechaConstruccion" name="fechaConstruccion" placeholder="<%=inmueble.fechaConstruccionInmueble%>" maxlength="30" required/>
                 </div>
                 <div class="text-white flex items-center space-x-2">
                     <i class="fa-solid fa-ruler-vertical"></i><p> Altura (mts.)</p>
@@ -201,56 +201,56 @@
 
             <div class="space-y-2 text-sm text-white">
                 <div>
-                    <input type="checkbox" id="cocina" name="cocina" value=""
-                    <% if (inmueble.cocinaInmueble == '1') { %> 
+                    <input type="checkbox" id="cocina" name="cocina" value="0"
+                    <% if (inmueble.cocinaInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Cocina</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="cisterna" name="cisterna" value=""
-                    <% if (inmueble.cisternaInmueble == '1') { %> 
+                    <input type="checkbox" id="cisterna" name="cisterna" value="0"
+                    <% if (inmueble.cisternaInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Cisterna</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="vigilancia" name="vigilancia" value=""
-                    <% if (inmueble.vigilanciaInmueble == '1') { %> 
+                    <input type="checkbox" id="vigilancia" name="vigilancia" value="0"
+                    <% if (inmueble.vigilanciaInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Vigilancia</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="generadorElectrico" name="generadorElectrico" value=""
-                    <% if (inmueble.generadorElectricoInmueble == '1') { %> 
+                    <input type="checkbox" id="generadorElectrico" name="generadorElectrico" value="0"
+                    <% if (inmueble.generadorElectricoInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Generador Eléctrico</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="andenCarga" name="andenCarga" value=""
-                    <% if (inmueble.andenCargaInmueble == '1') { %> 
+                    <input type="checkbox" id="andenCarga" name="andenCarga" value="0"
+                    <% if (inmueble.andenCargaInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Andén de Carga</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="oficina" name="oficina" value=""
-                    <% if (inmueble.oficinaInmueble == '1') { %> 
+                    <input type="checkbox" id="oficina" name="oficina" value="0"
+                    <% if (inmueble.oficinaInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
                     <label for="default-checkbox" class="ml-1 text-base">Oficina Inmueble</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="patioManiobras" name="patioManiobras" value=""
-                    <% if (inmueble.patioManiobrasInmueble == '1') { %> 
+                    <input type="checkbox" id="patioManiobras" name="patioManiobras" value="0"
+                    <% if (inmueble.patioManiobrasInmueble == 1) { %> 
                         checked
                     <% } %>
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
@@ -271,7 +271,7 @@
             <div>
                 <input
                     class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                    type="number" id="m2construccion" name="m2construccion" value="<%=inmueble.m2ConstruidosInmueble%>" placeholder="<%=inmueble.m2ConstruidosInmueble%>" maxlength="30" required/>
+                    type="number" id="m2Construccion" name="m2Construccion" value="<%=inmueble.m2ConstruidosInmueble%>" placeholder="<%=inmueble.m2ConstruidosInmueble%>" maxlength="30" required/>
             </div>
             <div class="text-white flex items-center space-x-2">
                 <i class="fa-solid fa-layer-group"></i><p> Pisos</p>
@@ -307,10 +307,16 @@
         <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
         <textarea id="desc" name="desc" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
     </div>
-    <% if (inmueble.activoInmueble == 0) { %>
-        <div class="text-white">
-            <input type="checkbox" id="activoInmueble" name="activoInmueble" value="0" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
-            <label for="default-checkbox" class="ml-1 text-base">Activo Inmueble</label>
-        </div>
-    <% } %>
+    <div class="text-white">
+        <input type="checkbox" 
+        <% if (inmueble.activoInmueble == 1) { %>
+            hidden checked
+        <% } %>
+        id="activoInmueble" name="activoInmueble" value="1" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+        <label 
+        <% if (inmueble.activoInmueble == 1) { %>
+            hidden
+        <% } %>
+        for="default-checkbox" class="ml-1 text-base">Activo Inmueble</label>
+    </div>
 </div>
