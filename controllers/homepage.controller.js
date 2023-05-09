@@ -50,7 +50,7 @@ exports.root = async(req,res,next) => {
 exports.getImgFromBucket = ( req,res,next ) => {
     var img = req.query.image;
     const AWS_BUCKET = "kiarabienesraices";
-    console.log('Trying to download file: ' + img);
+    //console.log('Trying to download file: ' + img);
     var opciones = {
         Bucket: AWS_BUCKET,
         Key: img,
