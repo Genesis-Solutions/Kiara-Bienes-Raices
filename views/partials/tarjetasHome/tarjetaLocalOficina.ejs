@@ -20,11 +20,13 @@
                     </div>
                 </div>
                 <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}); %>
-                <% if(data.precioVentaInmueble != null){ %>
-                    <h3 class="text-lg font-medium"> <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
-                <% } %>
-                <%if(data.precioRentaInmueble != null){%>
-                    <h3 class="text-lg font-medium"> <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
+                <% if (data.idTipoMovimiento == 1) { %>
+                    <h3 class="text-lg font-medium"> Venta: <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
+                <% } else if (data.idTipoMovimiento == 2) {%>
+                    <h3 class="text-lg font-medium"> Renta: <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
+                <% }  else if (data.idTipoMovimiento == 3) {%>
+                    <h3 class="text-lg font-medium"> Venta: <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
+                    <h3 class="text-lg font-medium"> Renta: <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
                 <% } %>
             </div>
         </div>
