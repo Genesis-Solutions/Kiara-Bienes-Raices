@@ -114,11 +114,16 @@ exports.deleteUser = async (req, res, next) => {
     */
     if (tramites_activos == 0) {
         await Dashboard.deleteUser(req.params.id);
-    } else {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
             comprobacionEliminado: true
+        });
+    } else {
+        res.status(200).json({
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            comprobacionEliminado: false
         });
     }
 }
