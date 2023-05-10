@@ -4,13 +4,25 @@
                 <i class="fa-solid fa-house"></i> <%= inmueble.m2ConstruidosInmueble %> m2 Construidos
             </div>
             <div>
+                <% if (inmueble.recamarasInmueble == 0) { %>
+                    <i class="fa-solid fa-layer-group invisible"></i>
+                <% } else if (inmueble.recamarasInmueble > 0){ %>
                 <i class="fa-solid fa-layer-group"></i> <%= inmueble.recamarasInmueble %> rec.
+                <% } %>
             </div>
             <div>
+                <% if (inmueble.baniosInmueble == 0) { %>
+                    <i class="fa-solid fa-bath invisible"></i>
+                <% } else if (inmueble.baniosInmueble > 0) { %>
                 <i class="fa-solid fa-bath"></i> <%= inmueble.baniosInmueble %> baño(s)
+                <% } %>
             </div>
             <div>
+                <% if (inmueble.estacionamientosInmueble == 0) { %>
+                    <i class="fa-solid fa-car invisible"></i>
+                <% } else if (inmueble.estacionamientosInmueble > 0) { %>
                 <i class="fa-solid fa-car"></i> <%= inmueble.estacionamientosInmueble %> estac.
+                <% } %>
             </div>
     </div>
 </div>

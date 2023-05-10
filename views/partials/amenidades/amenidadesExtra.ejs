@@ -2,39 +2,39 @@
     <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}) %>
     <div>
         <ul class="space-y-2">
-            <% if (inmueble.m2TerrenoInmueble != null) { %>
+            <% if (inmueble.m2TerrenoInmueble != null && inmueble.m2TerrenoInmueble > 0) { %>
                 <li>● <%= inmueble.m2TerrenoInmueble %> m2 Terreno</li>
             <% } %>
             
-            <% if (inmueble.m2ConstruidosInmueble != null) { %>
+            <% if (inmueble.m2ConstruidosInmueble != null && inmueble.m2ConstruidosInmueble > 0) { %>
                 <li>● <%= inmueble.m2ConstruidosInmueble %> m2 Construidos</li>
             <% } %>
             
-            <% if (inmueble.medidasFrenteInmueble != null) { %>
+            <% if (inmueble.medidasFrenteInmueble != null && inmueble.medidasFrenteInmueble > 0) { %>
                 <li>● Medida de Fondo <%= inmueble.medidasFrenteInmueble %> mts</li>
             <% } %>
             
-            <% if (inmueble.nivelesInmueble != null) { %>
+            <% if (inmueble.nivelesInmueble != null && inmueble.nivelesInmueble > 0) { %>
                 <li>● <%= inmueble.nivelesInmueble %> Pisos</li>
             <% } %>
             
-            <% if (inmueble.recamarasInmueble != null) { %>
+            <% if (inmueble.recamarasInmueble != null && inmueble.recamarasInmueble > 0) { %>
                 <li>● <%= inmueble.recamarasInmueble %> Recámaras </li>
             <% } %>
             
-            <% if (inmueble.cuartosPrivadosInmueble != null) { %>
+            <% if (inmueble.cuartosPrivadosInmueble != null && inmueble.cuartosPrivadosInmueble > 0) { %>
                 <li>● <%= inmueble.cuartosPrivadosInmueble %> Cuartos Priv. </li>
             <% } %>
             
-            <% if (inmuebles.baniosInmueble != null) { %>
+            <% if (inmuebles.baniosInmueble != null && inmuebles.baniosInmueble > 0) { %>
                 <li>● <%= inmueble.baniosInmueble %> Baños</li>
             <% } %>
             
-            <% if (inmueble.mediosBaniosInmueble != null) { %>
+            <% if (inmueble.mediosBaniosInmueble != null && inmueble.mediosBaniosInmueble > 0) { %>
                 <li>● <%= inmueble.mediosBaniosInmueble %> Medios Baños </li>
             <% } %>
             
-            <% if (inmueble.estacionamientosInmueble != null) { %>
+            <% if (inmueble.estacionamientosInmueble != null && inmueble.estacionamientosInmueble > 0 ) { %>
                 <li>● <%= inmueble.estacionamientosInmueble %> Estacionamientos </li>
             <% } %>
             
@@ -87,7 +87,7 @@
             <% } %>
             
             <% if (inmueble.fechaConstruccionInmueble != null) { %>
-                <li>● Construcción: <%= inmueble.fechaConstruccionInmueble %> </li>
+                <li>● Año de Construcción: <%= inmueble.fechaConstruccionInmueble %> </li>
             <% } %>
             
             <% if (inmueble.estudioInmueble != 0 && inmueble.estudioInmueble != null) { %>

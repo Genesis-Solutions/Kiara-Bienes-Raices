@@ -10,4 +10,5 @@ const pool = createPool({
     database: '',
 });
 
-module.exports = pool.promise();
+module.exports = pool.promise();
+
