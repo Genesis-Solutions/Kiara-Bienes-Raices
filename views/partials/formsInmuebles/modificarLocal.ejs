@@ -98,7 +98,8 @@
                 <div class="flex items-center">
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                        type="number" id="fechaConstruccion" name="fechaConstruccion" value="<%=inmueble.fechaConstruccionInmueble%>" placeholder="<%=inmueble.fechaConstruccionInmueble%>" maxlength="30" required/>
+                        type="number" id="fechaConstruccion" name="fechaConstruccion" value="<%=inmueble.fechaConstruccionInmueble%>" placeholder="<%=inmueble.fechaConstruccionInmueble%>" maxlength="4" 
+                        required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
                 </div>
             </div>
 
