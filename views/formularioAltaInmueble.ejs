@@ -61,17 +61,6 @@
         <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
     <%}%>
 
-    <!-- Buttons Section -->
-    <!-- <div class="px-10 pb-12 flex justify-evenly">
-        <input type="hidden" id="id_inmueble" name="id_inmueble" value="<%=idInmueble%>">
-        <button type="submit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
-            Cancelar
-        </button>
-        <button class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnSubmit">
-            Registrar
-        </button>
-    </div> -->
-
     <!-- Enlazar con la biblioteca de jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <!-- jQuery form plug in -->
@@ -106,18 +95,11 @@
                     e.preventDefault();
                     e.stopPropagation();
                     myDropzone.processQueue();
-                    window.location.replace('/dashboard/alta');
-                    //window.location.replace('/inmueble/<%=idInmueble%>');
+                    //window.location.replace('/dashboard/alta');
+                    window.location.replace('/inmueble/<%=idInmueble%>');
                 }); 
             }
         });
-    </script>
-
-    <!-- Submit del formulario del cuerpo del inmueble desde el boton Registrar -->
-    <script type="text/javascript">   
-        $(document).on("click", ".btnSubmit", function(){	
-            $('#cuerpoInmueble').submit();
-        })
     </script>
 
     <!-- Submit del formulario del imagenes del inmueble desde el submit del formulario del cuerpo -->
@@ -130,7 +112,7 @@
                 type: 'POST',
                 data: $( this ).serializeArray(),
                 success: function() {
-                    console.log("Dentro del succes de form 1");
+                    //console.log("Dentro del succes de form 1");
                     $('#imagenes').submit();
                 }
             })
@@ -148,8 +130,6 @@
     <script type="text/javascript">   
         function eliminarInmueble() {
             var idInmueble = $("#id_inmueble").val();
-            console.log("Hola desde el boton de eliminar");
-            console.log("idInmueble",idInmueble);
             $.ajax({
                 url: '/dashboard/baja/inmueble/<%=idInmueble%>',
                 type: 'GET',
