@@ -114,11 +114,11 @@
     </script>
 
     <!-- Submit del formulario del cuerpo del inmueble desde el boton Registrar -->
-    <script type="text/javascript">   
+    <!-- <script type="text/javascript">   
         $(document).on("click", ".btnSubmit", function(){	
             $('#cuerpoInmueble').submit();
         })
-    </script>
+    </script> -->
 
     <!-- Submit del formulario del imagenes del inmueble desde el submit del formulario del cuerpo -->
     <script type="text/javascript">  
@@ -148,8 +148,6 @@
     <script type="text/javascript">   
         function eliminarInmueble() {
             var idInmueble = $("#id_inmueble").val();
-            console.log("Hola desde el boton de eliminar");
-            console.log("idInmueble",idInmueble);
             $.ajax({
                 url: '/dashboard/baja/inmueble/<%=idInmueble%>',
                 type: 'GET',
