@@ -7,7 +7,7 @@ const pool = createPool({
     user: 'root',
     password: '',
     port: 3306,
-    database: 'dev_kiara_2',
+    database: '',
 });
 
 module.exports = pool.promise();
