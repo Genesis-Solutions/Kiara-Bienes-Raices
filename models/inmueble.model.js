@@ -778,7 +778,7 @@ Actualiza un inmueble de tipo Otro en la base de datos
   @return -> JSON Lista con toda la información de los ultimos 4 inmuebles dentro de la base de datos.
   */
   static fetchLastFour() {
-    return db.execute("SELECT * from inmueble ORDER BY idInmueble DESC LIMIT 4");
+    return db.execute("SELECT * from inmueble WHERE activoInmueble=1 ORDER BY idInmueble DESC LIMIT 4");
   }
 
   /*

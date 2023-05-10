@@ -1,5 +1,6 @@
 //Aqui va la conexion a la base de datos
-const { createPool } = require('mysql2');
+
+const { createPool } = require("mysql2");
 
 const pool = createPool({
     host: 'localhost',
@@ -10,3 +11,4 @@ const pool = createPool({
 });
 
 module.exports = pool.promise();
+
