@@ -126,14 +126,14 @@
                 <div class="grid grid-cols-2 space-x-5 gap-8">
                     <div class="space-y-5">
                         <div class="space-y-2">
-                            <label for="titulo" class="text-lg font-semibold">Dirección de la Propiedad</label>
+                            <label for="direccion" class="text-lg font-semibold">Dirección de la Propiedad</label>
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="text" id="direccion" name="direccion" value="<%=inmueble.direccionInmueble%>" placeholder="<%=inmueble.direccionInmueble%>" maxlength="30" required/>
+                                type="text" id="direccion" name="direccion" value="<%=inmueble.direccionInmueble%>" placeholder="<%=inmueble.direccionInmueble%>" maxlength="220" required/>
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label for="titulo" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
+                        <label for="linkMaps" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
                             type="text" id="linkMaps" name="linkMaps" value="<%=inmueble.linkGoogleMaps%>" placeholder="<%=inmueble.linkGoogleMaps%>" maxlength="1000" required/>
