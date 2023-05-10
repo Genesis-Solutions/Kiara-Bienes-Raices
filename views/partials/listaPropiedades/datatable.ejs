@@ -65,6 +65,8 @@
             thead += '<tr>'
             thead += '<th>Id del Inmueble</th>'
             thead += '<th>Propiedad</th>'
+            thead += '<th>Precio de Venta</th>'
+            thead += '<th>Precio de Renta</th>'
             thead += '<th>Dueño</th>'
             thead += '<th>Operación</th>'
             thead += '<th>Agente</th>'
@@ -76,6 +78,8 @@
             tfooter += '<tr>'
             tfooter += '<th>Id del Inmueble</th>'
             tfooter += '<th>Propiedad</th>'
+            tfooter += '<th>Precio de Venta</th>'
+            tfooter += '<th>Precio de Renta</th>'
             tfooter += '<th>Dueño</th>'
             tfooter += '<th>Operación</th>'
             tfooter += '<th>Rol</th>'
@@ -97,11 +101,31 @@
                 columns: [
                     {
                         data: "idInmueble"
-                    },    
+                    },
                     {
                         data: null,
                         render: function (data, type, row) {
                             return '<a href="../inmueble/' + data.idInmueble + '" class="badge badge-success">' + data.nombreInmueble + '</a>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (data.precioVentaInmueble == null) {
+                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
+                            }
+                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
+                            return '<span class="badge badge-success">' + formatter.format(data.precioVentaInmueble) + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (data.precioRentaInmueble == null) {
+                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
+                            }
+                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
+                            return '<span class="badge badge-success">' + formatter.format(data.precioRentaInmueble) + '</span>'
                         }
                     },
                     {
@@ -167,41 +191,41 @@
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
                 <%if (idRol == 2) {%>
-                    Swal.fire('No tienes permisos administrativos para la modificación.');
+                Swal.fire('No tienes permisos administrativos para la modificación.');
                     <%} else if (idRol == 1) {%>
-                        $.ajax({
-                            url: '/dashboard/agentes',
-                            method: 'get',
-                            success: function (choice) {
-                                for (var i = 0; i < choice.agentesArray.length; i = i + 1) {
-                                    var nombre = choice.agentesArray[i].nombresAgente + ' ' + choice.agentesArray[i].apellidosAgente
-                                    agentes[choice.agentesArray[i].idUsuario] = nombre
-                                }
-                                const { value: eleccion } = Swal.fire({
-                                    /* 
-                                    * Cuando el botón de modificación de encargado sea clickeado, se desplegará un modal con los agentes disponibles.
-                                    */
-                                    title: 'Selecciona al Encargado Nuevo:',
-                                    input: 'select',
-                                    inputOptions: agentes,
-                                    showCancelButton: true,
-                                }).then((result) => {
-                                    if (result.value >= 1) {
-                                        $.ajax({
-                                            url: '/dashboard/props/actualizar/' + result.value+'/'+id,
-                                            method: 'put',
-                                        });
-                                        Swal.fire('¡El encargado ha sido modificado!')
-                                        recargarTablaPropiedades();
-                                    }
-
-                                })
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                $.ajax({
+                    url: '/dashboard/agentes',
+                    method: 'get',
+                    success: function (choice) {
+                        for (var i = 0; i < choice.agentesArray.length; i = i + 1) {
+                            var nombre = choice.agentesArray[i].nombresAgente + ' ' + choice.agentesArray[i].apellidosAgente
+                            agentes[choice.agentesArray[i].idUsuario] = nombre
+                        }
+                        const { value: eleccion } = Swal.fire({
+                            /* 
+                            * Cuando el botón de modificación de encargado sea clickeado, se desplegará un modal con los agentes disponibles.
+                            */
+                            title: 'Selecciona al Encargado Nuevo:',
+                            input: 'select',
+                            inputOptions: agentes,
+                            showCancelButton: true,
+                        }).then((result) => {
+                            if (result.value >= 1) {
+                                $.ajax({
+                                    url: '/dashboard/props/actualizar/' + result.value + '/' + id,
+                                    method: 'put',
+                                });
+                                Swal.fire('¡El encargado ha sido modificado!')
+                                recargarTablaPropiedades();
                             }
 
-                        });
+                        })
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                    }
+
+                });
                             <%}%>   
         });
     </script>
