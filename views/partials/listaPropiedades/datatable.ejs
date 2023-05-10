@@ -111,33 +111,6 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            if (data.precioVentaInmueble == null) {
-                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
-                            }
-                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
-                            return '<span class="badge badge-success">' + formatter.format(data.precioVentaInmueble) + '</span>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            if (data.precioRentaInmueble == null) {
-                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
-                            }
-                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
-                            return '<span class="badge badge-success">' + formatter.format(data.precioRentaInmueble) + '</span>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            var arrendador = data.nombresArrendador + ' ' + data.apellidosArrendador
-                            return '<span class="badge badge-success">' + arrendador + '</span>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
                             if (data.idTipoMovimiento == 1) {
                                 var movimiento = 'Venta'
                             }
@@ -150,6 +123,34 @@
                             return '<span class="badge badge-success">' + movimiento + '</span>'
                         }
                     },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (data.precioVentaInmueble == null) {
+                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
+                            }
+                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
+                            return '<b class="badge badge-success">' + formatter.format(data.precioVentaInmueble) + '</b>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (data.precioRentaInmueble == null) {
+                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
+                            }
+                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
+                            return '<b class="badge badge-success">' + formatter.format(data.precioRentaInmueble) + '</b>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            var arrendador = data.nombresArrendador + ' ' + data.apellidosArrendador
+                            return '<span class="badge badge-success">' + arrendador + '</span>'
+                        }
+                    },
+                    
                     {
                         data: null,
                         render: function (data, type, row) {
