@@ -5,23 +5,19 @@
     <%- include('partials/navbar') %>
 
         <div class="grid grid-cols-2 gap-8">
-            <form id="formMedia" action="" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+            <form id="formMedia" action="/test/createlocal" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
                     <h2 class="text-2xl font-bold mb-4">Upload de una foto a local (assets/file)</h2>
-                    <label class="text-xl text-gray-600">Nombre</label>
-                    <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombreMedia" required>
                     <label class="text-xl text-gray-600">Subir fotografia</label>
                     <input type="file" id="mediaLocal" name="mediaLocal" class="border-2 border-gray-300 p-2 w-full"  required>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
-            <form id="formMedia" action="" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+            <form id="formMedia" action="/test/singleUploadS3" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
                     <h2 class="text-2xl font-bold mb-4">Upload de una foto al S3 - single upload</h2>
-                    <label class="text-xl text-gray-600">Nombre</label>
-                    <input class="border-2 border-gray-300 p-2 w-full" type="text" name="nombreMedia" required>
                     <label class="text-xl text-gray-600">Subir fotografia</label>
-                    <input type="file" id="mediaS3" name="mediaS3" class="border-2 border-gray-300 p-2 w-full"  required>
+                    <input type="file" id="singleMediaS3" name="singleMediaS3" class="border-2 border-gray-300 p-2 w-full"  required>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
