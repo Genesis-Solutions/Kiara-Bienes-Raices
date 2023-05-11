@@ -884,7 +884,8 @@ exports.updateBodyOtro = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps
+        linkMaps,
+        id_inmueble
     } = req.body;
     /*
     *Obtener el tipo de movimiento y los respectivos precios
@@ -907,11 +908,9 @@ exports.updateBodyOtro = (req, res, next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
-    const cocina = req.body.cocina ? 1 : 0;
-    const cisterna = req.body.cisterna ? 1 : 0;
-    const vigilancia = req.body.vigilancia ? 1 : 0;
-    const idInmueble = req.params.inmueble;
-    //console.log("idInmueble",idInmueble);
+    const estudio = req.body.cocina ? 1 : 0;
+    const roofGarden = req.body.cisterna ? 1 : 0;
+    const bodega = req.body.vigilancia ? 1 : 0;
     Dashboard.activateInmuebleOtro(
         titulo,
         id_agente,
@@ -931,13 +930,13 @@ exports.updateBodyOtro = (req, res, next) => {
         cuotaMantenimiento,
         estacionamientos,
         banios,
+        estudio,
+        roofGarden,
+        bodega,
         desc,
         direccion,
-        cocina,
-        cisterna,
-        vigilancia,
         linkMaps,
-        idInmueble
+        id_inmueble
     );
     res.status(200).json({ code: 200, msg: "Ok" })
 };

@@ -821,18 +821,18 @@ module.exports = class Dashboard {
         usoSuelo,
         ubicado,
         cuotaMantenimiento,
-        cocina,
-        cisterna,
-        vigilancia,
         estacionamientos,
         banios,
+        estudio,
+        roofGarden,
+        bodega,
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
     ){
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,  idAgenteAsignado=?,idArrendador=?,linkVideoInmueble=?, idTipoMovimiento=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=? WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?,linkVideoInmueble=?, idTipoMovimiento=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, estudioInmueble=?,roofGardenInmueble=?,  bodegaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
             [   
                 titulo,
                 id_agente,
@@ -850,15 +850,15 @@ module.exports = class Dashboard {
                 usoSuelo,
                 ubicado,
                 cuotaMantenimiento,
-                cocina,
-                cisterna,
-                vigilancia,
                 estacionamientos,
                 banios,
+                estudio,
+                roofGarden,
+                bodega,
                 desc,
                 direccion,
                 linkMaps,
-                idInmueble
+                id_inmueble
             ]
         );
     }
