@@ -522,9 +522,9 @@ exports.updateBodyLocal = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps
+        linkMaps,
+        id_inmueble
     } = req.body;
-    console.log(req.body);
     /*
     *Obtener el tipo de movimiento y los respectivos precios
     */
@@ -534,15 +534,15 @@ exports.updateBodyLocal = (req, res, next) => {
     let precioVenta = 0;
     let precioRenta = 0;
     if (venta === 1 && renta === 1) {
-        tipoMovimiento = 3
+        tipoMovimiento = 3;
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
     } else if (venta === 1 && renta === 0) {
-        tipoMovimiento = 1
+        tipoMovimiento = 1;
         precioVenta = req.body.precioVenta ? req.body.precioVenta : 0;
         precioRenta = 0;
     } else if (venta === 0 && renta === 1) {
-        tipoMovimiento = 2
+        tipoMovimiento = 2;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
@@ -550,8 +550,6 @@ exports.updateBodyLocal = (req, res, next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
-    const idInmueble = req.params.inmueble;
-    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleLocal(
         titulo,
         id_agente,
@@ -567,7 +565,6 @@ exports.updateBodyLocal = (req, res, next) => {
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
-        estacionamientos,
         usoSuelo,
         ubicado,
         cuotaMantenimiento,
@@ -582,7 +579,7 @@ exports.updateBodyLocal = (req, res, next) => {
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
     );
     res.status(200).json({ code: 200, msg: "Ok" })
 };
