@@ -3,7 +3,7 @@ const { uploadMedia } = require('../util/testLocalMulter.util');
 const { storage } = require('../util/awsMediaMulter.util');
 
 exports.getTestPage = (req,res,next) => {
-    // Renderizar la vista de la lista de Propiedades
+    // Renderizar la vista de test
     res.render("testImageUpload", {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
@@ -50,6 +50,22 @@ exports.postDropzoneLocal = (req,res,next) => {
                 const filename = req.files[0].filename;
                 //console.log(pathDest);
                 console.log(filename);
+            });
+        }
+    });
+    //res.status(200).json({code: 200, msg:"Ok"}); 
+    res.redirect('/test');
+};
+
+exports.postDropzoneS3 = (req, res, next) => {
+    var upload = storage.array('mediaDropzoneS3', 25);
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            req.files.forEach(function (file) {
+                const mediaName = file.key;
+                console.log(mediaName);
             });
         }
     });

@@ -44,10 +44,33 @@
                 </form>
             </div>
         </div>
+        <!-- Dropzone directo al S3 -->
+        <div class="px-10 py-5 grid grid-cols-3">
+            <!-- </div> -->
+            <div class="col-span-3">
+                <h2 class="text-lg font-semibold">
+                    Dropzone S3
+                </h2>
+                <p class="text-gray-700"> Subir maximo 5 imagenes </p>
+                <!-- Pictures Form -->
+                <form action="/test/dropzoneS3" id="imagenesS3" name="imagenesS3"
+                    enctype="multipart/form-data" method="POST">
+                    <div class="dropzone dz-clickable" id="uploadDropzoneS3">
+                        <div class="dz-default dz-message" data-dz-message="">
+                            <span>Drop files here to upload</span>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
 
         <div class="px-10 pb-12 flex justify-evenly">
-            <button class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnLocalDropzone">
+            <button  class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnLocalDropzone">
                 Upload dropzone local
+            </button>
+            <button  class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnS3Dropzone">
+                Upload dropzone S3
             </button>
         </div>
 
@@ -71,22 +94,48 @@
         <!-- Configuración de dropzone local-->
         <script type="text/javascript">
             Dropzone.autoDiscover = false;
-            function paramNameForSend() {
+            function paramNameForSendLocal() {
                 return "mediaDropzoneLocal";
             }
-            //console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
             $("#uploadDropzone").dropzone({ 
                 url: '/test/dropzonelocal',
                 maxFilesize: 15, // MB
                 maxFiles: 25,
                 autoProcessQueue: false,
                 uploadMultiple: true,
-                paramName: paramNameForSend,
+                paramName: paramNameForSendLocal,
                 method: 'post',
                 parallelUploads: 25,
                 init: function() {
                     var myDropzone = this;
                     $("#imagenes").submit(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                        window.location.replace('/test');
+                    }); 
+                }
+            });
+        </script>
+
+        <!-- Configuración de dropzone S3-->
+        <script type="text/javascript">
+            Dropzone.autoDiscover = false;
+            function paramNameForSendS3() {
+                return "mediaDropzoneS3";
+            }
+            $("#uploadDropzoneS3").dropzone({ 
+                url: '/test/dropzoneS3',
+                maxFilesize: 15, // MB
+                maxFiles: 25,
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                paramName: paramNameForSendS3,
+                method: 'post',
+                parallelUploads: 25,
+                init: function() {
+                    var myDropzone = this;
+                    $("#imagenesS3").submit(function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         myDropzone.processQueue();
@@ -107,6 +156,20 @@
         <script type="text/javascript">   
             function uploadLocalDropzone() {
                 $('#imagenes').submit();
+            }
+        </script>
+
+        <!-- Ejecución de la función uploadS3Dropzone desde el boton Upload dropzone S3 -->
+        <script type="text/javascript">   
+            $(document).on("click", ".btnS3Dropzone", function(){	
+                uploadS3Dropzone();
+            })
+        </script>
+
+        <!-- Función eliminarInmueble -->
+        <script type="text/javascript">   
+            function uploadS3Dropzone() {
+                $('#imagenesS3').submit();
             }
         </script>
 
