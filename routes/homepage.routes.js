@@ -20,5 +20,7 @@ router.get("/contacto", userController.getContacto);
 router.get("/politicas", userController.getPoliticas);
 router.get('/nosotros', userController.getNosotros);
 router.get('/servicios', userController.getServicios);
+router.get('/search', homeController.getInmueblesFiltradosIndex);
+router.post('/search', homeController.getInmueblesFiltradosIndex);
 
 module.exports = router;
