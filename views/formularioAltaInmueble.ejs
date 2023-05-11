@@ -92,10 +92,11 @@
             init: function() {
                 var myDropzone = this;
                 $("#imagenes").submit(function (e) {
+                    console.log("Dentro del succes de form 2");
                     e.preventDefault();
                     e.stopPropagation();
                     myDropzone.processQueue();
-                    window.location.replace('/catalogo');
+                    window.location.replace('/dashboard/alta');
                     //window.location.replace('/inmueble/<%=idInmueble%>');
                 }); 
             }
@@ -112,7 +113,7 @@
                 type: 'POST',
                 data: $( this ).serializeArray(),
                 success: function() {
-                    //console.log("Dentro del succes de form 1");
+                    console.log("Dentro del succes de form 1");
                     $('#imagenes').submit();
                 }
             })
