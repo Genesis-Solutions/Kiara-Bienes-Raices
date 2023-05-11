@@ -367,6 +367,7 @@ Agrega una o varias fotos al inmueble especificado en la solicitud HTTP.
 @throws {Error} - Error de base de datos si no se puede registrar la imagen del inmueble.
 */
 exports.setPhotos = (req, res, next) => {
+    console.log('Entrando a setPhotos');
     var upload = storage.array('media', 25);
     upload(req, res, function (err) {
         if (err) {

@@ -79,7 +79,8 @@
             return "media";
         }
         var idInmueble = $("#id_inmueble").val();
-        //console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
+        console.log("Dentro de la config de dropzone");
+        console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
         $("#uploadDropzone").dropzone({ 
             url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
             maxFilesize: 15, // MB
