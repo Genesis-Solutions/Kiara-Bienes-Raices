@@ -415,7 +415,8 @@ exports.updateBodyCasa = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps
+        linkMaps,
+        id_inmueble
     } = req.body;
     /*
     *Obtener el tipo de movimiento y los respectivos precios.
@@ -451,7 +452,6 @@ exports.updateBodyCasa = (req, res, next) => {
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
-    const idInmueble = req.params.inmueble;
     //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleCasa(
         titulo,
@@ -486,7 +486,7 @@ exports.updateBodyCasa = (req, res, next) => {
         bodega,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
     );
     res.status(200).json({ code: 200, msg: "Ok" });
 };
