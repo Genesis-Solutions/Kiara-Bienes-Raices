@@ -724,8 +724,8 @@ module.exports = class Dashboard {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2Terreno,
-        m2Construccion,
+        m2terreno,
+        m2construccion,
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
@@ -741,10 +741,10 @@ module.exports = class Dashboard {
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
         ) {
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,  idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
         [
             titulo,
             id_agente,
@@ -753,8 +753,8 @@ module.exports = class Dashboard {
             linkVideo,
             precioVenta,
             precioRenta,
-            m2Terreno,
-            m2Construccion,
+            m2terreno,
+            m2construccion,
             niveles,
             cuartosPrivadosInmueble,
             mediosBanios,
@@ -770,7 +770,7 @@ module.exports = class Dashboard {
             desc,
             direccion,
             linkMaps,
-            idInmueble,
+            id_inmueble
         ]
         );
     }
