@@ -452,7 +452,7 @@ module.exports = class Dashboard {
         idInmueble
     ){
         return db.execute(
-            'UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?, idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,m2ConstruidosInmueble=?,medidaFrenteInmueble=?,medidaFondoInmueble=?,nivelesInmueble=?,cuartosPrivadosInmueble=?,mediosBaniosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?,cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble = ?',
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?, idTipoMovimiento=?,linkVideoInmueble=?, precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,m2ConstruidosInmueble=?,medidasFrenteInmueble=?,medidasFondoInmueble=?, nivelesInmueble=?,cuartosPrivadosInmueble=?,mediosBaniosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?, cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
             [   
                 titulo,
                 id_agente,
@@ -482,7 +482,7 @@ module.exports = class Dashboard {
                 desc,
                 direccion,
                 linkMaps,
-                idInmueble               
+                idInmueble          
             ]
         );
     }
@@ -514,7 +514,7 @@ module.exports = class Dashboard {
     @param {number} idInmueble El ID del inmueble que se desea actualizar.
     @return El resultado de la ejecución de la consulta SQL en la base de datos.
     */
-    static changeInmuebleTerreno(
+    static activateInmuebleTerreno(
         titulo,
         id_agente,
         id_arrendador,
@@ -522,8 +522,8 @@ module.exports = class Dashboard {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2Terreno,
-        m2Construccion,
+        m2terreno,
+        m2construccion,
         medidaFrente,
         medidaFondo,
         usoSuelo,
@@ -531,41 +531,41 @@ module.exports = class Dashboard {
         servicioAgua,
         servicioLuz,
         servicioDrenaje,
+        vigilancia,
         tipoSuelo,
         cuotaMantenimiento,
-        vigilancia,
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
         ) {
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?, servicioDrenajeInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?, vigilanciaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=? WHERE idInmueble = ?",
+            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?,servicioDrenajeInmueble=?, vigilanciaInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?,  descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble = ?",
             [
-            titulo,
-            id_agente,
-            id_arrendador,
-            tipoMovimiento,
-            linkVideo,
-            precioVenta,
-            precioRenta,
-            m2Terreno,
-            m2Construccion,
-            medidaFrente,
-            medidaFondo,
-            usoSuelo,
-            ubicado,
-            servicioAgua,
-            servicioLuz,
-            servicioDrenaje,
-            tipoSuelo,
-            cuotaMantenimiento,
-            vigilancia,
-            desc,
-            direccion,
-            linkMaps,
-            idInmueble
-        ]
+                titulo,
+                id_agente,
+                id_arrendador,
+                tipoMovimiento,
+                linkVideo,
+                precioVenta,
+                precioRenta,
+                m2terreno,
+                m2construccion,
+                medidaFrente,
+                medidaFondo,
+                usoSuelo,
+                ubicado,
+                servicioAgua,
+                servicioLuz,
+                servicioDrenaje,
+                vigilancia,
+                tipoSuelo,
+                cuotaMantenimiento,
+                desc,
+                direccion,
+                linkMaps,
+                id_inmueble
+            ]
         );
     }
 
@@ -608,7 +608,7 @@ module.exports = class Dashboard {
     @param {number} idInmueble ID del inmueble a actualizar.
     @return El resultado de la ejecución de la consulta SQL para actualizar el inmueble.
     */
-    static changeInmuebleBodega(
+    static activateInmuebleBodega(
         titulo,
         id_agente,
         id_arrendador,
@@ -616,73 +616,73 @@ module.exports = class Dashboard {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2Terreno,
-        m2Construccion,
+        m2terreno,
+        m2construccion,
         medidaFrente,
         medidaFondo,
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
-        estacionamientos,
         usoSuelo,
         ubicado,
         cuotaMantenimiento,
+        fechaConstruccion,
+        muros,
+        altura,
+        tipoPiso,
+        tipoLuz,
+        estacionamientos,
+        banios,
         cocina,
         cisterna,
-        fechaConstruccion,
         vigilancia,
         generadorElectrico,
         andenCarga,
         oficina,
         patioManiobras,
-        muros,
-        altura,
-        tipoPiso,
-        tipoLuz,
-        banios,
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
         ){
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?, idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, estacionamientosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, generadorElectricoInmueble=?, andenCargaInmueble=?, oficinaInmueble=?, patioManiobrasInmueble=?, murosInmueble=?, alturaInmueble=?, tipoPisoInmueble=?, tipoLuzInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?, idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?,cuotaMantenimientoInmueble=?, fechaConstruccionInmueble=?, murosInmueble=?,alturaInmueble=?,tipoPisoInmueble=?, tipoLuzInmueble=?,estacionamientosInmueble=?, baniosInmueble=?, cocinaInmueble=?, cisternaInmueble=?,vigilanciaInmueble=?, generadorElectricoInmueble=?, andenCargaInmueble=?, oficinaInmueble=?, patioManiobrasInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
             [
-            titulo,
-            id_agente,
-            id_arrendador,
-            tipoMovimiento,
-            linkVideo,
-            precioVenta,
-            precioRenta,
-            m2Terreno,
-            m2Construccion,
-            medidaFrente,
-            medidaFondo,
-            niveles,
-            cuartosPrivadosInmueble,
-            mediosBanios,
-            estacionamientos,
-            usoSuelo,
-            ubicado,
-            cuotaMantenimiento,
-            cocina,
-            cisterna,
-            fechaConstruccion,
-            vigilancia,
-            generadorElectrico,
-            andenCarga,
-            oficina,
-            patioManiobras,
-            muros,
-            altura,
-            tipoPiso,
-            tipoLuz,
-            banios,
-            desc,
-            direccion,
-            linkMaps,
-            idInmueble
+                titulo,
+                id_agente,
+                id_arrendador,
+                tipoMovimiento,
+                linkVideo,
+                precioVenta,
+                precioRenta,
+                m2terreno,
+                m2construccion,
+                medidaFrente,
+                medidaFondo,
+                niveles,
+                cuartosPrivadosInmueble,
+                mediosBanios,
+                usoSuelo,
+                ubicado,
+                cuotaMantenimiento,
+                fechaConstruccion,
+                muros,
+                altura,
+                tipoPiso,
+                tipoLuz,
+                estacionamientos,
+                banios,
+                cocina,
+                cisterna,
+                vigilancia,
+                generadorElectrico,
+                andenCarga,
+                oficina,
+                patioManiobras,
+                desc,
+                direccion,
+                linkMaps,
+                id_inmueble
         ]
         );
     }
@@ -724,8 +724,8 @@ module.exports = class Dashboard {
         linkVideo,
         precioVenta,
         precioRenta,
-        m2Terreno,
-        m2Construccion,
+        m2terreno,
+        m2construccion,
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
@@ -741,11 +741,11 @@ module.exports = class Dashboard {
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
         ) {
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,  idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
-        [
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            [
             titulo,
             id_agente,
             id_arrendador,
@@ -753,8 +753,8 @@ module.exports = class Dashboard {
             linkVideo,
             precioVenta,
             precioRenta,
-            m2Terreno,
-            m2Construccion,
+            m2terreno,
+            m2construccion,
             niveles,
             cuartosPrivadosInmueble,
             mediosBanios,
@@ -770,8 +770,8 @@ module.exports = class Dashboard {
             desc,
             direccion,
             linkMaps,
-            idInmueble,
-        ]
+            id_inmueble
+            ]
         );
     }
 
@@ -821,18 +821,18 @@ module.exports = class Dashboard {
         usoSuelo,
         ubicado,
         cuotaMantenimiento,
-        cocina,
-        cisterna,
-        vigilancia,
         estacionamientos,
         banios,
+        estudio,
+        roofGarden,
+        bodega,
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
     ){
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,  idAgenteAsignado=?,idArrendador=?,linkVideoInmueble=?, idTipoMovimiento=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=? WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?,linkVideoInmueble=?, idTipoMovimiento=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, estudioInmueble=?,roofGardenInmueble=?,  bodegaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
             [   
                 titulo,
                 id_agente,
@@ -850,15 +850,15 @@ module.exports = class Dashboard {
                 usoSuelo,
                 ubicado,
                 cuotaMantenimiento,
-                cocina,
-                cisterna,
-                vigilancia,
                 estacionamientos,
                 banios,
+                estudio,
+                roofGarden,
+                bodega,
                 desc,
                 direccion,
                 linkMaps,
-                idInmueble
+                id_inmueble
             ]
         );
     }

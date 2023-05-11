@@ -24,9 +24,9 @@
             <label for="tipoOperacion" class="text-lg font-semibold text-white">Tipo de Operación</label>
             <div class="flex flex-row">
                 <fieldset>
-                    <input id="draft" class="peer/venta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="status" class="form-checkbox"/>
+                    <input id="draft" class="peer/venta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="venta" class="form-checkbox"/>
                     <label for="draft" class="ml-1 text-base text-white">Venta</label>
-                    <input id="published" class="ml-8 peer/renta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="status" class="form-checkbox" />
+                    <input id="published" class="ml-8 peer/renta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" name="renta" class="form-checkbox" />
                     <label for="published" class="ml-1 text-base text-white">Renta</label>
                     <div class="mt-4 hidden peer-checked/venta:block space-y-2">
                         <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
@@ -101,7 +101,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="cuotaMantenimiento" name="cuotaMantenimiento" placeholder="2" maxlength="30" required/>
+                            type="number" id="mediosBanios" name="mediosBanios" placeholder="2" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-circle-dollar-to-slot"></i><p> C. de Manten.</p>
@@ -109,7 +109,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="fechaConstruccion" name="fechaConstruccion" placeholder="1" maxlength="30" required/>
+                            type="number" id="cuotaMantenimiento" name="cuotaMantenimiento" placeholder="1" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-regular fa-calendar-days"></i><p> Año de Const.</p>
@@ -256,7 +256,7 @@
         </div>
     </div>
     <div class="px-10 pb-12 flex justify-evenly">
-        <input type="hidden" id="id_inmueble" name="id_inmueble" value="<%=idInmueble.idInmueble%>">
+        <input type="hidden" id="id_inmueble" name="id_inmueble" value="<%=idInmueble%>">
         <button class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
             Cancelar
         </button>
