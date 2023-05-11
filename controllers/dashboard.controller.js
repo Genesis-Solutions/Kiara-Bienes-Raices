@@ -695,7 +695,10 @@ exports.updateBodyBodega = (req, res, next) => {
         tipoLuz,
         estacionamientos,
         banios,
-        desc
+        desc,
+        direccion,
+        linkMaps,
+        id_inmueble
     } = req.body;
     /*
     *Obtener el tipo de movimiento y los respectivos precios
@@ -725,8 +728,6 @@ exports.updateBodyBodega = (req, res, next) => {
     const andenCarga = req.body.andenCarga ? 1 : 0;
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
-    const idInmueble = req.params.inmueble;
-    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
@@ -742,28 +743,27 @@ exports.updateBodyBodega = (req, res, next) => {
         niveles,
         cuartosPrivadosInmueble,
         mediosBanios,
-        estacionamientos,
         usoSuelo,
         ubicado,
         cuotaMantenimiento,
-        cocina,
-        cisterna,
         fechaConstruccion,
-        vigilancia,
-        generadorElectrico,
-        andenCarga,
-        oficina,
-        patioManiobras,
         muros,
         altura,
         tipoPiso,
         tipoLuz,
         estacionamientos,
         banios,
+        cocina,
+        cisterna,
+        vigilancia,
+        generadorElectrico,
+        andenCarga,
+        oficina,
+        patioManiobras,
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
     );
     res.status(200).json({ code: 200, msg: "Ok" });
 };
