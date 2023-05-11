@@ -745,7 +745,7 @@ module.exports = class Dashboard {
         ) {
         return db.execute(
             "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
-        [
+            [
             titulo,
             id_agente,
             id_arrendador,
@@ -771,7 +771,7 @@ module.exports = class Dashboard {
             direccion,
             linkMaps,
             id_inmueble
-        ]
+            ]
         );
     }
 

@@ -635,7 +635,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.inmueble;
-    //console.log("idInmueble",idInmueble);
     Dashboard.activateInmuebleTerreno(
         titulo,
         id_agente,
@@ -766,7 +765,7 @@ exports.updateBodyBodega = (req, res, next) => {
         linkMaps,
         idInmueble
     );
-    res.status(200).json({ code: 200, msg: "Ok" })
+    res.status(200).json({ code: 200, msg: "Ok" });
 };
 
 /*
@@ -824,7 +823,7 @@ exports.updateBodyOficina = (req, res, next) => {
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
-    Dashboard.activateInmuebleOficina(
+    Dashboard.changeInmuebleOficina(
         titulo,
         id_agente,
         id_arrendador,
