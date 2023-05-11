@@ -520,8 +520,11 @@ exports.updateBodyLocal = (req, res, next) => {
         m2construccion,
         estacionamientos,
         banios,
-        desc
+        desc,
+        direccion,
+        linkMaps
     } = req.body;
+    console.log(req.body);
     /*
     *Obtener el tipo de movimiento y los respectivos precios
     */
