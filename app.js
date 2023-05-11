@@ -32,10 +32,12 @@ const rutasHome = require('./routes/homepage.routes.js');
 const rutasInmueble = require('./routes/inmueble.routes.js');
 const rutasDashboard = require('./routes/dashboard.routes.js');
 const rutasSearchpage = require('./routes/searchpage.routes.js');
+const rutasTest = require('./routes/test.routes.js');
 
 app.use('/inmueble', rutasInmueble)
 app.use('/catalogo', rutasSearchpage); //Historia de usuario 2.7 - Ver lista de inmuebles
 app.use('/dashboard', rutasDashboard); //Historia de usuario 2.1 - Publicar inmueble
+app.use('/test', rutasTest); //Pruebas de subida de fotos al S3
 app.use('/', rutasHome);
 
 //app.use("/public",express.static(dirname + '/public')); 
