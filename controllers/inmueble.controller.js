@@ -136,7 +136,7 @@ exports.getEditarInmueble = async(req, res, next) => {
 exports.updateBodyCasa = (req,res,next) => {
     //console.log("Entrando a la ruta update body casa");
     //Elementos obligatorios del formulario
-    const {
+    let {
         titulo,
         linkVideo,
         m2Terreno,
@@ -188,7 +188,36 @@ exports.updateBodyCasa = (req,res,next) => {
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble",idInmueble);
+    console.log("idInmueble", idInmueble);
+    
+    if (m2Terreno == "" || m2Terreno == null) {
+        m2Terreno = 0;
+    }
+    if (m2Construccion == "" || m2Construccion == null) {
+        m2Construccion = 0;
+    }
+    if (recamaras == "" || recamaras == null) {
+        recamaras = 0;
+    }
+    if (estacionamientos == "" || estacionamientos == null) {
+        estacionamientos = 0;
+    }
+    if (banios == "" || banios == null) {
+        banios = 0;
+    }
+    if (niveles == "" || niveles == null) {
+        niveles = 0;
+    }
+    if (mediosBanios == "" || mediosBanios == null) {
+        mediosBanios = 0;
+    }
+    if (cuotaMantenimiento == "" || cuotaMantenimiento == null) {
+        cuotaMantenimiento = 0;
+    }
+    if (fechaConstruccion == "" || fechaConstruccion == null) {
+        fechaConstruccion = 0;
+    }
+
     Inmueble.changeInmuebleCasa(
         titulo,
         desc,
@@ -236,7 +265,7 @@ exports.updateBodyCasa = (req,res,next) => {
  */
 exports.updateBodyLocal = (req,res,next) => {
     //console.log("Entrando a la ruta update body local");
-    const {
+    let {
         titulo,
         linkVideo,
         m2Terreno,
@@ -282,6 +311,41 @@ exports.updateBodyLocal = (req,res,next) => {
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+
+    if (m2Terreno == "" || m2Terreno == null) {
+        m2Terreno = 0;
+    }
+    if (m2Construccion == "" || m2Construccion == null) {
+        m2Construccion = 0;
+    }
+    if (medidaFrente == "" || medidaFrente == null) {
+        medidaFrente = 0;
+    }
+    if (medidaFondo == "" || medidaFondo == null) {
+        medidaFondo = 0;
+    }
+    if (niveles == "" || niveles == null) {
+        niveles = 0;
+    }
+    if (cuartosPrivadosInmueble == "" || cuartosPrivadosInmueble == null) {
+        cuartosPrivadosInmueble = 0;
+    }
+    if (mediosBanios == "" || mediosBanios == null) {
+        mediosBanios = 0;
+    }
+    if (cuotaMantenimiento == "" || cuotaMantenimiento == null) {
+        cuotaMantenimiento = 0;
+    }
+    if (fechaConstruccion == "" || fechaConstruccion == null) {
+        fechaConstruccion = 0;
+    }
+    if (estacionamientos == "" || estacionamientos == null) {
+        estacionamientos = 0;
+    }
+    if (banios == "" || banios == null) {
+        banios = 0;
+    }
+
     Inmueble.changeInmuebleLocal(
         titulo,
         tipoMovimiento,
@@ -325,7 +389,7 @@ exports.updateBodyLocal = (req,res,next) => {
  */
 exports.updateBodyTerreno = (req,res,next) => {
     console.log("Entrando a la ruta update body terreno");
-    const {
+    let {
         titulo,
         linkVideo,
         m2Terreno,
@@ -364,6 +428,23 @@ exports.updateBodyTerreno = (req,res,next) => {
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+
+    if (m2Terreno == "" || m2Terreno == null) {
+        m2Terreno = 0;
+    }
+    if (m2Construccion == "" || m2Construccion == null) {
+        m2Construccion = 0;
+    }
+    if (medidaFrente == "" || medidaFrente == null) {
+        medidaFrente = 0;
+    }
+    if (medidaFondo == "" || medidaFondo == null) {
+        medidaFondo = 0;
+    }
+    if (cuotaMantenimiento == "" || cuotaMantenimiento == null) {
+        cuotaMantenimiento = 0;
+    }
+
     Inmueble.changeInmuebleTerreno(
         titulo,
         tipoMovimiento,
@@ -401,7 +482,7 @@ exports.updateBodyTerreno = (req,res,next) => {
  */
 exports.updateBodyBodega = (req,res,next) => {
     console.log("Entrando a la ruta update body bodega");
-    const {
+    let {
         titulo,
         linkVideo,
         m2Terreno,
@@ -452,6 +533,50 @@ exports.updateBodyBodega = (req,res,next) => {
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    if (m2Terreno == "" || m2Terreno == null) {
+        m2Terreno = 0;
+    }
+    if (m2Construccion == "" || m2Construccion == null) {
+        m2Construccion = 0;
+    }
+    if (medidaFrente == "" || medidaFrente == null) {
+        medidaFrente = 0;
+    }
+    if (medidaFondo == "" || medidaFondo == null) {
+        medidaFondo = 0;
+    }
+    if (niveles == "" || niveles == null) {
+        niveles = 0;
+    }
+    if (cuartosPrivadosInmueble == "" || cuartosPrivadosInmueble == null) {
+        cuartosPrivadosInmueble = 0;
+    }
+    if (mediosBanios == "" || mediosBanios == null) {
+        mediosBanios = 0;
+    }
+    if (cuotaMantenimiento == "" || cuotaMantenimiento == null) {
+        cuotaMantenimiento = 0;
+    }
+    if (fechaConstruccion == "" || fechaConstruccion == null) {
+        fechaConstruccion = 0;
+    }
+    if (estacionamientos == "" || estacionamientos == null) {
+        estacionamientos = 0;
+    }
+    if (banios == "" || banios == null) {
+        banios = 0;
+    }
+    if (altura == "" || altura == null) {
+        altura = 0;
+    }
+    if (muros == "" || muros == null) {
+        muros = 0;
+    }
+    if (oficina == "" || oficina == null) {
+        oficina = 0;
+    }
+
+
     Inmueble.changeInmuebleBodega(
         titulo,
         tipoMovimiento,
@@ -501,7 +626,7 @@ exports.updateBodyBodega = (req,res,next) => {
  */
 exports.updateBodyOficina = (req,res,next) => {
     console.log("Entrando a la ruta update body oficina");
-    const {
+    let {
         titulo,
         linkVideo,
         m2Terreno,
@@ -542,6 +667,35 @@ exports.updateBodyOficina = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    if (m2Terreno == "" || m2Terreno == null) {
+        m2Terreno = 0;
+    }
+    if (m2Construccion == "" || m2Construccion == null) {
+        m2Construccion = 0;
+    }
+    if (niveles == "" || niveles == null) {
+        niveles = 0;
+    }
+    if (cuartosPrivadosInmueble == "" || cuartosPrivadosInmueble == null) {
+        cuartosPrivadosInmueble = 0;
+    }
+    if (mediosBanios == "" || mediosBanios == null) {
+        mediosBanios = 0;
+    }
+    if (cuotaMantenimiento == "" || cuotaMantenimiento == null) {
+        cuotaMantenimiento = 0;
+    }
+    if (fechaConstruccion == "" || fechaConstruccion == null) {
+        fechaConstruccion = 0;
+    }
+    if (estacionamientos == "" || estacionamientos == null) {
+        estacionamientos = 0;
+    }
+    if (banios == "" || banios == null) {
+        banios = 0;
+    }
+
+
     Inmueble.changeInmuebleOficina(
         titulo,
         tipoMovimiento,
@@ -581,7 +735,7 @@ exports.updateBodyOficina = (req,res,next) => {
  */
 exports.updateBodyOtra = (req,res,next) => {
     console.log("Entrando a la ruta update body otra");
-    const {
+    let {
         titulo,
         linkVideo,
         m2Terreno,
@@ -622,6 +776,34 @@ exports.updateBodyOtra = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    if (m2Terreno == "" || m2Terreno == null) {
+        m2Terreno = 0;
+    }
+    if (m2Construccion == "" || m2Construccion == null) {
+        m2Construccion = 0;
+    }
+    if (niveles == "" || niveles == null) {
+        niveles = 0;
+    }
+    if (recamaras == "" || recamaras == null) {
+        recamaras = 0;
+    }
+    if (cuartosPrivadosInmueble == "" || cuartosPrivadosInmueble == null) {
+        cuartosPrivadosInmueble = 0;
+    }
+    if (mediosBanios == "" || mediosBanios == null) {
+        mediosBanios = 0;
+    }
+    if (cuotaMantenimiento == "" || cuotaMantenimiento == null) {
+        cuotaMantenimiento = 0;
+    }
+    if (estacionamientos == "" || estacionamientos == null) {
+        estacionamientos = 0;
+    }
+    if (banios == "" || banios == null) {
+        banios = 0;
+    }
+    
     Inmueble.changeInmuebleOtra(
         titulo,
         tipoMovimiento,
