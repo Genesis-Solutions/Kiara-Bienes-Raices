@@ -373,9 +373,13 @@ exports.setPhotos = (req, res, next) => {
             console.log(err);
         } else {
             req.files.forEach(function (file) {
+                console.log("Esto es dento de registrar imagenes");
                 const idInmueble = req.params.inmueble;
                 const mediaName = file.key;
+                console.log("idInmueble: ",idInmueble);
+                console.log("mediaName: ",mediaName);
                 Dashboard.registerImage(idInmueble, mediaName);
+                console.log("Esto es despues de la transaccion");
             });
         }
     });
