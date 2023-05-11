@@ -5,6 +5,7 @@
     <%- include('partials/navbar') %>
 
         <div class="grid grid-cols-2 gap-8">
+            <!-- Single upload a assets/file -->
             <form id="formMedia" action="/test/createlocal" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
                     <h2 class="text-2xl font-bold mb-4">Upload de una foto a local (assets/file)</h2>
@@ -13,6 +14,7 @@
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
+            <!-- Single upload al S3 -->
             <form id="formMedia" action="/test/singleUploadS3" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
                     <h2 class="text-2xl font-bold mb-4">Upload de una foto al S3 - single upload</h2>
@@ -22,10 +24,89 @@
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
         </div>
+        <!-- Dropzone con archivos locales -->
+        <div class="px-10 py-5 grid grid-cols-3">
+            <!-- </div> -->
+            <div class="col-span-3">
+                <h2 class="text-lg font-semibold">
+                    Dropzone local (/assets/file)
+                </h2>
+                <p class="text-gray-700"> Subir maximo 5 imagenes </p>
+                <!-- Pictures Form -->
+                <form action="/test/dropzonelocal" id="imagenes" name="imagenes"
+                    enctype="multipart/form-data" method="POST">
+                    <div class="dropzone dz-clickable" id="uploadDropzone">
+                        <div class="dz-default dz-message" data-dz-message="">
+                            <span>Drop files here to upload</span>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+
+        <div class="px-10 pb-12 flex justify-evenly">
+            <button class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnLocalDropzone">
+                Upload dropzone local
+            </button>
+        </div>
+
+        <!-- Enlazar con la biblioteca de jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <!-- jQuery form plug in -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+        <script src="https://malsup.github.io/jquery.form.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+        <!-- Enlazar con la biblioteca de Dropzone -->
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 
         <script>
             function enviarFormulario(e){
                 e.preventDefault();
+            }
+        </script>
+
+        <!-- Configuración de dropzone local-->
+        <script type="text/javascript">
+            Dropzone.autoDiscover = false;
+            function paramNameForSend() {
+                return "mediaDropzoneLocal";
+            }
+            //console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
+            $("#uploadDropzone").dropzone({ 
+                url: '/test/dropzonelocal',
+                maxFilesize: 15, // MB
+                maxFiles: 25,
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                paramName: paramNameForSend,
+                method: 'post',
+                parallelUploads: 25,
+                init: function() {
+                    var myDropzone = this;
+                    $("#imagenes").submit(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                        window.location.replace('/test');
+                    }); 
+                }
+            });
+        </script>
+
+        <!-- Ejecución de la función uploadLocalDropzone desde el boton Upload dropzone local -->
+        <script type="text/javascript">   
+            $(document).on("click", ".btnLocalDropzone", function(){	
+                uploadLocalDropzone();
+            })
+        </script>
+
+        <!-- Función eliminarInmueble -->
+        <script type="text/javascript">   
+            function uploadLocalDropzone() {
+                $('#imagenes').submit();
             }
         </script>
 

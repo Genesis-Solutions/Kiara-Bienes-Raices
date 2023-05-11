@@ -17,11 +17,9 @@ exports.postLocalImage = (req,res,next) => {
             console.log(err);
             return res.end("Error uploading file.");
         }
-        const text = req.body.nombreMedia;
-        var pathDest = req.files[0].destination.slice(8);
+        //var pathDest = req.files[0].destination.slice(8);
         const filename = req.files[0].filename;
-        console.log(text);
-        console.log(pathDest);
+        //console.log(pathDest);
         console.log(filename);
         //res.status(200).json({code: 200, msg:"Ok"}); 
         res.redirect('/test');
@@ -35,8 +33,26 @@ exports.postS3SingleImage = (req,res,next) => {
             console.log(err);
         }
         const mediaName = file.key;
+        console.log(mediaName);
     });
-    console.log(mediaName);
+    //res.status(200).json({code: 200, msg:"Ok"}); 
+    res.redirect('/test');
+};
+
+exports.postDropzoneLocal = (req,res,next) => {
+    var upload = uploadMedia.array('mediaDropzoneLocal', 25);
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            req.files.forEach(function (file) {
+                //var pathDest = req.files[0].destination.slice(8);
+                const filename = req.files[0].filename;
+                //console.log(pathDest);
+                console.log(filename);
+            });
+        }
+    });
     //res.status(200).json({code: 200, msg:"Ok"}); 
     res.redirect('/test');
 };
