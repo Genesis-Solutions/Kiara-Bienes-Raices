@@ -1,0 +1,18 @@
+<div class="px-5 py-3 text-center">
+    <div class="grid grid-cols-2 gap-2 py-2 text-sm">
+        <div>
+            <% if (inmueble.m2ConstruidosInmueble == 0) { %>
+                <i class="fa-solid fa-house invisible"></i>
+            <% } else if (inmueble.m2ConstruidosInmueble > 0){ %>
+            <i class="fa-solid fa-house"></i> <%= inmueble.m2ConstruidosInmueble %> m2 Construidos
+            <% } %>
+        </div>
+        <div>
+            <% if (inmueble.m2TerrenoInmueble == 0) { %>
+                <i class="fa-solid fa-layer-group invisible"></i>
+            <% } else if (inmueble.m2TerrenoInmueble > 0){ %>
+            <i class="fa-solid fa-layer-group"></i> <%= inmueble.m2TerrenoInmueble %> m2 Terreno
+            <% } %>
+        </div>
+    </div>
+</div>

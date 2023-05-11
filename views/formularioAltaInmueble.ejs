@@ -1,0 +1,161 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <%- include('partials/navbar') %>
+
+    <!-- Titulo de la pagina -->
+    <!-- Cambiar dependiendo del id del tipo de inmueble -->
+    <div class="p-10 flex justify-center items-center">
+        <% if(categoria == 1){ %>
+            <h1 class="text-4xl text-center">Dando de alta una casa</h1>
+        <% } else if (categoria == 2){ %>
+            <h1 class="text-4xl text-center">Dando de alta un departamento</h1>
+        <% } else if (categoria == 3){ %>
+            <h1 class="text-4xl text-center">Dando de alta un local</h1>
+        <% } else if (categoria == 4){ %>
+            <h1 class="text-4xl text-center">Dando de alta un terreno</h1>
+        <% } else if (categoria == 5){ %>
+            <h1 class="text-4xl text-center">Dando de alta una bodega</h1>
+        <% } else if (categoria == 6){ %>
+            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+        <% } else if (categoria == 7){ %>
+            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+        <%}%>
+    </div>
+
+    <!-- Pictures Form -->
+    <div class="px-10 py-5 grid grid-cols-3">
+        <!-- </div> -->
+        <div class="col-span-3">
+            <h2 class="text-lg font-semibold">
+                Imágenes del inmueble
+            </h2>
+            <p class="text-gray-700"> Subir por lo menos 5 imágenes del inmueble </p>
+            <!-- Pictures Form -->
+            <form action="/dashboard/alta/inmueble/imagenes/<%=idInmueble%>" id="imagenes" name="imagenes"
+                enctype="multipart/form-data" method="POST">
+                <div class="dropzone dz-clickable" id="uploadDropzone">
+                    <div class="dz-default dz-message" data-dz-message="">
+                        <span>Drop files here to upload</span>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+
+    <!-- Information Form -->
+    <!-- Cambiar dependiendo del id del tipo de inmueble -->
+    <% if(categoria == 1 || categoria == 2){ %>
+        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+    <% } else if (categoria == 3){ %>
+        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>        
+    <% } else if (categoria == 4){ %>
+        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>       
+    <% } else if (categoria == 5){ %>
+        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+    <% } else if (categoria == 6){ %>
+        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+    <% } else if (categoria == 7){ %>
+        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+    <%}%>
+
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- jQuery form plug in -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+    <script src="https://malsup.github.io/jquery.form.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+    <!-- Enlazar con la biblioteca de Dropzone -->
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
+    <!-- Configuración de dropzone -->
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+        function paramNameForSend() {
+            return "media";
+        }
+        var idInmueble = $("#id_inmueble").val();
+        //console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
+        $("#uploadDropzone").dropzone({ 
+            url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
+            maxFilesize: 15, // MB
+            maxFiles: 25,
+            autoProcessQueue: false,
+            uploadMultiple: true,
+            paramName: paramNameForSend,
+            method: 'post',
+            parallelUploads: 25,
+            init: function() {
+                var myDropzone = this;
+                $("#imagenes").submit(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    myDropzone.processQueue();
+                    window.location.replace('/catalogo');
+                    //window.location.replace('/inmueble/<%=idInmueble%>');
+                }); 
+            }
+        });
+    </script>
+
+    <!-- Submit del formulario del imagenes del inmueble desde el submit del formulario del cuerpo -->
+    <script type="text/javascript">  
+        $('#cuerpoInmueble').submit(function(e) {
+            e.preventDefault();
+            //console.log("Submit de cuerpoInmueble");
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $( this ).serializeArray(),
+                success: function() {
+                    //console.log("Dentro del succes de form 1");
+                    $('#imagenes').submit();
+                }
+            })
+        });
+    </script>
+
+    <!-- Ejecución de la función eliminarInmueble desde el boton Cancelar -->
+    <script type="text/javascript">   
+        $(document).on("click", ".btnCancelar", function(){	
+            eliminarInmueble();
+        })
+    </script>
+
+    <!-- Función eliminarInmueble -->
+    <script type="text/javascript">   
+        function eliminarInmueble() {
+            var idInmueble = $("#id_inmueble").val();
+            $.ajax({
+                url: '/dashboard/baja/inmueble/<%=idInmueble%>',
+                type: 'GET',
+                dataType: 'json',
+                success: function() {
+                    //console.log("On succes desde el eliminar");
+                    window.location.replace('/dashboard/alta');
+                }
+            });
+        }
+    </script>
+
+    <!-- Configuración de dropdowns de precio -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.form-checkbox').change(function(){
+                if($(this).is(':checked')){
+                    $('.form-checkbox').not(this).prop('disabled',true);
+                } else{
+                    $('.form-checkbox').prop('disabled',false);
+                }
+            });
+        });
+    </script>
+
+    <%- include("partials/footer") %>
+
+</body>
+</html>

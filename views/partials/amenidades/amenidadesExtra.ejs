@@ -1,0 +1,157 @@
+<div class="grid grid-cols-2 space-x-4">
+    <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}) %>
+    <div>
+        <ul class="space-y-2">
+            <% if (inmueble.m2TerrenoInmueble != null && inmueble.m2TerrenoInmueble > 0) { %>
+                <li>● <%= inmueble.m2TerrenoInmueble %> m2 Terreno</li>
+            <% } %>
+            
+            <% if (inmueble.m2ConstruidosInmueble != null && inmueble.m2ConstruidosInmueble > 0) { %>
+                <li>● <%= inmueble.m2ConstruidosInmueble %> m2 Construidos</li>
+            <% } %>
+            
+            <% if (inmueble.medidasFrenteInmueble != null && inmueble.medidasFrenteInmueble > 0) { %>
+                <li>● Medida de Fondo <%= inmueble.medidasFrenteInmueble %> mts</li>
+            <% } %>
+            
+            <% if (inmueble.nivelesInmueble != null && inmueble.nivelesInmueble > 0) { %>
+                <li>● <%= inmueble.nivelesInmueble %> Pisos</li>
+            <% } %>
+            
+            <% if (inmueble.recamarasInmueble != null && inmueble.recamarasInmueble > 0) { %>
+                <li>● <%= inmueble.recamarasInmueble %> Recámaras </li>
+            <% } %>
+            
+            <% if (inmueble.cuartosPrivadosInmueble != null && inmueble.cuartosPrivadosInmueble > 0) { %>
+                <li>● <%= inmueble.cuartosPrivadosInmueble %> Cuartos Priv. </li>
+            <% } %>
+            
+            <% if (inmuebles.baniosInmueble != null && inmuebles.baniosInmueble > 0) { %>
+                <li>● <%= inmueble.baniosInmueble %> Baños</li>
+            <% } %>
+            
+            <% if (inmueble.mediosBaniosInmueble != null && inmueble.mediosBaniosInmueble > 0) { %>
+                <li>● <%= inmueble.mediosBaniosInmueble %> Medios Baños </li>
+            <% } %>
+            
+            <% if (inmueble.estacionamientosInmueble != null && inmueble.estacionamientosInmueble > 0 ) { %>
+                <li>● <%= inmueble.estacionamientosInmueble %> Estacionamientos </li>
+            <% } %>
+            
+            <% if (inmueble.usoSueloInmueble != null) { %>
+                <li>● <%= inmueble.usoSueloInmueble %> </li>
+            <% } %>
+            
+            <% if (inmueble.enPrivadaInmueble != null) { %>
+                <li>● En Privada </li>
+            <% } %>
+            
+            <% if (inmueble.servicioAguaInmueble != 0 && inmueble.servicioAguaInmueble != null) { %>
+                <li>● Servicio de Agua </li>
+            <% } %>
+            
+            <% if (inmueble.servicioLuzInmueble != 0 && inmueble.servicioLuzInmueble != null) { %>
+                <li>● Servicio de Luz </li>
+            <% } %>
+            
+            <% if (inmueble.servicioDrenajeInmueble != 0 && inmueble.servicioDrenajeInmueble != null) { %>
+                <li>● Servicio de Drenaje </li>
+            <% } %>
+        </ul>
+    </div>
+    <div>
+        <ul class="space-y-2">
+            <% if (inmueble.tipoSueloInmueble != null) { %>
+                <li>● Suelo <%= inmueble.tipoSueloInmueble %></li>
+            <% } %>
+            
+            <% if (inmueble.cuotaMantenimientoInmueble != null) { %>
+                
+                <li>● Cuota Mantenimiento <%= formatter.format(inmueble.cuotaMantenimientoInmueble) %> </li>
+            <% } %>
+            
+            <% if (inmueble.cocinaInmueble != 0 && inmueble.cocinaInmueble != null) { %>
+                <li>● Cocina</li>
+            <% } %>
+            
+            <% if (inmueble.cisternaInmueble != 0 && inmueble.cisternaInmueble != null) { %>
+                <li>● Cisterna</li>
+            <% } %>
+            
+            <% if (inmueble.cuartoServicioInmueble != 0 && inmueble.cuartoServicioInmueble != null) { %>
+                <li>● Cuarto de Servicio</li>
+            <% } %>
+            
+            <% if (inmueble.salaTVInmueble != 0 && inmueble.salaTVInmueble != null) { %>
+                <li>● Sala de TV </li>
+            <% } %>
+            
+            <% if (inmueble.fechaConstruccionInmueble != null) { %>
+                <li>● Año de Construcción: <%= inmueble.fechaConstruccionInmueble %> </li>
+            <% } %>
+            
+            <% if (inmueble.estudioInmueble != 0 && inmueble.estudioInmueble != null) { %>
+                <li>● Estudio</li>
+            <% } %>
+            
+            <% if (inmueble.roofGardenInmueble != 0 && inmueble.roofGardenInmueble != null) { %>
+                <li>● Roof Garden </li>
+            <% } %>
+            
+            <% if (inmueble.areaLavadoInmueble != 0 && inmueble.areaLavadoInmueble != null) { %>
+                <li>● Area de Lavado </li>
+            <% } %>
+            
+            <% if (inmueble.vigilanciaInmueble != 0 && inmueble.vigilanciaInmueble != null) { %>
+                <li>● Vigilancia </li>
+            <% } %>
+            
+            <% if (inmueble.jardinInmueble != 0 && inmueble.jardinInmueble != null) { %>
+                <li>● Jardín </li>
+            <% } %>
+            
+            <% if (inmueble.tipoGasInmueble != null) { %>
+                <li>● Gas <%= inmueble.tipoGasInmueble %></li>
+            <% } %>
+            
+            <% if (inmueble.bodegaInmueble != 0 && inmueble.bodegaInmueble != null) { %>
+                <li>● Bodega </li>
+            <% } %>
+            
+            <% if (inmueble.generadorElectricoInmueble != 0 && inmueble.generadorElectricoInmueble != null) { %>
+                <li>● Generador Eléctrico</li>
+            <% } %>
+        </ul>
+    </div>
+    <div>
+        <ul class="space-y-2">
+            <% if (inmueble.tipoPisoInmueble != null) { %>
+                <li>● Tipo Piso: $<%= tipoPisoValue.tipoPiso %> </li>
+            <% } %>
+            
+            <% if (inmueble.andenCargaInmueble != 0 && inmueble.andenCargaInmueble != null) { %>
+                <li>● Anden de Carga</li>
+            <% } %>
+            
+            <% if (inmueble.tipoLuzInmueble != null) { %>
+                <li>● Luz <%= inmueble.tipoLuzInmueble %></li>
+            <% } %>
+            
+            <% if (inmueble.alturaInmueble != null) { %>
+                <li>● Altura: <%= inmueble.alturaInmueble %></li>
+            <% } %>
+            
+            <% if (inmueble.oficinaInmueble != null) { %>
+                <li>● Oficina </li>
+            <% } %>
+            
+            <% if (inmueble.patioManiobrasInmueble != 0 && inmueble.patioManiobrasInmueble != null ) { %>
+                <li>● Patio Maniobras </li>
+            <% } %>
+            
+            <% if (inmueble.murosInmueble != null) { %>
+                <li>●<%= inmueble.murosInmueble %> Muros</li>
+            <% } %>
+        </ul>
+    </div>
+</div>

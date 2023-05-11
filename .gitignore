@@ -1,0 +1,57 @@
+# Node.js dependencies
+node_modules/
+
+#Credenciales de AWS
+util/awsBucket.js
+
+
+#package-lock.json
+package-lock.json
+
+# Generated files
+*.log
+*.pid
+*.out
+*.err
+*.swp
+*.swo
+
+# IDE and editor files
+.vscode/
+.idea/
+*.iml
+
+# Mac OS X files
+.DS_Store
+
+# Compiled JavaScript files
+*.js.map
+
+# Environment variables
+.env
+
+# Log files
+logs/
+
+# Cache files
+cache/
+
+# Assets and build directories
+public/assets/
+build/
+
+# Temporary files
+tmp/
+
+# Yarn cache
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Tailwind CSS generated files
+.tailwind-cache/
+public/build/
+
+# Jquery files
+jquery.min.js

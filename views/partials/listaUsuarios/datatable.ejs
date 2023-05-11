@@ -1,0 +1,250 @@
+<!-- List Users -->
+<main class="text-center mb-20 mx-32">
+    <!-- Inicio de la DataTable lista usuarios -->
+    <div class="table-responsive text-center cell-border">
+        <table class="table table-bordered text-center" id="dataTableUsuarios" width="100%" cellspacing="0">
+        </table>
+    </div>
+
+
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- Enlazar con el archivo de DataTables JS -->
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+
+    <script crossorigin="anonymous" type="text/javascript"
+        src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+    <script type="text/javascript">
+        var log = console.log;
+        $(document).ready(function (e) {
+            recargarTablaUsuarios();
+            fixedHeader: {
+                header: true;
+                footer: true;
+            }
+        })
+
+    </script>
+
+    <script type="text/javascript">
+/*
+ * Carga de la data table que renderiza los datos de los usuarios.
+ */
+     
+        function recargarTablaUsuarios() {
+            //Carga de la tabla de usuarios mediante data table.
+            if ($.fn.DataTable.isDataTable("#dataTableUsuarios")) {
+                //$("#table_report").DataTable().clear().draw();
+                $("#dataTableUsuarios").dataTable().fnDestroy();
+                //$("#table_report").dataTable();
+                $('#dataTableUsuarios').empty();
+            }
+            var thead = ""
+            var tfooter = ""
+            thead += '<thead class="bg-gray-300 text-gray-600">'
+            thead += '<tr>'
+            thead +=  '<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTableUsuarios" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" style="width: 71px;" aria-sort="ascending">Id</th>'
+            // thead += '<th>Id</th>'
+            thead += '<th>Nombre</th>'
+            thead += '<th>Apellidos</th>'
+            thead += '<th>Rol</th>'
+            thead += '<th>Modificar rol</th>'
+            thead += '<th>Eliminar usuario</th>'
+            thead += '</tr>'
+            thead += '</thead>'
+            tfooter += '<tfoot>'
+            tfooter += '<tr>'
+            tfooter += '<th>Id</th>'
+            tfooter += '<th>Nombre</th>'
+            tfooter += '<th>Apellidos</th>'
+            tfooter += '<th>Rol</th>'
+            tfooter += '<th>Modificar rol</th>'
+            tfooter += '<th>Eliminar usuario</th>'
+            tfooter += '</tr>'
+            tfooter += '</tfoot>'
+            $('#dataTableUsuarios').append(thead);
+            // $('#dataTableUsuarios').append(tfooter);
+            $.fn.dataTable.moment('DD-MM-YYYY'); //Para ordenar por fecha
+            dataTable = $("#dataTableUsuarios").dataTable({
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+                processing: true,
+                lengthMenu: [5, 10, 20, 25, 30],
+                order: [[0, 'asc']],
+                deferRender: true,
+                ajax: '/dashboard/usuarios',
+                columns: [
+                    {
+                        data: "idUsuario"
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return '<span class="badge badge-success">' + data.nombreUsuario + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return '<span class="badge badge-success">' + data.apellidosUsuario + '</span>'
+                        }
+                    },
+                    {
+                        data: "nombreRol"
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            //Si el usuario es administrador, ocultar el botón.
+                            if (data.nombreRol == 'administrador') {
+                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
+                            }
+                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            //Si el usuario es administrador, ocultar el botón.
+                            if (data.nombreRol == 'administrador') {
+                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                            }
+                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
+                        }
+                    },
+                ]
+            })
+        }
+    </script>
+
+    <script type="text/javascript">
+/*
+* Acción del botón de edición de rol. Despliega un modal con un dropdown de las opciones disponibles para modificar
+*/
+        $(document).on("click", ".btnEditarRol", function () {
+            fila = $(this).closest("tr");
+            var idUsuario = parseInt(fila.find('td:eq(0)').text());
+            var nombreRol = $(this).closest('tr').find("td").eq(3).html();
+            const { value: eleccion } = Swal.fire({
+                /*
+                *Cuando el botón de modificación de rol sea clickeado, se desplegará un modal con los 3 roles disponibles.
+                */
+                title: 'Selecciona el Rol:',
+                input: 'select',
+                inputOptions: {
+                    'Rol': {
+                        1: 'Administrador',
+                        2: 'Agente',
+                        3: 'Usuario'
+                    }
+                },
+                showCancelButton: true,
+            }).then((result) => {
+                /*
+                * Comprobación que evita que un usuario cambie de rol erróneamente con procesos pendientes, perdiendo los permisos para seguir sus procesos adecuadamente.
+                */
+                if (result.value>=1){
+                if ((result.value==1)||(result.value==2 && (nombreRol=='agente'||nombreRol=='usuario'))||(result.value==3 && nombreRol=='usuario')) {
+                    $.ajax({
+                        url: '/dashboard/lista/actualizar/' + idUsuario + '/'+result.value,
+                        method: 'put',
+                    });
+                    Swal.fire('¡El rol ha sido modificado!')
+                    recargarTablaUsuarios();
+                }
+                else{
+                    $.ajax({
+                        url: '/dashboard/comprobar/actualizar/' + idUsuario + '/'+result.value,
+                        method: 'put',
+                        success: function (choice) {
+                            if (choice.comprobacionCambio == true) {
+                                Swal.fire('¡El rol ha sido modificado!')
+                                recargarTablaUsuarios();
+                            } else {
+                                Swal.fire('El usuario tiene procesos pendientes de concluir que no pueden ser heredados al rol elegido. Reasignelos o complételos para continuar.')
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+                    });
+                    }
+            }
+            })
+
+        });
+    </script>
+    <script type="text/javascript">
+/*
+* Funcionalidad de botón de eliminación de usuario. Despliega un modal que verifica la decisión del usuario para posteriormente asegurar la inexistencia de procesos del mismo.
+*/
+        $(document).on("click", ".btnEliminarUsuario", function () {
+            fila = $(this).closest("tr");
+            idUsuario = parseInt(fila.find('td:eq(0)').text());
+            /*
+            *Modal de confirmación.
+            */
+            Swal.fire({
+                title: '¿Confirma la eliminación del usuario?',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                /*
+                * Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/dashboard/lista/eliminar/' + idUsuario,
+                        method: 'put',
+                        success: function (choice) {
+                            if (choice.comprobacionEliminado == false) {
+                                Swal.fire('El usuario tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
+                            } else {
+                                Swal.fire('Usuario Eliminado!')
+                                recargarTablaUsuarios();
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+
+                    });
+                }
+            })
+        });
+    </script>
+
+    <style>
+        #dataTableUsuarios {
+            border-style: solid;
+            border-width: 1px;
+            border-color: #5c5c5c;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+    </style>
+
+</main>

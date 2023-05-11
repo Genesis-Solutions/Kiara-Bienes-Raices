@@ -1,0 +1,406 @@
+<!-- Information Form -->
+
+<form id="cuerpoInmueble" name="cuerpoInmueble" action="/inmueble/editarInmueble/casaDepartamento/<%=inmueble.idInmueble%>" method="POST">
+
+    <!-- Información General -->
+
+    <div class="px-10 pb-12 grid grid-cols-2 space-x-8">
+        <div class="space-y-2">
+            <label for="titulo" class="text-lg font-semibold">Título</label>
+            <input
+                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                type="text" id="titulo" name="titulo" value="<%=inmueble.nombreInmueble%>"
+                placeholder="<%=inmueble.nombreInmueble%>" maxlength="100" required />
+        </div>
+        <div class="space-y-2">
+            <label for="linkVideo" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
+            <input
+                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                type="text" id="linkVideo" name="linkVideo" value="<%=inmueble.linkVideoInmueble%>"
+                placeholder="<%=inmueble.linkVideoInmueble%>" required />
+        </div>
+    </div>
+
+    <div class="p-10 bg-sky-950 grid grid-cols-3 gap-8">
+        <div class="space-y-4">
+            <label for="tipoOperacion" class="text-lg font-semibold text-white">Tipo de Operación</label>
+            <label for="tipoOperacion" class="text-lg font-semibold text-red-500">*(OBLIGATORIO) Seleccionar una
+                opción</label>
+            <div class="flex flex-row">
+                <fieldset>
+                    <input id="ventaCheckbox"
+                        class="peer/venta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox"
+                        name="venta" class="form-checkbox" <% if (inmueble.idTipoMovimiento==1 ||
+                        inmueble.idTipoMovimiento==3) { %>
+                    checked <% } %>/>
+                        <label for="ventaCheckbox" class="ml-1 text-base text-white">Venta</label>
+                        <input id="rentaCheckbox"
+                            class="ml-8 peer/renta w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                            type="checkbox" name="renta" class="form-checkbox" <% if (inmueble.idTipoMovimiento==2 ||
+                            inmueble.idTipoMovimiento==3) { %>
+                        checked <% } %> />
+                            <label for="rentaCheckbox" class="ml-1 text-base text-white">Renta</label>
+                            <div class="mt-4 hidden peer-checked/venta:block space-y-2">
+                                <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
+                                <input
+                                    class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                    type="number" id="precioVenta" name="precioVenta"
+                                    value="<%=inmueble.precioVentaInmueble%>"
+                                    placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" />
+                            </div>
+                            <div class="mt-4 hidden peer-checked/renta:block space-y-2">
+                                <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
+                                <input
+                                    class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                    type="number" id="precioRenta" name="precioRenta"
+                                    value="<%=inmueble.precioRentaInmueble%>"
+                                    placeholder="<%=inmueble.precioRentaInmueble%>" maxlength="30" />
+                            </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <% if (idRol===1 || idRol===2){ %>
+            <div class="space-y-2">
+                <label for="idPropietario" class="text-lg font-semibold text-white">Seleccionar Dueño del
+                    inmueble</label>
+                <select
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                    id="idPropietario" name="idPropietario">
+                    <% listaPropietarios.forEach(propietario=>{ %>
+                        <option value="<%=propietario.idUsuario%>">
+                            <%=propietario.nombreUsuario%>
+                                <%=propietario.apellidosUsuario%>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+            <% } %>
+                <div class="col-span-2 space-y-2">
+                    <label for="" class="text-lg font-semibold text-white">Amenidades Secundarias</label>
+                    <div class="grid grid-cols-3 gap-7">
+
+                        <!-- Columna de Inputs -->
+
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div class="text-white flex items-center space-x-2">
+                                <i class="fa-solid fa-expand"></i>
+                                <p> M2 de Terreno</p>
+                            </div>
+                            <div class="flex items-center">
+                                <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                    type="number" id="m2Terreno" name="m2Terreno"
+                                    value="<%=inmueble.m2TerrenoInmueble%>"
+                                    placeholder="<%=inmueble.m2TerrenoInmueble%>" maxlength="30" required />
+                            </div>
+                            <div class="text-white flex items-center space-x-2">
+                                <i class="fa-solid fa-layer-group"></i>
+                                <p> Piso(s)</p>
+                            </div>
+                            <div class="flex items-center">
+                                <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                    type="number" id="niveles" name="niveles" value="<%=inmueble.nivelesInmueble%>"
+                                    placeholder="<%=inmueble.nivelesInmueble%>" maxlength="30" required />
+                            </div>
+                            <div class="text-white flex items-center space-x-2">
+                                <i class="fa-solid fa-toilet"></i>
+                                <p> 1/2 baño(s)</p>
+                            </div>
+                            <div class="flex items-center">
+                                <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                    type="number" id="mediosBanios" name="mediosBanios"
+                                    value="<%=inmueble.mediosBaniosInmueble%>"
+                                    placeholder="<%=inmueble.medioBaniosInmueble%>" maxlength="30" required />
+                            </div>
+                            <div class="text-white flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                                <p> C. de Manten.</p>
+                            </div>
+                            <div class="flex items-center">
+                                <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                    type="number" id="cuotaMantenimiento" name="cuotaMantenimiento"
+                                    value="<%=inmueble.cuotaMantenimientoInmueble%>"
+                                    placeholder="<%=inmueble.cuotaMantenimientoInmueble%>" maxlength="30" required />
+                            </div>
+                            <div class="text-white flex items-center space-x-2">
+                                <i class="fa-regular fa-calendar-days"></i>
+                                <p> Año de Const.</p>
+                            </div>
+                            <div class="flex items-center">
+                                <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                    type="number" id="fechaConstruccion" name="fechaConstruccion"
+                                    value="<%=inmueble.fechaConstruccionInmueble%>"
+                                    placeholder="<%=inmueble.fechaConstruccionInmueble%>" maxlength="4" required
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                    required />
+                            </div>
+                        </div>
+
+                        <!-- Columna de Dropdowns -->
+
+                        <div class="space-y-2">
+                            <div class="space-y-2">
+                                <label for="usoSuelo" class="text-sm text-white">Uso de Suelo</label>
+                                <select
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                    id="usoSuelo" name="usoSuelo">
+                                    <option value="habitacional" <% if (inmueble.usoSueloInmueble==='habitacional' ) {
+                                        %>
+                                        selected <% } %>
+                                            >Habitacional</option>
+                                    <option value="comercial" <% if (inmueble.usoSueloInmueble==='comercial' ) { %>
+                                        selected <% } %>
+                                            >Comercial</option>
+                                    <option value="comercial y servicios" <% if
+                                        (inmueble.usoSueloInmueble==='comercial y servicios' ) { %>
+                                        selected <% } %>
+                                            >Comercial y servicios</option>
+                                    <option value="industrial" <% if (inmueble.usoSueloInmueble==='industrial' ) { %>
+                                        selected <% } %>
+                                            >Industrial</option>
+                                    <option value="ejidal" <% if (inmueble.usoSueloInmueble==='ejidal' ) { %>
+                                        selected <% } %>
+                                            >Ejidal</option>
+                                    <option value="otro" <% if (inmueble.usoSueloInmueble==='otro' ) { %>
+                                        selected <% } %>
+                                            >Otro</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="ubicado" class="text-sm text-white">Ubicado</label>
+                                <select
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                    id="ubicado" name="ubicado">
+                                    <option value="1" <% if (inmueble.enPrivadaInmueble==1) { %>
+                                        selected <% } %>
+                                            >En Privada</option>
+                                    <option value="0" <% if (inmueble.enPrivadaInmueble==0) { %>
+                                        selected <% } %>
+                                            >En Calle</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="tipoGas" class="text-sm text-white">Tipo de Gas</label>
+                                <select
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                    id="tipoGas" name="tipoGas">
+                                    <option value="natural" <% if (inmueble.tipoGasInmueble==="natural" ) { %>
+                                        selected <% } %>
+                                            >Natural</option>
+                                    <option value="cilindro" <% if (inmueble.tipoGasInmueble==="cilindro" ) { %>
+                                        selected <% } %>
+                                            >Cilindro</option>
+                                    <option value="estacionario" <% if (inmueble.tipoGasInmueble==="estacionario" ) { %>
+                                        selected <% } %>
+                                            >Estacionario</option>
+                                    <option value="no tiene" <% if (inmueble.tipoGasInmueble==="no tiene" ) { %>
+                                        selected <% } %>
+                                            >No tiene</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Columna de Checkbox -->
+
+                        <div class="space-y-2 text-sm text-white">
+                            <div>
+                                <input type="checkbox" id="cocina" name="cocina" value="0" <% if
+                                    (inmueble.cocinaInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Cocina</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="cisterna" name="cisterna" value="0" <% if
+                                    (inmueble.cisternaInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Cisterna</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="cuartoServicio" name="cuartoServicio" value="0" <% if
+                                    (inmueble.cuartoServicioInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Cuarto de Servicio</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="salaTV" name="salaTV" value="0" <% if
+                                    (inmueble.salaTVInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Sala de TV</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="estudio" name="estudio" value="0" <% if
+                                    (inmueble.estudioInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Estudio</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="roofGarden" name="roofGarden" value="0" <% if
+                                    (inmueble.roofGardenInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Roof Garden</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="areaLavado" name="areaLavado" value="0" <% if
+                                    (inmueble.areaLavadoInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Área de Lavado</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="vigilancia" name="vigilancia" value="0" <% if
+                                    (inmueble.vigilanciaInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Vigilancia</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="jardin" name="jardin" value="0" <% if
+                                    (inmueble.jardinInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Jardín</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="bodega" name="bodega" value="0" <% if
+                                    (inmueble.bodegaInmueble==1) { %>
+                                checked
+                                <% } %>
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+                                    <label for="default-checkbox" class="ml-1 text-base">Bodega</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amenidades Principales -->
+
+                <div class="space-y-2">
+                    <label for="" class="text-lg font-semibold text-white">Amenidades Principales</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-house"></i>
+                            <p> M2 de Construcción</p>
+                        </div>
+                        <div>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="m2Construccion" name="m2Construccion"
+                                value="<%=inmueble.m2ConstruidosInmueble%>"
+                                placeholder="<%=inmueble.m2ConstruidosInmueble%>" maxlength="30" required />
+                        </div>
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-bed"></i>
+                            <p> Recámaras</p>
+                        </div>
+                        <div>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="recamaras" name="recamaras" value="<%=inmueble.recamarasInmueble%>"
+                                placeholder="<%=inmueble.recamarasInmueble%>" maxlength="30" required />
+                        </div>
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-car"></i>
+                            <p> Estacionamiento</p>
+                        </div>
+                        <div>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="estacionamientos" name="estacionamientos"
+                                value="<%=inmueble.estacionamientosInmueble%>"
+                                placeholder="<%=inmueble.estacionamientosInmueble%>" maxlength="30" required />
+                        </div>
+                        <div class="text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-bath"></i>
+                            <p> Baños</p>
+                        </div>
+                        <div>
+                            <input
+                                class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                                type="number" id="banios" name="banios" value="<%=inmueble.baniosInmueble%>"
+                                placeholder="<%=inmueble.baniosInmueble%>" maxlength="30" required />
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Descripción Inmueble -->
+
+                <div class="col-span-2 space-y-2">
+                    <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
+                    <textarea id="desc" name="desc" rows="5"
+                        class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Esta propiedad..."></textarea>
+                </div>
+                <div class="text-white">
+                    <input type="checkbox" <% if (inmueble.activoInmueble==1) { %>
+                    hidden checked
+                    <% } %>
+                        id="activoInmueble" name="activoInmueble" value="1" class="w-4 h-4 text-blue-600 bg-gray-100
+                        border-gray-300 rounded">
+                        <label <% if (inmueble.activoInmueble==1) { %>
+                            hidden
+                            <% } %>
+                                for="default-checkbox" class="ml-1 text-base">Activo Inmueble
+                        </label>
+                </div>
+    </div>
+
+    <!-- Dirección Inmueble -->
+
+    <div class="p-10 flex justify-center">
+        <div class="grid grid-cols-2 space-x-5 gap-8">
+            <div class="space-y-5">
+                <div class="space-y-2">
+                    <label for="direccion" class="text-lg font-semibold">Dirección de la Propiedad</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                        type="text" id="direccion" name="direccion" value="<%=inmueble.direccionInmueble%>"
+                        placeholder="<%=inmueble.direccionInmueble%>" maxlength="220" required />
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label for="linkMaps" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
+                <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
+                    type="text" id="linkMaps" name="linkMaps" value="<%=inmueble.linkGoogleMaps%>"
+                    placeholder="<%=inmueble.linkGoogleMaps%>" maxlength="1000" required />
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Buttons Section -->
+
+    <div class="px-10 pb-12 flex justify-evenly">
+        <a href="#" onclick="window.history.back()"
+            class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 text-center">
+            Cancelar
+        </a>
+        <button
+            class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnSubmit"
+            type="submit">
+            Registrar
+        </button>
+    </div>
+</form>

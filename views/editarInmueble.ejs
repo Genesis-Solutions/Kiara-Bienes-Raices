@@ -1,0 +1,65 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <%- include('partials/navbar') %>
+    
+    <% for (let inmueble of inmuebles) { %>
+     
+    
+
+            <!-- Information Form -->
+            <!-- Cambiar dependiendo del id del tipo de inmueble -->
+            <% if (inmueble.idCategoria == 1) { %>
+                <%- include('partials/formsInmuebles/modificarCasaDepartamento', {inmueble: inmueble}) %>
+            <% } else if (inmueble.idCategoria == 2) { %>
+                <%- include('partials/formsInmuebles/modificarCasaDepartamento', {inmueble: inmueble}) %>
+            <% } else if (inmueble.idCategoria == 3) { %>
+                <%- include('partials/formsInmuebles/modificarLocal', {inmueble: inmueble}) %>
+            <% } else if (inmueble.idCategoria == 4) { %>
+                <%- include('partials/formsInmuebles/modificarTerreno', {inmueble: inmueble}) %>
+            <% } else if (inmueble.idCategoria == 5) { %>
+                <%- include('partials/formsInmuebles/modificarBodega', {inmueble: inmueble}) %>
+            <% } else if (inmueble.idCategoria == 6) { %>
+                <%- include('partials/formsInmuebles/modificarOficina', {inmueble: inmueble}) %>
+            <% } else if (inmueble.idCategoria == 7) { %>
+                <%- include('partials/formsInmuebles/modificarOtro', {inmueble: inmueble}) %>
+            <% } %>  
+
+    <% } %>
+
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+
+    <script>
+        function enviarFormulario(e){
+            e.preventDefault();
+        }
+    </script>
+
+    <script type="text/javascript">   
+        $(document).on("click", ".btnSubmit", function(){		            
+            $("#cuerpoInmueble").submit();
+        });
+    </script>
+            <script type="text/javascript">
+            $(document).ready(function(){
+        $('.form-checkbox').change(function(){
+            if($(this).is(':checked')){
+            $('.form-checkbox').not(this).prop('disabled',true);
+            }
+            else{
+            $('.form-checkbox').prop('disabled',false);
+            }
+        });
+        });
+
+    </script>
+
+    <%- include("partials/footer") %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
+</body>
+</html>

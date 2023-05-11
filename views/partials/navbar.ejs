@@ -1,0 +1,99 @@
+<!-- NavBar Section -->
+
+<nav class="flex flex-wrap px-8 py-6 items-center justify-between w-full text-lg">
+    <a href="/">
+        <img class="h-16 w-16" src="/img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
+    </a>
+    <svg id="menu-button" class="h-6 w-6 cursor-pointer lg:hidden" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+    <div class="hidden w-full lg:flex lg:items-center text-center lg:w-auto" id="menu">
+        <ul class="pt-2 text-base font-medium lg:flex lg:justify-between lg:pt-0">
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="/catalogo">
+                    Propiedades
+                </a>
+            </li>
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="/contacto">
+                    Vender o Rentar mi Propiedad
+                </a>
+            </li>
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="/nosotros">
+                    Nosotros
+                </a>
+            </li>
+            <li>
+                <a class="lg:p-4 py-2 block hover:underline" href="/servicios">
+                    Servicios
+                </a>
+            </li>
+            <% if (isLogged == true && idRol == 1) { %>
+                <li>
+                    <a class="lg:p-4 py-2 block hover:underline" href="/dashboard">
+                        Panel Administrativo
+                    </a>
+                </li>
+            <% } %>
+            <% if (isLogged == true && idRol == 2) { %>
+                <li>
+                    <a class="lg:p-4 py-2 block hover:underline" href="/dashboard/props">
+                        Panel Administrativo
+                    </a>
+                </li>
+            <% } %>
+            <li>
+                <% if (isLogged != true) { %>
+                    <a href="/login">
+                        <button class="mt-2 px-5 py-2 w-full bg-gray-800 text-base text-white font-medium rounded-full hover:font-medium hover:bg-gray-700">
+                            Iniciar Sesión
+                        </button>
+                    </a>
+                <% } else { %>
+                    <div class="hidden lg:block ml-6 relative">
+                        <div class="object-center">
+                            <button id="userButton" class="mr-6 mt-2 block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-800 focus:outline-none">
+                                <!-- Foto de usuario cuando se tenga -->
+                            </button>
+                        </div>
+                        <div id="userDropdown" class="w-48 rounded-lg py-2 absolute right-0 mt-6 bg-white hidden">
+                            <a class="block px-4 py-2 text-gray-800" href="">Mi perfil</a>
+                            <hr class="bg-gray-800">
+                            <a class="block px-4 py-2 text-red-500" href="/logout">Cerrar sesión</a>
+                        </div>
+                    </div>
+                <% }; %>
+            </li>
+            <% if (isLogged == true) { %>
+                <li>
+                    <a class="lg:hidden lg:p-4 py-2 block hover:underline" href="#">
+                        Mi perfil
+                    </a>
+                </li>
+            <% } %>
+            <% if (isLogged == true) { %>
+                <li>
+                    <a class="lg:hidden lg:p-4 py-2 block hover:underline" href="/logout">
+                        Cerrar sesión
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    const button = document.querySelector('#menu-button');
+    const menu = document.querySelector('#menu');
+
+    button.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+    });
+    
+    const userButton = document.getElementById('userButton')
+    const userDropdown = document.getElementById('userDropdown')
+    userButton.addEventListener('click', ()=> {
+        userDropdown.classList.toggle('hidden')
+    })
+</script>
