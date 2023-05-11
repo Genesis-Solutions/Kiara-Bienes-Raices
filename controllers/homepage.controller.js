@@ -67,6 +67,15 @@ exports.getImgFromBucket = ( req,res,next ) => {
     });
 }
 
+/**
+* Esta función agrega la funcionalidad de filtros de búsqueda
+* mediante la creación de una query dinámica que es enviada al
+* modelo inmueblesFiltrados.
+*
+* @param: req, res, next
+* @returns: res.render(searchPageFiltrada)
+*/
+
 exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     if (req.body.newSearch == 1){
         delete req.session.searchParams;
