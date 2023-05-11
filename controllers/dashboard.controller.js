@@ -607,7 +607,10 @@ exports.updateBodyTerreno = (req, res, next) => {
         ubicado,
         tipoSuelo,
         cuotaMantenimiento,
-        desc
+        desc,
+        direccion,
+        linkMaps,
+        id_inmueble
     } = req.body;
     /*
     *Obtener el tipo de movimiento y los respectivos precios
@@ -634,7 +637,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     const servicioLuz = req.body.servicioLuz ? 1 : 0;
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
-    const idInmueble = req.params.inmueble;
     Dashboard.activateInmuebleTerreno(
         titulo,
         id_agente,
@@ -652,13 +654,13 @@ exports.updateBodyTerreno = (req, res, next) => {
         servicioAgua,
         servicioLuz,
         servicioDrenaje,
+        vigilancia,
         tipoSuelo,
         cuotaMantenimiento,
-        vigilancia,
         desc,
         direccion,
         linkMaps,
-        idInmueble
+        id_inmueble
     );
     res.status(200).json({ code: 200, msg: "Ok" })
 };
