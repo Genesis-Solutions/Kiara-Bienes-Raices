@@ -27,7 +27,7 @@ exports.postLocalImage = (req,res,next) => {
 }
 
 exports.postS3SingleImage = (req,res,next) => {
-    var upload = storage.array('uploadedImages[]', 1);
+    var upload = storage.array('uploadedImages', 1);
     upload(req, res, function (err) {
         if (err) {
             console.log(err);
