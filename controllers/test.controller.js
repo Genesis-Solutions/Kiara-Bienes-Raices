@@ -42,7 +42,6 @@ exports.postS3SingleImage = (req,res,next) => {
 
 exports.postS3MultipleImages = (req,res,next) => {
     console.log("Entrando a multiple images");
-    console.log(uploadedImages);
     var upload = storage.array('uploadedImages', 25);
     upload(req, res, function (err) {
         if (err) {
