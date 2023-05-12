@@ -44,6 +44,8 @@ exports.postS3MultipleImages = (req,res,next) => {
     console.log("Entrando a multiple images");
     console.log("Antes del log de req.body");
     console.log(req.body);
+    console.log("Antes del log de req.files");
+    console.log(req.files);
     var upload = storage.array('uploadedImages', 25);
     upload(req, res, function (err) {
         if (err) {
