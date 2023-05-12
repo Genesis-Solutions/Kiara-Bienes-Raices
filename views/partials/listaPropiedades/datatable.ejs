@@ -65,10 +65,10 @@
             thead += '<tr>'
             thead += '<th>Id del Inmueble</th>'
             thead += '<th>Propiedad</th>'
+            thead += '<th>Operacion</th>'
             thead += '<th>Precio de Venta</th>'
             thead += '<th>Precio de Renta</th>'
-            thead += '<th>Dueño</th>'
-            thead += '<th>Operación</th>'
+            thead += '<th>Propietario</th>'
             thead += '<th>Agente</th>'
             thead += '<th>Modificar agente asignado</th>'
             thead += '<th>¿En proceso?</th>'
@@ -191,7 +191,7 @@
             var agentes = {}
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
-                <%if (idRol == 2) {%>
+                <% if (idRol == 2) { %>
                 Swal.fire('No tienes permisos administrativos para la modificación.');
                     <%} else if (idRol == 1) {%>
                 $.ajax({
