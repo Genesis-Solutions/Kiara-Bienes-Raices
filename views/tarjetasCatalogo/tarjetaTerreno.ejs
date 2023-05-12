@@ -14,10 +14,10 @@
                     </h1>
                     <p class="text-lg font-semibold">
                         <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}); %>
-                        <% if(data.precioVentaInmueble != null){ %>
+                        <% if(data.precioVentaInmueble != null && data.precioVentaInmueble > 0){ %>
                             Venta: <%= formatter.format(data.precioVentaInmueble) %> -  
                         <% } %> 
-                        <%if(data.precioRentaInmueble != null){%>
+                        <%if(data.precioRentaInmueble != null && data.precioRentaInmueble > 0){%>
                             Renta: <%= formatter.format(data.precioRentaInmueble) %>
                         <% } %>
                     </p>
