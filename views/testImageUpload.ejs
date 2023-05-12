@@ -26,8 +26,7 @@
             <!-- Multiple upload al S3 -->
             <form id="formMediaS3" action='/test/multipleImages' method='POST' enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
                 <label for='file'>Seleccione una o más imagenes:</label>
-                <input type='file' multiple='multiple' accept='image/*' name='multipleImages' id='multipleImages' />
-                <span class='hint'>Supported files: jpg, jpeg, png.</span>
+                <input type='file' multiple='multiple' accept='image/*' name='uploadedImages' id='uploadedImages' />
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
         </div>
@@ -173,11 +172,28 @@
             })
         </script>
 
-        <!-- Función eliminarInmueble -->
+        <!-- Función uploadS3Dropzone -->
         <script type="text/javascript">   
             function uploadS3Dropzone() {
                 $('#imagenesS3').submit();
             }
+        </script>
+
+        <!-- Función eliminarInmueble -->
+        <script type="text/javascript">   
+            formMediaS3.addEventListener('submit', async function (e) {
+                const files = e.target.uploadedImages.files;
+                if (files.length != 0) {
+                    for (const single_file of files) {
+                        data.append('uploadedImages', single_file)
+                    }
+                }
+            });
+            const submit_data_fetch = await fetch('/test/multipleImages', 
+            {
+                method: 'POST',
+                body: data
+            });
         </script>
 
     </body>
