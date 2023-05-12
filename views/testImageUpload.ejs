@@ -26,7 +26,7 @@
             <!-- Multiple upload al S3 -->
             <form id="formMediaS3" action='/test/multipleImages' method='POST' enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
                 <label for='file'>Seleccione una o más imagenes:</label>
-                <input type='file' multiple='multiple' accept='image/*' name='uploadedImages' id='uploadedImages' />
+                <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' />
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
             </form>
         </div>
@@ -187,14 +187,14 @@
             // Manejador de eventos de envío del formulario
             document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
                 event.preventDefault();
-                const files = document.querySelector('#uploadedImages').files;
+                const files = document.querySelector('#uploadedImages[]').files;
                 const formData = new FormData();
                 console.log("Lenght de los archivos");
                 console.log("Archivos subidos:", files.length);
                 for (let i = 0; i < files.length; i++) {
                     console.log("Dentro del for de uploadImages");
                     console.log(files[i]);
-                    formData.append('uploadedImages', files[i]);
+                    formData.append('uploadedImages[]', files[i]);
                 }
                 // Enviar la petición POST con los archivos al servidor
                 fetch('/test/multipleImages', {
