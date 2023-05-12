@@ -387,6 +387,26 @@ exports.setPhotos = (req, res, next) => {
     res.status(200).json({ code: 200, msg: "Ok" });
 };
 
+exports.setPhotos = (req, res, next) => {
+    var upload = storage.array('uploadedImages[]');
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            req.files.forEach(function (file) {
+                console.log("Esto es dento de registrar imagenes");
+                const idInmueble = req.params.inmueble;
+                const mediaName = file.key;
+                console.log("idInmueble: ",idInmueble);
+                console.log("mediaName: ",mediaName);
+                Dashboard.registerImage(idInmueble, mediaName);
+                console.log("Esto es despues de la transaccion");
+            });
+        }
+    });
+    ///res.status(200).json({code: 200, msg:"Ok"}); 
+};
+
 /*
 Actualiza los datos de un inmueble de tipo "Casa" o "Departamento" en el dashboard.
 Los inmuebles de tipo "Casa" y "Departamento" almacenan los mismos datos.
