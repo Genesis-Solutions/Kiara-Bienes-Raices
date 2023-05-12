@@ -40,6 +40,20 @@ exports.postS3SingleImage = (req,res,next) => {
     res.redirect('/test');
 };
 
+exports.postS3MultipleImages = (req,res,next) => {
+    var upload = storage.array('multipleImages', 25);
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+        }
+        const mediaName = file.key;
+        console.log(mediaName);
+        console.log("Desde el upload de multiple image");
+    });
+    //res.status(200).json({code: 200, msg:"Ok"}); 
+    res.redirect('/test');
+};
+
 exports.postDropzoneLocal = (req,res,next) => {
     var upload = uploadMedia.array('mediaDropzoneLocal', 25);
     upload(req, res, function (err) {
