@@ -144,7 +144,7 @@
                     $("#imagenesS3").submit(function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        this.on("uploadprogress", function(file, progress) {
+                        myDropzone.on("uploadprogress", function(file, progress) {
                             console.log("File progress", progress);
                         });
                         myDropzone.processQueue();
