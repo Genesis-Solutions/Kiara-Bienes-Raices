@@ -196,19 +196,11 @@
                     console.log(files[i]);
                     formData.append('uploadedImages', files[i]);
                 }
-                // Enviar la petición POST con los archivos al servidor
-                fetch('/test/multipleImages', {
+                $.ajax( {
+                    url: '/test/multipleImages',
                     method: 'POST',
-                    body: formData,
-                })
-                .then((response) => {
-                    console.log(response);
-                    alert('Archivos cargados correctamente');
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert('Error al cargar los archivos');
-                });
+                    data: formData
+                } );
             });
         </script>
 
