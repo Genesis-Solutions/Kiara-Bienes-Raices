@@ -27,7 +27,7 @@ exports.postLocalImage = (req,res,next) => {
 }
 
 exports.postS3SingleImage = (req,res,next) => {
-    var upload = storage.array('uploadedImages', 1);
+    var upload = storage.array('singleMediaS3', 1);
     upload(req, res, function (err) {
         if (err) {
             console.log(err);
@@ -54,6 +54,7 @@ exports.postS3MultipleImages = (req,res,next) => {
         } else {
             req.files.forEach(function (file) {
                 const mediaName = file.key;
+                console.log("-------");
                 console.log("mediaName: ",mediaName);
                 console.log("Desde el multiple upload a s3");
             });
