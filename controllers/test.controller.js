@@ -32,8 +32,9 @@ exports.postS3SingleImage = (req,res,next) => {
         if (err) {
             console.log(err);
         }
-        const mediaName = file.key;
-        console.log(mediaName);
+        //const mediaName = file.key;
+        //console.log(mediaName);
+        console.log("Desde el upload de single image");
     });
     //res.status(200).json({code: 200, msg:"Ok"}); 
     res.redirect('/test');
