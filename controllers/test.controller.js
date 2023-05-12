@@ -46,10 +46,13 @@ exports.postS3MultipleImages = (req,res,next) => {
     upload(req, res, function (err) {
         if (err) {
             console.log(err);
+        } else {
+            req.files.forEach(function (file) {
+                const mediaName = file.key;
+                console.log("mediaName: ",mediaName);
+                console.log("Desde el multiple upload a s3");
+            });
         }
-        const mediaName = file.key;
-        console.log(mediaName);
-        console.log("Desde el upload de multiple image");
     });
     ///res.status(200).json({code: 200, msg:"Ok"}); 
     res.redirect('/test');
