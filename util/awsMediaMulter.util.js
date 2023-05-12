@@ -11,7 +11,7 @@ var storage = multer({
             cb(null, {fieldName: file.fieldname});
         },
         key: function (req, file, cb) {
-            console.log("Dentro del multer s3: file-",file)
+            //console.log("Dentro del multer s3: file-",file)
             return cb(null, "img/"+Date.now()+"-"+file.originalname);
         }
     })

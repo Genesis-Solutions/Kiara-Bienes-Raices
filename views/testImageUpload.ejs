@@ -189,6 +189,8 @@
                 event.preventDefault();
                 const files = document.querySelector('#uploadedImages').files;
                 const formData = new FormData();
+                console.log("Lenght de los archivos");
+                console.log("Archivos subidos:", files.length);
                 for (let i = 0; i < files.length; i++) {
                     formData.append('uploadedImages', files[i]);
                 }
