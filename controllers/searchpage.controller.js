@@ -174,18 +174,15 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         * En caso de buscar inmuebles en renta y seleccionar un rango de
         * precio, utiliza precioRentaInmueble para generar la query
         */
-
-        if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
-            //console.log("dentro del precio equisde")
-            conditions.push("(idTipoMovimiento = 1 OR idTipoMovimiento = 3)")
+        if (params.idTipoMovimiento == "3") {
             if (typeof params.precioMinimo !== 'undefined') {
-
-                if (params.precioMaximo != ''){
-                    conditions.push("precioVentaInmueble BETWEEN ? AND ?");
+                conditions.push("(idTipoMovimiento = 1 OR idTipoMovimiento = 2 OR idTipoMovimiento = 3)")
+                //console.log("dentro del precio equisde")
+                if (params.precioMaximo != '') {
+                    conditions.push("precioRentaInmueble BETWEEN ? AND ?");
                     values.push(params.precioMinimo);
                     values.push(params.precioMaximo);
-                }
-                
+                };
             };
         } else if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
             if (typeof params.precioMinimo !== 'undefined') {
@@ -195,10 +192,20 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
                     conditions.push("precioRentaInmueble BETWEEN ? AND ?");
                     values.push(params.precioMinimo);
                     values.push(params.precioMaximo);
-                }
+                };
+            };
+        } else if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
+            //console.log("dentro del precio equisde")
+            conditions.push("(idTipoMovimiento = 1 OR idTipoMovimiento = 3)")
+            if (typeof params.precioMinimo !== 'undefined') {
+
+                if (params.precioMaximo != ''){
+                    conditions.push("precioVentaInmueble BETWEEN ? AND ?");
+                    values.push(params.precioMinimo);
+                    values.push(params.precioMaximo);
+                };
             };
         };
-
         /** 
         * En caso de buscar por dirección agrega el filtro de LIKE a la query,
         * al ser una expresión regular, permite buscar por texto aquellas
@@ -207,7 +214,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
         console.log(params.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
-            conditions.push("direccionInmueble LIKE ?");
+            conditions.push("nombreInmueble LIKE ?");
             values.push("%" + params.direccionInmueble + "%");
         };
 
@@ -384,7 +391,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     /**
     * Obtiene la cantidad de inmuebles filtrados
     */
-    
+    //console.log(countQuery)
     const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values);
 
     /**
@@ -429,7 +436,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         */
         
         numeroResultados = countFiltered[0][0].total;
-        console.log("numero de pags" + numeroResultados)
+        //console.log("numero de pags" + numeroResultados)
         numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
 
         /** 
@@ -466,8 +473,8 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
 
         builtQueryLimits = builtQuery + limits;
 
-        console.log(builtQuery);
-        console.log(conditions.values)
+        //console.log(builtQuery);
+        //console.log(conditions.values)
         //console.log(countFiltered[0][0].total)
     };
 
@@ -524,7 +531,7 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
     * muestra la vista searchPageVacia.ejs
     */
 
-    console.log(resultsExist)
+    //console.log(resultsExist)
     if (resultsExist == true) {
         res.render('searchPageFiltrada', {
             inmuebles: inmuebles,
@@ -540,7 +547,6 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         res.render('searchPageVacia', {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol
-        })
-    };
-    
-}
+        });
+    };
+};
