@@ -67,6 +67,7 @@ exports.postDropzoneS3 = (req, res, next) => {
             req.files.forEach(function (file) {
                 const mediaName = file.key;
                 console.log(mediaName);
+                console.log("Desde el upload de dropzone a s3");
             });
         }
     });

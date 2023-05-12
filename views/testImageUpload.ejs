@@ -126,10 +126,10 @@
             }
             $("#uploadDropzoneS3").dropzone({ 
                 url: '/test/dropzoneS3',
-                maxFilesize: 15, // MB
+                //maxFilesize: 15, // MB
                 maxFiles: 25,
                 autoProcessQueue: false,
-                uploadMultiple: true,
+                uploadMultiple: false,
                 paramName: paramNameForSendS3,
                 method: 'post',
                 parallelUploads: 25,
