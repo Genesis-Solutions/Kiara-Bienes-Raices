@@ -196,7 +196,7 @@
                     //console.log(files[i]);
                     formData.append('uploadedImages[]', files[i]);
                     // Enviar la petición POST con los archivos al servidor
-                    fetch('/test/multipleImages', {
+                    fetch('/test/singleUploadS3', {
                         method: 'POST',
                         body: formData,
                     })
