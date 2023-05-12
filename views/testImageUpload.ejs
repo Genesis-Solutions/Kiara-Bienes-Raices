@@ -188,28 +188,27 @@
             document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
                 event.preventDefault();
                 const files = document.querySelector('#uploadedImages').files;
-                const formData = new FormData();
                 console.log("Lenght de los archivos");
                 console.log("Archivos subidos:", files.length);
                 for (let i = 0; i < files.length; i++) {
                     console.log("Dentro del for de uploadImages");
+                    const formData = new FormData();
                     //console.log(files[i]);
                     formData.append('uploadedImages[]', files[i]);
+                    // Enviar la petición POST con los archivos al servidor
+                    fetch('/test/multipleImages', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        //alert('Archivos cargados correctamente');
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        alert('Error al cargar los archivos');
+                    });
                 }
-                console.log(formData);
-                // Enviar la petición POST con los archivos al servidor
-                fetch('/test/multipleImages', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then((response) => {
-                    console.log(response);
-                    alert('Archivos cargados correctamente');
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert('Error al cargar los archivos');
-                });
             });
         </script>
 
