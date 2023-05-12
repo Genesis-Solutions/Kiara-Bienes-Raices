@@ -181,18 +181,27 @@
 
         <!-- Función eliminarInmueble -->
         <script type="text/javascript">   
-            formMediaS3.addEventListener('submit', async function (e) {
-                const files = e.target.uploadedImages.files;
-                if (files.length != 0) {
-                    for (const single_file of files) {
-                        data.append('uploadedImages', single_file)
-                    }
+            // Manejador de eventos de envío del formulario
+            document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
+                event.preventDefault();
+                const files = document.querySelector('#uploadedImages').files;
+                const formData = new FormData();
+                for (let i = 0; i < files.length; i++) {
+                    formData.append('uploadedImages', files[i]);
                 }
-            });
-            const submit_data_fetch = await fetch('/test/multipleImages', 
-            {
-                method: 'POST',
-                body: data
+                // Enviar la petición POST con los archivos al servidor
+                fetch('/test/multipleImages', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then((response) => {
+                    console.log(response);
+                    alert('Archivos cargados correctamente');
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert('Error al cargar los archivos');
+                });
             });
         </script>
 
