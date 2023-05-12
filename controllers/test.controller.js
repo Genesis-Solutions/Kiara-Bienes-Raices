@@ -46,18 +46,25 @@ exports.postS3MultipleImages = (req,res,next) => {
     console.log(req.body);
     console.log("Antes del log de req.files");
     console.log(req.files);
-    var upload = storage.array('uploadedImages', 25);
-    upload(req, res, function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            req.files.forEach(function (file) {
-                const mediaName = file.key;
-                console.log("mediaName: ",mediaName);
-                console.log("Desde el multiple upload a s3");
-            });
-        }
+    var upload = storage;
+    upload.array('uploadedImages');
+    console.log("Archivos subidos:");
+    req.files.forEach((file) => {
+        console.log("Dentro del forEachFile");
+        console.log(file.originalname);
     });
+    // var upload = storage.array('uploadedImages', 25);
+    // upload(req, res, function (err) {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         req.files.forEach(function (file) {
+    //             const mediaName = file.key;
+    //             console.log("mediaName: ",mediaName);
+    //             console.log("Desde el multiple upload a s3");
+    //         });
+    //     }
+    // });
     ///res.status(200).json({code: 200, msg:"Ok"}); 
     res.redirect('/test');
 };
