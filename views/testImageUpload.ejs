@@ -141,6 +141,9 @@
                 parallelUploads: 25,
                 init: function() {
                     var myDropzone = this;
+                    this.on("uploadprogress", function(file, progress) {
+                        console.log("File progress", progress);
+                    });
                     $("#imagenesS3").submit(function (e) {
                         e.preventDefault();
                         e.stopPropagation();
