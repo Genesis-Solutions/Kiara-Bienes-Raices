@@ -366,26 +366,26 @@ Agrega una o varias fotos al inmueble especificado en la solicitud HTTP.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede registrar la imagen del inmueble.
 */
-exports.setPhotos = (req, res, next) => {
-    console.log('Entrando a setPhotos');
-    var upload = storage.array('media', 25);
-    upload(req, res, function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            req.files.forEach(function (file) {
-                console.log("Esto es dento de registrar imagenes");
-                const idInmueble = req.params.inmueble;
-                const mediaName = file.key;
-                console.log("idInmueble: ",idInmueble);
-                console.log("mediaName: ",mediaName);
-                Dashboard.registerImage(idInmueble, mediaName);
-                console.log("Esto es despues de la transaccion");
-            });
-        }
-    });
-    res.status(200).json({ code: 200, msg: "Ok" });
-};
+// exports.setPhotos = (req, res, next) => {
+//     console.log('Entrando a setPhotos');
+//     var upload = storage.array('media', 25);
+//     upload(req, res, function (err) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             req.files.forEach(function (file) {
+//                 console.log("Esto es dento de registrar imagenes");
+//                 const idInmueble = req.params.inmueble;
+//                 const mediaName = file.key;
+//                 console.log("idInmueble: ",idInmueble);
+//                 console.log("mediaName: ",mediaName);
+//                 Dashboard.registerImage(idInmueble, mediaName);
+//                 console.log("Esto es despues de la transaccion");
+//             });
+//         }
+//     });
+//     res.status(200).json({ code: 200, msg: "Ok" });
+// };
 
 exports.setPhotos = (req, res, next) => {
     var upload = storage.array('uploadedImages[]');
