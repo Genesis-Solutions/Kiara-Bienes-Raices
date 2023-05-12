@@ -32,8 +32,9 @@ exports.postS3SingleImage = (req,res,next) => {
         if (err) {
             console.log(err);
         }
-        //const mediaName = file.key;
-        //console.log(mediaName);
+        const mediaName = file.key;
+        console.log("-------");
+        console.log(mediaName);
         console.log("Desde el upload de single image");
     });
     //res.status(200).json({code: 200, msg:"Ok"}); 
@@ -41,11 +42,11 @@ exports.postS3SingleImage = (req,res,next) => {
 };
 
 exports.postS3MultipleImages = (req,res,next) => {
-    console.log("Entrando a multiple images");
-    console.log("Antes del log de req.body");
-    console.log(req.body);
-    console.log("Antes del log de req.files");
-    console.log(req.files);
+    // console.log("Entrando a multiple images");
+    // console.log("Antes del log de req.body");
+    // console.log(req.body);
+    // console.log("Antes del log de req.files");
+    // console.log(req.files);
     var upload = storage.array('uploadedImages[]');
     upload(req, res, function (err) {
         if (err) {
