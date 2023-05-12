@@ -133,12 +133,8 @@
         document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
             event.preventDefault();
             const files = document.querySelector('#uploadedImages').files;
-            console.log("Lenght de los archivos");
-            console.log("Archivos subidos:", files.length);
             var idInmueble = $("#id_inmueble").val();
-            console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
             for (let i = 0; i <= files.length; i++) {
-                console.log("Dentro del for de uploadImages");
                 const formData = new FormData();
                 //console.log(files[i]);
                 formData.append('uploadedImages[]', files[i]);
@@ -149,7 +145,6 @@
                 })
                 .then((response) => {
                     console.log(response);
-                    //alert('Archivos cargados correctamente');
                 })
                 .catch((error) => {
                     console.error(error);
