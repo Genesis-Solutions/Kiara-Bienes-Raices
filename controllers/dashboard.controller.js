@@ -366,8 +366,9 @@ Agrega una o varias fotos al inmueble especificado en la solicitud HTTP.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede registrar la imagen del inmueble.
 */
+
 exports.setPhotos = (req, res, next) => {
-    var upload = storage.array('media', 25);
+    var upload = storage.array('uploadedImages[]');
     upload(req, res, function (err) {
         if (err) {
             console.log(err);
@@ -379,7 +380,7 @@ exports.setPhotos = (req, res, next) => {
             });
         }
     });
-    res.status(200).json({ code: 200, msg: "Ok" });
+    ///res.status(200).json({code: 200, msg:"Ok"}); 
 };
 
 /*

@@ -1,0 +1,218 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <%- include('partials/navbar') %>
+
+        <div class="grid grid-cols-2 gap-8">
+            <!-- Single upload a assets/file -->
+            <form id="formMedia" action="/test/createlocal" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <h2 class="text-2xl font-bold mb-4">Upload de una foto a local (assets/file)</h2>
+                    <label class="text-xl text-gray-600">Subir fotografia</label>
+                    <input type="file" id="mediaLocal" name="mediaLocal" class="border-2 border-gray-300 p-2 w-full"  required>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
+            </form>
+            <!-- Single upload al S3 -->
+            <form id="formMedia2" action="/test/singleUploadS3" onsubmit="enviarFormulario(e)" class="bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <h2 class="text-2xl font-bold mb-4">Upload de una foto al S3 - single upload</h2>
+                    <label class="text-xl text-gray-600">Subir fotografia</label>
+                    <input type="file" id="singleMediaS3" name="singleMediaS3" class="border-2 border-gray-300 p-2 w-full"  required>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
+            </form>
+            <!-- Multiple upload al S3 -->
+            <form id="formMediaS3" action='/test/multipleImages' method='POST' enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
+                <label for='file'>Seleccione una o más imagenes:</label>
+                <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' />
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
+            </form>
+        </div>
+        <!-- Dropzone con archivos locales -->
+        <div class="px-10 py-5 grid grid-cols-3">
+            <!-- </div> -->
+            <div class="col-span-3">
+                <h2 class="text-lg font-semibold">
+                    Dropzone local (/assets/file)
+                </h2>
+                <p class="text-gray-700"> Subir maximo 5 imagenes </p>
+                <!-- Pictures Form -->
+                <form action="/test/dropzonelocal" id="imagenes" name="imagenes"
+                    enctype="multipart/form-data" method="POST">
+                    <div class="dropzone dz-clickable" id="uploadDropzone">
+                        <div class="dz-default dz-message" data-dz-message="">
+                            <span>Drop files here to upload</span>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+        <!-- Dropzone directo al S3 -->
+        <div class="px-10 py-5 grid grid-cols-3">
+            <!-- </div> -->
+            <div class="col-span-3">
+                <h2 class="text-lg font-semibold">
+                    Dropzone S3
+                </h2>
+                <p class="text-gray-700"> Subir maximo 5 imagenes </p>
+                <!-- Pictures Form -->
+                <form action="/test/dropzoneS3" id="imagenesS3" name="imagenesS3"
+                    enctype="multipart/form-data" method="POST">
+                    <div class="dropzone dz-clickable" id="uploadDropzoneS3">
+                        <div class="dz-default dz-message" data-dz-message="">
+                            <span>Drop files here to upload</span>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+
+        <div class="px-10 pb-12 flex justify-evenly">
+            <button  class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnLocalDropzone">
+                Upload dropzone local
+            </button>
+            <button  class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnS3Dropzone">
+                Upload dropzone S3
+            </button>
+        </div>
+
+        <!-- Enlazar con la biblioteca de jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <!-- jQuery form plug in -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+        <script src="https://malsup.github.io/jquery.form.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+        <!-- Enlazar con la biblioteca de Dropzone -->
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
+        <script>
+            function enviarFormulario(e){
+                e.preventDefault();
+            }
+        </script>
+
+        <!-- Configuración de dropzone local-->
+        <script type="text/javascript">
+            Dropzone.autoDiscover = false;
+            function paramNameForSendLocal() {
+                return "mediaDropzoneLocal";
+            }
+            $("#uploadDropzone").dropzone({ 
+                url: '/test/dropzonelocal',
+                maxFilesize: 15, // MB
+                maxFiles: 25,
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                paramName: paramNameForSendLocal,
+                method: 'post',
+                parallelUploads: 25,
+                init: function() {
+                    var myDropzone = this;
+                    $("#imagenes").submit(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                        window.location.replace('/test');
+                    }); 
+                }
+            });
+        </script>
+
+        <!-- Configuración de dropzone S3-->
+        <script type="text/javascript">
+            Dropzone.autoDiscover = false;
+            function paramNameForSendS3() {
+                return "mediaDropzoneS3";
+            }
+            $("#uploadDropzoneS3").dropzone({ 
+                url: '/test/dropzoneS3',
+                maxFilesize: 15730000, // MB
+                maxFiles: 25,
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                paramName: paramNameForSendS3,
+                method: 'post',
+                parallelUploads: 25,
+                init: function() {
+                    var myDropzone = this;
+                    $("#imagenesS3").submit(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.on("uploadprogress", function(file, progress) {
+                            console.log("File progress", progress);
+                        });
+                        myDropzone.processQueue();
+                        window.location.replace('/test');
+                    }); 
+                }
+            });
+        </script>
+
+        <!-- Ejecución de la función uploadLocalDropzone desde el boton Upload dropzone local -->
+        <script type="text/javascript">   
+            $(document).on("click", ".btnLocalDropzone", function(){	
+                uploadLocalDropzone();
+            })
+        </script>
+
+        <!-- Función eliminarInmueble -->
+        <script type="text/javascript">   
+            function uploadLocalDropzone() {
+                $('#imagenes').submit();
+            }
+        </script>
+
+        <!-- Ejecución de la función uploadS3Dropzone desde el boton Upload dropzone S3 -->
+        <script type="text/javascript">   
+            $(document).on("click", ".btnS3Dropzone", function(){	
+                uploadS3Dropzone();
+            })
+        </script>
+
+        <!-- Función uploadS3Dropzone -->
+        <script type="text/javascript">   
+            function uploadS3Dropzone() {
+                $('#imagenesS3').submit();
+            }
+        </script>
+
+        <!-- Función eliminarInmueble -->
+        <script type="text/javascript">   
+            // Manejador de eventos de envío del formulario
+            document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
+                event.preventDefault();
+                const files = document.querySelector('#uploadedImages').files;
+                console.log("Lenght de los archivos");
+                console.log("Archivos subidos:", files.length);
+                for (let i = 0; i <= files.length; i++) {
+                    console.log("Dentro del for de uploadImages");
+                    const formData = new FormData();
+                    //console.log(files[i]);
+                    formData.append('uploadedImages[]', files[i]);
+                    // Enviar la petición POST con los archivos al servidor
+                    fetch('/test/multipleImages', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        //alert('Archivos cargados correctamente');
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        alert('Error al cargar los archivos');
+                    });
+                }
+            });
+        </script>
+
+
+    </body>
+
+</html>
