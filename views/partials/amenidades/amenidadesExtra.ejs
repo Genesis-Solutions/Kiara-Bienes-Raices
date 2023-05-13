@@ -121,12 +121,9 @@
             <% if (inmueble.generadorElectricoInmueble != 0 && inmueble.generadorElectricoInmueble != null) { %>
                 <li>● Generador Eléctrico</li>
             <% } %>
-        </ul>
-    </div>
-    <div>
-        <ul class="space-y-2">
+        
             <% if (inmueble.tipoPisoInmueble != null) { %>
-                <li>● Tipo Piso: $<%= tipoPisoValue.tipoPiso %> </li>
+                <li>● Tipo Piso: <%= inmueble.tipoPisoInmueble %> </li>
             <% } %>
             
             <% if (inmueble.andenCargaInmueble != 0 && inmueble.andenCargaInmueble != null) { %>
