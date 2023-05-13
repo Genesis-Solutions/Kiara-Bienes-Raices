@@ -4,24 +4,46 @@
 
     <%- include('partials/navbar') %>
 
-    <!-- Titulo de la pagina -->
-    <!-- Cambiar dependiendo del id del tipo de inmueble -->
-    <div class="p-10 flex justify-center items-center">
+    <!-- Heading Section -->
+
+    <div class="px-10">
+        <hr class="h-px my-4 bg-gray-800 border-0">
+    </div>
+
+    <div class="px-10 p-10 text-center space-y-4">
         <% if(categoria == 1){ %>
-            <h1 class="text-4xl text-center">Dando de alta una casa</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta una Casa
+            </h2>
         <% } else if (categoria == 2){ %>
-            <h1 class="text-4xl text-center">Dando de alta un departamento</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Departamento
+            </h2>
         <% } else if (categoria == 3){ %>
-            <h1 class="text-4xl text-center">Dando de alta un local</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Local
+            </h2>
         <% } else if (categoria == 4){ %>
-            <h1 class="text-4xl text-center">Dando de alta un terreno</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Terreno
+            </h2>
         <% } else if (categoria == 5){ %>
-            <h1 class="text-4xl text-center">Dando de alta una bodega</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta una Bodega
+            </h2>
         <% } else if (categoria == 6){ %>
-            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta una Oficina
+            </h2>
         <% } else if (categoria == 7){ %>
-            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Inmueble
+            </h2>
         <%}%>
+        <p class="pb-10">
+            No olvides llenar los campos con la información correspondiente.
+        </p>
+        <hr class="h-px my-4 bg-gray-800 border-0">
     </div>
 
     <!-- Pictures Form -->
@@ -31,13 +53,22 @@
             <h2 class="text-lg font-semibold">
                 Imágenes del inmueble
             </h2>
-            <p class="text-gray-700"> Subir por lo menos 5 imágenes del inmueble </p>
+            <p class="text-gray-700 pb-2"> Sube por lo menos 5 imágenes del inmueble. </p>
             <!-- Multiple upload al S3 -->
-            <form id="formMediaS3" action="/dashboard/alta/inmueble/imagenes/<%=idInmueble%>" method='POST' enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
-                <label for='file'>Seleccione una o más imagenes:</label>
-                <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' />
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
-            </form>
+            <div class="flex items-center justify-center w-full">
+                <form class="w-full" id="formMediaS3" action="/dashboard/alta/inmueble/imagenes/<%=idInmueble%>" method='POST' enctype="multipart/form-data">
+                    <label for='uploadedImages' class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 text-sm text-gray-500">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <i class="fa-solid fa-cloud-arrow-up fa-2xl my-4 pt-5"></i>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Selecciona</span> las imágenes del inmueble.</p>
+                            <p class="text-xs text-gray-500 pb-2">PNG o JPG</p>
+                            <p id="fileCount" class="pb-5"></p>
+                        </div>
+                    </label>
+                    <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' class="hidden" onchange="updateFileCount(event)"/>
+                </form>
+            </div>
+
             <!-- Pictures Form -->
             <!-- <form action="/dashboard/alta/inmueble/imagenes/<%=idInmueble%>" id="imagenes" name="imagenes"
                 enctype="multipart/form-data" method="POST">
@@ -194,6 +225,21 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        function updateFileCount(event) {
+            var fileCount = event.target.files.length;
+            var files = event.target.files;
+            var fileCountElement = document.getElementById('fileCount');
+            fileCountElement.innerHTML = "<p class='text-center pb-2'>Número de imágenes: <span class='font-semibold'>" + fileCount + "</span></p>";
+            for (var i = 0; i < fileCount; i++) {
+                var fileName = files[i].name;
+                var fileItem = document.createElement("p");
+                fileItem.textContent = fileName;
+                fileCountElement.appendChild(fileItem); 
+            }
+        }
     </script>
 
     <%- include("partials/footer") %>
