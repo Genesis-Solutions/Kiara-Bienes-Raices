@@ -1,34 +1,32 @@
-<div class="w-full">
+<div class="col-span-1 flex flex-col rounded-lg overflow-hidden border border-gray-300 hover:scale-105 transition duration-150">
     <a href="inmueble/<%=data.idInmueble%>">
-        <div class="rounded-lg border border-gray-300 hover:scale-105 transition duration-150">
-            <img src="/get_bucket_img?image=<%=data.img%>" class="w-full h-44 rounded-t-lg">
-            <div class="px-5 py-3">
-                <h3 class="text-lg font-semibold"> <%= data.nombreInmueble %>
-                </h3>
-                <div class="grid grid-cols-2 gap-2 py-2">
-                    <div>
-                        <i class="fa-solid fa-house"></i> <%= data.m2TerrenoInmueble %> m2
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-layer-group"></i> <%= data.nivelesInmueble %> niveles
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-bath"></i> <%= data.baniosInmueble %> baños
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-car"></i> <%= data.estacionamientosInmueble %> estac.
-                    </div>
+        <!-- <div class="h-40 bg-cover bg-center" style="background-image: url(/get_bucket_img?image=<%=data.img%>);"></div> -->
+        <img src="/get_bucket_img?image=<%=data.img%>" class="object-cover w-full h-52">
+        <div class="px-5 py-3 flex flex-wrap">
+            <h3 class="text-lg font-semibold w-full"> <%= data.nombreInmueble %> </h3>
+            <div class="grid grid-cols-2 gap-2 py-2 w-full">
+                <div>
+                    <i class="fa-solid fa-house"></i> <%= data.m2TerrenoInmueble %> m2
                 </div>
-                <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}); %>
-                <% if (data.idTipoMovimiento == 1) { %>
-                    <h3 class="text-lg font-medium"> Venta: <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
-                <% } else if (data.idTipoMovimiento == 2) {%>
-                    <h3 class="text-lg font-medium"> Renta: <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
-                <% }  else if (data.idTipoMovimiento == 3) {%>
-                    <h3 class="text-lg font-medium"> Venta: <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
-                    <h3 class="text-lg font-medium"> Renta: <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
-                <% } %>
+                <div>
+                    <i class="fa-solid fa-layer-group"></i> <%= data.nivelesInmueble %> niveles
+                </div>
+                <div>
+                    <i class="fa-solid fa-bath"></i> <%= data.baniosInmueble %> baños
+                </div>
+                <div>
+                    <i class="fa-solid fa-car"></i> <%= data.estacionamientosInmueble %> estac.
+                </div>
             </div>
+            <% const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'}); %>
+            <% if (data.idTipoMovimiento == 1) { %>
+                <h3 class="text-lg font-medium w-full"> Venta: <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
+            <% } else if (data.idTipoMovimiento == 2) {%>
+                <h3 class="text-lg font-medium w-full"> Renta: <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
+            <% }  else if (data.idTipoMovimiento == 3) {%>
+                <h3 class="text-lg font-medium w-full"> Venta: <%= formatter.format(data.precioVentaInmueble) %> MXN</h3> 
+                <h3 class="text-lg font-medium w-full"> Renta: <%= formatter.format(data.precioRentaInmueble) %> MXN / Mes</h3>
+            <% } %>
         </div>
     </a>
 </div>
