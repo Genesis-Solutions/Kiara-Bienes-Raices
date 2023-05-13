@@ -103,8 +103,9 @@
                     e.preventDefault();
                     e.stopPropagation();
                     myDropzone.processQueue();
-                    window.location.replace('/dashboard/alta');
-                    //window.location.replace('/inmueble/<%=idInmueble%>');
+                    // window.location.replace('/dashboard/alta');
+                    // window.location.replace('/inmueble/<%=idInmueble%>');
+                    // window.location.replace('/catalogo');
                 }); 
             }
         });
@@ -122,6 +123,9 @@
                 success: function() {
                     console.log("Dentro del succes de form 1");
                     $('#formMediaS3').submit();
+                    setTimeout(function() {
+                        window.location.replace('/catalogo');
+                    }, 2000);
                 }
             })
         });
@@ -151,7 +155,8 @@
                     alert('Error al cargar los archivos');
                 });
             }
-            window.location.replace('/dashboard/alta');
+            // console.log("ya se registro")
+            // window.location.replace('/inmueble/<%=idInmueble%>');
         });
     </script>
 
