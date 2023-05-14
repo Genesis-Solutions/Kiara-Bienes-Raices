@@ -7,6 +7,7 @@
     </div>
 
 
+
     <!-- Enlazar con la biblioteca de jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -36,6 +37,12 @@
     <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
 
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.jqueryui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+    
+
     <script type="text/javascript">
         var log = console.log;
         $(document).ready(function (e) {
@@ -63,15 +70,15 @@
             }
             var thead = ""
             var tfooter = ""
-            thead += '<thead class="bg-gray-300 text-gray-600">'
-            thead += '<tr>'
-            thead +=  '<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTableUsuarios" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" style="width: 71px;" aria-sort="ascending">Id</th>'
+            thead += '<thead>'
+            thead += '<tr class="bg-[#F1F1F1] text-[#757F87]">'
+            thead +=  '<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTableUsuarios" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" style="width: auto; text-align: center; border-top-left-radius: 0.5rem;" aria-sort="ascending">Id</th>'
             // thead += '<th>Id</th>'
-            thead += '<th>Nombre</th>'
-            thead += '<th>Apellidos</th>'
-            thead += '<th>Rol</th>'
-            thead += '<th>Modificar rol</th>'
-            thead += '<th>Eliminar usuario</th>'
+            thead += '<th style="width: auto; text-align: center;">Nombre</th>'
+            thead += '<th style="width: auto; text-align: center;">Apellidos</th>'
+            thead += '<th style="width: auto; text-align: center;">Rol</th>'
+            // thead += '<th style="width: auto; text-align: center;">Modificar rol</th>'
+            thead += '<th style="width: auto; text-align: center; border-top-right-radius: 0.5rem;">Acciones</th>'
             thead += '</tr>'
             thead += '</thead>'
             tfooter += '<tfoot>'
@@ -97,49 +104,60 @@
                 deferRender: true,
                 ajax: '/dashboard/usuarios',
                 columns: [
-                    {
-                        data: "idUsuario"
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            return '<span class="badge badge-success">' + data.nombreUsuario + '</span>'
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            return '<span class="badge badge-success">' + data.apellidosUsuario + '</span>'
-                        }
-                    },
-                    {
-                        data: "nombreRol"
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            //Si el usuario es administrador, ocultar el botón.
-                            if (data.nombreRol == 'administrador') {
-                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
+                    {'data': 'idUsuario'},
+                    {'data': 'nombreUsuario'},
+                    {'data': 'apellidosUsuario'},
+                    {'data': 'nombreRol'},
+                    {"data": null,
+                        "render": function(data, type, row) {
+                            if(data.nombreRol == 'administrador'){
+                                return '<div class="space-x-3"><button type="button" id="button" dataId=' + data.idUsuario + ' class="invisible bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl btnEditarRol my-2">Modificar Rol</button><button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="invisible bg-[#ED4F4F] hover:bg-red-400 text-white font-bold py-2 px-4 rounded-xl btnEliminarUsuario my-2">Eliminar</button></div>';
                             }
-                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded btnEditarRol my-2">Modificar Rol</button>'
+                            return '<div class="space-x-3"><button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl btnEditarRol my-2">Modificar Rol</button><button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-400 text-white font-bold py-2 px-4 rounded-xl btnEliminarUsuario my-2">Eliminar</button></div>';
+
                         }
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            //Si el usuario es administrador, ocultar el botón.
-                            if (data.nombreRol == 'administrador') {
-                                return '<button type="button" hidden id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
-                            }
-                            return '<button type="button" id="button" dataId=' + data.idUsuario + ' class="bg-[#ED4F4F] hover:bg-red-700 text-white font-bold py-2 px-4 rounded btnEliminarUsuario my-2">Eliminar Usuario</button>'
-                        }
-                    },
+                    }
                 ]
             })
         }
     </script>
 
+    <style>
+    
+        #dataTableUsuarios_filter {
+            text-align: center;
+            position: absolute;
+            top: 0;
+            transform: translateY(-130%);
+        }
+
+        #dataTableUsuarios_length {
+            text-align: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translateY(-130%);
+        }
+
+       td {
+            border-top: 1px solid #D9D9D9 !important;
+        }
+
+        #dataTableUsuarios {
+            margin: 0% !important;
+            border-radius: 0.5rem;
+        }
+
+        #dataTableUsuarios {
+            border-style: solid;
+            border-width: 1px;
+            border-color: #D9D9D9;
+            margin-top: 2%;
+            margin-bottom: 2%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
     <script type="text/javascript">
 /*
 * Acción del botón de edición de rol. Despliega un modal con un dropdown de las opciones disponibles para modificar
@@ -236,15 +254,5 @@
             })
         });
     </script>
-
-    <style>
-        #dataTableUsuarios {
-            border-style: solid;
-            border-width: 1px;
-            border-color: #5c5c5c;
-            margin-top: 2%;
-            margin-bottom: 2%;
-        }
-    </style>
 
 </main>

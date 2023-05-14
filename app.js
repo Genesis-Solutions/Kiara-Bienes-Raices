@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 require("dotenv").config();
 
-//const port = 3000;
+const port = 3000;
 
 const app = express();
 
@@ -42,6 +42,6 @@ app.use('/', rutasHome);
 //app.use(express.static(path.join(dirname, 'public')));
 
 // Puerto al que escucha 3000
-app.listen(process.env.DEPLOYMENT_PORT, ()=>{
+app.listen(port, ()=>{
     //console.log("Server running on port", 3000)
 });
