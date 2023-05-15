@@ -540,7 +540,7 @@ module.exports = class Dashboard {
         id_inmueble
         ) {
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?,servicioDrenajeInmueble=?, vigilanciaInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?,  descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble = ?",
+            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?,servicioDrenajeInmueble=?, vigilanciaInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?,  descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=0 WHERE idInmueble = ?",
             [
                 titulo,
                 id_agente,

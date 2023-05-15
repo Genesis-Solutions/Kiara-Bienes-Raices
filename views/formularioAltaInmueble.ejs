@@ -169,25 +169,30 @@
             event.preventDefault();
             const files = document.querySelector('#uploadedImages').files;
             var idInmueble = $("#id_inmueble").val();
+            const uploadPromises = [];
             for (let i = 0; i <= files.length; i++) {
                 const formData = new FormData();
                 //console.log(files[i]);
                 formData.append('uploadedImages[]', files[i]);
                 // Enviar la petición POST con los archivos al servidor
-                fetch('/dashboard/alta/inmueble/imagenes/<%=idInmueble%>', {
+                const uploadPromise = fetch('/dashboard/alta/inmueble/imagenes/<%=idInmueble%>', {
                     method: 'POST',
                     body: formData,
                 })
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert('Error al cargar los archivos');
-                });
+                uploadPromises.push(uploadPromise);
             }
             // console.log("ya se registro")
             // window.location.replace('/inmueble/<%=idInmueble%>');
+            Promise.all(uploadPromises)
+            .then((responses) => {
+                console.log(responses);
+                console.log("Todas las imagenes subidas");
+                window.location.replace(`/dashboard/alta`);
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('Error al cargar los archivos');
+            });
         });
     </script>
 
