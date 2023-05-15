@@ -82,6 +82,8 @@
         </div>
     </div>
 
+    <div id="loader">Cargando archivos...</div>
+
     <!-- Information Form -->
     <!-- Cambiar dependiendo del id del tipo de inmueble -->
     <% if(categoria == 1 || categoria == 2){ %>
@@ -169,30 +171,35 @@
             event.preventDefault();
             const files = document.querySelector('#uploadedImages').files;
             var idInmueble = $("#id_inmueble").val();
-            const uploadPromises = [];
-            for (let i = 0; i <= files.length; i++) {
+            var loaded = 0;
+            var total = files.length;
+            $('#loader').show();
+            for (let i = 0; i <= total; i++) {
                 const formData = new FormData();
                 //console.log(files[i]);
                 formData.append('uploadedImages[]', files[i]);
                 // Enviar la petición POST con los archivos al servidor
-                const uploadPromise = fetch('/dashboard/alta/inmueble/imagenes/<%=idInmueble%>', {
-                    method: 'POST',
-                    body: formData,
-                })
-                uploadPromises.push(uploadPromise);
+                $.ajax({
+                    url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        loaded++;
+                        if (loaded == total) {
+                            $('#loader').hide(); // Ocultar el mensaje de carga
+                            window.location.replace('/dashboard/alta');
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                        alert('Error al cargar los archivos');
+                    }
+                });
             }
             // console.log("ya se registro")
             // window.location.replace('/inmueble/<%=idInmueble%>');
-            Promise.all(uploadPromises)
-            .then((responses) => {
-                console.log(responses);
-                console.log("Todas las imagenes subidas");
-                window.location.replace(`/dashboard/alta`);
-            })
-            .catch((error) => {
-                console.error(error);
-                alert('Error al cargar los archivos');
-            });
         });
     </script>
 
