@@ -381,7 +381,7 @@ exports.setPhotos = (req, res, next) => {
             });
         }
     });
-    ///res.status(200).json({code: 200, msg:"Ok"}); 
+    res.status(200).json({code: 200, msg:"Ok"}); 
 };
 
 /*
