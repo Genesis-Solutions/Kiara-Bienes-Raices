@@ -378,11 +378,12 @@ exports.setPhotos = (req, res, next) => {
                 const idInmueble = req.params.inmueble;
                 const mediaName = file.key;
                 Dashboard.registerImage(idInmueble, mediaName);
+                res.status(200).json({code: 200, msg:"Ok"});
             });
         }
     });
     //res.status(200).json({code: 200, msg:"Ok"}); 
-    res.redirect('/dashboard/alta');
+    //res.redirect('/dashboard/alta');
 };
 
 /*
