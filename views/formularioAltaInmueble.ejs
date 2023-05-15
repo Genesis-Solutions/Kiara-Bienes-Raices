@@ -189,6 +189,7 @@
                         loaded++;
                         if (loaded == total) {
                             $('#loader').hide(); // Ocultar el mensaje de carga
+                            console.log("Ya se acabaron de subir las fotos");
                             window.location.replace('/dashboard/alta');
                         }
                     },
