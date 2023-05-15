@@ -368,6 +368,7 @@ Agrega una o varias fotos al inmueble especificado en la solicitud HTTP.
 */
 
 exports.setPhotos = (req, res, next) => {
+    console.log("Dentro de setPhotos");
     var upload = storage.array('uploadedImages[]');
     upload(req, res, function (err) {
         if (err) {

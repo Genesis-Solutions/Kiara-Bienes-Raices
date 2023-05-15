@@ -185,6 +185,7 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
+                        console.log("Dentro del success de ajax");
                         loaded++;
                         if (loaded === total) {
                             console.log("Ya se acabaron de subir las fotos");
