@@ -174,8 +174,12 @@
             var loaded = 0;
             var total = files.length;
             $('#loader').show();
-            for (let i = 0; i <= total; i++) {
+            for (let i = 0; i < total; i++) {
                 const formData = new FormData();
+                console.log("Loaded: ------");
+                console.log(loaded);
+                console.log("total: ------");
+                console.log(total);
                 //console.log(files[i]);
                 formData.append('uploadedImages[]', files[i]);
                 // Enviar la petición POST con los archivos al servidor
@@ -187,7 +191,7 @@
                     contentType: false,
                     success: function(response) {
                         loaded++;
-                        if (loaded == total) {
+                        if (loaded === total) {
                             $('#loader').hide(); // Ocultar el mensaje de carga
                             console.log("Ya se acabaron de subir las fotos");
                             window.location.replace('/dashboard/alta');
