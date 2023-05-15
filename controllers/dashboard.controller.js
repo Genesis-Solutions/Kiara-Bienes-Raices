@@ -380,7 +380,8 @@ exports.setPhotos = (req, res, next) => {
                 Dashboard.registerImage(idInmueble, mediaName);
             });
         }
-        res.status(200).json({code: 200, msg:"Ok"}); 
+        //res.status(200).json({code: 200, msg:"Ok"}); 
+        res.redirect('/dashboard/alta');
     });
     //res.status(200).json({code: 200, msg:"Ok"}); 
     //res.redirect('/dashboard/alta');
