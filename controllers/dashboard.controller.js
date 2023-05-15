@@ -381,7 +381,6 @@ exports.setPhotos = (req, res, next) => {
             });
         }
     });
-    res.redirect('/dashboard/alta')
     ///res.status(200).json({code: 200, msg:"Ok"}); 
 };
 
