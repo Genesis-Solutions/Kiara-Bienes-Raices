@@ -863,4 +863,15 @@ module.exports = class Dashboard {
         );
     }
     
+    /*
+    * Activar inmueble solicitado.
+    * @param idInmueble: String -> Id del inmueble que será eliminado
+    */
+    static activateInmueble(idInmueble) {
+        return db.execute(
+            'UPDATE usuario SET activoInmueble=1 WHERE idInmueble=?', 
+            [idInmueble]
+        );
+    }
+
 };

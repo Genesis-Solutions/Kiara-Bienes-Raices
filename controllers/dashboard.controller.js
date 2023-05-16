@@ -379,7 +379,14 @@ exports.setPhotos = (req, res, next) => {
                 Dashboard.registerImage(idInmueble, mediaName);
             });
         }
-        res.redirect('/dashboard/alta');
+        const idInmueble = req.params.inmueble;
+        console.log("Id del inmueble: ");
+        console.log(idInmueble);
+        Dashboard.activateInmueble(idInmueble)
+        .then(([rows, fieldData]) => {
+            res.redirect('/dashboard/alta');
+        })
+        .catch(error => { console.log(error) });
     });
 };
 
