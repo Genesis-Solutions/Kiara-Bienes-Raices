@@ -371,7 +371,7 @@ exports.setPhotos = (req, res, next) => {
     var upload = storage.array('uploadedImages[]');
     upload(req, res, function (err) {
         if (err) {
-            console.log(err);
+            console.log("Error upload S3: "+err);
         } else {
             req.files.forEach(function (file) {
                 const idInmueble = req.params.inmueble;
