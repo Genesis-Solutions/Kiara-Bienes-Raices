@@ -869,7 +869,7 @@ module.exports = class Dashboard {
     */
     static activateInmueble(idInmueble) {
         return db.execute(
-            'UPDATE usuario SET activoInmueble=1 WHERE idInmueble=?', 
+            'UPDATE inmueble SET activoInmueble=1 WHERE idInmueble=?', 
             [idInmueble]
         );
     }

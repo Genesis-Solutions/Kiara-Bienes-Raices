@@ -380,11 +380,9 @@ exports.setPhotos = (req, res, next) => {
             });
         }
         const idInmueble = req.params.inmueble;
-        console.log("Id del inmueble: ");
-        console.log(idInmueble);
         Dashboard.activateInmueble(idInmueble)
         .then(([rows, fieldData]) => {
-            res.redirect('/dashboard/alta');
+            res.redirect(`/inmueble/${idInmueble}`);
         })
         .catch(error => { console.log(error) });
     });
