@@ -84,13 +84,22 @@ exports.getImgFromBucket = ( req,res,next ) => {
     var opciones = {
         Bucket: AWS_BUCKET,
         Key: img,
+        httpOptions: {
+            timeout : 0
+        },
+        maxRetries: 2
     };
     //Obtiene el objeto del bucket de Amazon S3 y envía la imagen como respuesta
     bucket.getObject(opciones, function(err, data) {
-        res.attachment(img);
-        res.send(data.Body);
+        if (err) {
+            console.log("Error imgFromBucket: "+err);
+        } else {
+            res.attachment(img);
+            res.send(data.Body);
+        }
     });
 }
+
 
 /*
  * Renderiza la vista de edición de un inmueble, recuperando información necesaria para su presentación.
