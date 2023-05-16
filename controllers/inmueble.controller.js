@@ -84,10 +84,6 @@ exports.getImgFromBucket = ( req,res,next ) => {
     var opciones = {
         Bucket: AWS_BUCKET,
         Key: img,
-        httpOptions: {
-            timeout : 0
-        },
-        maxRetries: 2
     };
     //Obtiene el objeto del bucket de Amazon S3 y envía la imagen como respuesta
     bucket.getObject(opciones, function(err, data) {
