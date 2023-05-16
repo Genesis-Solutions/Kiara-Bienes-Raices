@@ -368,7 +368,6 @@ Agrega una o varias fotos al inmueble especificado en la solicitud HTTP.
 */
 
 exports.setPhotos = (req, res, next) => {
-    console.log("Dentro de setPhotos");
     var upload = storage.array('uploadedImages[]');
     upload(req, res, function (err) {
         if (err) {
@@ -380,11 +379,8 @@ exports.setPhotos = (req, res, next) => {
                 Dashboard.registerImage(idInmueble, mediaName);
             });
         }
-        //res.status(200).json({code: 200, msg:"Ok"}); 
         res.redirect('/dashboard/alta');
     });
-    //res.status(200).json({code: 200, msg:"Ok"}); 
-    //res.redirect('/dashboard/alta');
 };
 
 /*

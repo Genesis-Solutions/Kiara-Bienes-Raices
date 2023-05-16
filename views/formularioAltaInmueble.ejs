@@ -168,13 +168,8 @@
             var idInmueble = $("#id_inmueble").val();
             var loaded = 0;
             var total = files.length;
-            console.log("Dentro del form de imagenes");
             for (let i = 0; i < total; i++) {
                 const formData = new FormData();
-                console.log("Loaded: ------");
-                console.log(loaded);
-                console.log("total: ------");
-                console.log(total);
                 //console.log(files[i]);
                 formData.append('uploadedImages[]', files[i]);
                 // Enviar la petición POST con los archivos al servidor
@@ -185,11 +180,11 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        console.log("Dentro del success de ajax");
                         loaded++;
                         if (loaded === total) {
+                            console.log(response);
                             console.log("Ya se acabaron de subir las fotos");
-                            window.location.replace('/dashboard/alta');
+                            //window.location.replace('/dashboard/alta');
                         }
                     },
                     error: function(error) {
