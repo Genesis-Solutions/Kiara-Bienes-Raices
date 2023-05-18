@@ -86,7 +86,7 @@
                 <li>● Sala de TV </li>
             <% } %>
             
-            <% if (inmueble.fechaConstruccionInmueble != null) { %>
+            <% if (inmueble.fechaConstruccionInmueble != null && inmueble.fechaConstruccionInmueble > 0) { %>
                 <li>● Año de Construcción: <%= inmueble.fechaConstruccionInmueble %> </li>
             <% } %>
             
