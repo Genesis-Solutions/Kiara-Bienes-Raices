@@ -45,3 +45,5 @@ app.use('/', rutasHome);
 console.log("puerto: ", process.env.PORT)
 app.listen(port, ()=>{
 });
+
+module.exports = app;
