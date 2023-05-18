@@ -48,7 +48,6 @@
 
     <!-- Pictures Form -->
     <div class="px-10 py-5 grid grid-cols-3">
-        <!-- </div> -->
         <div class="col-span-3">
             <h2 class="text-lg font-semibold">
                 Imágenes del inmueble
@@ -65,22 +64,12 @@
                             <p id="fileCount" class="pb-5"></p>
                         </div>
                     </label>
-                    <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' class="hidden" onchange="updateFileCount(event)"/>
+                    <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' class="hidden"/>
                 </form>
             </div>
-
-            <!-- Pictures Form -->
-            <!-- <form action="/dashboard/alta/inmueble/imagenes/<%=idInmueble%>" id="imagenes" name="imagenes"
-                enctype="multipart/form-data" method="POST">
-                <div class="dropzone dz-clickable" id="uploadDropzone">
-                    <div class="dz-default dz-message" data-dz-message="">
-                        <span>Drop files here to upload</span>
-                    </div>
-                </div>
-                <br />
-            </form> -->
         </div>
     </div>
+    <input type="hidden" id="imgCount" name="imgCount">
 
     <!-- Information Form -->
     <!-- Cambiar dependiendo del id del tipo de inmueble -->
@@ -105,55 +94,33 @@
     <script src="https://malsup.github.io/jquery.form.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
-    <!-- Enlazar con la biblioteca de Dropzone -->
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-
-    <!-- Configuración de dropzone -->
-    <script type="text/javascript">
-        Dropzone.autoDiscover = false;
-        function paramNameForSend() {
-            return "media";
-        }
-        var idInmueble = $("#id_inmueble").val();
-        $("#uploadDropzone").dropzone({ 
-            url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
-            maxFilesize: 15, // MB
-            maxFiles: 25,
-            autoProcessQueue: false,
-            uploadMultiple: true,
-            paramName: paramNameForSend,
-            method: 'post',
-            parallelUploads: 25,
-            init: function() {
-                var myDropzone = this;
-                $("#imagenes").submit(function (e) {
-                    console.log("Dentro del succes de form 2");
-                    e.preventDefault();
-                    e.stopPropagation();
-                    myDropzone.processQueue();
-                }); 
-            }
-        });
-    </script>
 
     <!-- Submit del formulario del imagenes del inmueble desde el submit del formulario del cuerpo -->
     <script type="text/javascript">  
         $('#cuerpoInmueble').submit(function(e) {
             e.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: $( this ).serializeArray(),
-                success: function() {
-                    console.log("Dentro del succes de form 1");
-                    $('#formMediaS3').submit();
-                }
-            })
+            var inputElement = document.getElementById('imgCount');
+            if(inputElement.value < 5){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Necesita subir por lo menos 5 imagenes del inmueble',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else {
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $( this ).serializeArray(),
+                    success: function() {
+                        $('#formMediaS3').submit();
+                    }
+                })
+            }
         });
     </script>
 
-    <!-- Función eliminarInmueble -->
+    <!-- Función uploadImages -->
     <script type="text/javascript">   
         // Manejador de eventos de envío del formulario
         document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
@@ -237,7 +204,17 @@
         });
     </script>
 
-    <script>
+    <!-- Verificar que existan por lo menos 5 imagenes en formMediaS3 antes del upload -->
+    <script type="text/javascript">
+        const fileInput = document.getElementById('uploadedImages');
+        fileInput.addEventListener('change', function(event) {
+            updateFileCount(event);
+            countImages(event);
+        });
+    </script>
+
+    <!-- Count de imagenes dentro de formMediaS3 -->
+    <script type="text/javascript">
         function updateFileCount(event) {
             var fileCount = event.target.files.length;
             var files = event.target.files;
@@ -249,6 +226,15 @@
                 fileItem.textContent = fileName;
                 fileCountElement.appendChild(fileItem); 
             }
+        }
+    </script>
+
+    <!-- Verificar que existan por lo menos 5 imagenes en formMediaS3 antes del upload -->
+    <script type="text/javascript">
+        function countImages(event) {
+            var fileCount = event.target.files.length;
+            var inputElement = document.getElementById('imgCount');
+            inputElement.value = fileCount;
         }
     </script>
 
