@@ -114,6 +114,15 @@
                     data: $( this ).serializeArray(),
                     success: function() {
                         $('#formMediaS3').submit();
+                        Swal.fire({
+                            title: 'Registrando el inmueble',
+                            showConfirmButton: false,
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            onOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
                     }
                 })
             }
@@ -122,7 +131,9 @@
 
     <!-- Función uploadImages -->
     <script type="text/javascript">   
-        // Manejador de eventos de envío del formulario
+        /* 
+        * Manejador de eventos de envío del formulario
+        */
         document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
             event.preventDefault();
             const files = document.querySelector('#uploadedImages').files;
@@ -140,9 +151,6 @@
                     contentType: false,
                     success: function(response) {
                         loaded++;
-                        if (loaded === total) {
-                            //window.location.replace('/dashboard/alta');
-                        }
                     },
                     error: function(error) {
                         console.error(error);
@@ -229,7 +237,7 @@
         }
     </script>
 
-    <!-- Verificar que existan por lo menos 5 imagenes en formMediaS3 antes del upload -->
+    <!-- Asignar a un input el numero de imagenes en formMediaS3 -->
     <script type="text/javascript">
         function countImages(event) {
             var fileCount = event.target.files.length;
