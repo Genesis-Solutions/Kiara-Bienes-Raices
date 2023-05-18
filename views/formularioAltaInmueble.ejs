@@ -116,8 +116,6 @@
             return "media";
         }
         var idInmueble = $("#id_inmueble").val();
-        //console.log("Dentro de la config de dropzone");
-        //console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
         $("#uploadDropzone").dropzone({ 
             url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
             maxFilesize: 15, // MB
@@ -143,7 +141,6 @@
     <script type="text/javascript">  
         $('#cuerpoInmueble').submit(function(e) {
             e.preventDefault();
-            //console.log("Submit de cuerpoInmueble");
             $.ajax({
                 url: $(this).attr('action'),
                 type: 'POST',
@@ -151,9 +148,6 @@
                 success: function() {
                     console.log("Dentro del succes de form 1");
                     $('#formMediaS3').submit();
-                    //setTimeout(function() {
-                    //    window.location.replace('/catalogo');
-                    //}, 2000); -->
                 }
             })
         });
@@ -170,9 +164,7 @@
             var total = files.length;
             for (let i = 0; i < total; i++) {
                 const formData = new FormData();
-                //console.log(files[i]);
                 formData.append('uploadedImages[]', files[i]);
-                // Enviar la petición POST con los archivos al servidor
                 $.ajax({
                     url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
                     type: 'POST',
@@ -182,8 +174,6 @@
                     success: function(response) {
                         loaded++;
                         if (loaded === total) {
-                            console.log(response);
-                            console.log("Ya se acabaron de subir las fotos");
                             //window.location.replace('/dashboard/alta');
                         }
                     },
@@ -207,14 +197,29 @@
     <script type="text/javascript">   
         function eliminarInmueble() {
             var idInmueble = $("#id_inmueble").val();
-            $.ajax({
-                url: '/dashboard/baja/inmueble/<%=idInmueble%>',
-                type: 'GET',
-                dataType: 'json',
-                success: function() {
-                    //console.log("On succes desde el eliminar");
-                    window.location.replace('/dashboard/alta');
-                }
+            Swal.fire({
+                title: '¿Confirma la cancelación del inmueble?',                
+                showCancelButton: true,
+                confirmButtonText: `Confirmar cancelación`,                
+                }).then((result) => {               
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/dashboard/baja/inmueble/<%=idInmueble%>',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Inmueble eliminado',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            setTimeout(function() {
+                                window.location.replace('/dashboard/alta');
+                            }, 2000);
+                        }
+                    });
+                } 
             });
         }
     </script>
