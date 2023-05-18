@@ -30,7 +30,7 @@ package-lock.json
 # Environment variables
 .env
 test-environment.json
-production-environment.json
+dev-environment.json
 prod-environment.json
 
 # Log files
