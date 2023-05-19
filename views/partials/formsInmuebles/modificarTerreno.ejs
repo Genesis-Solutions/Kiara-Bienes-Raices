@@ -47,7 +47,7 @@
                                     <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
                                     <input
                                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="precioVenta" name="precioVenta"
+                                        type="number" min="0" id="precioVenta" name="precioVenta"
                                         value="<%=inmueble.precioVentaInmueble%>"
                                         placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" />
                                 </div>
@@ -55,7 +55,7 @@
                                     <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
                                     <input
                                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="precioRenta" name="precioRenta"
+                                        type="number" min="0" id="precioRenta" name="precioRenta"
                                         value="<%=inmueble.precioRentaInmueble%>"
                                         placeholder="<%=inmueble.precioRentaInmueble%>" maxlength="30" />
                                 </div>
@@ -96,7 +96,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="medidaFrente" name="medidaFrente"
+                                type="number" min="0" id="medidaFrente" name="medidaFrente"
                                 value="<%=inmueble.medidasFrenteInmueble%>"
                                 placeholder="<%=inmueble.medidasFrenteInmueble%>" maxlength="30" required />
                         </div>
@@ -107,7 +107,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="medidaFondo" name="medidaFondo"
+                                type="number" min="0" id="medidaFondo" name="medidaFondo"
                                 value="<%=inmueble.medidasFondoInmueble%>"
                                 placeholder="<%=inmueble.medidasFondoInmueble%>" maxlength="30" required />
                         </div>
@@ -118,7 +118,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="cuotaMantenimiento" name="cuotaMantenimiento"
+                                type="number" min="0" id="cuotaMantenimiento" name="cuotaMantenimiento"
                                 value="<%=inmueble.cuotaMantenimientoInmueble%>"
                                 placeholder="<%=inmueble.cuotaMantenimientoInmueble%>" maxlength="30" required />
                         </div>
@@ -136,7 +136,7 @@
                                 <div>
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="mConstruccion" name="m2Construccion"
+                                        type="number" min="0" id="mConstruccion" name="m2Construccion"
                                         value="<%=inmueble.m2ConstruidosInmueble%>"
                                         placeholder="<%=inmueble.m2ConstruidosInmueble%>" maxlength="30" required />
                                 </div>
@@ -147,7 +147,7 @@
                                 <div>
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="m2Terreno" name="m2Terreno" value="<%=inmueble.m2TerrenoInmueble%>"
+                                        type="number" min="0" id="m2Terreno" name="m2Terreno" value="<%=inmueble.m2TerrenoInmueble%>"
                                         placeholder="<%=inmueble.m2TerrenoInmueble%>" maxlength="30" required />
                                 </div>
                             </div>
