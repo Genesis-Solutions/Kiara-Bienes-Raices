@@ -34,13 +34,13 @@
                         <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
                         <input
                             class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="precioVenta" name="precioVenta" placeholder="3,000,000" maxlength="30"/>
+                            type="number" min="0" id="precioVenta" name="precioVenta" placeholder="3,000,000" maxlength="30"/>
                     </div>
                     <div class="mt-4 hidden peer-checked/renta:block space-y-2">
                         <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
                         <input
                             class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="precioRenta" name="precioRenta" placeholder="15,000" maxlength="30"/>
+                            type="number" min="0" id="precioRenta" name="precioRenta" placeholder="15,000" maxlength="30"/>
                     </div>
                 </fieldset>
             </div>
@@ -80,7 +80,7 @@
                     <div>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="m2terreno" name="m2terreno" placeholder="450" maxlength="30" required/>
+                            type="number" min="0" id="m2terreno" name="m2terreno" placeholder="450" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-house"></i><p> M2 de Construcción</p>
@@ -88,7 +88,7 @@
                     <div>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="m2construccion" name="m2construccion" placeholder="450" maxlength="30" required/>
+                            type="number" min="0" id="m2construccion" name="m2construccion" placeholder="450" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-layer-group"></i><p> Piso(s)</p>
@@ -96,7 +96,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="niveles" name="niveles" placeholder="3" maxlength="30" required/>
+                            type="number" min="0" id="niveles" name="niveles" placeholder="3" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-bed"></i><p> Num. Recámaras</p>
@@ -104,7 +104,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="numRecamaras" name="numRecamaras" placeholder="3" maxlength="30" required/>
+                            type="number" min="0" id="numRecamaras" name="numRecamaras" placeholder="3" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-door-closed"></i><p> Privados</p>
@@ -112,7 +112,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="cuartosPrivados" name="cuartosPrivados" placeholder="3" maxlength="30" required/>
+                            type="number" min="0" id="cuartosPrivados" name="cuartosPrivados" placeholder="3" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-bath"></i><p> Baños</p>
@@ -120,7 +120,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="banios" name="banios" placeholder="1" maxlength="30" required/>
+                            type="number" min="0" id="banios" name="banios" placeholder="1" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-toilet"></i><p> Medios Baños</p>
@@ -128,7 +128,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="mediosBanios" name="mediosBanios" placeholder="2" maxlength="30" required/>
+                            type="number" min="0" id="mediosBanios" name="mediosBanios" placeholder="2" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-car"></i><p> Estac.</p>
@@ -136,7 +136,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="estacionamientos" name="estacionamientos" placeholder="1" maxlength="30" required/>
+                            type="number" min="0" id="estacionamientos" name="estacionamientos" placeholder="1" maxlength="30" required/>
                     </div>
                     <div class="text-white flex items-center space-x-2">
                         <i class="fa-solid fa-circle-dollar-to-slot"></i><p> C. de Manten.</p>
@@ -144,7 +144,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" id="cuotaMantenimiento" name="cuotaMantenimiento" placeholder="500" maxlength="30" required/>
+                            type="number" min="0" id="cuotaMantenimiento" name="cuotaMantenimiento" placeholder="500" maxlength="30" required/>
                     </div>
                 </div>
 
@@ -195,7 +195,7 @@
         <!-- Descripción Inmueble -->
         <div class="col-span-3 space-y-2">
             <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
-            <textarea id="desc" name="desc" maxlength="950" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
+            <textarea id="desc" name="desc" maxlength="3000" rows="5" class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Esta propiedad..."></textarea>
             <br>
         </div>
     </div>

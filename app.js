@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 require("dotenv").config();
-
-//const port = 3000;
+const fs = require("fs")
 
 const app = express();
+
+const port = process.env.PORT
+app.set("port", port);
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -40,8 +42,8 @@ app.use('/', rutasHome);
 
 //app.use("/public",express.static(dirname + '/public')); 
 //app.use(express.static(path.join(dirname, 'public')));
-
-// Puerto al que escucha 3000
-app.listen(process.env.DEPLOYMENT_PORT, ()=>{
-    //console.log("Server running on port", 3000)
+//console.log("puerto: ", process.env.PORT)
+app.listen(port, ()=>{
 });
+
+module.exports = app;

@@ -47,7 +47,7 @@
                                     <h3 for="" class="text-lg font-semibold text-white">Precio Venta</h3>
                                     <input
                                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="precioVenta" name="precioVenta"
+                                        type="number" min="0" id="precioVenta" name="precioVenta"
                                         value="<%=inmueble.precioVentaInmueble%>"
                                         placeholder="<%=inmueble.precioVentaInmueble%>" maxlength="30" />
                                 </div>
@@ -55,7 +55,7 @@
                                     <h3 for="" class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
                                     <input
                                         class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="precioRenta" name="precioRenta"
+                                        type="number" min="0" id="precioRenta" name="precioRenta"
                                         value="<%=inmueble.precioRentaInmueble%>"
                                         placeholder="<%=inmueble.precioRentaInmueble%>" maxlength="30" />
                                 </div>
@@ -71,9 +71,9 @@
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         id="idPropietario" name="idPropietario">
                         <% listaPropietarios.forEach(propietario=>{ %>
-                            <option value="<%=propietario.idUsuario%>">
+                            <option value="<%= propietario.idUsuario %>" <% if (propietario.idUsuario === inmueble.idArrendador) { %> selected <% } %>>
                                 <%=propietario.nombreUsuario%>
-                                    <%=propietario.apellidosUsuario%>
+                                <%=propietario.apellidosUsuario%>
                             </option>
                             <% }); %>
                     </select>
@@ -99,7 +99,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="m2Terreno" name="m2Terreno"
+                                type="number" min="0" id="m2Terreno" name="m2Terreno"
                                 value="<%=inmueble.m2TerrenoInmueble%>"
                                 placeholder="<%=inmueble.m2TerrenoInmueble%>" maxlength="30" required />
                         </div>
@@ -110,7 +110,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="niveles" name="niveles" value="<%=inmueble.nivelesInmueble%>"
+                                type="number" min="0" id="niveles" name="niveles" value="<%=inmueble.nivelesInmueble%>"
                                 placeholder="<%=inmueble.nivelesInmueble%>" maxlength="30" required />
                         </div>
                         <div class="text-white flex items-center space-x-2">
@@ -120,7 +120,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="mediosBanios" name="mediosBanios"
+                                type="number" min="0" id="mediosBanios" name="mediosBanios"
                                 value="<%=inmueble.mediosBaniosInmueble%>"
                                 placeholder="<%=inmueble.medioBaniosInmueble%>" maxlength="30" required />
                         </div>
@@ -131,7 +131,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="cuotaMantenimiento" name="cuotaMantenimiento"
+                                type="number" min="0" id="cuotaMantenimiento" name="cuotaMantenimiento"
                                 value="<%=inmueble.cuotaMantenimientoInmueble%>"
                                 placeholder="<%=inmueble.cuotaMantenimientoInmueble%>" maxlength="30" required />
                         </div>
@@ -142,7 +142,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" id="fechaConstruccion" name="fechaConstruccion"
+                                type="number" min="0" id="fechaConstruccion" name="fechaConstruccion"
                                 value="<%=inmueble.fechaConstruccionInmueble%>"
                                 placeholder="<%=inmueble.fechaConstruccionInmueble%>" maxlength="4" required
                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -162,7 +162,7 @@
                                 <div class="flex items-center">
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="m2Construccion" name="m2Construccion"
+                                        type="number" min="0" id="m2Construccion" name="m2Construccion"
                                         value="<%=inmueble.m2ConstruidosInmueble%>"
                                         placeholder="<%=inmueble.m2ConstruidosInmueble%>" maxlength="30" required />
                                 </div>
@@ -173,7 +173,7 @@
                                 <div class="flex items-center">
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="recamaras" name="recamaras" value="<%=inmueble.recamarasInmueble%>"
+                                        type="number" min="0" id="recamaras" name="recamaras" value="<%=inmueble.recamarasInmueble%>"
                                         placeholder="<%=inmueble.recamarasInmueble%>" maxlength="30" required />
                                 </div>
                                 <div class="text-white flex items-center space-x-2">
@@ -183,7 +183,7 @@
                                 <div class="flex items-center">
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="estacionamientos" name="estacionamientos"
+                                        type="number" min="0" id="estacionamientos" name="estacionamientos"
                                         value="<%=inmueble.estacionamientosInmueble%>"
                                         placeholder="<%=inmueble.estacionamientosInmueble%>" maxlength="30" required />
                                 </div>
@@ -194,7 +194,7 @@
                                 <div class="flex items-center">
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                        type="number" id="banios" name="banios" value="<%=inmueble.baniosInmueble%>"
+                                        type="number" min="0" id="banios" name="banios" value="<%=inmueble.baniosInmueble%>"
                                         placeholder="<%=inmueble.baniosInmueble%>" maxlength="30" required />
                                 </div>
                             </div>
@@ -361,6 +361,7 @@
                 <label for="" class="text-lg font-semibold text-white">Sobre esta Propiedad</label>
                 <textarea id="desc" name="desc" rows="5"
                     class="block px-5 py-3 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    maxlength="3000"
                     placeholder="<%=inmueble.descInmueble%>"><%=inmueble.descInmueble%></textarea>
             </div>
             <div class="text-white lg:ml-32">
@@ -371,7 +372,7 @@
                 <label <% if (inmueble.activoInmueble==1) { %>
                     hidden
                 <% } %>
-                for="default-checkbox" class="ml-1 text-base">Activo Inmueble
+                for="default-checkbox" class="ml-1 text-base">Activar Inmueble
                 </label>
             </div>
         </div>
