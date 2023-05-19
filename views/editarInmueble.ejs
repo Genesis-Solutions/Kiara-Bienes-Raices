@@ -43,7 +43,7 @@
                 var inputValue = document.getElementById('linkMaps').value;
                 var substring = '<iframe src="https://www.google.com/maps/';
                 if (!inputValue.includes(substring)) {
-                    event.preventDefault(); // Prevenir el form se envie
+                    event.preventDefault(); 
                     alert('El link de Google Maps debe ser un "Embed a Map"');
                 } else {
                     event.preventDefault(); 

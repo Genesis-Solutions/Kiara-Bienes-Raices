@@ -247,6 +247,22 @@
         }
     </script>
 
+<script type="text/javascript">   
+    $(document).on("click", ".btnSubmit", function(){
+        document.getElementById('cuerpoInmueble').addEventListener('submit', function(event) {
+            var inputValue = document.getElementById('linkMaps').value;
+            var substring = '<iframe src="https://www.google.com/maps/';
+            if (!inputValue.includes(substring)) {
+                event.preventDefault(); 
+                alert('El link de Google Maps debe ser un "Embed a Map"');
+            } else {
+                event.preventDefault(); 
+                $("#cuerpoInmueble").submit();
+            }
+        });
+    });
+</script>
+
     <%- include("partials/footer") %>
 
 </body>
