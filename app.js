@@ -42,7 +42,7 @@ app.use('/', rutasHome);
 
 //app.use("/public",express.static(dirname + '/public')); 
 //app.use(express.static(path.join(dirname, 'public')));
-console.log("puerto: ", process.env.PORT)
+//console.log("puerto: ", process.env.PORT)
 app.listen(port, ()=>{
 });
 
