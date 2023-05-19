@@ -246,6 +246,20 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function () {
+        $('#checkBtn').click(function() {
+            checkedVenta = $("input[id=venta]:checked").length;
+            checkedRenta = $("input[id=renta]:checked").length;
+
+            if(!checkedVenta && !checkedRenta){
+                alert("La propiedad debe estar en venta y/o renta");
+                return false;
+            }
+        });
+    });
+    </script>
+
     <%- include("partials/footer") %>
 
 </body>
