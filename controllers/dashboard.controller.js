@@ -15,11 +15,13 @@ exports.getDashboard = (req, res, next) => {
         res.render("listUsers", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
+            idUsuario: req.session.idUsuario 
         });
     } else if (req.session.idRol == 2) {
         res.render("dashboardListaPropiedades", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
+            idUsuario: req.session.idUsuario 
         });
     }
 };
@@ -32,6 +34,7 @@ exports.getDashboardProps = (req, res, next) => {
     res.render("dashboardListaPropiedades", {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
+        idUsuario: req.session.idUsuario 
     });
 };
 
@@ -48,6 +51,14 @@ exports.getUsers = async (req, res, next) => {
  */
 exports.getPropiedades = async (req, res, next) => {
     const dataProps = await Dashboard.fetchAllPropiedades();
+    res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
+}
+
+/*
+ * Llamada de query que regresa un json con los datos de las propiedades del agente en el sistema.
+ */
+exports.getPropiedadesAgente = async (req, res, next) => {
+    const dataProps = await Dashboard.fetchAllPropiedadesAgente(req.params.idUsuario);
     res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
 }
 
@@ -75,7 +86,8 @@ exports.getAdminUser = async (req, res, next) => {
         res.render("adminUserRegistration", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            listRoles: listRoles[0]
+            listRoles: listRoles[0],
+            idUsuario: req.session.idUsuario, 
         });
     }
 }
@@ -117,13 +129,15 @@ exports.deleteUser = async (req, res, next) => {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionEliminado: true
+            comprobacionEliminado: true,
+            idUsuario: req.session.idUsuario, 
         });
     } else {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionEliminado: false
+            comprobacionEliminado: false,
+            idUsuario: req.session.idUsuario
         });
     }
 }
@@ -149,14 +163,16 @@ exports.comprobarUpdateRol = async (req, res, next) => {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionCambio: true
+            comprobacionCambio: true,
+            idUsuario: req.session.idUsuario 
         });
     }
     else {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionCambio: false
+            comprobacionCambio: false,
+            idUsuario: req.session.idUsuario 
         });
     }
 
@@ -176,7 +192,8 @@ exports.getAgentes = async (req, res, next) => {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            agentesArray: agentesArray
+            agentesArray: agentesArray,
+            idUsuario: req.session.idUsuario 
         });
 }
 
@@ -220,7 +237,8 @@ exports.postAdminUser = async (req, res, next) => {
                         isLogged: req.session.isLoggedIn,
                         idRol: req.session.idRol,
                         errorEmail,
-                        listRoles: listRoles[0]
+                        listRoles: listRoles[0],
+                        idUsuario: req.session.idUsuario 
                     });
                 }
             } else {
@@ -256,7 +274,8 @@ exports.postAdminUser = async (req, res, next) => {
                             isLogged: req.session.isLoggedIn,
                             idRol: req.session.idRol,
                             errorPassword,
-                            listRoles: listRoles[0]
+                            listRoles: listRoles[0],
+                            idUsuario: req.session.idUsuario
                         });
                     }
                 }
@@ -293,7 +312,8 @@ exports.getRegisterpage = async (req, res, next) => {
         res.render('altaInmueble', {
             categorias: categorias[0],
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            idUsuario: req.session.idUsuario 
         });
     }
 }

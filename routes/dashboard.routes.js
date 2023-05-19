@@ -88,6 +88,7 @@ router.get('/', isLogged, agenteAdminAuth, dashboardController.getDashboard);
 * Rutas de la lista de propiedades
 */
 router.get('/propiedades',isLogged, agenteAdminAuth, dashboardController.getPropiedades)
+router.get('/propiedades/:idUsuario',isLogged, agenteAdminAuth, dashboardController.getPropiedadesAgente)
 router.get('/props', isLogged, agenteAdminAuth, dashboardController.getDashboardProps);
 router.get('/agentes', isLogged, agenteAdminAuth, dashboardController.getAgentes);
 /**
