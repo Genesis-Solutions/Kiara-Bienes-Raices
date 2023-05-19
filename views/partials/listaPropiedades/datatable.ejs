@@ -62,6 +62,12 @@
                 $("#dataTablePropiedades").dataTable().fnDestroy();
                 $('#dataTablePropiedades').empty();
             }
+            <%if (idRol==1){%>
+                var ruta = '/dashboard/propiedades'
+            <%} else{%>
+                var idAgente=<%= idUsuario%>
+                var ruta = '/dashboard/propiedades/'+idAgente 
+            <%}%>
             var thead = ""
             var tfooter = ""
             thead += '<thead>'
@@ -100,7 +106,7 @@
                 lengthMenu: [5, 10, 20, 25, 30],
                 order: [[0, 'asc']],
                 deferRender: true,
-                ajax: '/dashboard/propiedades',
+                ajax: ruta,
                 columns: [
                     {'data': "idInmueble"},
                     {'data': null,
@@ -227,9 +233,6 @@
             var agentes = {}
             fila = $(this).closest("tr");
             id = parseInt(fila.find('td:eq(0)').text());
-                <% if (idRol == 2) { %>
-                Swal.fire('No tienes permisos administrativos para la modificación.');
-                    <%} else if (idRol == 1) {%>
                 $.ajax({
                     url: '/dashboard/agentes',
                     method: 'get',
@@ -263,7 +266,6 @@
                     }
 
                 });
-                            <%}%>   
         });
     </script>
 

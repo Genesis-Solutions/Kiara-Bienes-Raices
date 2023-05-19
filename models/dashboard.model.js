@@ -33,6 +33,17 @@ module.exports = class Dashboard {
         );
     }
 
+        /*
+     * Obtener la lista total de propiedades del agente para la lista.
+     * @return JSON -> Lista de propiedades del agente
+     */
+        static fetchAllPropiedadesAgente(idUsuario) {
+            return db.execute(
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador WHERE I.idAgenteAsignado=?', [
+                idUsuario,
+            ]);
+    }
+
     /*
     * Actualizar rol del usuario en cuestión.
     * @param idUsuario: String -> Concatenación del id del usuario y del rol que este futuramente tendrá
