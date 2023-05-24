@@ -109,7 +109,6 @@ exports.getEditarInmueble = async(req, res, next) => {
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
-    const listaPropietarios = await Inmueble.fetchClientes();
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
     //console.log(idFotos[0]);
@@ -126,8 +125,7 @@ exports.getEditarInmueble = async(req, res, next) => {
         inmuebles : inmueble,
         agente : agente,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol,
-        listaPropietarios: listaPropietarios[0]
+        idRol: req.session.idRol
     })
 }
 
