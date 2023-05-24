@@ -208,7 +208,6 @@ Actualiza un inmueble de tipo Casa en la base de datos
 @param bodega la existencia de bodega en el inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -315,7 +314,6 @@ Actualiza un inmueble de tipo Local en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -409,7 +407,6 @@ Actualiza un inmueble de tipo Terreno en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -502,7 +499,6 @@ Actualiza un inmueble de tipo Bodega en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -609,7 +605,6 @@ Actualiza un inmueble de tipo Oficina en la base de datos
 @param direccion la dirección del inmueble
 @param desc la descripción del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 
@@ -698,7 +693,6 @@ Actualiza un inmueble de tipo Otro en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
