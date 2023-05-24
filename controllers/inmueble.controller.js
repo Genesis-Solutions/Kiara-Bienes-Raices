@@ -400,7 +400,6 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         direccion,
         linkMaps,
-        idPropietario,
         desc,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -464,7 +463,6 @@ exports.updateBodyTerreno = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble 
     );
