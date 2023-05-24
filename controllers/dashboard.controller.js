@@ -525,7 +525,6 @@ exports.updateBodyLocal = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         medidaFrente,
@@ -574,7 +573,6 @@ exports.updateBodyLocal = (req, res, next) => {
     Dashboard.activateInmuebleLocal(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
