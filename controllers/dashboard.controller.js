@@ -798,7 +798,6 @@ exports.updateBodyOficina = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -843,7 +842,6 @@ exports.updateBodyOficina = (req, res, next) => {
     Dashboard.changeInmuebleOficina(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
