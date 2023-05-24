@@ -500,7 +500,6 @@ exports.updateBodyBodega = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
-        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -606,7 +605,6 @@ exports.updateBodyBodega = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
     );
