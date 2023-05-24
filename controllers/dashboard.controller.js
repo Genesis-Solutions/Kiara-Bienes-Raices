@@ -882,7 +882,6 @@ exports.updateBodyOtro = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -927,7 +926,6 @@ exports.updateBodyOtro = (req, res, next) => {
     Dashboard.activateInmuebleOtro(
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         tipoMovimiento,
         precioVenta,
