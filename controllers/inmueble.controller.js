@@ -156,7 +156,6 @@ exports.updateBodyCasa = (req,res,next) => {
         banios,
         desc,
         direccion,
-        idPropietario,
         linkMaps,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -191,8 +190,7 @@ exports.updateBodyCasa = (req,res,next) => {
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble", idInmueble);
-    
+
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -252,7 +250,6 @@ exports.updateBodyCasa = (req,res,next) => {
         bodega,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
     );
