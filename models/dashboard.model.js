@@ -29,7 +29,7 @@ module.exports = class Dashboard {
      */
     static fetchAllPropiedades() {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador'
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado'
         );
     }
 
@@ -39,7 +39,7 @@ module.exports = class Dashboard {
      */
         static fetchAllPropiedadesAgente(idUsuario) {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador WHERE I.idAgenteAsignado=?', [
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.idAgenteAsignado=?', [
                 idUsuario,
             ]);
     }

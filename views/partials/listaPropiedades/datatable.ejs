@@ -82,7 +82,6 @@
             thead += '<th style="width: auto; text-align: center;">Operación</th>'
             thead += '<th style="width: auto; text-align: center;">Precio Venta</th>'
             thead += '<th style="width: auto; text-align: center;">Precio Renta</th>'
-            thead += '<th style="width: auto; text-align: center;">Propietario</th>'
             thead += '<th style="width: auto; text-align: center;">Agente</th>'
             thead += '<th style="width: auto; text-align: center;">Modificar Agente Asignado</th>'
             thead += '<th style="width: auto; text-align: center; border-top-right-radius: 0.5rem;">¿En proceso?</th>'
@@ -95,7 +94,6 @@
             tfooter += '<th>Operación</th>'
             tfooter += '<th>Precio de Venta</th>'
             tfooter += '<th>Precio de Renta</th>'
-            tfooter += '<th>Dueño</th>'
             tfooter += '<th>Agente</th>'
             tfooter += '<th>Modificar agente asignado</th>'
             tfooter += '<th>¿En proceso?</th>'
@@ -153,14 +151,6 @@
                             return '<span class="badge badge-success">' + formatter.format(data.precioRentaInmueble) + '</span>'
                         }
                     },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            var arrendador = data.nombresArrendador + ' ' + data.apellidosArrendador
-                            return '<span class="badge badge-success">' + arrendador + '</span>'
-                        }
-                    },
-                    
                     {
                         data: null,
                         render: function (data, type, row) {
