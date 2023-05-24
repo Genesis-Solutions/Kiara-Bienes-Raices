@@ -5,6 +5,8 @@
         <table class="table table-bordered text-center " id="dataTablePropiedades" width="100%" cellspacing="0">
         </table>
     </div>
+    <input type="hidden" id="rol" name="rol" value="<%=idRol%>">
+    <input type="hidden" id="usuario" name="usuario" value="<%=idUsuario%>">
     <!-- Enlazar con la biblioteca de jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -62,12 +64,15 @@
                 $("#dataTablePropiedades").dataTable().fnDestroy();
                 $('#dataTablePropiedades').empty();
             }
-            <%if (idRol==1){%>
+            var rol = document.getElementById('rol');
+            var idRol = rol.value
+            if (idRol==1) {
                 var ruta = '/dashboard/propiedades'
-            <%} else{%>
-                var idAgente=<%= idUsuario%>
+            } else {
+                var usuario = document.getElementById('usuario');
+                var idAgente = usuario.value
                 var ruta = '/dashboard/propiedades/'+idAgente 
-            <%}%>
+            }
             var thead = ""
             var tfooter = ""
             thead += '<thead>'
