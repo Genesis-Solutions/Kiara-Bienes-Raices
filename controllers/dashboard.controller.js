@@ -616,7 +616,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -659,7 +658,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     Dashboard.activateInmuebleTerreno(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
