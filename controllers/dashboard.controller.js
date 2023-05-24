@@ -695,7 +695,6 @@ exports.updateBodyBodega = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -750,7 +749,6 @@ exports.updateBodyBodega = (req, res, next) => {
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,

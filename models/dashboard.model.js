@@ -616,7 +616,6 @@ module.exports = class Dashboard {
     static activateInmuebleBodega(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -655,7 +654,6 @@ module.exports = class Dashboard {
             [
                 titulo,
                 id_agente,
-                id_arrendador,
                 tipoMovimiento,
                 linkVideo,
                 precioVenta,
