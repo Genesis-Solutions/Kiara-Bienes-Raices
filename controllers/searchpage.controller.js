@@ -120,7 +120,7 @@ exports.getSearchPage = async( req,res,next ) => {
     * para mostrar los inmuebles que están activos, los datos para
     * la paginación y las variables de sesión de isLogged y el idRol
     */
-    console.log(totalInmuebles[0][0].total)
+    //console.log(totalInmuebles[0][0].total)
     if (totalInmuebles[0][0].total > 0) {
         res.render('searchpage', {
             inmuebles: inmuebles[0],
@@ -236,12 +236,14 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         /** 
         * En caso de buscar por dirección agrega el filtro de LIKE a la query,
         * al ser una expresión regular, permite buscar por texto aquellas
-        * propiedades que coincidan o se aproximen a la búsqueda
+        * propiedades que coincidan o se aproximen a la búsqueda 
+        * (nombre y desc.)
         */
 
-        console.log(params.direccionInmueble)
+        //console.log(params.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
-            conditions.push("nombreInmueble LIKE ?");
+            conditions.push("(nombreInmueble LIKE ? OR descInmueble LIKE ?)");
+            values.push("%" + params.direccionInmueble + "%");
             values.push("%" + params.direccionInmueble + "%");
         };
 
