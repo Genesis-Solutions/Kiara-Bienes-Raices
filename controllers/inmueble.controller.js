@@ -64,8 +64,22 @@ exports.getInmueble = async (req, res, next) => {
 exports.eliminarPropiedad = (req, res, next) => {
     console.log("Adentro de controlador eliminar");
     const idInmueble = req.params.idInmueble;
-    const activoInmueble = 0;
+    const activoInmueble = 2;
     Inmueble.eliminarPropiedad(activoInmueble, idInmueble);
+}
+
+/*
+ * Desactiva una propiedad cambiando su estado a inactivo.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {function} next - Función de middleware de Express.
+ * @returns {void}
+ */
+exports.desactivarPropiedad = (req, res, next) => {
+    console.log("Adentro de controlador eliminar");
+    const idInmueble = req.params.idInmueble;
+    const activoInmueble = 0;
+    Inmueble.desactivarPropiedad(activoInmueble, idInmueble);
 }
 
 /*
