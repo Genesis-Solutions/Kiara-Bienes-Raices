@@ -343,8 +343,6 @@ exports.getCategoria = async (req, res, next) => {
         const idInmueble = await Dashboard.getLastDisabledRegisterID();
         //console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
         const listaAgentes = await Dashboard.fetchAgents();
-        //console.log("Lista de todos los agentes",listaAgentes[0]);
-        const listaClientes = await Dashboard.fetchClients();
         //console.log("Lista de todos los agentes",listaClientes[0]);
         const listaTipoMovimientos = await Dashboard.fetchAllMovements();
         //console.log("Lista de todos los tipos de movimiento",listaTipoMovimientos[0]);
@@ -354,7 +352,6 @@ exports.getCategoria = async (req, res, next) => {
             idInmueble: idInmueble[0][0].idInmueble,
             categoria: idCategoria,
             listaAgentes: listaAgentes[0],
-            listaClientes: listaClientes[0],
             listaTipoMovimientos: listaTipoMovimientos[0],
             idUsuario: idUsuario
         });
@@ -425,7 +422,6 @@ exports.updateBodyCasa = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         niveles,
@@ -482,7 +478,6 @@ exports.updateBodyCasa = (req, res, next) => {
     Dashboard.activateInmuebleCasa(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -530,7 +525,6 @@ exports.updateBodyLocal = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         medidaFrente,
@@ -579,7 +573,6 @@ exports.updateBodyLocal = (req, res, next) => {
     Dashboard.activateInmuebleLocal(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -623,7 +616,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -666,7 +658,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     Dashboard.activateInmuebleTerreno(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -704,7 +695,6 @@ exports.updateBodyBodega = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -759,7 +749,6 @@ exports.updateBodyBodega = (req, res, next) => {
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -809,7 +798,6 @@ exports.updateBodyOficina = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -854,7 +842,6 @@ exports.updateBodyOficina = (req, res, next) => {
     Dashboard.changeInmuebleOficina(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -895,7 +882,6 @@ exports.updateBodyOtro = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -940,7 +926,6 @@ exports.updateBodyOtro = (req, res, next) => {
     Dashboard.activateInmuebleOtro(
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         tipoMovimiento,
         precioVenta,
