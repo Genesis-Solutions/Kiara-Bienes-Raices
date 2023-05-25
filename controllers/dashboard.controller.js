@@ -27,11 +27,23 @@ exports.getDashboard = (req, res, next) => {
 };
 
 /*
- * Renderización de la lista de propiedades
+ * Renderización de la lista de propiedades activas
  */
 exports.getDashboardProps = (req, res, next) => {
     // Renderizar la vista de la lista de Propiedades
     res.render("dashboardListaPropiedades", {
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+        idUsuario: req.session.idUsuario 
+    });
+};
+
+/*
+ * Renderización de la lista de propiedades inactivas
+ */
+exports.getDashboardPropsInactivas = (req, res, next) => {
+    // Renderizar la vista de la lista de Propiedades
+    res.render("listaPropiedadesInactivas", {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
         idUsuario: req.session.idUsuario 
@@ -55,10 +67,26 @@ exports.getPropiedades = async (req, res, next) => {
 }
 
 /*
- * Llamada de query que regresa un json con los datos de las propiedades del agente en el sistema.
+ * Llamada de query que regresa un json con los datos de las propiedades del agente en el sistema que esten activas
  */
 exports.getPropiedadesAgente = async (req, res, next) => {
     const dataProps = await Dashboard.fetchAllPropiedadesAgente(req.params.idUsuario);
+    res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
+}
+
+/*
+ * Llamada de query que regresa un json con los datos de las propiedades del sistema que esten inactivas
+ */
+exports.getPropiedadesInactivas = async (req, res, next) => {
+    const dataProps = await Dashboard.fetchAllPropiedadesInactivas();
+    res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
+}
+
+/*
+ * Llamada de query que regresa un json con los datos de las propiedades del sistema que esten inactivas
+ */
+exports.getPropiedadesAgenteInactivas = async (req, res, next) => {
+    const dataProps = await Dashboard.fetchAllPropiedadesAgenteInactivas();
     res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
 }
 
