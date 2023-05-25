@@ -88,7 +88,7 @@ exports.getPropiedadesInactivas = async (req, res, next) => {
  * Llamada de query que regresa un json con los datos de las propiedades del sistema que esten inactivas
  */
 exports.getPropiedadesAgenteInactivas = async (req, res, next) => {
-    const dataProps = await Dashboard.fetchAllPropiedadesAgenteInactivas();
+    const dataProps = await Dashboard.fetchAllPropiedadesAgenteInactivas(req.params.idUsuario);
     res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
 }
 
