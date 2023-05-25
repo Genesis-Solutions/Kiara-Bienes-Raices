@@ -170,8 +170,8 @@
                             /*
                             *Si el inmueble se encuentra activo, mencionar que no está en proceso y viceversa.
                             */
-                            if (data.activoInmueble == 1) {
-                                return '<span class="badge badge-success">' + 'No' + '</span>'
+                            if (data.activoTramite == null) {
+                                return '<button type="button" id="button" style="width: auto;" class="btnIniciarProceso bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl btnEditarRol my-2">Iniciar Proceso</button>'
                             }
                             else {
                                 return '<span class="badge badge-success">' + 'Si' + '</span>'
