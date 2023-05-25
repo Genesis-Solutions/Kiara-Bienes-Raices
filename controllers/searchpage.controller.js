@@ -18,49 +18,69 @@ exports.getSearchPage = async( req,res,next ) => {
     const totalInmuebles = await SearchPage.totalInmuebles();
 
     /**
-    * Obtiene la cantidad de resultados por página, en este caso es
-    * de 1 para probar la paginación 
+    * Dado a que necesitamos revisar que existan inmuebles, debemos crear éstas
+    * variables para que puedan ser usadas después de la verificación 
     */
-    
-    const resultadosPorPagina = 4;
-    
-    /** 
-    * Establece la cantidad de resultados por pagina
-    */ 
 
-    const numeroResultados = totalInmuebles[0][0].total;
-    const numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
-    
-    /** 
-    * Solicita la cantidad de resultados por pagina 
-    */
+    var resultsExist = false;
+    var resultadosPorPagina;
+    var numeroResultados;
+    var numeroPaginas;
+
+    if (totalInmuebles[0][0].total > 0) {
+        resultsExist = true;
+    };
 
     const pagina = req.query.pagina ? Number(req.query.pagina) : 1;
-    if (pagina>numeroPaginas) {
-        res.redirect('/catalogo?pagina='+encodeURIComponent(numeroPaginas));
-    } else if (pagina<1) {
-        res.redirect('/catalogo?pagina='+encodeURIComponent('1'));
-    }
-    
-    /** 
-    * Determina los límites para saber qué mostrar por página
-    */
 
-    const limiteInferior = (pagina-1)*resultadosPorPagina;
-    var limSuperior = resultadosPorPagina.toString();
-    var limInferior = limiteInferior.toString();
+    if (resultsExist == true) {
+        /**
+        * Obtiene la cantidad de resultados por página, en este caso es
+        * de 1 para probar la paginación 
+        */
+    
+        resultadosPorPagina = 4;
+
+        /** 
+        * Establece la cantidad de resultados por pagina
+        */ 
+
+        numeroResultados = totalInmuebles[0][0].total;
+        numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
+
+        /** 
+        * Solicita la cantidad de resultados por pagina 
+        */
+
+        if (pagina>numeroPaginas) {
+            res.redirect('/catalogo?pagina='+encodeURIComponent(numeroPaginas));
+        } else if (pagina<1) {
+            res.redirect('/catalogo?pagina='+encodeURIComponent('1'));
+        }
+        
+        /** 
+        * Determina los límites para saber qué mostrar por página
+        */
+
+        const limiteInferior = (pagina-1)*resultadosPorPagina;
+        var limSuperior = resultadosPorPagina.toString();
+        var limInferior = limiteInferior.toString();
+    }
     
     /** 
     * Construye la lista de inmuebles filtrados con sus imágenes
     * respectivas
     */
 
-    const inmuebles = await SearchPage.inmueblesPaginados(limInferior,limSuperior);
-    for (let i=0; i < inmuebles[0].length; i++) {
-        const imgId = await SearchPage.idFotoPortada((inmuebles[0][i].idInmueble.toString()));
-        const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
-        const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
-        inmuebles[0][i].img = imgSrcFilename;
+    var inmuebles;
+    if (resultsExist == true) {
+        inmuebles = await SearchPage.inmueblesPaginados(limInferior,limSuperior);
+        for (let i=0; i < inmuebles[0].length; i++) {
+            const imgId = await SearchPage.idFotoPortada((inmuebles[0][i].idInmueble.toString()));
+            const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
+            const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
+            inmuebles[0][i].img = imgSrcFilename;
+        }
     }
     
     /**
@@ -100,16 +120,23 @@ exports.getSearchPage = async( req,res,next ) => {
     * para mostrar los inmuebles que están activos, los datos para
     * la paginación y las variables de sesión de isLogged y el idRol
     */
-
-    res.render('searchpage', {
-        inmuebles: inmuebles[0],
-        pagina: pagina,
-        iterador: iterador,
-        linkFinal: linkFinal,
-        numeroPaginas: numeroPaginas,
-        isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
-    }); 
+    //console.log(totalInmuebles[0][0].total)
+    if (totalInmuebles[0][0].total > 0) {
+        res.render('searchpage', {
+            inmuebles: inmuebles[0],
+            pagina: pagina,
+            iterador: iterador,
+            linkFinal: linkFinal,
+            numeroPaginas: numeroPaginas,
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol
+        }); 
+    } else {
+        res.render('searchPageVacia', {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol
+        }); 
+    }
 }
 
 /*
@@ -209,12 +236,14 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
         /** 
         * En caso de buscar por dirección agrega el filtro de LIKE a la query,
         * al ser una expresión regular, permite buscar por texto aquellas
-        * propiedades que coincidan o se aproximen a la búsqueda
+        * propiedades que coincidan o se aproximen a la búsqueda 
+        * (nombre y desc.)
         */
 
-        console.log(params.direccionInmueble)
+        //console.log(params.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
-            conditions.push("nombreInmueble LIKE ?");
+            conditions.push("(nombreInmueble LIKE ? OR descInmueble LIKE ?)");
+            values.push("%" + params.direccionInmueble + "%");
             values.push("%" + params.direccionInmueble + "%");
         };
 

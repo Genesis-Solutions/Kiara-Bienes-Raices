@@ -1,5 +1,7 @@
 const Dashboard = require('../models/dashboard.model');
 const { storage } = require('../util/awsMediaMulter.util');
+const linkYoutubeKiara = 'https://www.youtube.com/@kiarabienesraices/featured';
+const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14939.700429428109!2d-100.40389240351634!3d20.591115845212013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b2a918d2dc1%3A0x35673f825669f344!2sCentro%2C%2076000%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1685044595433!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
 
 /*
 * Historia de usuario 1.5, 1.6 y 1.9 - Ver lista de usuarios, modificar rol y eliminar usuario.
@@ -15,23 +17,38 @@ exports.getDashboard = (req, res, next) => {
         res.render("listUsers", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
+            idUsuario: req.session.idUsuario 
         });
     } else if (req.session.idRol == 2) {
         res.render("dashboardListaPropiedades", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
+            idUsuario: req.session.idUsuario 
         });
     }
 };
 
 /*
- * Renderización de la lista de propiedades
+ * Renderización de la lista de propiedades activas
  */
 exports.getDashboardProps = (req, res, next) => {
     // Renderizar la vista de la lista de Propiedades
     res.render("dashboardListaPropiedades", {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
+        idUsuario: req.session.idUsuario 
+    });
+};
+
+/*
+ * Renderización de la lista de propiedades inactivas
+ */
+exports.getDashboardPropsInactivas = (req, res, next) => {
+    // Renderizar la vista de la lista de Propiedades
+    res.render("listaPropiedadesInactivas", {
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+        idUsuario: req.session.idUsuario 
     });
 };
 
@@ -48,6 +65,30 @@ exports.getUsers = async (req, res, next) => {
  */
 exports.getPropiedades = async (req, res, next) => {
     const dataProps = await Dashboard.fetchAllPropiedades();
+    res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
+}
+
+/*
+ * Llamada de query que regresa un json con los datos de las propiedades del agente en el sistema que esten activas
+ */
+exports.getPropiedadesAgente = async (req, res, next) => {
+    const dataProps = await Dashboard.fetchAllPropiedadesAgente(req.params.idUsuario);
+    res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
+}
+
+/*
+ * Llamada de query que regresa un json con los datos de las propiedades del sistema que esten inactivas
+ */
+exports.getPropiedadesInactivas = async (req, res, next) => {
+    const dataProps = await Dashboard.fetchAllPropiedadesInactivas();
+    res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
+}
+
+/*
+ * Llamada de query que regresa un json con los datos de las propiedades del sistema que esten inactivas
+ */
+exports.getPropiedadesAgenteInactivas = async (req, res, next) => {
+    const dataProps = await Dashboard.fetchAllPropiedadesAgenteInactivas(req.params.idUsuario);
     res.status(200).json({ code: 200, code: "Ok", data: dataProps[0] });
 }
 
@@ -75,7 +116,8 @@ exports.getAdminUser = async (req, res, next) => {
         res.render("adminUserRegistration", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            listRoles: listRoles[0]
+            listRoles: listRoles[0],
+            idUsuario: req.session.idUsuario, 
         });
     }
 }
@@ -117,13 +159,15 @@ exports.deleteUser = async (req, res, next) => {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionEliminado: true
+            comprobacionEliminado: true,
+            idUsuario: req.session.idUsuario, 
         });
     } else {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionEliminado: false
+            comprobacionEliminado: false,
+            idUsuario: req.session.idUsuario
         });
     }
 }
@@ -149,14 +193,16 @@ exports.comprobarUpdateRol = async (req, res, next) => {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionCambio: true
+            comprobacionCambio: true,
+            idUsuario: req.session.idUsuario 
         });
     }
     else {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            comprobacionCambio: false
+            comprobacionCambio: false,
+            idUsuario: req.session.idUsuario 
         });
     }
 
@@ -176,7 +222,8 @@ exports.getAgentes = async (req, res, next) => {
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            agentesArray: agentesArray
+            agentesArray: agentesArray,
+            idUsuario: req.session.idUsuario 
         });
 }
 
@@ -220,7 +267,8 @@ exports.postAdminUser = async (req, res, next) => {
                         isLogged: req.session.isLoggedIn,
                         idRol: req.session.idRol,
                         errorEmail,
-                        listRoles: listRoles[0]
+                        listRoles: listRoles[0],
+                        idUsuario: req.session.idUsuario 
                     });
                 }
             } else {
@@ -256,7 +304,8 @@ exports.postAdminUser = async (req, res, next) => {
                             isLogged: req.session.isLoggedIn,
                             idRol: req.session.idRol,
                             errorPassword,
-                            listRoles: listRoles[0]
+                            listRoles: listRoles[0],
+                            idUsuario: req.session.idUsuario
                         });
                     }
                 }
@@ -293,7 +342,8 @@ exports.getRegisterpage = async (req, res, next) => {
         res.render('altaInmueble', {
             categorias: categorias[0],
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            idUsuario: req.session.idUsuario 
         });
     }
 }
@@ -323,8 +373,6 @@ exports.getCategoria = async (req, res, next) => {
         const idInmueble = await Dashboard.getLastDisabledRegisterID();
         //console.log("Id del inmueble recien generado",idInmueble[0][0].idInmueble);
         const listaAgentes = await Dashboard.fetchAgents();
-        //console.log("Lista de todos los agentes",listaAgentes[0]);
-        const listaClientes = await Dashboard.fetchClients();
         //console.log("Lista de todos los agentes",listaClientes[0]);
         const listaTipoMovimientos = await Dashboard.fetchAllMovements();
         //console.log("Lista de todos los tipos de movimiento",listaTipoMovimientos[0]);
@@ -334,7 +382,6 @@ exports.getCategoria = async (req, res, next) => {
             idInmueble: idInmueble[0][0].idInmueble,
             categoria: idCategoria,
             listaAgentes: listaAgentes[0],
-            listaClientes: listaClientes[0],
             listaTipoMovimientos: listaTipoMovimientos[0],
             idUsuario: idUsuario
         });
@@ -405,7 +452,6 @@ exports.updateBodyCasa = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         niveles,
@@ -446,6 +492,15 @@ exports.updateBodyCasa = (req, res, next) => {
         precioVenta = 0;
     }
     /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
+    /*
     *Obtener amenidades adicionales
     */
     const cocina = req.body.cocina ? 1 : 0;
@@ -462,7 +517,6 @@ exports.updateBodyCasa = (req, res, next) => {
     Dashboard.activateInmuebleCasa(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -510,7 +564,6 @@ exports.updateBodyLocal = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         medidaFrente,
@@ -552,6 +605,15 @@ exports.updateBodyLocal = (req, res, next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
@@ -559,7 +621,6 @@ exports.updateBodyLocal = (req, res, next) => {
     Dashboard.activateInmuebleLocal(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -603,7 +664,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -639,6 +699,15 @@ exports.updateBodyTerreno = (req, res, next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     const servicioAgua = req.body.servicioAgua ? 1 : 0;
     const servicioLuz = req.body.servicioLuz ? 1 : 0;
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
@@ -646,7 +715,6 @@ exports.updateBodyTerreno = (req, res, next) => {
     Dashboard.activateInmuebleTerreno(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -684,7 +752,6 @@ exports.updateBodyBodega = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -736,10 +803,18 @@ exports.updateBodyBodega = (req, res, next) => {
     const andenCarga = req.body.andenCarga ? 1 : 0;
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -789,7 +864,6 @@ exports.updateBodyOficina = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -828,13 +902,21 @@ exports.updateBodyOficina = (req, res, next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     Dashboard.changeInmuebleOficina(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -875,7 +957,6 @@ exports.updateBodyOtro = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         m2terreno,
         m2construccion,
@@ -914,13 +995,21 @@ exports.updateBodyOtro = (req, res, next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     const estudio = req.body.cocina ? 1 : 0;
     const roofGarden = req.body.cisterna ? 1 : 0;
     const bodega = req.body.vigilancia ? 1 : 0;
     Dashboard.activateInmuebleOtro(
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         tipoMovimiento,
         precioVenta,

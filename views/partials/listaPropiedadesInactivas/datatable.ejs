@@ -67,11 +67,11 @@
             var rol = document.getElementById('rol');
             var idRol = rol.value
             if (idRol==1) {
-                var ruta = '/dashboard/propiedades'
+                var ruta = '/dashboard/propiedades/propiedadesInactivas'
             } else {
                 var usuario = document.getElementById('usuario');
                 var idAgente = usuario.value
-                var ruta = '/dashboard/propiedades/'+idAgente 
+                var ruta = '/dashboard/propiedades/propiedadesInactivas/'+idAgente 
             }
             var thead = ""
             var tfooter = ""
@@ -170,8 +170,8 @@
                             /*
                             *Si el inmueble se encuentra activo, mencionar que no está en proceso y viceversa.
                             */
-                            if (data.activoTramite == null) {
-                                return '<button type="button" id="button" style="width: auto;" class="btnIniciarProceso bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl btnEditarRol my-2">Iniciar Proceso</button>'
+                            if (data.activoInmueble == 1) {
+                                return '<span class="badge badge-success">' + 'No' + '</span>'
                             }
                             else {
                                 return '<span class="badge badge-success">' + 'Si' + '</span>'

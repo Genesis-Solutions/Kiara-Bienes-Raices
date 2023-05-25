@@ -58,6 +58,18 @@ module.exports = class Inmueble {
   }
   /*
 
+    /*
+  Desactivar una propiedad de la base de datos.
+  @param activoInmueble El estado de la propiedad que se desea eliminar.
+  @param idInmueble El identificador de la propiedad que se desea eliminar.
+  @throws SQLException Si hay un error al ejecutar la actualización en la base de datos.
+  */
+  static desactivarPropiedad(activoInmueble, idInmueble) {
+    return db
+    .execute("UPDATE inmueble SET activoInmueble=? WHERE idInmueble=?", [activoInmueble, idInmueble]);
+  }
+  /*
+
 Actualiza un inmueble existente en la base de datos.
 @static
 @param {string} titulo - El titulo del inmueble a actualizar.
@@ -208,7 +220,6 @@ Actualiza un inmueble de tipo Casa en la base de datos
 @param bodega la existencia de bodega en el inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -244,12 +255,11 @@ Actualiza un inmueble de tipo Casa en la base de datos
     bodega,
     direccion,
     linkMaps,
-    idPropietario,
     activoInmueble,
     idInmueble
   ) {
     return db.execute(
-      "UPDATE inmueble SET nombreInmueble=?,descInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?,precioRentaInmueble=?, m2TerrenoInmueble=?,m2ConstruidosInmueble=?, nivelesInmueble=?, mediosBaniosInmueble=?, cuotaMantenimientoInmueble=?, fechaConstruccionInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, tipoGasInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?, jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?, linkGoogleMaps=?, idArrendador=?, activoInmueble=? WHERE idInmueble = ?",
+      "UPDATE inmueble SET nombreInmueble=?,descInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?,precioRentaInmueble=?, m2TerrenoInmueble=?,m2ConstruidosInmueble=?, nivelesInmueble=?, mediosBaniosInmueble=?, cuotaMantenimientoInmueble=?, fechaConstruccionInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, tipoGasInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?, jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=? WHERE idInmueble = ?",
       [
         titulo,
         desc,
@@ -281,7 +291,6 @@ Actualiza un inmueble de tipo Casa en la base de datos
         bodega,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
       ]
@@ -317,7 +326,6 @@ Actualiza un inmueble de tipo Local en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -349,12 +357,11 @@ Actualiza un inmueble de tipo Local en la base de datos
     desc,
     direccion,
     linkMaps,
-    idPropietario,
     activoInmueble,
     idInmueble
   ) {
     return db.execute(
-      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?,m2TerrenoInmueble=?, m2ConstruidosInmueble=?,medidasFrenteInmueble=?,medidasFondoInmueble=?,nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?,cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=?,direccionInmueble=?,linkGoogleMaps=?, idArrendador=?, activoInmueble=? WHERE idInmueble = ?",
+      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?,m2TerrenoInmueble=?, m2ConstruidosInmueble=?,medidasFrenteInmueble=?,medidasFondoInmueble=?,nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?,cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=?,direccionInmueble=?,linkGoogleMaps=?, activoInmueble=? WHERE idInmueble = ?",
       [
         titulo,
         tipoMovimiento,
@@ -382,7 +389,6 @@ Actualiza un inmueble de tipo Local en la base de datos
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
       ]
@@ -413,7 +419,6 @@ Actualiza un inmueble de tipo Terreno en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -439,12 +444,11 @@ Actualiza un inmueble de tipo Terreno en la base de datos
     desc,
     direccion,
     linkMaps,
-    idPropietario,
     activoInmueble,
     idInmueble
   ) {
     return db.execute(
-      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?, servicioDrenajeInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?, vigilanciaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=? ,idArrendador=?, activoInmueble=? WHERE idInmueble = ?",
+      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?, servicioDrenajeInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?, vigilanciaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=? WHERE idInmueble = ?",
       [
         titulo,
         tipoMovimiento,
@@ -466,7 +470,6 @@ Actualiza un inmueble de tipo Terreno en la base de datos
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
       ]
@@ -508,7 +511,6 @@ Actualiza un inmueble de tipo Bodega en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -546,12 +548,11 @@ Actualiza un inmueble de tipo Bodega en la base de datos
     desc,
     direccion,
     linkMaps,
-    idPropietario,
     activoInmueble,
     idInmueble
   ) {
     return db.execute(
-      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, estacionamientosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, generadorElectricoInmueble=?, andenCargaInmueble=?, oficinaInmueble=?, patioManiobrasInmueble=?, murosInmueble=?, alturaInmueble=?, tipoPisoInmueble=?, tipoLuzInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, idArrendador=?, activoInmueble=? WHERE idInmueble=?",
+      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, estacionamientosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, generadorElectricoInmueble=?, andenCargaInmueble=?, oficinaInmueble=?, patioManiobrasInmueble=?, murosInmueble=?, alturaInmueble=?, tipoPisoInmueble=?, tipoLuzInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=? WHERE idInmueble=?",
       [
         titulo,
         tipoMovimiento,
@@ -585,7 +586,6 @@ Actualiza un inmueble de tipo Bodega en la base de datos
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
       ]
@@ -617,7 +617,6 @@ Actualiza un inmueble de tipo Oficina en la base de datos
 @param direccion la dirección del inmueble
 @param desc la descripción del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 
@@ -646,12 +645,11 @@ Actualiza un inmueble de tipo Oficina en la base de datos
     direccion,
     desc,
     linkMaps,
-    idPropietario,
     activoInmueble,
     idInmueble
   ) {
     return db.execute(
-      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, direccionInmueble=?, descInmueble=?, linkGoogleMaps=?, idArrendador=?, activoInmueble=? WHERE idInmueble=?",
+      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, direccionInmueble=?, descInmueble=?, linkGoogleMaps=?, activoInmueble=? WHERE idInmueble=?",
       [
         titulo,
         tipoMovimiento,
@@ -675,7 +673,6 @@ Actualiza un inmueble de tipo Oficina en la base de datos
         direccion,
         desc,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
       ]
@@ -708,7 +705,6 @@ Actualiza un inmueble de tipo Otro en la base de datos
 @param desc la descripción del inmueble
 @param direccion la dirección del inmueble
 @param linkMaps el enlace de Google Maps del inmueble
-@param idPropietario el ID del propietario del inmueble
 @param idInmueble el ID del inmueble a actualizar
 @return el resultado de la ejecución de la consulta a la base de datos
 */
@@ -737,12 +733,11 @@ Actualiza un inmueble de tipo Otro en la base de datos
     desc,
     direccion,
     linkMaps,
-    idPropietario,
     activoInmueble,
     idInmueble
   ) {
     return db.execute(
-      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, idArrendador=?, activoInmueble=? WHERE idInmueble=?",
+      "UPDATE inmueble SET nombreInmueble=?, idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=? WHERE idInmueble=?",
       [
         titulo,
         tipoMovimiento,
@@ -766,7 +761,6 @@ Actualiza un inmueble de tipo Otro en la base de datos
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
       ]

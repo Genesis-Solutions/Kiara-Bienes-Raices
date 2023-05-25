@@ -87,7 +87,11 @@ router.get('/', isLogged, agenteAdminAuth, dashboardController.getDashboard);
 /*
 * Rutas de la lista de propiedades
 */
-router.get('/propiedades',isLogged, agenteAdminAuth, dashboardController.getPropiedades)
+router.get('/propiedades/propiedadesInactivas/:idUsuario',isLogged, agenteAdminAuth, dashboardController.getPropiedadesAgenteInactivas)
+router.get('/propiedades/propiedadesInactivas',isLogged, agenteAdminAuth, dashboardController.getPropiedadesInactivas)
+router.get('/propiedades/:idUsuario', isLogged, agenteAdminAuth, dashboardController.getPropiedadesAgente)
+router.get('/propiedades', isLogged, agenteAdminAuth, dashboardController.getPropiedades)
+router.get('/inactivas', isLogged, agenteAdminAuth, dashboardController.getDashboardPropsInactivas);
 router.get('/props', isLogged, agenteAdminAuth, dashboardController.getDashboardProps);
 router.get('/agentes', isLogged, agenteAdminAuth, dashboardController.getAgentes);
 /**
