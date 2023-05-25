@@ -62,7 +62,6 @@ exports.getInmueble = async (req, res, next) => {
  * @returns {void}
  */
 exports.eliminarPropiedad = (req, res, next) => {
-    console.log("Adentro de controlador eliminar");
     const idInmueble = req.params.idInmueble;
     const activoInmueble = 2;
     Inmueble.eliminarPropiedad(activoInmueble, idInmueble);
@@ -76,7 +75,6 @@ exports.eliminarPropiedad = (req, res, next) => {
  * @returns {void}
  */
 exports.desactivarPropiedad = (req, res, next) => {
-    console.log("Adentro de controlador eliminar");
     const idInmueble = req.params.idInmueble;
     const activoInmueble = 0;
     Inmueble.desactivarPropiedad(activoInmueble, idInmueble);
