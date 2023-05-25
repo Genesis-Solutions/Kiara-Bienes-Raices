@@ -93,12 +93,12 @@
             
             <!-- Photo Album md and lg screens -->
             <div class="md:mt-5 lg:mt-10 md:grid md:grid-cols-2 h-96 md:gap-2 hidden">
-                <div class="cursor-pointer hover:scale-105 transition duration-150 h-96 w-full">
+                <div data-modal-target="defaultModal" data-modal-toggle="defaultModal" rel="noopener noreferrer" class="cursor-pointer hover:scale-105 transition duration-150 h-96 w-full">
                     <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="rounded-l-lg object-cover h-full w-full " alt="Imagen principal">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <% for (let i=1; i < 3; i++) { %>
-                        <div class="cursor-pointer hover:scale-105 transition duration-150 h-48">
+                        <div data-modal-target="defaultModal" data-modal-toggle="defaultModal" rel="noopener noreferrer" class="cursor-pointer hover:scale-105 transition duration-150 h-48">
                             <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="object-cover h-full w-full" alt="Imagen de inmueble 4">
                         </div>
                     <%}%>
