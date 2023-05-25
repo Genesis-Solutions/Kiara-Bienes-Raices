@@ -58,6 +58,18 @@ module.exports = class Inmueble {
   }
   /*
 
+    /*
+  Desactivar una propiedad de la base de datos.
+  @param activoInmueble El estado de la propiedad que se desea eliminar.
+  @param idInmueble El identificador de la propiedad que se desea eliminar.
+  @throws SQLException Si hay un error al ejecutar la actualización en la base de datos.
+  */
+  static desactivarPropiedad(activoInmueble, idInmueble) {
+    return db
+    .execute("UPDATE inmueble SET activoInmueble=? WHERE idInmueble=?", [activoInmueble, idInmueble]);
+  }
+  /*
+
 Actualiza un inmueble existente en la base de datos.
 @static
 @param {string} titulo - El titulo del inmueble a actualizar.

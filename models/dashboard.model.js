@@ -24,14 +24,24 @@ module.exports = class Dashboard {
     }
 
     /*
-     * Obtener la lista total de propiedades del sistema para la lista.
+     * Obtener la lista total de propiedades del sistema para la lista que se encuentran activas.
      * @return JSON -> Lista de propiedades
      */
     static fetchAllPropiedades() {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado'
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1'
         );
     }
+
+    /*
+     * Obtener la lista total de propiedades del sistema para la lista que se encuentran inactivas.
+     * @return JSON -> Lista de propiedades
+     */
+    static fetchAllPropiedadesInactivas() {
+        return db.execute(
+        'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=0'
+    );
+}
 
         /*
      * Obtener la lista total de propiedades del agente para la lista.
@@ -40,6 +50,17 @@ module.exports = class Dashboard {
         static fetchAllPropiedadesAgente(idUsuario) {
             return db.execute(
             'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.idAgenteAsignado=?', [
+                idUsuario,
+            ]);
+    }
+
+         /*
+     * Obtener la lista total de propiedades del agente para la lista.
+     * @return JSON -> Lista de propiedades del agente
+     */
+         static fetchAllPropiedadesAgenteInactivas(idUsuario) {
+            return db.execute(
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.idAgenteAsignado=? AND I.activoInmueble = 0', [
                 idUsuario,
             ]);
     }
