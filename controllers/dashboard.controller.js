@@ -1,5 +1,7 @@
 const Dashboard = require('../models/dashboard.model');
 const { storage } = require('../util/awsMediaMulter.util');
+const linkYoutubeKiara = 'https://www.youtube.com/@kiarabienesraices/featured';
+const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14939.700429428109!2d-100.40389240351634!3d20.591115845212013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b2a918d2dc1%3A0x35673f825669f344!2sCentro%2C%2076000%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1685044595433!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
 
 /*
 * Historia de usuario 1.5, 1.6 y 1.9 - Ver lista de usuarios, modificar rol y eliminar usuario.
@@ -490,6 +492,15 @@ exports.updateBodyCasa = (req, res, next) => {
         precioVenta = 0;
     }
     /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
+    /*
     *Obtener amenidades adicionales
     */
     const cocina = req.body.cocina ? 1 : 0;
@@ -594,6 +605,15 @@ exports.updateBodyLocal = (req, res, next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
@@ -678,6 +698,15 @@ exports.updateBodyTerreno = (req, res, next) => {
         tipoMovimiento = 2
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
+    }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
     }
     const servicioAgua = req.body.servicioAgua ? 1 : 0;
     const servicioLuz = req.body.servicioLuz ? 1 : 0;
@@ -774,6 +803,15 @@ exports.updateBodyBodega = (req, res, next) => {
     const andenCarga = req.body.andenCarga ? 1 : 0;
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
@@ -864,6 +902,15 @@ exports.updateBodyOficina = (req, res, next) => {
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
     }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
@@ -947,6 +994,15 @@ exports.updateBodyOtro = (req, res, next) => {
         tipoMovimiento = 2;
         precioRenta = req.body.precioRenta ? req.body.precioRenta : 0;
         precioVenta = 0;
+    }
+    /*
+    *Mapas y videos opcionales. Valores por defectos
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
     }
     const estudio = req.body.cocina ? 1 : 0;
     const roofGarden = req.body.cisterna ? 1 : 0;
