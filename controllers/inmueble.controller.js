@@ -1,9 +1,8 @@
 // Base controlador
-const path = require('path');
 const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
-const { link } = require('fs');
-
+const linkYoutubeKiara = 'https://www.youtube.com/@kiarabienesraices/featured';
+const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14939.700429428109!2d-100.40389240351634!3d20.591115845212013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b2a918d2dc1%3A0x35673f825669f344!2sCentro%2C%2076000%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1685044595433!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
 
 /*
  * Obtiene información de un inmueble y renderiza la vista correspondiente.
@@ -204,7 +203,15 @@ exports.updateBodyCasa = (req,res,next) => {
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -324,7 +331,15 @@ exports.updateBodyLocal = (req,res,next) => {
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -439,7 +454,15 @@ exports.updateBodyTerreno = (req,res,next) => {
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -542,6 +565,15 @@ exports.updateBodyBodega = (req,res,next) => {
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -584,8 +616,6 @@ exports.updateBodyBodega = (req,res,next) => {
     if (oficina == "" || oficina == null) {
         oficina = 0;
     }
-
-
     Inmueble.changeInmuebleBodega(
         titulo,
         tipoMovimiento,
@@ -674,6 +704,15 @@ exports.updateBodyOficina = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -701,8 +740,6 @@ exports.updateBodyOficina = (req,res,next) => {
     if (banios == "" || banios == null) {
         banios = 0;
     }
-
-
     Inmueble.changeInmuebleOficina(
         titulo,
         tipoMovimiento,
@@ -781,6 +818,15 @@ exports.updateBodyOtra = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
