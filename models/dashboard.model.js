@@ -257,7 +257,7 @@ module.exports = class Dashboard {
     static insertDisabledRegister(idCategoria,idUsuario) {
         return db.execute(
             'INSERT INTO inmueble(idAgenteAlta,idAgenteAsignado,idCategoria,idTipoMovimiento,nombreInmueble,descInmueble,precioVentaInmueble,precioRentaInmueble,activoInmueble,fechaRegistroInmueble) VALUES (?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())',
-            [idUsuario,idUsuario,idCategoria,1,"Registro vacio","Registro vacio",0,0,0]
+            [idUsuario,idUsuario,idCategoria,1,"Registro vacio","Registro vacio",0,0,2]
         );
     }
 
