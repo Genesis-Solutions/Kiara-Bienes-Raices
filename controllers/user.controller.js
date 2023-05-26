@@ -185,7 +185,7 @@ exports.getPerfil = async (req, res, next) => {
   res.render('profile', {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol,
-    datosUsuario: datosUsuario[0]
+    datosUsuario: datosUsuario[0][0]
   });
 };
 
