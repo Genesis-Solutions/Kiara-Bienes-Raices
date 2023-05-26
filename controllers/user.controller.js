@@ -182,10 +182,14 @@ exports.getServicios = (req, res, next) => {
 */
 exports.getPerfil = async (req, res, next) => {
   const datosUsuario = await User.getUserProfile(req.session.idUsuario);
+  const idFoto = datosUsuario[0][0].idFoto;
+  const srcPhoto = await User.srcFotoPortada(idFoto);
+  const pfp = (srcPhoto[0][0].archivoFoto).slice(23);
   res.render('profile', {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol,
-    datosUsuario: datosUsuario[0]
+    datosUsuario: datosUsuario[0][0],
+    profilePhoto: pfp
   });
 };
 

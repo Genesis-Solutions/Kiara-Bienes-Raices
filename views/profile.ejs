@@ -22,25 +22,31 @@
         <h2 class="text-4xl font-bold mb-2">Información Personal</h2>
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-5">
             <div class="col-span-2 lg:col-span-1 row-span-4 p-5 flex justify-center">
-                <img src="img/casa.jpg" alt="" class="w-96 h-80 object-cover self-center rounded-lg">
+                <img src="/perfil/get_bucket_img?image=<%=profilePhoto%>" alt="" class="w-96 h-80 object-cover self-center rounded-lg">
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="nombre">Nombre(s)</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="nombreUsuario" name="nombreUsuario" value="Diego Emilio" maxlength="30" required disabled/>
+                        type="text" id="nombreUsuario" name="nombreUsuario" value="<%=datosUsuario.nombreUsuario%>" maxlength="30" required disabled/>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="apellido">Apellidos</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="apellidosUsuario" name="apellidosUsuario" value="Pineda Valencia" maxlength="30" required disabled/>
+                        type="text" id="apellidosUsuario" name="apellidosUsuario" value="<%=datosUsuario.apellidosUsuario%>" maxlength="30" required disabled/>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="estadoCivilUsuario">Estado Civil</label>
-                <input
-                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="Sin datos" maxlength="30" disabled/>
+                <% if (datosUsuario.estadoCivilUsuario != null) { %>
+                    <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="<%=datosUsuario.estadoCivilUsuario%>" maxlength="30" disabled/>
+                <% } else { %>
+                    <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="Sin datos" maxlength="30" disabled/>
+                <% } %>
                 <!-- <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
                     id="estadoCivilUsuario" name="estadoCivilUsuario">
                     <option value="N/A">Escoger una opción</option>
@@ -51,21 +57,27 @@
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="ocupacion">Ocupación</label>
+                <% if (datosUsuario.ocupacionUsuario != null) { %>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="ocupacion" name="ocupacionUsuario" value="<%=datosUsuario.ocupacionUsuario%>" maxlength="30" disabled/>
+                <% } else { %>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                         type="text" id="ocupacion" name="ocupacionUsuario" value="Sin datos" maxlength="30" disabled/>
+                <% } %>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="email">Correo Electrónico</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="email" id="emailUsuario" name="emailUsuario" value="diego@kiara.com" maxlength="60" required disabled/>
+                            type="email" id="emailUsuario" name="emailUsuario" value="<%=datosUsuario.emailUsuario%>" maxlength="60" required disabled/>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="telefonoUsuario">Número de Teléfono</label>
                 <input type="tel"
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            , id="telefonoUsuario" name="telefonoUsuario" value="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required disabled/>
+                            , id="telefonoUsuario" name="telefonoUsuario" value="<%=datosUsuario.telefonoUsuario%>" maxlength="10" minlength="10" pattern="[0-9]{10}" required disabled/>
             </div>
             <div class="col-span-1 space-y-2 py-5 hidden">
                 <a href="" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700">
