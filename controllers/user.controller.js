@@ -180,10 +180,12 @@ exports.getServicios = (req, res, next) => {
 * @param: req, res, next
 * @returns: res.render(perfil)
 */
-exports.getPerfil = (req, res, next) => {
+exports.getPerfil = async (req, res, next) => {
+  const datosUsuario = await User.getUserProfile(req.session.idUsuario);
   res.render('perfil', {
     isLogged: req.session.isLoggedIn,
-    idRol: req.session.idRol
+    idRol: req.session.idRol,
+    datosUsuario: datosUsuario[0]
   });
 };
 
