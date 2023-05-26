@@ -84,7 +84,7 @@
             thead += '<th style="width: auto; text-align: center;">Precio Renta</th>'
             thead += '<th style="width: auto; text-align: center;">Agente</th>'
             thead += '<th style="width: auto; text-align: center;">Modificar Agente Asignado</th>'
-            thead += '<th style="width: auto; text-align: center; border-top-right-radius: 0.5rem;">¿En proceso?</th>'
+            thead += '<th style="width: auto; text-align: center; border-top-right-radius: 0.5rem;">Estado</th>'
             thead += '</tr>'
             thead += '</thead>'
             tfooter += '<tfoot>'
@@ -96,7 +96,7 @@
             tfooter += '<th>Precio de Renta</th>'
             tfooter += '<th>Agente</th>'
             tfooter += '<th>Modificar agente asignado</th>'
-            tfooter += '<th>¿En proceso?</th>'
+            tfooter += '<th>Estado</th>'
             tfooter += '</tr>'
             tfooter += '</tfoot>'
             $('#dataTablePropiedades').append(thead);
@@ -170,11 +170,11 @@
                             /*
                             *Si el inmueble se encuentra activo, mencionar que no está en proceso y viceversa.
                             */
-                            if (data.activoInmueble == 1) {
-                                return '<span class="badge badge-success">' + 'No' + '</span>'
+                            if (data.activoInmueble == 0) {
+                                return '<button type="button" id="button" style="width: auto;" class="btnReactivarPropiedad bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl btnEditarRol my-2">Reactivar Propiedad</button>'
                             }
-                            else {
-                                return '<span class="badge badge-success">' + 'Si' + '</span>'
+                            else if (data.activoInmueble == 3) {
+                                return '<span class="badge badge-success">' + 'En proceso' + '</span>'
                             }
                         }
                     },
