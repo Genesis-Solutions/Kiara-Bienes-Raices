@@ -7,12 +7,12 @@
     <div class="bg-cover w-full" style="background-image: url(img/main_img.jpg)">
         <%- include('partials/navbar') %>
 
-        <div class="px-10 pb-10 lg:grid lg:grid-cols-3 md:flex flex-col">
+        <div class="px-10 pb-12 lg:grid lg:grid-cols-3 md:flex flex-col">
             
             <!-- Slogan Section -->
             
-            <div class="px-20 pt-3 pb-8 md:p-20 text-center">
-                <h1 class="text-5xl font-extrabold">Tu patrimonio, en manos expertas</h1>
+            <div class="px-5 md:px-20 pt-3 pb-8 md:p-20 text-center">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold">Tu patrimonio, en manos expertas</h1>
             </div>
             
             <!-- SearchBar Section -->
@@ -60,9 +60,9 @@
     </div>
 
     <!-- Properties Section -->
-    <div class="p-10 md:px-10 md:py-8 lg:py-10 flex-col justify-center">
+    <div class="p-12 md:px-10 md:py-8 lg:py-10 flex-col justify-center">
         <div>
-            <h2 class="pb-12 lg:py-10 md:py-8 text-4xl font-bold lg:flex lg:justify-center text-center">
+            <h2 class="pb-10 md:pb-12 lg:py-10 md:py-8 text-2xl md:text-4xl font-bold lg:flex lg:justify-center text-center">
                 ¡Explora nuestras nuevas propiedades!
             </h2>
         </div>
@@ -92,15 +92,15 @@
     <!-- Features Section -->
 
     <div class="bg-sky-950 lg:grid lg:grid-cols-2 md:flex md:flex-col">
-        <div class="px-16 py-10">
-            <h2 class="py-10 text-4xl font-bold text-white">
+        <div class="px-12 pt-12 md:px-16 md:py-10">
+            <h2 class="pb-2 md:pb-0 md:py-10 text-2xl md:text-4xl font-bold text-white">
                 Encuentra tu lugar perfecto
             </h2>
             <p class="text-base text-white">
                 En KIARA, ofrecemos una experiencia excepcional de compra o renta de inmuebles, gracias a nuestro equipo de profesionales comprometidos en brindarle el mejor servicio posible. Con nuestros conocimientos del mercado inmobiliario, elegirnos será la mejor decisión que pueda tomar.
             </p>
             <!-- Properties Section -->
-            <div class="grid grid-cols-2 px-2 py-14 gap-14">
+            <div class="grid grid-cols-2 px-2 py-8 md:py-14 gap-8 md:gap-14">
                 <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
                     <div class="flex justify-center items-center">
                         <i class="fa-solid fa-building fa-lg mr-3"></i>
@@ -156,30 +156,28 @@
     </div>
 
     <!-- Process Section -->
-    <div class="p-20">
+    <div class="p-12 md:p-20">
         <div class="flex justify-center">
-            <h2 class="text-4xl font-bold text-center">
+            <h2 class="text-2xl md:text-4xl font-bold text-center">
                 ¿Te interesa vender o rentar tu propiedad?
             </h2>
         </div>
-        <div class="lg:grid lg:grid-cols-3 place-items-center pt-12 md:flex md:flex-col space-y-5 md:space-y-12 md:text-center">
-            <a href="/contacto">
-                <div class="hover:scale-105 transition duration-150">
-                    <img src="img/process1_img.png" class="">
-                    <p>
-                        <span class="underline underline-offset-4">Contacta</span> a uno de nuestros agentes
-                    </p>
-                </div>
-            </a>
+        <div class="lg:grid lg:grid-cols-3 place-items-center text-center pt-4 md:pt-12 md:flex md:flex-col space-y-5 md:space-y-12 lg:space-y-0 md:text-center">
+            <div class="flex flex-col justify-center">
+                <img src="img/process1_img.png" class="w-32 h-32 self-center md:w-44 md:h-44 lg:w-60 lg:h-60">
+                <p>
+                    <span class="underline underline-offset-4">Contacta</span> a uno de nuestros agentes
+                </p>
+            </div>
             
-            <div class="hover:scale-105 transition duration-150">
-                <img src="img/process2_img.png" class="">
+            <div class="flex flex-col justify-center">
+                <img src="img/process2_img.png" class="w-40 h-40 self-center md:w-48 md:h-48 lg:w-64 lg:h-64">
                 <p class="lg:pl-16">
                     Prepara tu <span class="underline underline-offset-4">documentación</span>
                 </p>
             </div>
-            <div class="hover:scale-105 transition duration-150">
-                <img src="img/process3_img.png" class="">
+            <div class="flex flex-col justify-center">
+                <img src="img/process3_img.png" class="w-40 h-36 self-center md:w-56 md:h-48 lg:w-64 lg:h-60">
                 <p class="pl-5">
                     Visualiza el <span class="underline underline-offset-4">seguimiento</span> de tu proceso
                 </p>
