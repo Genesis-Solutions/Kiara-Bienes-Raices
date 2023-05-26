@@ -263,6 +263,25 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function () {
+        $('#btnSubmit').click(function() {
+            checkedVenta = $("input[id=venta]:checked").length;
+            checkedRenta = $("input[id=renta]:checked").length;
+            if(!checkedVenta && !checkedRenta){
+                //sweetAlert("La propiedad debe estar en venta y/o renta");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'La propiedad debe estar en venta y/o renta',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return false;
+            }
+        });
+    });
+    </script>
+
     <%- include("partials/footer") %>
 
 </body>
