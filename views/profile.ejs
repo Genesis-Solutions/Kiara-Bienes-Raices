@@ -28,41 +28,44 @@
                 <label for="nombre">Nombre(s)</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="nombreUsuario" name="nombreUsuario" value="Diego Emilio" maxlength="30" required/>
+                        type="text" id="nombreUsuario" name="nombreUsuario" value="Diego Emilio" maxlength="30" required disabled/>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="apellido">Apellidos</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="apellidosUsuario" name="apellidosUsuario" value="Pineda Valencia" maxlength="30" required/>
+                        type="text" id="apellidosUsuario" name="apellidosUsuario" value="Pineda Valencia" maxlength="30" required disabled/>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="estadoCivilUsuario">Estado Civil</label>
-                <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="Sin datos" maxlength="30" disabled/>
+                <!-- <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
                     id="estadoCivilUsuario" name="estadoCivilUsuario">
                     <option value="N/A">Escoger una opción</option>
                     <option value="Soltero">Soltero</option>
                     <option value="Casado">Casado</option>
                     <option value="Casado-Bienes Mancomunados">Casado-Bienes Mancomunados</option>
-                </select>
+                </select> -->
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="ocupacion">Ocupación</label>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="ocupacion" name="ocupacionUsuario" value="Sin datos" maxlength="30" />
+                        type="text" id="ocupacion" name="ocupacionUsuario" value="Sin datos" maxlength="30" disabled/>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="email">Correo Electrónico</label>
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            type="email" id="emailUsuario" name="emailUsuario" value="diego@kiara.com" maxlength="60" required />
+                            type="email" id="emailUsuario" name="emailUsuario" value="diego@kiara.com" maxlength="60" required disabled/>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="telefonoUsuario">Número de Teléfono</label>
                 <input type="tel"
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                            , id="telefonoUsuario" name="telefonoUsuario" value="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required />
+                            , id="telefonoUsuario" name="telefonoUsuario" value="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required disabled/>
             </div>
             <div class="col-span-1 space-y-2 py-5 hidden">
                 <a href="" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700">
