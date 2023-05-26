@@ -4,7 +4,7 @@
   "description": "kiara-bienes-raices",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter mochawesome --timeout 10000 --exit",
+    "test": "jest",
     "start": "nodemon app.js",
     "build-tail": "tailwindcss build -i ./styles/input.css -o ./styles/style.css"
   },
