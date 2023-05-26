@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 require("dotenv").config();
-const fs = require("fs")
 
 const app = express();
 
@@ -34,10 +33,12 @@ const rutasHome = require('./routes/homepage.routes.js');
 const rutasInmueble = require('./routes/inmueble.routes.js');
 const rutasDashboard = require('./routes/dashboard.routes.js');
 const rutasSearchpage = require('./routes/searchpage.routes.js');
+const rutasUsuario = require('./routes/user.routes.js');
 
 app.use('/inmueble', rutasInmueble)
-app.use('/catalogo', rutasSearchpage); //Historia de usuario 2.7 - Ver lista de inmuebles
-app.use('/dashboard', rutasDashboard); //Historia de usuario 2.1 - Publicar inmueble
+app.use('/catalogo', rutasSearchpage);
+app.use('/dashboard', rutasDashboard);
+//app.use('/perfil', rutasUsuario);
 app.use('/', rutasHome);
 
 //app.use("/public",express.static(dirname + '/public')); 

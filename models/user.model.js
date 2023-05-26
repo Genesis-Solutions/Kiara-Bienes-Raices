@@ -66,4 +66,17 @@ module.exports = class User {
         });
     });
   }
+
+  /*
+  * Obtener toda la información de un usuario.
+  * @param idUsuario: Int -> Id del usuario.
+  * @return JSON -> Datos completos del usuario.
+  */
+  static getUserProfile(idUsuario) {
+    return db.execute(
+        'SELECT * FROM usuario WHERE idUsuario=?',
+        [idUsuario]
+    );
+  }
+
 };

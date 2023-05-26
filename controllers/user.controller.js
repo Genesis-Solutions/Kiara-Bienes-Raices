@@ -1,6 +1,6 @@
-const path = require('path');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
+const bucket = require("../util/awsBucket.js");
 
 // -- LOGIN -- //
 
@@ -174,3 +174,34 @@ exports.getServicios = (req, res, next) => {
     idRol: req.session.idRol
   });
 };
+
+/*
+* Obtener los datos de un usuario para desplegarlos en su perfil
+* @param: req, res, next
+* @returns: res.render(perfil)
+*/
+exports.getPerfil = async (req, res, next) => {
+  const datosUsuario = await User.getUserProfile(req.session.idUsuario);
+  res.render('perfil', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol,
+    datosUsuario: datosUsuario[0]
+  });
+};
+
+/*
+* Obtiene la imagen del bucket S3
+*/
+exports.getImgFromBucket = ( req,res,next ) => {
+  var img = req.query.image;
+  const AWS_BUCKET = "kiarabienesraices";
+  //console.log('Trying to download file: ' + img);
+  var opciones = {
+      Bucket: AWS_BUCKET,
+      Key: img,
+  };
+  bucket.getObject(opciones, function(err, data) {
+      res.attachment(img);
+      res.send(data.Body);
+  });
+}
