@@ -84,7 +84,7 @@
             thead += '<th style="width: auto; text-align: center;">Precio Renta</th>'
             thead += '<th style="width: auto; text-align: center;">Agente</th>'
             thead += '<th style="width: auto; text-align: center;">Modificar Agente Asignado</th>'
-            thead += '<th style="width: auto; text-align: center; border-top-right-radius: 0.5rem;">¿En proceso?</th>'
+            thead += '<th style="width: auto; text-align: center; border-top-right-radius: 0.5rem;"></th>'
             thead += '</tr>'
             thead += '</thead>'
             tfooter += '<tfoot>'
@@ -96,7 +96,7 @@
             tfooter += '<th>Precio de Renta</th>'
             tfooter += '<th>Agente</th>'
             tfooter += '<th>Modificar agente asignado</th>'
-            tfooter += '<th>¿En proceso?</th>'
+            tfooter += '<th></th>'
             tfooter += '</tr>'
             tfooter += '</tfoot>'
             $('#dataTablePropiedades').append(thead);
@@ -167,15 +167,8 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            /*
-                            *Si el inmueble se encuentra activo, mencionar que no está en proceso y viceversa.
-                            */
-                            if (data.activoTramite == null) {
                                 return '<button type="button" id="button" style="width: auto;" class="btnIniciarProceso bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl btnEditarRol my-2">Iniciar Proceso</button>'
-                            }
-                            else {
-                                return '<span class="badge badge-success">' + 'Si' + '</span>'
-                            }
+
                         }
                     },
                 ]

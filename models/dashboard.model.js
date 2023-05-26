@@ -29,7 +29,7 @@ module.exports = class Dashboard {
      */
     static fetchAllPropiedades() {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, T.activoTramite FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado LEFT JOIN tramite T ON I.idInmueble = T.idInmueble WHERE I.activoInmueble=1'
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1'
         );
     }
 
@@ -39,7 +39,7 @@ module.exports = class Dashboard {
      */
     static fetchAllPropiedadesInactivas() {
         return db.execute(
-        'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, T.activoTramite FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado LEFT JOIN tramite T ON I.idInmueble = T.idInmueble WHERE I.activoInmueble=0'
+        'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=0 OR I.activoInmueble=3'
     );
 }
 
@@ -49,10 +49,10 @@ module.exports = class Dashboard {
      */
         static fetchAllPropiedadesAgente(idUsuario) {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, T.activoTramite FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado LEFT JOIN tramite T ON I.idInmueble = T.idInmueble WHERE I.idAgenteAsignado=? AND I.activoInmueble=1', [
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1 AND I.idAgenteAsignado=?', [
                 idUsuario,
             ]);
-    }
+    } 
 
          /*
      * Obtener la lista total de propiedades del agente para la lista.
@@ -60,7 +60,7 @@ module.exports = class Dashboard {
      */
          static fetchAllPropiedadesAgenteInactivas(idUsuario) {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, T.activoTramite FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado LEFT JOIN tramite T ON I.idInmueble = T.idInmueble WHERE I.idAgenteAsignado=? AND I.activoInmueble = 0', [
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.idAgenteAsignado=? AND (I.activoInmueble = 0 OR I.activoInmueble=3)', [
                 idUsuario,
             ]);
     }
