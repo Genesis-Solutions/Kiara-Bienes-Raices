@@ -78,5 +78,17 @@ module.exports = class User {
         [idUsuario]
     );
   }
+  
+    /*
+    * Obtener el nombre del archivo dentro del S3 de la foto portada del inmueble por su id.
+    * @param id: String -> Id de una foto. 
+    * @return JSON -> Nombre del archivo dentro del S3.
+    */
+    static srcFotoPortada(id) {
+        return db.execute(
+          'SELECT archivoFoto FROM foto WHERE idFoto = ?',
+          [id]
+        );
+    }
 
 };
