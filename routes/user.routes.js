@@ -12,6 +12,6 @@ router.get('/get_bucket_img',userController.getImgFromBucket);
 /* 
 * Ver perfil del usuario.
 */
-router.get('/perfil', isLogged, userController.getPerfil);
+router.get('/', isLogged, userController.getPerfil);
 
 module.exports = router;

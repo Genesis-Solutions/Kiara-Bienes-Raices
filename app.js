@@ -38,7 +38,7 @@ const rutasUsuario = require('./routes/user.routes.js');
 app.use('/inmueble', rutasInmueble)
 app.use('/catalogo', rutasSearchpage);
 app.use('/dashboard', rutasDashboard);
-//app.use('/perfil', rutasUsuario);
+app.use('/perfil', rutasUsuario);
 app.use('/', rutasHome);
 
 //app.use("/public",express.static(dirname + '/public')); 

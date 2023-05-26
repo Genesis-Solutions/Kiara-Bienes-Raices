@@ -178,11 +178,11 @@ exports.getServicios = (req, res, next) => {
 /*
 * Obtener los datos de un usuario para desplegarlos en su perfil
 * @param: req, res, next
-* @returns: res.render(perfil)
+* @returns: res.render(profile)
 */
 exports.getPerfil = async (req, res, next) => {
   const datosUsuario = await User.getUserProfile(req.session.idUsuario);
-  res.render('perfil', {
+  res.render('profile', {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol,
     datosUsuario: datosUsuario[0]
