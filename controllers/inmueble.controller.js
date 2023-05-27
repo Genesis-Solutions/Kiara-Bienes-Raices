@@ -13,6 +13,7 @@ const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!
  */
 exports.getInmueble = async (req, res, next) => {
     const idInmueble = req.params.idInmueble;
+    //console.log("id del inmueble: ", idInmueble);
     //Info de agente e inmueblee
     const inmueble = await Inmueble.getInmueble(idInmueble);
     // activoInmueble ya viene en inmueble
@@ -40,8 +41,9 @@ exports.getInmueble = async (req, res, next) => {
         arregloFotos.push(imgSrcFilename);
     }
     const idAgente = await Inmueble.getIdAgente(idInmueble);
-    console.log("idAgente: " + idAgente);
+    //console.log("idAgente: " + idAgente);
     const agente = await Inmueble.getInfoAgente(idAgente);
+    //console.log("info del agente: ", agente)
     //console.log(inmueble[0].idAgenteAlta);
     const currentURL = req.protocol + '://' + req.get('host') + req.originalUrl;
     res.render('inmueble', {
