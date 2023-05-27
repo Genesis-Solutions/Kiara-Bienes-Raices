@@ -29,7 +29,13 @@ module.exports = class User {
   static findOne(emailUsuario) {
     return db.execute("SELECT * FROM usuario WHERE emailUsuario=?", [
       emailUsuario,
-    ]);
+    ]).then(([rows, fieldData]) => {
+      return rows[0];
+    })
+    .catch((error) => {
+        console.log(error);
+        return 0;
+    });
   }
 
   static insertUser(

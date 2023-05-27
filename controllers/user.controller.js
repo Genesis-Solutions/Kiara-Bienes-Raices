@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const bucket = require("../util/awsBucket.js");
+const olvidePassword = require("../util/email.js")
+const generarId= require("../util/token.js")
 
 // -- LOGIN -- //
 
@@ -208,4 +210,46 @@ exports.getImgFromBucket = ( req,res,next ) => {
       res.attachment(img);
       res.send(data.Body);
   });
+}
+
+exports.getOlvidePassword = (req, res) => {
+  res.render('olvidePassword');
+};
+
+exports.resetPassword = async( req, res, next ) => {
+  
+  const usuario = await User.findOne(req.body.emailUsuario)
+
+  if (!usuario) {
+    //console.log("El correo electrónico ingresado ya está registrado.");
+    const errorEmail = "No existe ninguna cuenta con este correo";
+    return res.render("olvidePassword", { errorEmail });
+  } 
+
+  // Generar token y enviar email
+  const newToken = generarId.generarId();
+
+  // Enviar email
+  olvidePassword.olvidePassword({
+      email: usuario.emailUsuario,
+      nombre: usuario.nombreUsuario,
+      token: newToken
+  })
+}
+
+exports.comprobarToken = async(req, res) => {
+  const {token} = req.params
+
+  const usuario = await User.findOne(token)
+
+  if(!usuario) {
+      return res.render('/auth/olvideContra',{
+          pagina: 'Error al confirmar',
+          mensaje: 'Hubo un error al confirmar tu cuenta, intenta de nuevo',
+          error: true
+      })
+  }
+
+  // Mostrar formulario para modificar password
+  res.render()
 }

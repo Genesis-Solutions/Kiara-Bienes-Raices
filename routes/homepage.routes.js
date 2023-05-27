@@ -22,5 +22,7 @@ router.get('/nosotros', userController.getNosotros);
 router.get('/servicios', userController.getServicios);
 router.get('/search', homeController.getInmueblesFiltradosIndex);
 router.post('/search', homeController.getInmueblesFiltradosIndex);
+router.get('/olvidePassword', userController.getOlvidePassword);
+router.post('/olvidePassword', userController.resetPassword);
 
 module.exports = router;
