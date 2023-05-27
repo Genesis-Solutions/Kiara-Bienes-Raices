@@ -25,7 +25,8 @@ exports.getInmueble = async (req, res, next) => {
         tramite = aTramite[0].activoTramite;
     }
     //console.log("Este es el activo tramite 2",tramite);
-    const agente = Inmueble.getInfoAgente(idAgente);
+    const agente = await Inmueble.getInfoAgente(idAgente);
+    //console.log(agente);
     const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
@@ -37,7 +38,8 @@ exports.getInmueble = async (req, res, next) => {
         const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
         arregloFotos.push(imgSrcFilename);
     }
-    //console.log(arregloFotos);
+    //console.log(inmueble[0].idAgenteAlta);
+    const currentURL = req.protocol + '://' + req.get('host') + req.originalUrl;
     res.render('inmueble', {
         tituloInmueble: inmueble.nombreInmueble,
         fotoPortada: arregloFotos[0],
@@ -49,7 +51,8 @@ exports.getInmueble = async (req, res, next) => {
         idInmueble: req.params.idInmueble,
         tramite: tramite,
         idUsuario: req.session.idUsuario,
-        listaAttributesInmueble: listaAttributesInmueble[0]
+        listaAttributesInmueble: listaAttributesInmueble[0],
+        currentURL: currentURL
     })
 };
 

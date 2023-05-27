@@ -313,7 +313,7 @@
                     <%- include("partials/amenidades/amenidadesExtra", {inmueble: inmueble}) %>
                 </div>
             </div>
-            <div class="flex flex-col-reverse px-8 md:grid md:grid-cols-4 space-x-7">
+            <div class="flex flex-col-reverse md:px-8 md:grid md:grid-cols-4 space-x-7">
                 <div class="text-center bg-white rounded-lg">
                     <div class="bg-[#131C1B] rounded-t-lg p-2">
                         <h2 class="text-white text-2xl">Contacto</h2>
@@ -333,21 +333,21 @@
                             <h3 id="agentPhone" class="text-gray-800 text-lg">461 361 8880</h3>
                         </div>
                         <div class="flex justify-center mt-4">
-                          <a href="https://api.whatsapp.com/send?phone=524613618880" class="bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-10 inline-block">Contactar por WhatsApp</a>
+                          <a href="https://api.whatsapp.com/send?phone=524613618880&text=Hola,%20me%20interesa%20la%20propiedad%20titulada%20'<%=inmueble.nombreInmueble%>'%20en%20su%20página%20me%20podrían%20brindar%20mas%20información%20porfavor%3F%20<%=currentURL%>" class="bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-10 inline-block">Contactar por WhatsApp</a>
                         </div>
                     </div>
                 </div>      
-                <div class="space-y-2 col-span-3">
+                <div class="md:px-5 col-span-3">
                     <h2 class="text-2xl font-bold">
                         Dirección de la propiedad
                     </h2>
-                    <p>
+                    <p class="mb-5">
                         <%= inmueble.direccionInmueble %>
                     </p>
                     <h2 class="text-2xl font-bold">
                         Sobre esta propiedad
                     </h2>
-                    <p>
+                    <p class="mb-5">
                         <%= inmueble.descInmueble %>
                     </p>
                 </div>

@@ -113,9 +113,9 @@ Obtiene el id del agente responsable del inmueble.
 @returns {Promise} Una promesa que se resuelve a un objeto que contiene el id del agente responsable.
 */
 
-  static getIdAgente(idInmueble) {
-    return db.execute("SELECT idAgente FROM tramite WHERE idInmueble = ?", [
-      idInmueble,
+  static getIdAgente(idAgente) {
+    return db.execute("SELECT * FROM usuario WHERE idUsuario = ?", [
+      idAgente,
     ]);
   }
 
@@ -127,7 +127,10 @@ Obtiene la información del agente con base en su identificador.
 */
 
   static getInfoAgente(idAgente) {
-    "SELECT * FROM usuario WHERE idUsuario = ?", [idAgente];
+    return db.execute(
+      "SELECT * FROM usuario WHERE idUsuario = ?", 
+      [idAgente]
+    );
   }
 
   /*
