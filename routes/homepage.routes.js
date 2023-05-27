@@ -23,4 +23,6 @@ router.get('/servicios', userController.getServicios);
 router.get('/search', homeController.getInmueblesFiltradosIndex);
 router.post('/search', homeController.getInmueblesFiltradosIndex);
 
+router.get('/olvideContrasenia', homeController.getOlvideContrasenia);
+
 module.exports = router;

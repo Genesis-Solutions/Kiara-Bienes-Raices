@@ -408,3 +408,7 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     };
     
 }
+
+exports.getOlvideContrasenia = ( req,res,next ) => {
+    res.render('olvideContraseña');
+}
