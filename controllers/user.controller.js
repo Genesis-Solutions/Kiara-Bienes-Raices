@@ -209,3 +209,15 @@ exports.getImgFromBucket = ( req,res,next ) => {
       res.send(data.Body);
   });
 }
+
+/*
+* Obtener los datos de un usuario para desplegarlos en su perfil
+* @param: req, res, next
+* @returns: res.render(procesos)
+*/
+exports.getMisProcesos = (req, res, next) => {
+  res.render('procesosUsuario', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
+};
