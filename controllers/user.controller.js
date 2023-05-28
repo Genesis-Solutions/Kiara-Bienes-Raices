@@ -2,7 +2,8 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const bucket = require("../util/awsBucket.js");
 const olvidePassword = require("../util/email.js")
-const generarId= require("../util/token.js")
+const generarId= require("../util/token.js");
+const { error } = require('jquery');
 
 // -- LOGIN -- //
 
@@ -242,14 +243,20 @@ exports.comprobarToken = async(req, res) => {
 
   const usuario = await User.findOne(token)
 
-  if(!usuario) {
-      return res.render('/auth/olvideContra',{
-          pagina: 'Error al confirmar',
-          mensaje: 'Hubo un error al confirmar tu cuenta, intenta de nuevo',
-          error: true
-      })
+  if (!usuario) {
+    //console.log("El correo electrónico ingresado ya está registrado.");
+    return abort(404);
   }
 
   // Mostrar formulario para modificar password
-  res.render()
+  const password = req.body.nuevaContrasenia
+  const passwordConfirmada = req.body.confirmacionContrasenia
+
+  if (password != passwordConfirmada) {
+    const errorEmail = 'Las contraseñas no coinciden'
+    res.render("nuevaPassword", { errorEmail })
+  } else {
+    
+    res.redirect("/login")
+  }
 }
