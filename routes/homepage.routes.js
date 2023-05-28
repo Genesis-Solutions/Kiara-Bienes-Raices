@@ -27,4 +27,6 @@ router.post('/olvidePassword', userController.resetPassword);
 router.get('/olvidePassword/:token', userController.comprobarToken)
 router.post('/olvidePassword/:token', userController)
 
+router.get('/olvideContrasenia', homeController.getOlvideContrasenia);
+
 module.exports = router;
