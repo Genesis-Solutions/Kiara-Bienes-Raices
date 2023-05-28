@@ -1,7 +1,7 @@
 const db = require("../util/database.util");
 const bcrypt = require("bcryptjs");
 
-module.exports = class User {
+class User {
   constructor(
     nombreUsuario,
     apellidosUsuario,
@@ -29,13 +29,7 @@ module.exports = class User {
   static findOne(emailUsuario) {
     return db.execute("SELECT * FROM usuario WHERE emailUsuario=?", [
       emailUsuario,
-    ]).then(([rows, fieldData]) => {
-      return rows[0];
-    })
-    .catch((error) => {
-        console.log(error);
-        return 0;
-    });
+    ]);
   }
 
   static insertUser(
@@ -97,4 +91,68 @@ module.exports = class User {
         );
     }
 
+  /*
+  * Obtener nombre del usuario mediante email.
+  * @param emailUsuario: String -> email del usuario.
+  * @return JSON -> Nombre del usuario.
+  */
+  static getUserName(emailUsuario) {
+    return db.execute(
+        'SELECT nombreUsuario FROM usuario WHERE emailUsuario=?',
+        [emailUsuario]
+    ).then(([rows, fielData]) => {
+      return rows[0].nombreUsuario;
+    }).catch((error) => {
+        console.log(error);
+        return 0;
+    });
+  }
+
+  /**
+   * Nueva contraseña
+   */
+
+  static resetPassword(newPassword, emailUsuario){
+    return bcrypt.hash(newPassword, 12).then((passwordCifrado) => {
+        return db.execute('UPDATE usuario SET passwordUsuario = ? WHERE emailUsuario = ?', [passwordCifrado, emailUsuario])
+    }).catch((error)=>{
+        console.log(error);
+    });
+}
 };
+
+class Token {
+  /*
+   * 
+   * @param {*} email 
+   * @param {*} token 
+   * @param {*} fechaIntento 
+   */
+
+  constructor(email,token,fechaIntento) {
+      this.email = email, this.token = token, this.fechaIntento};
+
+  static insertToken(email, token, fechaIntento) {
+      return db.execute('INSERT INTO token (email, token, fechaIntento) VALUES (?,?,?)', 
+      [email, token, fechaIntento]).catch((error) => {
+      console.log(error);
+      });
+  };
+
+  static findOne(token) {
+    return db.execute("SELECT * FROM token WHERE token = ?", [token])
+    .then(([rows, fieldData]) => {
+      return rows;
+    })
+    .catch((error) => {
+      console.log(error);
+      return 0;
+    });
+  };
+
+  static deleteToken(token) {
+    return db.execute('DELETE FROM token WHERE token = ?', [token])
+  }
+};
+
+module.exports = {User, Token};
