@@ -2,7 +2,7 @@ const sgMail = require('@sendgrid/mail')
 
 exports.olvidePassword = (datos) => {
     const {nombre, email, token} = datos
-    sgMail.setApiKey(process.env.SENDGRID)
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
     const msg = {
         to: email, // Change to your recipient
         from: 'A01706972@tec.mx', // Change to your verified sender
