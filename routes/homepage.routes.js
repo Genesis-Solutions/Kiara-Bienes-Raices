@@ -25,8 +25,6 @@ router.post('/search', homeController.getInmueblesFiltradosIndex);
 router.get('/olvidePassword', userController.getOlvidePassword);
 router.post('/olvidePassword', userController.resetPassword);
 router.get('/olvidePassword/:token', userController.comprobarToken)
-router.post('/olvidePassword/:token', userController)
-
-router.get('/olvideContrasenia', homeController.getOlvideContrasenia);
+//router.post('/olvidePassword/:token', userController)
 
 module.exports = router;
