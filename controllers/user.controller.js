@@ -342,7 +342,7 @@ exports.newPassword = async (req, res, next) => {
     req.flash('warning', 'Las contraseñas no coinciden.')
     return res.redirect('/olvidePassword/' + token)
   };
-
+}
 /*
 * Obtener los datos de un usuario para desplegarlos en su perfil
 * @param: req, res, next
