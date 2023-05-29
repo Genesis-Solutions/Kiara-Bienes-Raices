@@ -294,9 +294,14 @@ exports.comprobarToken = async(req, res) => {
   //console.log("dentro del GET del token");
   const token = req.params.token;
   const infoToken = await Token.findOne(token);
-  const currentTime = moment().tz(process.env.TIMEZONE).format('YYYY-MM-DD HH:mm:ss');
-  const timeLimit = moment(infoToken[0].fechaIntento).format('YYYY-MM-DD HH:mm:ss');
+  var currentTime;
+  var timeLimit;
   //console.log("hora actual", currentTime, "hora límite", timeLimit);
+
+  if (infoToken.length >= 1) {
+    currentTime = moment().tz(process.env.TIMEZONE).format('YYYY-MM-DD HH:mm:ss');
+    timeLimit = moment(infoToken[0].fechaIntento).format('YYYY-MM-DD HH:mm:ss');
+  }
 
   /**
    * La siguiente validación se encarga de tres cosas:
