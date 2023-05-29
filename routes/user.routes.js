@@ -14,4 +14,6 @@ router.get('/get_bucket_img',userController.getImgFromBucket);
 */
 router.get('/', isLogged, userController.getPerfil);
 
+router.get('/procesos', isLogged, userController.getMisProcesos);
+
 module.exports = router;

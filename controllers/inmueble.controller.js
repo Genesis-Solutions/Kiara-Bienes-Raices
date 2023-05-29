@@ -12,12 +12,14 @@ const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!
  * @returns {void}
  */
 exports.getInmueble = async (req, res, next) => {
+    const idInmueble = req.params.idInmueble;
+    //console.log("id del inmueble: ", idInmueble);
     //Info de agente e inmueblee
-    const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
+    const inmueble = await Inmueble.getInmueble(idInmueble);
     // activoInmueble ya viene en inmueble
-    const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
+    
     //console.log("Este es el id del inmueble ", req.params.idInmueble);
-    const aTramite = await Inmueble.getActivoTramite(req.params.idInmueble);
+    const aTramite = await Inmueble.getActivoTramite(idInmueble);
     let tramite = 0;
     if (aTramite.length <= 0 ){
         tramite = 0;
@@ -25,10 +27,11 @@ exports.getInmueble = async (req, res, next) => {
         tramite = aTramite[0].activoTramite;
     }
     //console.log("Este es el activo tramite 2",tramite);
-    const agente = Inmueble.getInfoAgente(idAgente);
-    const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
+    
+    //console.log(agente);
+    const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(idInmueble);
     //Imagenes
-    const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
+    const idFotos = await Inmueble.getIdFotosInmueble(idInmueble);
     //console.log(idFotos[0]);
     arregloFotos = [];
     for (let i=0; i < idFotos[0].length; i++) {
@@ -37,19 +40,25 @@ exports.getInmueble = async (req, res, next) => {
         const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
         arregloFotos.push(imgSrcFilename);
     }
-    //console.log(arregloFotos);
+    const idAgente = await Inmueble.getIdAgente(idInmueble);
+    //console.log("idAgente: " + idAgente);
+    const agente = await Inmueble.getInfoAgente(idAgente);
+    //console.log("info del agente: ", agente)
+    //console.log(inmueble[0].idAgenteAlta);
+    const currentURL = req.protocol + '://' + req.get('host') + req.originalUrl;
     res.render('inmueble', {
         tituloInmueble: inmueble.nombreInmueble,
         fotoPortada: arregloFotos[0],
         fotos: arregloFotos,
         inmuebles : inmueble,
-        agente : agente,
+        agenteInfo : agente,
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
         idInmueble: req.params.idInmueble,
         tramite: tramite,
         idUsuario: req.session.idUsuario,
-        listaAttributesInmueble: listaAttributesInmueble[0]
+        listaAttributesInmueble: listaAttributesInmueble[0],
+        currentURL: currentURL
     })
 };
 

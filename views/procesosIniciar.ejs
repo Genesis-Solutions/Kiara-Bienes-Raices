@@ -1,0 +1,190 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Navbar Section -->
+
+    <%- include('partials/navbar') %>
+
+    <!-- Heading Section -->
+
+    <div class="px-10 py-2 text-center">
+        <hr class="h-px my-4 bg-gray-800 border-0">
+        <h2 class="text-2xl md:text-4xl font-bold mb-2 pt-5 md:pt-10">Inicializar Proceso</h2>
+        <p class="pb-5 md:pb-10">
+            Inicia un proceso de compra o venta. Asegúrate de asignar correctamente el propietario y el cliente y modificar los pasos de acuerdo al proceso.
+        </p>
+        <hr class="h-px my-4 bg-gray-800 border-0">
+    </div>
+
+    <!-- Section -->
+
+    <div class="pt-5 px-12 grid grid-cols-2 gap-5">
+        <div class="col-span-2 md:col-span-1">
+            <h3 class="text-lg font-semibold pb-2">¿Quién es el propietario?</h3>
+            <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                id="propietario" name="propietario">
+                <option value="N/A">Escoger una opción</option>
+                <option value="Soltero">Luis Pérez</option>
+                <option value="Casado">Carla Etienne</option>
+            </select>
+        </div>
+        <div class="col-span-2 md:col-span-1">
+            <h3 class="text-lg font-semibold pb-2">¿Quién es el cliente?</h3>
+            <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                id="cliente" name="cliente">
+                <option value="N/A">Escoger una opción</option>
+                <option value="Soltero">Luis Pérez</option>
+                <option value="Casado">Carla Etienne</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Steps List -->
+
+    <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+
+        <!-- Step -->
+
+        <div class="grid grid-cols-5 item" draggable="true">
+            <div class="col-span-3">
+                <ol class="relative border-l border-sky-950">
+                    <li class="ml-6">            
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                            <p class="text-white">1</p>
+                        </span>
+                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
+                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
+                    </li>
+                </ol>
+                <hr class="h-10 border-l border-sky-950 border-t-0">
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- Step -->
+
+        <div class="grid grid-cols-5 item" draggable="true">
+            <div class="col-span-3">
+                <ol class="relative border-l border-sky-950">
+                    <li class="ml-6">            
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                            <p class="text-white">2</p>
+                        </span>
+                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
+                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
+                    </li>
+                </ol>
+                <hr class="h-10 border-l border-sky-950 border-t-0">
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+            </div>
+        </div>
+
+         <!-- Step -->
+
+         <div class="grid grid-cols-5 item" draggable="true">
+            <div class="col-span-3">
+                <ol class="relative border-l border-sky-950">
+                    <li class="ml-6">            
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                            <p class="text-white">3</p>
+                        </span>
+                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
+                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
+                    </li>
+                </ol>
+                <hr class="h-10 border-l border-sky-950 border-t-0">
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- Step Sin Rayita -->
+
+        <div class="grid grid-cols-5 item" draggable="true">
+            <div class="col-span-3">
+                <ol class="relative border-l border-sky-950">
+                    <li class="ml-6">            
+                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                            <p class="text-white">4</p>
+                        </span>
+                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
+                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+            </div>
+            <div class="col-span-1 text-center">
+                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Add Step Button Section (Activa Modal) -->
+
+    <div class="px-24 pb-10 flex justify-center">
+        <a href="" class="flex justify-center items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200 border border-dashed">
+            <i class="fa-solid fa-plus mr-2 text-center"></i>
+            <p class="text-center">Agregar Paso</p>
+        </a>
+    </div>
+
+    <!-- Buttons Section -->
+
+    <div class="px-10 pb-14 flex justify-evenly">
+        <button type="button" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
+            Cancelar
+        </button>
+        <input type="submit" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700" value=" Iniciar " />
+    </div>
+
+    <!-- Footer Section -->
+
+    <%- include("partials/footer") %>
+
+    <script>
+        const sortableList = document.querySelector(".sortable-list");
+        const items = sortableList.querySelectorAll(".item");
+        items.forEach(item => {
+            item.addEventListener("dragstart", () => {
+                // Adding dragging class to item after a delay
+                setTimeout(() => item.classList.add("dragging"), 0);
+            });
+            // Removing dragging class from item on dragend event
+            item.addEventListener("dragend", () => item.classList.remove("dragging"));
+        });
+        const initSortableList = (e) => {
+            e.preventDefault();
+            const draggingItem = document.querySelector(".dragging");
+            // Getting all items except currently dragging and making array of them
+            let siblings = [...sortableList.querySelectorAll(".item:not(.dragging)")];
+            // Finding the sibling after which the dragging item should be placed
+            let nextSibling = siblings.find(sibling => {
+                return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+            });
+            // Inserting the dragging item before the found sibling
+            sortableList.insertBefore(draggingItem, nextSibling);
+        }
+        sortableList.addEventListener("dragover", initSortableList);
+        sortableList.addEventListener("dragenter", e => e.preventDefault());
+    </script>
+
+</body>
+</html>

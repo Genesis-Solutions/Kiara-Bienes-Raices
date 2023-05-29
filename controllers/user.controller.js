@@ -342,4 +342,15 @@ exports.newPassword = async (req, res, next) => {
     req.flash('warning', 'Las contraseñas no coinciden.')
     return res.redirect('/olvidePassword/' + token)
   };
+
+/*
+* Obtener los datos de un usuario para desplegarlos en su perfil
+* @param: req, res, next
+* @returns: res.render(procesos)
+*/
+exports.getMisProcesos = (req, res, next) => {
+  res.render('procesosUsuario', {
+    isLogged: req.session.isLoggedIn,
+    idRol: req.session.idRol
+  });
 };

@@ -114,9 +114,15 @@ Obtiene el id del agente responsable del inmueble.
 */
 
   static getIdAgente(idInmueble) {
-    return db.execute("SELECT idAgente FROM tramite WHERE idInmueble = ?", [
+    return db.execute("SELECT idAgenteAsignado FROM inmueble WHERE idInmueble = ?", [
       idInmueble,
-    ]);
+    ]).then(([rows, data]) => {
+      return rows[0].idAgenteAsignado;
+    })
+    .catch((error) => {
+      console.log(error);
+      return 0;
+    });
   }
 
   /*
@@ -127,7 +133,16 @@ Obtiene la información del agente con base en su identificador.
 */
 
   static getInfoAgente(idAgente) {
-    "SELECT * FROM usuario WHERE idUsuario = ?", [idAgente];
+    return db.execute(
+      "SELECT * FROM usuario WHERE idUsuario = ?", 
+      [idAgente]
+    ).then(([rows, data]) => {
+      return rows;
+    })
+    .catch((error) => {
+      console.log(error);
+      return 0;
+    });
   }
 
   /*
