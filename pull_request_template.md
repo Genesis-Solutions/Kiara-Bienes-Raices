@@ -29,7 +29,7 @@
 
 ## Antes de aceptar el PR y hacer merge, TODOS los checkbox deben estar marcados
 
-- [] En caso de aplicar, ¿Ya corriste las pruebas unitarias de forma local?
+- [] En caso de aplicar, ¿Ya corriste las pruebas unitarias de forma local en la rama?
 
 - [] ¿Ya revisaste todos los cambios en archivos?
 

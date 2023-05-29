@@ -1,6 +1,12 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/user.model');
+const {User, Token} = require('../models/user.model');
 const bucket = require("../util/awsBucket.js");
+const olvidePassword = require("../util/email.js")
+const generarId= require("../util/token.js");
+const { error } = require('jquery');
+const moment = require("moment-timezone"); // Para fechas
+const { request } = require('chai');
+moment.locale('es-mx');
 
 // -- LOGIN -- //
 
@@ -12,6 +18,8 @@ exports.getLogin = (req, res, next) => {
   res.render("login", {
     emailUsuario: req.session.emailUsuario ? req.session.emailUsuario : "",
     info: "",
+    warning : req.flash('warning'),
+    success : req.flash('success')
   });
 };
 
@@ -26,8 +34,11 @@ exports.login = (req, res, next) => {
 
       //Si no existe el correo, redirige a la pantalla de login
       if (rows.length < 1) {
-        const errorLogin = "Credenciales inválidas";
-        return res.render("login", { errorLogin });
+        req.flash('warning', 'Credenciales inválidas');
+        return res.render("login", {
+          warning : req.flash('warning'),
+          success : req.flash('success')
+        });
     };
 
       // Información del usuario:
@@ -52,8 +63,11 @@ exports.login = (req, res, next) => {
             // console.log('success login');
             return res.redirect("./");
           } else {
-            const errorLoginPassword = "Credenciales inválidas";
-            return res.render("login", { errorLoginPassword });
+            req.flash('warning', 'Credenciales inválidas');
+            return res.render("login", {
+              warning : req.flash('warning'),
+              success : req.flash('success')
+            });
           }
         });
     })
@@ -95,16 +109,22 @@ exports.register = (req, res, next) => {
     .then(async ([rows, data]) => {
       if (rows.length >= 1) {
         //console.log("El correo electrónico ingresado ya está registrado.");
-        const errorEmail = "El correo electrónico ingresado ya está registrado";
-        res.render("register", { errorEmail });
+        req.flash('warning', 'El correo electrónico ingresado ya está registrado')
+        res.render("register", {
+          warning : req.flash('warning'),
+          success : req.flash('success')
+        });
       } else {
         //Revisar que las contraseñas coincidan
         if (passwordUsuario == passwordUsuarioConfirmar) {
           //console.log("Las contraseñas coinciden.");
           // Revisar que sean 10 digitos exactos para el telefono
           if (telefonoUsuario.length != 10) {
-            const errorTelefono = "El número de teléfono debe contener 10 dígitos";
-            res.render("register", { errorTelefono });
+            req.flash('warning', 'El número de teléfono debe contener 10 dígitos')
+            res.render("register", {
+              warning : req.flash('warning'),
+              success : req.flash('success')
+            });
           }
           // console.log("Las contraseñas coinciden.");
           // Si todo fue validado correctamente, se inserta el usuario en la base de datos
@@ -128,8 +148,10 @@ exports.register = (req, res, next) => {
             });
         } else {
           //console.log("Las contraseñas no coinciden");
-          const errorPassword = "Las contraseñas no coinciden";
-          res.render("register", { errorPassword });
+          req.flash('warning', 'Las contraseñas no coinciden')
+          res.render("register", { 
+            warning : req.flash('warning'),
+            success : req.flash('success') });
         }
       }
     })
@@ -209,6 +231,117 @@ exports.getImgFromBucket = ( req,res,next ) => {
       res.send(data.Body);
   });
 }
+
+exports.getOlvidePassword = (req, res) => {
+  res.render('olvidePassword', {
+    warning : req.flash('warning'),
+    success : req.flash('success')
+  });
+};
+
+exports.resetPassword = ( req, res, next ) => {
+  User.findOne(req.body.emailUsuario).then(async ([rows, data]) => {
+    //Si no existe el correo, redirige a la pantalla de login
+    if (rows.length < 1) {
+      req.flash('warning', 'No existe ninguna cuenta con este correo')
+      return res.redirect("/olvidePassword");
+    };
+    const email = req.body.emailUsuario
+    const nombreUsuario = await User.getUserName(email);
+    // Generar token y enviar email
+    const newToken = generarId.generarId();
+
+    /**
+     * Genera el timestamp en formato aaaa-mm-dd : hh:mm:ss, se le
+     * suman 10 minutos para dar tiempo de cambio de contraseña.
+     * 
+     * NOTA: Utiliza la variable de ambiente de timezone porque
+     * el servidor puede tener una diferente a la de los usuarios.
+     */
+
+    const currentTime = moment().tz(process.env.TIMEZONE).format('YYYY-MM-DD HH:mm:ss');
+    const deadline = moment(currentTime).add(10, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+
+    /**
+     * Insertar nuevo token en la base de datos con la fecha actual + 10
+     * minutos para poder ingresar a la URL.
+    */
+
+    Token.insertToken(email, newToken, deadline);
+
+    /**
+     * Envía la URL con el token generado al usuario para que pueda
+     * ingresar a cambiar su contraseña.
+     * 
+     * @param: email : String,
+     * @param: nombreUsuario : String,
+     * @param: token : String
+     */
+
+    olvidePassword.olvidePassword({
+        email: email,
+        nombre: nombreUsuario,
+        token: newToken,
+    });
+    req.flash('success', 'Se ha enviado un enlace para reestablecer su contraseña a su correo')
+    return res.redirect("/olvidePassword");
+  }).catch((error) => {
+    console.log(error);
+  });
+};
+
+exports.comprobarToken = async(req, res) => {
+  //console.log("dentro del GET del token");
+  const token = req.params.token;
+  const infoToken = await Token.findOne(token);
+  var currentTime;
+  var timeLimit;
+  //console.log("hora actual", currentTime, "hora límite", timeLimit);
+
+  if (infoToken.length >= 1) {
+    currentTime = moment().tz(process.env.TIMEZONE).format('YYYY-MM-DD HH:mm:ss');
+    timeLimit = moment(infoToken[0].fechaIntento).format('YYYY-MM-DD HH:mm:ss');
+  }
+
+  /**
+   * La siguiente validación se encarga de tres cosas:
+   * 1. Que el token exista y sea un intento verídico.
+   * 2. Que el token no haya expirado aún.
+   * 3. De enviar al usuario a la vista para reestablecer su contraseña.
+   * 
+   * Los tokens son eliminados de la base de datos si ya han expirado.
+   */
+
+  if (infoToken.length < 1) {
+    req.flash('warning', 'Error al validar su token.');
+    return res.redirect("/login");
+  } else if (currentTime > timeLimit) {
+    await Token.deleteToken(token);
+    req.flash('warning', 'Su token de verificación ha expirado.');
+    return res.redirect("/login");
+  } else {
+    res.render('nuevaPassword', {
+      warning : req.flash('warning'),
+      success : req.flash('success')
+    });
+  };
+};
+
+exports.newPassword = async (req, res, next) => {
+  const token = req.params.token;
+  const infoToken = await Token.findOne(token);
+  const emailUsuario = infoToken[0].email;
+  console.log(emailUsuario)
+
+  if (req.body.nuevaContrasenia == req.body.confirmacionContrasenia) {
+    await User.resetPassword(req.body.nuevaContrasenia, emailUsuario);
+    await Token.deleteToken(token);
+    req.flash('success', 'Se ha reestablecido su contraseña.')
+    return res.redirect('/login');
+  } else {
+    req.flash('warning', 'Las contraseñas no coinciden.')
+    return res.redirect('/olvidePassword/' + token)
+  };
 
 /*
 * Obtener los datos de un usuario para desplegarlos en su perfil

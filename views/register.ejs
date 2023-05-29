@@ -50,10 +50,15 @@
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             type="email" id="emailUsuario" name="emailUsuario" placeholder="maria@gmail.com" maxlength="60" required />
-                        <% if (typeof errorEmail !=='undefined' ) { %>
-                            <p style="color: red">
-                                <%= errorEmail %>
-                            </p>
+                            <% if (warning != '') { %>
+                                <p style="color: red">
+                                    <%= warning %>
+                                </p>
+                            <% } %>
+                            <% if (success != '') { %>
+                                <p style="color: green">
+                                    <%= success %>
+                                </p>
                             <% } %>
                     </div>
                     <div>
@@ -62,11 +67,16 @@
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                             , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required
                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
-                            <% if (typeof errorTelefono !=='undefined' ) { %>
+                            <% if (warning != '') { %>
                                 <p style="color: red">
-                                    <%= errorTelefono %>
+                                    <%= warning %>
                                 </p>
-                                <% } %>
+                            <% } %>
+                            <% if (success != '') { %>
+                                <p style="color: green">
+                                    <%= success %>
+                                </p>
+                            <% } %>
                     </div>
                     <div>
                         <label for="ocupacion">Ocupación</label>
