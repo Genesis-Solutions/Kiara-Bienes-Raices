@@ -20,132 +20,403 @@
     <!-- Section -->
     <div class="pt-5 px-12 grid grid-cols-2 gap-5">
         <div class="col-span-2 md:col-span-1">
-            <h3 class="text-lg font-semibold pb-2">Elige el tipo de operación</h3>
-            <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
-                id="movimiento" name="movimiento">
-                <option value="N/A">Escoger una opción</option>
-                <option value="renta">Renta</option>
-                <option value="venta">venta</option>
-            </select>
-        </div>
-    </div>  
-    <div class="pt-5 px-12 grid grid-cols-2 gap-5">
-        <div class="col-span-2 md:col-span-1">
             <h3 class="text-lg font-semibold pb-2">¿Quién es el propietario?</h3>
-            <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
-                id="propietario" name="propietario">
-                <option value="N/A">Escoger una opción</option>
-                <option value="Soltero">Luis Pérez</option>
-                <option value="Casado">Carla Etienne</option>
-            </select>
+            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+            id="id_duenio" name="id_duenio">
+            <% usuarios.forEach(usuarios=>{ %>
+                <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
+            <% }); %>
+        </select>
         </div>
         <div class="col-span-2 md:col-span-1">
             <h3 class="text-lg font-semibold pb-2">¿Quién es el cliente?</h3>
-            <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
-                id="cliente" name="cliente">
-                <option value="N/A">Escoger una opción</option>
-                <option value="Soltero">Luis Pérez</option>
-                <option value="Casado">Carla Etienne</option>
-            </select>
+            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+            id="id_cliente" name="id_cliente">
+            <% usuarios.forEach(usuarios=>{ %>
+                <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
+            <% }); %>
+        </select>
         </div>
     </div>
 
     <!-- Steps List -->
+    <% if (idTipoMovimiento == 1) { %>
 
-    <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+        <!-- Plantilla para Venta -->
 
-        <!-- Step -->
+        <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+            <!-- Step -->
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">1</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+    
+            <!-- Step -->
+    
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">2</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 2 al día 7</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+    
+             <!-- Step -->
+    
+             <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">3</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de contrato de compraventa</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 4 al 9</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
 
-        <div class="grid grid-cols-5 item" draggable="true">
-            <div class="col-span-3">
-                <ol class="relative border-l border-sky-950">
-                    <li class="ml-6">            
-                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                            <p class="text-white">1</p>
-                        </span>
-                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                    </li>
-                </ol>
-                <hr class="h-10 border-l border-sky-950 border-t-0">
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">4</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Aprobación de las partes del borrador de contrato</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 5 al 10</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
             </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+    
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">5</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato de compraventa</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 6 al 11</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
             </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">6</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo comercial</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
             </div>
+            
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">7</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo hacendario</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">8</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Avalúo terminado y entregado</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 19 al día 23</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">9</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de documentación por parte de Notaria</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 20 al día 30</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">10</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de proyecto de escritura</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 30 al día 40</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+
+            <!-- Step Sin Rayita -->
+    
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">11</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de escritura de compraventa</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 35 al día 45</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+    
         </div>
+    <% } else if(idTipoMovimiento == 2) { %>
 
-        <!-- Step -->
+        <!-- Plantilla para Renta -->
+        
+        <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+            <!-- Step -->
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">1</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+    
+            <!-- Step -->
+    
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">2</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 2 al 6</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
+    
+             <!-- Step -->
+    
+             <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">3</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Inicio de trámite de póliza jurídica</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 3 al 7</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
+            </div>
 
-        <div class="grid grid-cols-5 item" draggable="true">
-            <div class="col-span-3">
-                <ol class="relative border-l border-sky-950">
-                    <li class="ml-6">            
-                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                            <p class="text-white">2</p>
-                        </span>
-                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                    </li>
-                </ol>
-                <hr class="h-10 border-l border-sky-950 border-t-0">
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">4</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Resultado de investigación de póliza jurídica</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 7 al 11</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
             </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">5</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de contrato</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 8 al 12</p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
             </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+    
+            <!-- Step Sin Rayita -->
+    
+            <div class="grid grid-cols-5 item" draggable="true">
+                <div class="col-span-3">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white">6</p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato</h3>
+                            <p class="text-sm text-gray-500 hidden md:block">Día 10 al 15</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                </div>
+                <div class="col-span-1 text-center">
+                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                </div>
             </div>
+    
         </div>
-
-         <!-- Step -->
-
-         <div class="grid grid-cols-5 item" draggable="true">
-            <div class="col-span-3">
-                <ol class="relative border-l border-sky-950">
-                    <li class="ml-6">            
-                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                            <p class="text-white">3</p>
-                        </span>
-                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                    </li>
-                </ol>
-                <hr class="h-10 border-l border-sky-950 border-t-0">
-            </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-            </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-            </div>
-        </div>
-
-        <!-- Step Sin Rayita -->
-
-        <div class="grid grid-cols-5 item" draggable="true">
-            <div class="col-span-3">
-                <ol class="relative border-l border-sky-950">
-                    <li class="ml-6">            
-                        <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                            <p class="text-white">4</p>
-                        </span>
-                        <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                        <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                    </li>
-                </ol>
-            </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-            </div>
-            <div class="col-span-1 text-center">
-                <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-            </div>
-        </div>
-
-    </div>
+    <% } %>
+    
 
     <!-- Add Step Button Section (Activa Modal) -->
 
