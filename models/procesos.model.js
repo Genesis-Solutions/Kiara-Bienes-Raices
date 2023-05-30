@@ -5,7 +5,7 @@ const db = require('../util/database.util');
  */
 module.exports = class Procesos {
 
-     /**
+    /*
      * Constructor de la clase Procesos.
      * @param {number} idTramite - El ID del trámite.
      * @param {Date} fechaCreacionTramite - La fecha de creación del trámite.

@@ -1,5 +1,5 @@
 const Procesos = require('../models/procesos.model');
-
+const Inmueble = require('../models/inmueble.model');
 
 
 exports.getProcesos = async (req, res, next) => {
@@ -11,13 +11,16 @@ exports.getProcesos = async (req, res, next) => {
       const nombreAgente = await Procesos.getNombreAgente(tramiteId)
       const tramiteInfo = await Procesos.getDescTramite(tramiteId);
       const fotoInmueble = await Procesos.getFotoTramite(tramiteInfo[0].idInmueble);
+      const imgSrc = await Inmueble.getSrcFotosInmueble(fotoInmueble[0][0].idFoto);
+      const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
+      console.log(imgSrcFilename)
       const info = {
         idInmueble: tramiteInfo[0].idInmueble,
         nombreInmueble: tramiteInfo[0].nombreInmueble,
         descInmueble: tramiteInfo[0].descInmueble,
         direccionInmueble: tramiteInfo[0].direccionInmueble,
         nombreAgente: nombreAgente[0][0].nombreUsuario,
-        fotoInmueble: fotoInmueble[0][0].idFoto
+        fotoInmueble: imgSrcFilename
       };
       return info;
     }));
