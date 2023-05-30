@@ -6,6 +6,7 @@ const adminAuth = require('../util/adminAuth.util');
 const agenteAdminAuth = require('../util/agenteAdminAuth.util');
 
 const dashboardController = require('../controllers/dashboard.controller');
+const procesos2Controller = require('../controllers/procesos2.controller');
 
 /**
 * Rutas
@@ -98,5 +99,7 @@ router.get('/agentes', isLogged, agenteAdminAuth, dashboardController.getAgentes
 * Actualizar el encargado de una determinada propiedad
 */
 router.put('/props/actualizar/:idAgente/:idPropiedad', dashboardController.updateEncargado);
+
+router.get('/iniciarProceso/:idInmueble', isLogged, agenteAdminAuth, procesos2Controller.getIniciarProceso);
 
 module.exports = router;
