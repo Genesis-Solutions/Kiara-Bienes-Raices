@@ -10,11 +10,11 @@ const procesosController = require('../controllers/procesos.controller.js');
 */
 router.get('/get_bucket_img',userController.getImgFromBucket);
 
+router.get('/procesos', isLogged, procesosController.getProcesos);
+
 /* 
 * Ver perfil del usuario.
 */
 router.get('/', isLogged, userController.getPerfil);
-
-router.get('/procesos', isLogged, procesosController.getProcesos);
 
 module.exports = router;
