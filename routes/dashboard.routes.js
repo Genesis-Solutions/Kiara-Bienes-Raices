@@ -12,6 +12,7 @@ const procesos2Controller = require('../controllers/procesos2.controller');
 * Rutas
 */
 
+router.get('/iniciarProceso/:idInmueble/:idTipoMovimiento', isLogged, agenteAdminAuth, procesos2Controller.getIniciarProceso);
 /**
 * Registrar imagenes de un inmueble
 */
@@ -100,6 +101,6 @@ router.get('/agentes', isLogged, agenteAdminAuth, dashboardController.getAgentes
 */
 router.put('/props/actualizar/:idAgente/:idPropiedad', dashboardController.updateEncargado);
 
-router.get('/iniciarProceso/:idInmueble', isLogged, agenteAdminAuth, procesos2Controller.getIniciarProceso);
+
 
 module.exports = router;
