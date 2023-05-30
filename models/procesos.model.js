@@ -110,7 +110,7 @@ module.exports = class Procesos {
   static infoTramite(idUsuario) {
       
     return db
-      .execute("SELECT * FROM tramite WHERE (idArrendador OR idCliente OR idAgente = ?) AND activoTramite = 1", [idUsuario])
+      .execute("SELECT * FROM tramite WHERE idCliente = ? OR idArrendador = ? OR idAgente = ? AND activoTramite = 1", [idUsuario, idUsuario, idUsuario])
       .then(([rows, data]) => {
         //console.log(rows)
         return rows;

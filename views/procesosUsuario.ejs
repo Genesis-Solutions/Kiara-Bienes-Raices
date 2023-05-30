@@ -51,16 +51,27 @@
                                 <div class="col-span-3 lg:col-span-1 flex items-center order-first lg:order-last">
                                     <i id="userButton" class="fa-solid fa-circle-user fa-2xl mr-2"></i><p>Agente: <%= tramite.nombreAgente %></p>
                                 </div>
+
                                 <div class="col-span-3 lg:col-span-1 flex items-center">
                                     <a href="/inmueble/<%=tramite.idInmueble%>" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
                                         Ver Más
                                     </a>
                                 </div>
-                                <div class="col-span-3 lg:col-span-1 flex items-center">
-                                    <a href="" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                                        Ver Proceso
-                                    </a>
-                                </div>
+
+                                <% if (idRol == 1 || idRol == 2) { %>
+                                    <div class="col-span-3 lg:col-span-1 flex items-center">
+                                        <a href="#" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                            Modificar/Ver Proceso
+                                        </a>
+                                    </div>
+                                        <% } else {%>
+                                        <div class="col-span-3 lg:col-span-1 flex items-center">
+                                            <a href="#" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                                Ver Proceso
+                                            </a>
+                                        </div>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>

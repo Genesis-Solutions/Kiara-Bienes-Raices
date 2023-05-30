@@ -1,11 +1,14 @@
 const Procesos = require('../models/procesos.model');
 const Inmueble = require('../models/inmueble.model');
 
-
+/**
+ * Clase que maneja la obtención de información de trámites y renderización de la vista 'procesosUsuario'.
+ */
 exports.getProcesos = async (req, res, next) => {
 
   try {
     const tramites = await Procesos.infoTramite(req.session.idUsuario);
+
     const data = await Promise.all(tramites.map(async (tramite) => {
       const tramiteId = tramite.idTramite;
       const nombreAgente = await Procesos.getNombreAgente(tramiteId)
