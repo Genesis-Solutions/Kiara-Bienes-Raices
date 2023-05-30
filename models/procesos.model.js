@@ -5,7 +5,7 @@ const db = require('../util/database.util');
  */
 module.exports = class Procesos {
 
-     /**
+    /*
      * Constructor de la clase Procesos.
      * @param {number} idTramite - El ID del trámite.
      * @param {Date} fechaCreacionTramite - La fecha de creación del trámite.
@@ -44,7 +44,32 @@ module.exports = class Procesos {
           "SELECT u.idUsuario, u.nombreUsuario, u.telefonoUsuario, u.emailUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = (SELECT idTramite FROM tramite WHERE idInmueble=?)",
           [idInmueble]
         );
-    }
+  }
+
+  /**
+ * Obtiene el nombre y ID del agente asociado a un trámite.
+ * @param {number} idTramite - El ID del trámite.
+ * @returns {Promise} Una promesa que se resuelve con el nombre y ID del agente.
+ */
+  
+  static getNombreAgente(idTramite) {
+    return db.execute(
+      "SELECT u.idUsuario, u.nombreUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = ?",
+      [idTramite]
+    );
+  }
+
+  /**
+ * Obtiene la foto asociada a un inmueble.
+ * @param {number} idInmueble - El ID del inmueble.
+ * @returns {Promise} Una promesa que se resuelve con la foto del inmueble.
+ */
+  static getFotoTramite(idInmueble) {
+    return db.execute(
+      "SELECT idFoto FROM fotoinmueble WHERE idInmueble = ?",
+      [idInmueble]
+    );
+}
 
       /**
      * Obtiene la información del inmueble asociado al trámite del agente.
@@ -54,7 +79,7 @@ module.exports = class Procesos {
     
     static getInfoInmuebleTramiteAgente(idAgente) {
         return db.execute(
-          "SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble, I.idFoto FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idAgente = ?",
+          "SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idAgente = ?",
           [idAgente]
         );
       }
@@ -64,11 +89,37 @@ module.exports = class Procesos {
      * @param {number} idUsuario - El ID del usuario.
      * @returns {Promise} Una promesa que se resuelve con la información del inmueble.
      */
-    static getInfoInmuebleTramiteUsuario(idUsuario) {
-    return db.execute(
-        "SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble , I.idFoto FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idCliente OR TR.idArrendador = ?",
-        [idUsuario]
-    );
-    }
+  static getDescTramite(idTramite) {
+      
+    return db
+    .execute("SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idTramite = ?", [idTramite])
+    .then(([rows, data]) => {
+      //console.log(rows)
+      return rows;
+    })
+    .catch((error) => {
+      console.log(error);
+      return 0;
+    });
+  }
+  
+    /*
+     * Obtener los tramites de un usuario
+     * @return JSON -> Cantidad total de inmuebles.
+     */
+  static infoTramite(idUsuario) {
+      
+    return db
+      .execute("SELECT * FROM tramite WHERE idCliente = ? OR idArrendador = ? OR idAgente = ? AND activoTramite = 1", [idUsuario, idUsuario, idUsuario])
+      .then(([rows, data]) => {
+        //console.log(rows)
+        return rows;
+      })
+      .catch((error) => {
+        console.log(error);
+        return 0;
+      });
+  }
+
 }
 

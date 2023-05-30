@@ -24,71 +24,91 @@
 
         <h2 class="text-4xl font-bold mb-5">Mis Procesos</h2>
 
-        <div class="rounded-lg border border-gray-300 text-base focus:outline-none focus:border-gray-800 focus:ring-gray-800">
-            <div class="flex flex-col md:grid md:grid-cols-3">
-                <div class="md:order-last">
-                    <img src="" class="h-60 md:h-72 w-full object-cover rounded-t-lg md:rounded-tl-none md:rounded-tr-lg" alt="">
+        <% if(data.length > 0){ %>
+
+            <% data.forEach(tramite=>{ %>
+
+                <div class="rounded-lg border border-gray-300 text-base focus:outline-none focus:border-gray-800 focus:ring-gray-800 mb-5">
+                    <div class="flex flex-col md:grid md:grid-cols-3">
+                        <div class="md:order-last">
+                            <img src="/perfil/get_bucket_img?image=<%=tramite.fotoInmueble%>" class="h-60 md:h-72 w-full object-cover rounded-t-lg md:rounded-tl-none md:rounded-tr-lg" alt="">
+                        </div>
+                        <div class="col-span-2 p-5 md:p-6 lg:p-12 space-y-5">
+                            <div class="flex justify-between lg:flex-row flex-col">
+                                <h1 class="text-lg font-semibold">
+                                    <%= tramite.nombreInmueble %>
+                                </h1>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="font-semibold">
+                                    <%= tramite.direccionInmueble %>
+                                </h3>
+                                <p class="hidden lg:flex">
+                                    <%= tramite.descInmueble %>
+                                </p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-5">
+                                <div class="col-span-3 lg:col-span-1 flex items-center order-first lg:order-last">
+                                    <i id="userButton" class="fa-solid fa-circle-user fa-2xl mr-2"></i><p>Agente: <%= tramite.nombreAgente %></p>
+                                </div>
+
+                                <div class="col-span-3 lg:col-span-1 flex items-center">
+                                    <a href="/inmueble/<%=tramite.idInmueble%>" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                        Ver Más
+                                    </a>
+                                </div>
+
+                                <% if (idRol == 1 || idRol == 2) { %>
+                                    <div class="col-span-3 lg:col-span-1 flex items-center">
+                                        <a href="#" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                            Modificar / Ver Proceso
+                                        </a>
+                                    </div>
+                                        <% } else {%>
+                                        <div class="col-span-3 lg:col-span-1 flex items-center">
+                                            <a href="#" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                                Ver Proceso
+                                            </a>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Step Bar Section -->
+
+                    <div class="px-8 py-5">
+                        <ol class="flex items-center w-full">
+                            <li class="flex w-full items-center text-white after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-950 after:border-4 after:inline-block">
+                                <span class="flex items-center justify-center w-10 h-10 bg-sky-950 rounded-full lg:h-12 lg:w-12 shrink-0">
+                                    <p>1</p>
+                                </span>
+                            </li>
+                            <li class="flex items-center w-full after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
+                                <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0 border-2 border-sky-950">
+                                    <p>2</p>
+                                </span>
+                            </li>
+                            <li class="flex items-center w-full after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
+                                <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
+                                    <p>3</p>
+                                </span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
+                                    <p>4</p>
+                                </span>
+                            </li>
+                        </ol>
+                    </div>
+
                 </div>
-                <div class="col-span-2 p-5 md:p-6 lg:p-12 space-y-5">
-                    <div class="flex justify-between lg:flex-row flex-col">
-                        <h1 class="text-lg font-semibold">
-                            Nombre Inmueble
-                        </h1>
-                    </div>
-                    <div class="space-y-2">
-                        <h3 class="font-semibold">
-                            Dirección Inmueble
-                        </h3>
-                        <p class="hidden lg:flex">
-                            Descripción Inmueble
-                        </p>
-                    </div>
-                    <div class="grid grid-cols-3 gap-5">
-                        <div class="col-span-3 lg:col-span-1 flex items-center order-first lg:order-last">
-                            <i id="userButton" class="fa-solid fa-circle-user fa-2xl mr-2"></i><p>Agente Nombre Agente</p>
-                        </div>
-                        <div class="col-span-3 lg:col-span-1 flex items-center">
-                            <a href="" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                                Ver Más
-                            </a>
-                        </div>
-                        <div class="col-span-3 lg:col-span-1 flex items-center">
-                            <a href="" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                                Ver Proceso
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Progress Step Bar Section -->
-
-            <div class="px-8 py-5">
-                <ol class="flex items-center w-full">
-                    <li class="flex w-full items-center text-white after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-950 after:border-4 after:inline-block">
-                        <span class="flex items-center justify-center w-10 h-10 bg-sky-950 rounded-full lg:h-12 lg:w-12 shrink-0">
-                            <p>1</p>
-                        </span>
-                    </li>
-                    <li class="flex items-center w-full after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
-                        <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0 border-2 border-sky-950">
-                            <p>2</p>
-                        </span>
-                    </li>
-                    <li class="flex items-center w-full after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
-                        <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
-                            <p>3</p>
-                        </span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
-                            <p>4</p>
-                        </span>
-                    </li>
-                </ol>
-            </div>
-
-        </div>
+            <% }); %>
+        <% } else { %>
+            <p class="text-center text-lg font-bold">No hay ningún tramite asignado a usted</p>
+        <% }; %>
     </div>
 
     <!-- Footer Section -->
