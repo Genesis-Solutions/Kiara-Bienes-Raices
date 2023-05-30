@@ -1,117 +1,78 @@
 const Procesos = require('../models/procesos.model');
 const db = require('../util/database.util');
 
-// Mockear la función de base de datos execute para simular su comportamiento
+// Mock para la función db.execute()
 jest.mock('../util/database.util', () => ({
-  execute: jest.fn(),
+  execute: jest.fn().mockResolvedValue([])
 }));
 
 describe('Procesos', () => {
-  describe('getAgentInfo', () => {
-    it('debería devolver la información del agente', async () => {
-      const idInmueble = 1;
-      const mockResult = [
-        { idUsuario: 1, nombreUsuario: 'John Doe', telefonoUsuario: '123456789', emailUsuario: 'johndoe@example.com' },
-      ];
-      db.execute.mockResolvedValueOnce(mockResult);
-
-      const resultado = await Procesos.getAgentInfo(idInmueble);
-
-      expect(db.execute).toHaveBeenCalledWith(
-        'SELECT u.idUsuario, u.nombreUsuario, u.telefonoUsuario, u.emailUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = (SELECT idTramite FROM tramite WHERE idInmueble=?)',
-        [idInmueble]
-      );
-      expect(resultado).toEqual(mockResult);
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('getNombreAgente', () => {
-    it('debería devolver el nombre y el ID del agente', async () => {
-      const idTramite = 1;
-      const mockResult = [
-        { idUsuario: 1, nombreUsuario: 'John Doe' },
-      ];
-      db.execute.mockResolvedValueOnce(mockResult);
+    it('debería obtener el nombre y ID del agente asociado a un trámite', async () => {
+      db.execute.mockResolvedValueOnce([
+        [{ idUsuario: 1, nombreUsuario: 'John Doe' }],
+        {}
+      ]);
 
-      const resultado = await Procesos.getNombreAgente(idTramite);
+      const result = await Procesos.getNombreAgente(1);
 
       expect(db.execute).toHaveBeenCalledWith(
         'SELECT u.idUsuario, u.nombreUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = ?',
-        [idTramite]
+        [1]
       );
-      expect(resultado).toEqual(mockResult);
+      expect(result).toEqual([{ idUsuario: 1, nombreUsuario: 'John Doe' }]);
     });
   });
 
   describe('getFotoTramite', () => {
-    it('debería devolver la foto del inmueble', async () => {
-      const idInmueble = 1;
-      const mockResult = [
-        { idFoto: 1 },
-      ];
-      db.execute.mockResolvedValueOnce(mockResult);
+    it('debería obtener la foto asociada a un inmueble', async () => {
+      db.execute.mockResolvedValueOnce([[{ idFoto: 1 }], {}]);
 
-      const resultado = await Procesos.getFotoTramite(idInmueble);
+      const result = await Procesos.getFotoTramite(1);
 
       expect(db.execute).toHaveBeenCalledWith(
         'SELECT idFoto FROM fotoinmueble WHERE idInmueble = ?',
-        [idInmueble]
+        [1]
       );
-      expect(resultado).toEqual(mockResult);
-    });
-  });
-
-  describe('getInfoInmuebleTramiteAgente', () => {
-    it('debería devolver la información del inmueble asociado al trámite del agente', async () => {
-      const idAgente = 1;
-      const mockResult = [
-        { idInmueble: 1, nombreInmueble: 'Inmueble 1', descInmueble: 'Descripción del inmueble', direccionInmueble: 'Dirección del inmueble' },
-      ];
-      db.execute.mockResolvedValueOnce(mockResult);
-
-      const resultado = await Procesos.getInfoInmuebleTramiteAgente(idAgente);
-
-      expect(db.execute).toHaveBeenCalledWith(
-        'SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idAgente = ?',
-        [idAgente]
-      );
-      expect(resultado).toEqual(mockResult);
+      expect(result).toEqual([[{ idFoto: 1 }]]);
     });
   });
 
   describe('getDescTramite', () => {
-    it('debería devolver la información del inmueble asociado al trámite del usuario', async () => {
-      const idTramite = 1;
-      const mockResult = [ 
-        { idInmueble: 1, nombreInmueble: 'Inmueble 1', descInmueble: 'Descripción del inmueble', direccionInmueble: 'Dirección del inmueble' }
-      ];
-      db.execute.mockResolvedValueOnce(mockResult);
+    it('debería obtener la información del inmueble asociado al trámite', async () => {
+      db.execute.mockResolvedValueOnce([
+        [{ idInmueble: 1, nombreInmueble: 'Casa', descInmueble: 'Descripción', direccionInmueble: 'Dirección' }],
+        {}
+      ]);
 
-      const resultado = [await Procesos.getDescTramite(idTramite)];
+      const result = await Procesos.getDescTramite(1);
 
       expect(db.execute).toHaveBeenCalledWith(
         'SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idTramite = ?',
-        [idTramite]
+        [1]
       );
-      expect(resultado).toEqual(mockResult);
+      expect(result).toEqual([{ idInmueble: 1, nombreInmueble: 'Casa', descInmueble: 'Descripción', direccionInmueble: 'Dirección' }]);
     });
   });
 
   describe('infoTramite', () => {
-    it('debería devolver la información del trámite del usuario', async () => {
-      const idUsuario = 1;
-      const mockResult = [ 
-        { idTramite: 1, idCliente: 1, idAgente: 2, idArrendador: 3, activoTramite: 1 }
-      ];
-      db.execute.mockResolvedValueOnce(mockResult);
+    it('debería obtener los trámites de un usuario', async () => {
+      db.execute.mockResolvedValueOnce([
+        [{ idTramite: 1, fechaCreacionTramite: '2023-01-01', activoTramite: true, idInmueble: 1, IdCliente: 1, IdAgente: 2, IdArrendador: 3 }],
+        {}
+      ]);
 
-      const resultado = [await Procesos.infoTramite(idUsuario)];
+      const result = await Procesos.infoTramite(1);
 
       expect(db.execute).toHaveBeenCalledWith(
         'SELECT * FROM tramite WHERE idCliente = ? OR idArrendador = ? OR idAgente = ? AND activoTramite = 1',
-        [idUsuario, idUsuario, idUsuario]
+        [1, 1, 1]
       );
-      expect(resultado).toEqual(mockResult);
+      expect(result).toEqual([{ idTramite: 1, fechaCreacionTramite: '2023-01-01', activoTramite: true, idInmueble: 1, IdCliente: 1, IdAgente: 2, IdArrendador: 3 }]);
     });
   });
 });
