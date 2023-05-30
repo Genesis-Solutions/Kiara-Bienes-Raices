@@ -44,7 +44,21 @@ module.exports = class Procesos {
           "SELECT u.idUsuario, u.nombreUsuario, u.telefonoUsuario, u.emailUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = (SELECT idTramite FROM tramite WHERE idInmueble=?)",
           [idInmueble]
         );
-    }
+  }
+  
+  static getNombreAgente(idTramite) {
+    return db.execute(
+      "SELECT u.idUsuario, u.nombreUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = ?",
+      [idTramite]
+    );
+  }
+  
+  static getFotoTramite(idInmueble) {
+    return db.execute(
+      "SELECT idFoto FROM fotoinmueble WHERE idInmueble = ?",
+      [idInmueble]
+    );
+}
 
       /**
      * Obtiene la información del inmueble asociado al trámite del agente.
@@ -54,7 +68,7 @@ module.exports = class Procesos {
     
     static getInfoInmuebleTramiteAgente(idAgente) {
         return db.execute(
-          "SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble, I.idFoto FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idAgente = ?",
+          "SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idAgente = ?",
           [idAgente]
         );
       }
@@ -64,11 +78,37 @@ module.exports = class Procesos {
      * @param {number} idUsuario - El ID del usuario.
      * @returns {Promise} Una promesa que se resuelve con la información del inmueble.
      */
-    static getInfoInmuebleTramiteUsuario(idUsuario) {
-    return db.execute(
-        "SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble , I.idFoto FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idCliente OR TR.idArrendador = ?",
-        [idUsuario]
-    );
-    }
+  static getDescTramite(idTramite) {
+      
+    return db
+    .execute("SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idTramite = ?", [idTramite])
+    .then(([rows, data]) => {
+      //console.log(rows)
+      return rows;
+    })
+    .catch((error) => {
+      console.log(error);
+      return 0;
+    });
+  }
+  
+    /*
+     * Obtener los tramites de un usuario
+     * @return JSON -> Cantidad total de inmuebles.
+     */
+  static infoTramite(idUsuario) {
+      
+    return db
+      .execute("SELECT * FROM tramite WHERE (idArrendador OR idCliente OR idAgente = ?) AND activoTramite = 1", [idUsuario])
+      .then(([rows, data]) => {
+        //console.log(rows)
+        return rows;
+      })
+      .catch((error) => {
+        console.log(error);
+        return 0;
+      });
+  }
+
 }
 
