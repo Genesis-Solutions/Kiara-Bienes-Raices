@@ -33,19 +33,6 @@ module.exports = class Procesos {
         this.IdArrendador = IdArrendador
     }
 
-      /**
-     * Obtiene la información del agente a partir del ID del inmueble.
-     * @param {number} idInmueble - El ID del inmueble.
-     * @returns {Promise} Una promesa que se resuelve con la información del agente.
-     */
-
-    static getAgentInfo(idInmueble) {
-        return db.execute(
-          "SELECT u.idUsuario, u.nombreUsuario, u.telefonoUsuario, u.emailUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = (SELECT idTramite FROM tramite WHERE idInmueble=?)",
-          [idInmueble]
-        );
-  }
-
   /**
  * Obtiene el nombre y ID del agente asociado a un trámite.
  * @param {number} idTramite - El ID del trámite.
@@ -70,19 +57,6 @@ module.exports = class Procesos {
       [idInmueble]
     );
 }
-
-      /**
-     * Obtiene la información del inmueble asociado al trámite del agente.
-     * @param {number} idAgente - El ID del agente.
-     * @returns {Promise} Una promesa que se resuelve con la información del inmueble.
-     */
-    
-    static getInfoInmuebleTramiteAgente(idAgente) {
-        return db.execute(
-          "SELECT I.idInmueble, I.nombreInmueble, I.descInmueble, I.direccionInmueble FROM inmueble I JOIN tramite TR ON I.idInmueble = TR.idInmueble WHERE TR.idAgente = ?",
-          [idAgente]
-        );
-      }
 
       /**
      * Obtiene la información del inmueble asociado al trámite del usuario.
