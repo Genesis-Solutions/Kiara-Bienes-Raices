@@ -1,4 +1,4 @@
-const { getUserProfile } = require('../models/user.model.js');
+const { User } = require('../models/user.model.js');
 const db = require('../util/database.util.js'); 
 
 // Mock para db.execute
@@ -18,7 +18,7 @@ jest.mock('../util/database.util.js', () => ({
 describe('getUserProfile', () => {
     it('debe ejecutar la consulta SQL correcta y devolver el perfil de usuario correspondiente', async () => {
         const idUsuario = 1;
-        const resultado = await getUserProfile(idUsuario);
+        const resultado = await User.getUserProfile(idUsuario);
         expect(db.execute).toHaveBeenCalledWith('SELECT * FROM usuario WHERE idUsuario=?', [idUsuario]);
         expect(resultado).toEqual([{ 
             idUsuario: 1, 
