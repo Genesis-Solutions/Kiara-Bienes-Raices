@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const {User, Token} = require('../models/user.model');
 const bucket = require("../util/awsBucket.js");
-const olvidePassword = require("../util/email.js")
+const emailController = require("../util/email.js")
 const generarId= require("../util/token.js");
 const { error } = require('jquery');
 const moment = require("moment-timezone"); // Para fechas
@@ -278,7 +278,7 @@ exports.resetPassword = ( req, res, next ) => {
      * @param: token : String
      */
 
-    olvidePassword.olvidePassword({
+    emailController.olvidePassword({
         email: email,
         nombre: nombreUsuario,
         token: newToken,
@@ -331,7 +331,7 @@ exports.newPassword = async (req, res, next) => {
   const token = req.params.token;
   const infoToken = await Token.findOne(token);
   const emailUsuario = infoToken[0].email;
-  console.log(emailUsuario)
+  // console.log(emailUsuario)
 
   if (req.body.nuevaContrasenia == req.body.confirmacionContrasenia) {
     await User.resetPassword(req.body.nuevaContrasenia, emailUsuario);
