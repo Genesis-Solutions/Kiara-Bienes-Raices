@@ -45,6 +45,12 @@ module.exports = class Procesos {
           [idInmueble]
         );
   }
+
+  /**
+ * Obtiene el nombre y ID del agente asociado a un trámite.
+ * @param {number} idTramite - El ID del trámite.
+ * @returns {Promise} Una promesa que se resuelve con el nombre y ID del agente.
+ */
   
   static getNombreAgente(idTramite) {
     return db.execute(
@@ -52,7 +58,12 @@ module.exports = class Procesos {
       [idTramite]
     );
   }
-  
+
+  /**
+ * Obtiene la foto asociada a un inmueble.
+ * @param {number} idInmueble - El ID del inmueble.
+ * @returns {Promise} Una promesa que se resuelve con la foto del inmueble.
+ */
   static getFotoTramite(idInmueble) {
     return db.execute(
       "SELECT idFoto FROM fotoinmueble WHERE idInmueble = ?",
