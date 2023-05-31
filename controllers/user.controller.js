@@ -48,7 +48,6 @@ exports.login = (req, res, next) => {
       req.session.nombreUsuario = rows[0].nombreUsuario;
       req.session.apellidosUsuario = rows[0].apellidosUsuario;
       req.session.emailUsuario = rows[0].emailUsuario;
-      req.session.idUsuario = rows[0].idUsuario;
       req.session.idRol = rows[0].idRol;
 
       // console.log("en método login " + req.session.nombreUsuario)
@@ -210,8 +209,11 @@ exports.getPerfil = async (req, res, next) => {
   res.render('profile', {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol,
+    emailUsuario: req.session.emailUsuario,
     datosUsuario: datosUsuario[0][0],
-    profilePhoto: pfp
+    profilePhoto: pfp,
+    warning : req.flash('warning'),
+    success : req.flash('success')
   });
 };
 
@@ -230,7 +232,7 @@ exports.getImgFromBucket = ( req,res,next ) => {
       res.attachment(img);
       res.send(data.Body);
   });
-}
+};
 
 exports.getOlvidePassword = (req, res) => {
   res.render('olvidePassword', {
@@ -246,7 +248,7 @@ exports.resetPassword = ( req, res, next ) => {
       req.flash('warning', 'No existe ninguna cuenta con este correo')
       return res.redirect("/olvidePassword");
     };
-    const email = req.body.emailUsuario
+    const email = req.body.emailUsuario;
     const nombreUsuario = await User.getUserName(email);
     // Generar token y enviar email
     const newToken = generarId.generarId();
@@ -301,7 +303,7 @@ exports.comprobarToken = async(req, res) => {
   if (infoToken.length >= 1) {
     currentTime = moment().tz(process.env.TIMEZONE).format('YYYY-MM-DD HH:mm:ss');
     timeLimit = moment(infoToken[0].fechaIntento).format('YYYY-MM-DD HH:mm:ss');
-  }
+  };
 
   /**
    * La siguiente validación se encarga de tres cosas:
@@ -331,18 +333,19 @@ exports.newPassword = async (req, res, next) => {
   const token = req.params.token;
   const infoToken = await Token.findOne(token);
   const emailUsuario = infoToken[0].email;
-  console.log(emailUsuario)
+  //console.log(emailUsuario)
 
   if (req.body.nuevaContrasenia == req.body.confirmacionContrasenia) {
     await User.resetPassword(req.body.nuevaContrasenia, emailUsuario);
     await Token.deleteToken(token);
-    req.flash('success', 'Se ha reestablecido su contraseña.')
+    req.flash('success', 'Se ha reestablecido su contraseña.');
     return res.redirect('/login');
   } else {
-    req.flash('warning', 'Las contraseñas no coinciden.')
-    return res.redirect('/olvidePassword/' + token)
+    req.flash('warning', 'Las contraseñas no coinciden.');
+    return res.redirect('/olvidePassword/' + token);
   };
-}
+};
+
 /*
 * Obtener los datos de un usuario para desplegarlos en su perfil
 * @param: req, res, next
@@ -352,5 +355,27 @@ exports.getMisProcesos = (req, res, next) => {
   res.render('procesosUsuario', {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol
+  });
+};
+
+/**
+ * Cambio de contraseña
+ */
+
+exports.changePassword = async (req, res, next) => {
+  bcrypt.compare(req.body.currentPassword, req.session.passwordUsuario).then(async doMatch => {
+    if (doMatch){
+      if (req.body.newPassword == req.body.confirmPassword) {
+        await User.resetPassword(req.body.newPassword, req.body.emailUsuario);
+        req.flash('success', 'Se ha reestablecido su contraseña.');
+        return res.redirect('/perfil');
+      } else {
+        req.flash('warning', 'Las contraseñas no coinciden.');
+        return res.redirect('/perfil');
+      };
+    } else {
+      req.flash('warning', 'Contraseña incorrecta.');
+      return res.redirect('/perfil');
+    };
   });
 };
