@@ -38,4 +38,6 @@ exports.postIniciarProceso = async(req, res, next) => {
         return result;
     };
     const result = splitKeyValue(pasos);
+    const resultJSON = JSON.stringify(result);
+    console.log(resultJSON);
 }

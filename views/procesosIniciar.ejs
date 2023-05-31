@@ -579,9 +579,6 @@
              //newItem.textContent = 'New Item'; // Set the text content of the new item
             newItem.innerHTML = `
                 <div class="grid grid-cols-5 item" draggable="true">
-                    <input type="text" hidden id="paso${currentValue}" name="paso${currentValue}" value="${currentValue}"></input>
-                    <input type="number" value="0" hidden id="estatus${currentValue}" name="estatus${currentValue}" class="estatus${currentValue}"></input>
-                    <input type="tex" value="0" hidden id="observacion${currentValue}" name="observacion${currentValue}" class="observacion${currentValue}"></input>
                     <div class="col-span-3">
                         <ol class="relative border-l border-sky-950">
                             <li class="ml-6">            
@@ -595,6 +592,9 @@
                             </li>
                         </ol>
                     </div>
+                    <input type="text" hidden id="paso${currentValue}" name="paso${currentValue}" value="${currentValue}"></input>
+                    <input type="number" value="0" hidden id="estatus${currentValue}" name="estatus${currentValue}" class="estatus${currentValue}"></input>
+                    <input type="tex" value="0" hidden id="observacion${currentValue}" name="observacion${currentValue}" class="observacion${currentValue}"></input>
                     <div class="col-span-1 text-center">
                         <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
                     </div>
