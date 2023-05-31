@@ -17,4 +17,10 @@ router.get('/procesos', isLogged, procesosController.getProcesos);
 */
 router.get('/', isLogged, userController.getPerfil);
 
+/**
+ * Cambiar contraseña
+ */
+
+router.post('/cambiarPassword', isLogged, userController.changePassword);
+
 module.exports = router;
