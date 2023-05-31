@@ -79,7 +79,10 @@ exports.login = (req, res, next) => {
 
 // - Getter de la vista Register
 exports.getRegister = (req, res, next) => {
-  res.render("register");
+  res.render("register", {
+    warning : req.flash('warning'),
+    success : req.flash('success')
+  });
 };
 
 // - Método de registro
