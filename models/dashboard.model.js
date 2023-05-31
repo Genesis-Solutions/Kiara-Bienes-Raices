@@ -267,7 +267,7 @@ module.exports = class Dashboard {
     */
     static getLastDisabledRegisterID(){
         return db.execute(
-            'SELECT idInmueble FROM inmueble WHERE activoInmueble = 0 ORDER BY idInmueble DESC LIMIT 1'
+            'SELECT idInmueble FROM inmueble WHERE activoInmueble = 2 ORDER BY idInmueble DESC LIMIT 1'
         );
     }
 
