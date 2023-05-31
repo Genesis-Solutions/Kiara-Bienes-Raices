@@ -6,519 +6,527 @@
 
     <%- include('partials/navbar') %>
 
+<% for( let inmueble of inmuebles) { %>
+
+
+
     <!-- Heading Section -->
 
     <div class="px-10 py-2 text-center">
         <hr class="h-px my-4 bg-gray-800 border-0">
         <h2 class="text-2xl md:text-4xl font-bold mb-2 pt-5 md:pt-10">Inicializar Proceso</h2>
         <p class="pb-5 md:pb-10">
-            Inicia un proceso de compra o venta. Asegúrate de asignar correctamente el propietario y el cliente y modificar los pasos de acuerdo al proceso.
+            Inicia el proceso de la propiedad <strong><%=inmueble.nombreInmueble%></strong>, puedes iniciar el proceso con los pasos predeterminados o puedes añadirle los pasos que desees.
         </p>
         <hr class="h-px my-4 bg-gray-800 border-0">
     </div>
 
-    <!-- Section -->
-    <div class="pt-5 px-12 grid grid-cols-2 gap-5">
-        <div class="col-span-2 md:col-span-1">
-            <h3 class="text-lg font-semibold pb-2">¿Quién es el propietario?</h3>
-            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-            id="id_duenio" name="id_duenio">
-            <% usuarios.forEach(usuarios=>{ %>
-                <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
-            <% }); %>
-        </select>
+    <form action="/dashboard/iniciarProceso/<%=inmueble.idInmueble%>" method="POST">
+        <!-- Section -->
+        <div class="pt-5 px-12 grid grid-cols-2 gap-5">
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-lg font-semibold pb-2">¿Quién es el propietario?</h3>
+                <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                id="id_duenio" name="id_duenio">
+                <% usuarios.forEach(usuarios=>{ %>
+                    <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
+                <% }); %>
+            </select>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-lg font-semibold pb-2">¿Quién es el cliente?</h3>
+                <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                id="id_cliente" name="id_cliente">
+                <% usuarios.forEach(usuarios=>{ %>
+                    <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
+                <% }); %>
+            </select>
+            </div>
         </div>
-        <div class="col-span-2 md:col-span-1">
-            <h3 class="text-lg font-semibold pb-2">¿Quién es el cliente?</h3>
-            <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-            id="id_cliente" name="id_cliente">
-            <% usuarios.forEach(usuarios=>{ %>
-                <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
-            <% }); %>
-        </select>
-        </div>
-    </div>
 
-    <!-- Steps List -->
-    <% if (idTipoMovimiento == 1) { %>
+        <!-- Steps List -->
+        <% if (idTipoMovimiento == 1) { %>
 
-        <!-- Plantilla para Venta -->
+            <!-- Plantilla para Venta -->
 
-        <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
-            <!-- Step -->
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">1</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
-                            <input type="text" hidden id="titulo1" name="titulo1" value="Recepción de apartado"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
-                            <input type="text" hidden id="descripcion1" name="descripcion1" value="Día 1"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
+            <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+                <!-- Step -->
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">1</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
+                                <input type="text" hidden id="titulo1" name="titulo1" value="Recepción de apartado"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
+                                <input type="text" hidden id="descripcion1" name="descripcion1" value="Día 1"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="1" hidden id="paso1" name="paso1" class="paso1"></input>
+                    <input type="number" value="0" hidden id="estatus1" name="estatus1" class="estatus1"></input>
+                    <input type="text" value="0" hidden id="observacion1" name="observacion1" class="observacion1"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
-                <input type="text" value="1" hidden id="paso1" name="paso1" class="paso1"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-    
-            <!-- Step -->
-    
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">2</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
-                            <input type="text" hidden id="titulo2" name="titulo2" value="Recepción de documentación"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 2 al día 7</p>
-                            <input type="text" hidden id="descripcion2" name="descripcion2" value="Día 2 al 7"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
-                </div>
-                <input type="text" value="2" hidden id="paso2" name="paso2" class="paso2"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-    
-             <!-- Step -->
-    
-             <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">3</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de contrato de compraventa</h3>
-                            <input type="text" hidden id="titulo3" name="titulo3" value="Elaboración de contrato de compraventa"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 4 al 9</p>
-                            <input type="text" hidden id="descripcion3" name="descripcion3" value="Día 4 al 9"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
-                </div>
-                <input type="text" value="3" hidden id="paso3" name="paso3" class="paso3"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">4</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Aprobación de las partes del borrador de contrato</h3>
-                            <input type="text" hidden id="titulo4" name="titulo4" value="Aprobación de las partes del borrador de contrato"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 5 al 10</p>
-                            <input type="text" hidden id="descripcion4" name="descripcion4" value="Día 5 al 10"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
-                </div>
-                <input type="text" value="4" hidden id="paso4" name="paso4" class="paso4"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-    
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">5</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato de compraventa</h3>
-                            <input type="text" hidden id="titulo5" name="titulo5" value="Firma de contrato de compraventa"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 6 al 11</p>
-                            <input type="text" hidden id="descripcion5" name="descripcion5" value="Día 6 al 11"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="5" hidden id="paso5" name="paso5" class="paso5"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">6</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo comercial</h3>
-                            <input type="text" hidden id="titulo6" name="titulo6" value="Realización de avalúo comercial"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
-                            <input type="text" hidden id="descripcion6" name="descripcion6" value="Día 14 al 18"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="6" hidden id="paso6" name="paso6" class="paso6"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">7</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo hacendario</h3>
-                            <input type="text" hidden id="titulo7" name="titulo7" value="Realización de avalúo hacendario"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
-                            <input type="text" hidden id="descripcion7" name="descripcion7" value="Día 14 al 18"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="7" hidden id="paso7" name="paso7" class="paso7"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">8</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Avalúo terminado y entregado</h3>
-                            <input type="text" hidden id="titulo8" name="titulo8" value="Avalúo terminado y entregado"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 19 al día 23</p>
-                            <input type="text" hidden id="descripcion8" name="descripcion8" value="Día 19 al 23"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="8" hidden id="paso8" name="paso8" class="paso8"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">9</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de documentación por parte de Notaria</h3>
-                            <input type="text" hidden id="titulo9" name="titulo9" value="Revisión de documentación por parte de Notaria"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 20 al día 30</p>
-                            <input type="text" hidden id="descripcion9" name="descripcion9" value="Día 20 al 30"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="9" hidden id="paso9" name="paso9" class="paso9"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">10</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de proyecto de escritura</h3>
-                            <input type="text" hidden id="titulo10" name="titulo10" value="Elaboración de proyecto de escritura"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 30 al día 40</p>
-                            <input type="text" hidden id="descripcion10" name="descripcion10" value="Día 30 al 40"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="10" hidden id="paso10" name="paso10" class="paso10"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-
-            <!-- Step Sin Rayita -->
-    
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">11</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de escritura de compraventa</h3>
-                            <input type="text" hidden id="titulo11" name="titulo11" value="Firma de escritura de compraventa"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 35 al día 45</p>
-                            <input type="text" hidden id="descripcion11" name="descripcion11" value="Día 35 al 45"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="11" hidden id="paso11" name="paso11" class="paso11"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-    
-        </div>
-    <% } else if(idTipoMovimiento == 2) { %>
-
-        <!-- Plantilla para Renta -->
         
-        <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
-            <!-- Step -->
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">1</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
-                            <input type="text" hidden id="titulo1" name="titulo1" value="Recepción de apartado"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
-                            <input type="text" hidden id="descripcion1" name="descripcion1" value="Día 1"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">2</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
+                                <input type="text" hidden id="titulo2" name="titulo2" value="Recepción de documentación"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 2 al día 7</p>
+                                <input type="text" hidden id="descripcion2" name="descripcion2" value="Día 2 al 7"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="2" hidden id="paso2" name="paso2" class="paso2"></input>
+                    <input type="number" value="0" hidden id="estatus2" name="estatus2" class="estatus2"></input>
+                    <input type="text" value="0" hidden id="observacion2" name="observacion2" class="observacion2"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
-                <input type="text" value="1" hidden id="paso1" name="paso1" class="paso1"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+        
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">3</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de contrato de compraventa</h3>
+                                <input type="text" hidden id="titulo3" name="titulo3" value="Elaboración de contrato de compraventa"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 4 al 9</p>
+                                <input type="text" hidden id="descripcion3" name="descripcion3" value="Día 4 al 9"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="3" hidden id="paso3" name="paso3" class="paso3"></input>
+                    <input type="number" value="0" hidden id="estatus3" name="estatus3" class="estatus3"></input>
+                    <input type="text" value="0" hidden id="observacion3" name="observacion3" class="observacion3"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-    
-            <!-- Step -->
-    
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">2</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
-                            <input type="text" hidden id="titulo2" name="titulo2" value="Recepción de documentación"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 2 al 6</p>
-                            <input type="text" hidden id="descripcion2" name="descripcion2" value="Día 2 al 6"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
-                </div>
-                <input type="text" value="2" hidden id="paso2" name="paso2" class="paso2"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
-    
-             <!-- Step -->
-    
-             <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">3</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Inicio de trámite de póliza jurídica</h3>
-                            <input type="text" hidden id="titulo3" name="titulo3" value="Inicio de trámite de póliza jurídica"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 3 al 7</p>
-                            <input type="text" hidden id="descripcion3" name="descripcion3" value="Día 3 al 7"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
-                </div>
-                <input type="text" value="3" hidden id="paso3" name="paso3" class="paso3"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">4</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Resultado de investigación de póliza jurídica</h3>
-                            <input type="text" hidden id="titulo4" name="titulo4" value="Resultado de investigación de póliza jurídica"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 7 al 11</p>
-                            <input type="text" hidden id="descripcion4" name="descripcion4" value="Día 7 al 11"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">4</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Aprobación de las partes del borrador de contrato</h3>
+                                <input type="text" hidden id="titulo4" name="titulo4" value="Aprobación de las partes del borrador de contrato"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 5 al 10</p>
+                                <input type="text" hidden id="descripcion4" name="descripcion4" value="Día 5 al 10"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="4" hidden id="paso4" name="paso4" class="paso4"></input>
+                    <input type="number" value="0" hidden id="estatus4" name="estatus4" class="estatus4"></input>
+                    <input type="text" value="0" hidden id="observacion4" name="observacion4" class="observacion4"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
-                <input type="text" value="4" hidden id="paso4" name="paso4" class="paso4"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">5</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato de compraventa</h3>
+                                <input type="text" hidden id="titulo5" name="titulo5" value="Firma de contrato de compraventa"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 6 al 11</p>
+                                <input type="text" hidden id="descripcion5" name="descripcion5" value="Día 6 al 11"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="5" hidden id="paso5" name="paso5" class="paso5"></input>
+                    <input type="number" value="0" hidden id="estatus5" name="estatus5" class="estatus5"></input>
+                    <input type="text" value="0" hidden id="observacion5" name="observacion5" class="observacion5"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">5</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de contrato</h3>
-                            <input type="text" hidden id="titulo5" name="titulo5" value="Revisión de contrato"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 8 al 12</p>
-                            <input type="text" hidden id="descripcion5" name="descripcion5" value="Día 8 al 12"></input>
-                        </li>
-                    </ol>
-                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">6</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo comercial</h3>
+                                <input type="text" hidden id="titulo6" name="titulo6" value="Realización de avalúo comercial"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
+                                <input type="text" hidden id="descripcion6" name="descripcion6" value="Día 14 al 18"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="6" hidden id="paso6" name="paso6" class="paso6"></input>
+                    <input type="number" value="0" hidden id="estatus6" name="estatus6" class="estatus6"></input>
+                    <input type="text" value="0" hidden id="observacion6" name="observacion6" class="observacion6"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
-                <input type="text" value="5" hidden id="paso5" name="paso5" class="paso5"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">7</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo hacendario</h3>
+                                <input type="text" hidden id="titulo7" name="titulo7" value="Realización de avalúo hacendario"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
+                                <input type="text" hidden id="descripcion7" name="descripcion7" value="Día 14 al 18"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="7" hidden id="paso7" name="paso7" class="paso7"></input>
+                    <input type="number" value="0" hidden id="estatus7" name="estatus7" class="estatus7"></input>
+                    <input type="text" value="0" hidden id="observacion7" name="observacion7" class="observacion7"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">8</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Avalúo terminado y entregado</h3>
+                                <input type="text" hidden id="titulo8" name="titulo8" value="Avalúo terminado y entregado"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 19 al día 23</p>
+                                <input type="text" hidden id="descripcion8" name="descripcion8" value="Día 19 al 23"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="8" hidden id="paso8" name="paso8" class="paso8"></input>
+                    <input type="number" value="0" hidden id="estatus8" name="estatus8" class="estatus8"></input>
+                    <input type="text" value="0" hidden id="observacion8" name="observacion8" class="observacion8"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">9</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de documentación por parte de Notaria</h3>
+                                <input type="text" hidden id="titulo9" name="titulo9" value="Revisión de documentación por parte de Notaria"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 20 al día 30</p>
+                                <input type="text" hidden id="descripcion9" name="descripcion9" value="Día 20 al 30"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="9" hidden id="paso9" name="paso9" class="paso9"></input>
+                    <input type="number" value="0" hidden id="estatus9" name="estatus9" class="estatus9"></input>
+                    <input type="text" value="0" hidden id="observacion9" name="observacion9" class="observacion9"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">10</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de proyecto de escritura</h3>
+                                <input type="text" hidden id="titulo10" name="titulo10" value="Elaboración de proyecto de escritura"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 30 al día 40</p>
+                                <input type="text" hidden id="descripcion10" name="descripcion10" value="Día 30 al 40"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="10" hidden id="paso10" name="paso10" class="paso10"></input>
+                    <input type="number" value="0" hidden id="estatus10" name="estatus10" class="estatus10"></input>
+                    <input type="text" value="0" hidden id="observacion10" name="observacion10" class="observacion10"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <!-- Step Sin Rayita -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">11</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de escritura de compraventa</h3>
+                                <input type="text" hidden id="titulo11" name="titulo11" value="Firma de escritura de compraventa"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 35 al día 45</p>
+                                <input type="text" hidden id="descripcion11" name="descripcion11" value="Día 35 al 45"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="11" hidden id="paso11" name="paso11" class="paso11"></input>
+                    <input type="number" value="0" hidden id="estatus11" name="estatus11" class="estatus11"></input>
+                    <input type="text" value="0" hidden id="observacion11" name="observacion11" class="observacion11"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+            </div>
+        <% } else if(idTipoMovimiento == 2) { %>
+
+            <!-- Plantilla para Renta -->
+            
+            <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+                <!-- Step -->
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">1</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
+                                <input type="text" hidden id="titulo1" name="titulo1" value="Recepción de apartado"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
+                                <input type="text" hidden id="descripcion1" name="descripcion1" value="Día 1"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="1" hidden id="paso1" name="paso1" class="paso1"></input>
+                    <input type="number" value="0" hidden id="estatus1" name="estatus1" class="estatus1"></input>
+                    <input type="text" value="0" hidden id="observacion1" name="observacion1" class="observacion1"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">2</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
+                                <input type="text" hidden id="titulo2" name="titulo2" value="Recepción de documentación"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 2 al 6</p>
+                                <input type="text" hidden id="descripcion2" name="descripcion2" value="Día 2 al 6"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="2" hidden id="paso2" name="paso2" class="paso2"></input>
+                    <input type="number" value="0" hidden id="estatus2" name="estatus2" class="estatus2"></input>
+                    <input type="text" value="0" hidden id="observacion2" name="observacion2" class="observacion2"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">3</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Inicio de trámite de póliza jurídica</h3>
+                                <input type="text" hidden id="titulo3" name="titulo3" value="Inicio de trámite de póliza jurídica"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 3 al 7</p>
+                                <input type="text" hidden id="descripcion3" name="descripcion3" value="Día 3 al 7"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="3" hidden id="paso3" name="paso3" class="paso3"></input>
+                    <input type="number" value="0" hidden id="estatus3" name="estatus3" class="estatus3"></input>
+                    <input type="text" value="0" hidden id="observacion3" name="observacion3" class="observacion3"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">4</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Resultado de investigación de póliza jurídica</h3>
+                                <input type="text" hidden id="titulo4" name="titulo4" value="Resultado de investigación de póliza jurídica"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 7 al 11</p>
+                                <input type="text" hidden id="descripcion4" name="descripcion4" value="Día 7 al 11"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="4" hidden id="paso4" name="paso4" class="paso4"></input>
+                    <input type="number" value="0" hidden id="estatus4" name="estatus4" class="estatus4"></input>
+                    <input type="text" value="0" hidden id="observacion4" name="observacion4" class="observacion4"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">5</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de contrato</h3>
+                                <input type="text" hidden id="titulo5" name="titulo5" value="Revisión de contrato"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 8 al 12</p>
+                                <input type="text" hidden id="descripcion5" name="descripcion5" value="Día 8 al 12"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="5" hidden id="paso5" name="paso5" class="paso5"></input>
+                    <input type="number" value="0" hidden id="estatus5" name="estatus5" class="estatus5"></input>
+                    <input type="text" value="0" hidden id="observacion5" name="observacion5" class="observacion5"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step Sin Rayita -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">6</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato</h3>
+                                <input type="text" hidden id="titulo6" name="titulo6" value="Firma de contrato"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 10 al 15</p>
+                                <input type="text" hidden id="descripcion6" name="descripcion6" value="Día 10 al 15"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="6" hidden id="paso6" name="paso6" class="paso6"></input>
+                    <input type="number" value="0" hidden id="estatus6" name="estatus6" class="estatus6"></input>
+                    <input type="text" value="0" hidden id="observacion6" name="observacion6" class="observacion6"></input>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
                 </div>
             </div>
-    
-            <!-- Step Sin Rayita -->
-    
-            <div class="grid grid-cols-5 item" draggable="true">
-                <div class="col-span-3">
-                    <ol class="relative border-l border-sky-950">
-                        <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                <p class="text-white">6</p>
-                            </span>
-                            <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato</h3>
-                            <input type="text" hidden id="titulo6" name="titulo6" value="Firma de contrato"></input>
-                            <p class="text-sm text-gray-500 hidden md:block">Día 10 al 15</p>
-                            <input type="text" hidden id="descripcion6" name="descripcion6" value="Día 10 al 15"></input>
-                        </li>
-                    </ol>
-                </div>
-                <input type="text" value="6" hidden id="paso6" name="paso6" class="paso6"></input>
-                <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                <input type="text" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
-                </div>
-                <div class="col-span-1 text-center">
-                    <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
-                </div>
-            </div>
+        <% } %>
+        
+
+        <!-- Add Step Button Section (Activa Modal) -->
+
+        <div class="px-24 pb-10 flex justify-center">
+            <button data-modal-target="pasoModal" data-modal-toggle="pasoModal" class="flex justify-center items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200 border border-dashed">
+                <i class="fa-solid fa-plus mr-2 text-center"></i>
+                <p class="text-center">Agregar Paso</p>
+            </button>
         </div>
-    <% } %>
-    
 
-    <!-- Add Step Button Section (Activa Modal) -->
+        <!-- Buttons Section -->
 
-    <div class="px-24 pb-10 flex justify-center">
-        <button data-modal-target="pasoModal" data-modal-toggle="pasoModal" class="flex justify-center items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200 border border-dashed">
-            <i class="fa-solid fa-plus mr-2 text-center"></i>
-            <p class="text-center">Agregar Paso</p>
-        </button>
-    </div>
-
-    <!-- Buttons Section -->
-
-    <div class="px-10 pb-14 flex justify-evenly">
-        <button type="button" onclick="goBack()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
-            Cancelar
-        </button>
-        <input type="submit" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700" value=" Iniciar " />
-    </div>
+        <div class="px-10 pb-14 flex justify-evenly">
+            <button type="button" onclick="goBack()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
+                Cancelar
+            </button>
+            <button type="submit" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                Iniciar
+            </button>
+        </div>
+    </form>
 
     <!-- Footer Section -->
 
@@ -551,12 +559,19 @@
         </div>
     </div> 
 
-
+<% } %>
+<% if(idTipoMovimiento == 2) { %>
+    <input hidden type="number" id="pasos" value="7">
+<% } else { %>
+    <input hidden type="number" id="pasos" value="12">
+<% } %>
 <script>
         const sortableList = document.querySelector(".sortable-list");
         const btnAgregarPaso = document.getElementById('btnAgregarPaso');
-        var i = 1;
+        
         function addItem() {
+            const i = document.getElementById('pasos');
+            var currentValue = parseInt(i.value);
             const titulo  = document.getElementById('titulo').value;
             const descripcion  = document.getElementById('descripcion').value;
             // Create a new list item element
@@ -564,9 +579,9 @@
              //newItem.textContent = 'New Item'; // Set the text content of the new item
             newItem.innerHTML = `
                 <div class="grid grid-cols-5 item" draggable="true">
-                    <input type="text" hidden id="paso${i}" name="paso${i}" value="${i}"></input>
-                    <input type="number" value="0" hidden id="estatus" name="estatus" class="estatus"></input>
-                    <input type="tex" value="0" hidden id="observacion" name="observacion" class="observacion"></input>
+                    <input type="text" hidden id="paso${currentValue}" name="paso${currentValue}" value="${currentValue}"></input>
+                    <input type="number" value="0" hidden id="estatus${currentValue}" name="estatus${currentValue}" class="estatus${currentValue}"></input>
+                    <input type="tex" value="0" hidden id="observacion${currentValue}" name="observacion${currentValue}" class="observacion${currentValue}"></input>
                     <div class="col-span-3">
                         <ol class="relative border-l border-sky-950">
                             <li class="ml-6">            
@@ -574,9 +589,9 @@
                                     <p class="text-white">PA</p>
                                 </span>
                                 <h3 class="font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
-                                <input type="text" hidden id="titulo${i}" name="titulo${i}" value="${titulo}"></input>
+                                <input type="text" hidden id="titulo${currentValue}" name="titulo${currentValue}" value="${titulo}"></input>
                                 <p class="text-sm text-gray-500 hidden md:block">${descripcion}</p>
-                                <input type="text" hidden id="descripcion${i}" name="descripcion${i}" value="${descripcion}"></input>
+                                <input type="text" hidden id="descripcion${currentValue}" name="descripcion${currentValue}" value="${descripcion}"></input>
                             </li>
                         </ol>
                     </div>
@@ -590,7 +605,10 @@
                 `;
             // Make the new item draggable
             newItem.draggable = true;
-            i += 1;
+            var newValue = currentValue + 1;
+            i.value = newValue;
+            console.log("Variable 'i' value: " + newValue);
+            //i += 1;
             // Append the new item to the list
             sortableList.appendChild(newItem);
         }

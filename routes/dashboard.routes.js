@@ -13,6 +13,7 @@ const procesos2Controller = require('../controllers/procesos2.controller');
 */
 
 router.get('/iniciarProceso/:idInmueble/:idTipoMovimiento', isLogged, agenteAdminAuth, procesos2Controller.getIniciarProceso);
+router.post('/iniciarProceso/:idInmueble', procesos2Controller.postIniciarProceso);
 /**
 * Registrar imagenes de un inmueble
 */
