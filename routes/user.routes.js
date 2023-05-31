@@ -14,6 +14,10 @@ router.get('/get_bucket_img',userController.getImgFromBucket);
 */
 router.get('/procesos', isLogged, procesosController.getProcesos);
 /* 
+* Publicar nueva foto de perfil.
+*/
+router.post('/fotoPerfil', isLogged, userController.setProfilePhoto);
+/* 
 * Ver perfil del usuario.
 */
 router.get('/', isLogged, userController.getPerfil);
