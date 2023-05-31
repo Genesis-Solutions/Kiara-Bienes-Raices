@@ -9,9 +9,10 @@ const procesosController = require('../controllers/procesos.controller.js');
 * Obtener las imagenes del bucket de S3.
 */
 router.get('/get_bucket_img',userController.getImgFromBucket);
-
+/* 
+* Obtener la lista de procesos.
+*/
 router.get('/procesos', isLogged, procesosController.getProcesos);
-
 /* 
 * Ver perfil del usuario.
 */
