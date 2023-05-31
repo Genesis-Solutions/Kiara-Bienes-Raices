@@ -16,8 +16,26 @@ exports.getIniciarProceso = async (req, res, next) => {
 
 exports.postIniciarProceso = async(req, res, next) => {
     const idInmueble = req.params.idInmueble;
-    console.log(idInmueble);
-    console.log(req.body);
-    
-
+    const idDuenio = req.body.id_duenio;
+    const idCliente = req.body.id_cliente;
+    const pasos = req.body;
+    var duenio = "id_duenio";
+    var cliente = "id_cliente";
+    delete pasos[duenio];
+    delete pasos[cliente];
+    const splitKeyValue = obj => {
+        const keys = Object.keys(obj);
+        const result = [];
+        for(let i = 0; i < keys.length; i=i+5){
+        result.push({
+            'titulo': obj[keys[i]],
+            'descPaso': obj[keys[i+1]],
+            'paso':obj[keys[i+2]],
+            'status':obj[keys[i+3]],
+            'observacion':obj[keys[i+4]],
+        });
+        };
+        return result;
+    };
+    const result = splitKeyValue(pasos);
 }
