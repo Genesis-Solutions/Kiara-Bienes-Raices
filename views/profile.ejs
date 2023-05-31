@@ -3,9 +3,17 @@
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- Navbar Section -->
-
     <%- include('partials/navbar') %>
-
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- Librerías necesarias -->
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.jqueryui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
     <!-- Menu Section -->
 
     <div class="px-10 pt-8">
@@ -99,14 +107,55 @@
         </div>
         <div class="grid grid-cols-4 space-y-2 py-5">
             <div class="col-span-2 col-start-2">
-                <button id="btnEliminarCuenta" name="btnEliminarCuenta" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 ">
+                <button id="btnEliminarCuenta" href="#" onclick="EliminarCuenta()" name="btnEliminarCuenta" class="btnEliminarCuenta text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnEliminarCuenta">
                     Eliminar Cuenta
                 </button>
             </div>
         </div>
     </div>
 
+    <script>
+        /*
+        * Funcionalidad de botón de eliminación de la cuenta del perfil. Despliega un modal que verifica la decisión del usuario para posteriormente asegurar la inexistencia de procesos del mismo.
+        */
+                function EliminarCuenta(){
+                    const idUs=<%=datosUsuario.idUsuario%>
+                    /*
+                    *Modal de confirmación.
+                    */
+                    Swal.fire({
+                        title: '¿Confirma la eliminación de su cuenta?',
+                        showCancelButton: true,
+                        confirmButtonText: `Confirmar`,
+                    }).then((result) => {
+                        /*
+                        * Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                        */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/dashboard/lista/eliminar/' + idUs,
+                                method: 'put',
+                                success: function (choice) {
+                                    if (choice.comprobacionEliminado == false) {
+                                        Swal.fire('Tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
+                                    } else {
+                                        console.log("Si la eliminó alv")
+                                        Swal.fire('¡Tu cuenta ha sido eliminada!')
+                                        window.location='/logout'
+                                    }
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                                }
+        
+                            });
+                        }
+                    })
+                }
+            </script>
+
     <!-- Footer Section -->
+    
 
     <%- include("partials/footer") %>
 
