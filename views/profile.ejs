@@ -21,8 +21,15 @@
     <div class="p-10">
         <h2 class="text-4xl font-bold mb-2">Información Personal</h2>
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-5">
-            <div class="col-span-2 lg:col-span-1 row-span-4 p-5 flex justify-center">
-                <img src="/perfil/get_bucket_img?image=<%=profilePhoto%>" alt="" class="w-96 h-80 object-cover self-center rounded-lg">
+            <div class="col-span-2 lg:col-span-1 row-span-4 p-5 text-center justify-center">
+                <div>
+                    <img src="/perfil/get_bucket_img?image=<%=profilePhoto%>" alt="" class="w-96 h-80 object-cover mx-0 text-center self-center rounded-lg">
+                </div>
+                <div class="col-span-1 space-y-2 md:px-28 lg:px-5 py-5">
+                    <button id="btnFotoPerfil" name="btnFotoPerfil" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                        Modificar Foto de Perfil
+                    </button>
+                </div>
             </div>
             <div class="col-span-1 space-y-2">
                 <label for="nombre">Nombre(s)</label>
@@ -80,14 +87,21 @@
                             , id="telefonoUsuario" name="telefonoUsuario" value="<%=datosUsuario.telefonoUsuario%>" maxlength="10" minlength="10" pattern="[0-9]{10}" required disabled/>
             </div>
             <div class="col-span-1 space-y-2 py-5">
-                <a href="" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700">
-                    Eliminar Cuenta
-                </a>
+                <button id="btnModificarInformación" name="btnModificarInformación" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                    Modificar Información Personal
+                </button>
             </div>
             <div class="col-span-1 space-y-2 py-5">
-                <a href="" class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
-                    Modificar Perfil
-                </a>
+                <button id="btnCambiarContrasenia" name="btnCambiarContrasenia" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                    Cambiar Contraseña
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-4 space-y-2 py-5">
+            <div class="col-span-2 col-start-2">
+                <button id="btnEliminarCuenta" name="btnEliminarCuenta" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 ">
+                    Eliminar Cuenta
+                </button>
             </div>
         </div>
     </div>
