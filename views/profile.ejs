@@ -92,9 +92,21 @@
                 </button>
             </div>
             <div class="col-span-1 space-y-2 py-5">
-                <button id="btnCambiarContrasenia" name="btnCambiarContrasenia" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                <button id="btnCambiarContrasenia" name="btnCambiarContrasenia" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700" data-modal-target="changePasswordModal" data-modal-toggle="changePasswordModal">
                     Cambiar Contraseña
                 </button>
+            </div>
+            <div class="col-3 space-y-2 py-5">
+                <% if (warning != '') { %>
+                    <p style="color: red">
+                        <%= warning %>
+                    </p>
+                <% } %>
+                <% if (success != '') { %>
+                    <p style="color: green">
+                        <%= success %>
+                    </p>
+                <% } %>
             </div>
         </div>
         <div class="grid grid-cols-4 space-y-2 py-5">
@@ -109,6 +121,50 @@
     <!-- Footer Section -->
 
     <%- include("partials/footer") %>
+
+    <!-- Modal de cambiar contraseña -->
+    <div id="changePasswordModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+            <div class="modal-container bg-white w-96 mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <!-- Contenido del modal -->
+                <div class="modal-content py-4 text-left px-6">
+                    <!-- Título del modal -->
+                    <div class="flex justify-between items-center pb-3">
+                        <p class="text-2xl font-bold">Cambiar contraseña</p>
+                        <button data-modal-hide="changePasswordModal" class="modal-close cursor-pointer z-50">
+                            <svg class="fill-current text-gray-700 hover:text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                            <path
+                                d="M16.22 4.22L11.41 9L16.22 13.78L13.78 16.22L9 11.41L4.22 16.22L1.78 13.78L6.59 9L1.78 4.22L4.22 1.78L9 6.59L13.78 1.78L16.22 4.22Z"
+                            />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Formulario de cambio de contraseña -->
+                    <form id="changePasswordForm" action="/perfil/cambiarPassword" method="POST">
+                        <input type="hidden" name="emailUsuario" value="<%- emailUsuario %>">
+                        <div class="mb-4">
+                            <label for="currentPassword" class="block text-gray-700 text-sm font-bold mb-2">Contraseña actual</label>
+                            <input type="password" name="currentPassword" id="currentPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="newPassword" class="block text-gray-700 text-sm font-bold mb-2">Nueva contraseña</label>
+                            <input type="password" name="newPassword" id="newPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="confirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Confirmar contraseña</label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        
+                        <!-- Botones del formulario -->
+                        <div class="flex justify-end">
+                            <button type="button" data-modal-hide="changePasswordModal" class="modal-cancel-btn px-4 py-2 mr-2 rounded">Cancelar</button>
+                            <button type="submit" class="text-sm md:text-base px-2 py-2 w-fit rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
 
 </body>
 </html>
