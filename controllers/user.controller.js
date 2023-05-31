@@ -358,7 +358,7 @@ exports.getMisProcesos = (req, res, next) => {
 * Actualizar la foto de perfil.
 * @param: req, res, next
 */
-exports.setProfilePhoto = async(req,res,next) => {
+exports.setProfilePhoto = (req,res,next) => {
   var upload = storage.array('profilePhoto',1);
   upload(req, res, function (err) {
       if (err) {
@@ -366,9 +366,13 @@ exports.setProfilePhoto = async(req,res,next) => {
       } else {
           req.files.forEach(function (file) {
               const mediaName = file.key;
-              User.registerPFP(mediaName);
-          });
+              const idUsuario = req.session.idUsuario;
+              User.registerPFP(mediaName,idUsuario)
+                .then(([rows, fieldData]) => {
+                  res.redirect('/perfil');
+                })
+                  .catch(error => { console.log(error) });
+                });
       }
-      res.redirect('/perfil');
   });
 };

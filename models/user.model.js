@@ -125,11 +125,11 @@ class User {
     @param {string} photoKey - La clave de la imagen que se guardará en Amazon S3.
     @returns {Promise} Promesa que devuelve el resultado de la consulta a la base de datos.
     */
-    static registerPFP(photoKey){
+    static registerPFP(photoKey,idUsuario){
       const fullImage = "s3://kiarabienesraices/"+photoKey;
       return db.execute(
-          'CALL newPFP (?)',
-          [fullImage]
+          'CALL newPFP (?,?)',
+          [fullImage,idUsuario]
       );
   }
 
