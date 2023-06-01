@@ -106,7 +106,27 @@
             var filesSize = document.getElementById('sizeCount');
             var successRegistry = document.getElementById('successRegistry');
             var mapCheck = $('input[name="linkMapsBody"]').val();
-            console.log(mapCheck);
+            var videoCheck = $('input[name="linkVideoBody"]').val();
+            var confirmMap = 0;
+            var confirmVideo = 0;
+
+            if (mapCheck) {
+                if(mapCheck.indexOf("<iframe src=") === -1 || 
+                mapCheck.indexOf("</iframe>") === -1){
+                    confirmMap = 0;
+                } else {
+                    confirmMap = 1;
+                }
+            };
+
+            if (videoCheck) {
+                if(videoCheck.indexOf("youtu") === -1){
+                    confirmVideo = 0;
+                } else {
+                    confirmVideo = 1;
+                }
+            };
+            
             if(inputElement.value < 5){
                 Swal.fire({
                     icon: 'error',
@@ -121,16 +141,22 @@
                     showConfirmButton: false,
                     timer: 2000
                 });
-            } else if (mapCheck) {
-                if (mapCheck.indexOf("<iframe src=") === -1 || 
-                mapCheck.indexOf("</iframe>") === -1) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'El formato del mapa debe ser "Embed Map"',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                };
+            } else if (confirmVideo != 1) {
+                //console.log("estatus de video",confirmVideo);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que el mapa o el vídeo tengan el formato correcto',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else if (confirmMap != 1){
+                //console.log("estatus de mapa",confirmMap);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que el mapa o el vídeo tengan el formato correcto',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             } else {
                 desactivarUnload();
                 $.ajax({
@@ -147,7 +173,7 @@
                             onOpen: () => {
                                 Swal.showLoading();
                             }
-                        });
+                        })
                     }
                 })
             }
