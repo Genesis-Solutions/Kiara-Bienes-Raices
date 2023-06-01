@@ -385,6 +385,7 @@ exports.setProfilePhoto = (req,res,next) => {
 
 /**
  * Cambio de contraseña
+ * @param: req, res, next
  */
 
 exports.changePassword = async (req, res, next) => {
