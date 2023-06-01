@@ -109,7 +109,6 @@
             var videoCheck = $('input[name="linkVideoBody"]').val();
             var confirmMap = 0;
             var confirmVideo = 0;
-
             if (mapCheck) {
                 if(mapCheck.indexOf("<iframe src=") === -1 || 
                 mapCheck.indexOf("</iframe>") === -1){
@@ -117,6 +116,8 @@
                 } else {
                     confirmMap = 1;
                 }
+            } else {
+                confirmMap = 1;
             };
 
             if (videoCheck) {
@@ -125,6 +126,8 @@
                 } else {
                     confirmVideo = 1;
                 }
+            } else {
+                confirmVideo = 1;
             };
             
             if(inputElement.value < 5){
@@ -313,7 +316,7 @@
             fileCountElement.innerHTML = "<p class='text-center pb-2'>Número de imágenes: <span class='font-semibold'>" + fileCount + "</span></p>";
             for (var i = 0; i < fileCount; i++) {
                 var fileName = files[i].name;
-                console.log(files[i].size)
+                //console.log(files[i].size)
                 fileSize = fileSize + files[i].size;
                 var fileItem = document.createElement("p");
                 fileItem.textContent = fileName;
