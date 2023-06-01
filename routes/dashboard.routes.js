@@ -6,11 +6,14 @@ const adminAuth = require('../util/adminAuth.util');
 const agenteAdminAuth = require('../util/agenteAdminAuth.util');
 
 const dashboardController = require('../controllers/dashboard.controller');
+const procesos2Controller = require('../controllers/procesos2.controller');
 
 /**
 * Rutas
 */
 
+router.get('/iniciarProceso/:idInmueble/:idTipoMovimiento', isLogged, agenteAdminAuth, procesos2Controller.getIniciarProceso);
+router.post('/iniciarProceso/:idInmueble', procesos2Controller.postIniciarProceso);
 /**
 * Registrar imagenes de un inmueble
 */
@@ -98,5 +101,7 @@ router.get('/agentes', isLogged, agenteAdminAuth, dashboardController.getAgentes
 * Actualizar el encargado de una determinada propiedad
 */
 router.put('/props/actualizar/:idAgente/:idPropiedad', dashboardController.updateEncargado);
+
+
 
 module.exports = router;
