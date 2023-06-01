@@ -95,9 +95,9 @@
                             , id="telefonoUsuario" name="telefonoUsuario" value="<%=datosUsuario.telefonoUsuario%>" maxlength="10" minlength="10" pattern="[0-9]{10}" required disabled/>
             </div>
             <div class="col-span-1 space-y-2 py-5">
-                <button id="btnModificarInformación" name="btnModificarInformación" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                <a data-modal-target="changeInfo" data-modal-toggle="changeInfo" id="btnModificarInformación" name="btnModificarInformación" class="cursor-pointer text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
                     Modificar Información Personal
-                </button>
+                </a>
             </div>
             <div class="col-span-1 space-y-2 py-5">
                 <button id="btnCambiarContrasenia" name="btnCambiarContrasenia" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700" data-modal-target="changePasswordModal" data-modal-toggle="changePasswordModal">
@@ -159,6 +159,75 @@
                             </div>
                         </div>
                         <button data-modal-hide="changePP" type="submit" id="submitPhoto" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Guardar Cambio</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL MODIFICAR Informacion -->
+    <div id="changeInfo" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+            <form action="#" method="POST">
+                <div class="relative bg-white rounded-lg shadow">
+                    <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="changeInfo">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="px-6 py-6 lg:px-8">
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 ">Cambia la Informacion de tu Perfil</h3>
+                        <div class="grid grid-cols-2 gap-5">
+                            <div class="col-span-1 space-y-2">
+                                <label for="nombreUsuario">Nombre(s)</label>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="nombreUsuario" name="nombreUsuario" value="<%=datosUsuario.nombreUsuario%>" maxlength="30" required/>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="apellidosUsuario">Apellidos</label>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="apellidosUsuario" name="apellidosUsuario" value="<%=datosUsuario.apellidosUsuario%>" maxlength="30" required/>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="estadoCivilUsuario">Estado Civil</label>
+                                <% if (datosUsuario.estadoCivilUsuario != null) { %>
+                                    <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="<%=datosUsuario.estadoCivilUsuario%>" maxlength="30"/>
+                                <% } else { %>
+                                    <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="Sin datos" maxlength="30"/>
+                                <% } %>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="ocupacionUsuario">Ocupación</label>
+                                <% if (datosUsuario.ocupacionUsuario != null) { %>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="ocupacion" name="ocupacionUsuario" value="<%=datosUsuario.ocupacionUsuario%>" maxlength="30"/>
+                                <% } else { %>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="ocupacion" name="ocupacionUsuario" value="Sin datos" maxlength="30"/>
+                                <% } %>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="emailUsuario">Correo Electrónico</label>
+                                        <input
+                                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                            type="email" id="emailUsuario" name="emailUsuario" value="<%=datosUsuario.emailUsuario%>" maxlength="60" required/>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="telefonoUsuario">Número de Teléfono</label>
+                                <input type="tel"
+                                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                            , id="telefonoUsuario" name="telefonoUsuario" value="<%=datosUsuario.telefonoUsuario%>" maxlength="10" minlength="10" pattern="[0-9]{10}" required/>
+                            </div>
+                        </div>
+                        <button data-modal-hide="changeInfo" type="submit" id="submitPhoto" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-8 px-5 py-2.5 text-center">Guardar Cambio</button>
                     </div>
                 </div>
             </form>
