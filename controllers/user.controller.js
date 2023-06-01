@@ -3,10 +3,9 @@ const {User, Token} = require('../models/user.model');
 const bucket = require("../util/awsBucket.js");
 const olvidePassword = require("../util/email.js")
 const generarId= require("../util/token.js");
-const { error } = require('jquery');
 const moment = require("moment-timezone"); // Para fechas
-const { request } = require('chai');
 moment.locale('es-mx');
+const { storage } = require('../util/awsMediaMulter.util');
 
 // -- LOGIN -- //
 
@@ -358,6 +357,29 @@ exports.getMisProcesos = (req, res, next) => {
   res.render('procesosUsuario', {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol
+  });
+};
+
+/*
+* Actualizar la foto de perfil.
+* @param: req, res, next
+*/
+exports.setProfilePhoto = (req,res,next) => {
+  var upload = storage.array('profilePhoto',1);
+  upload(req, res, function (err) {
+      if (err) {
+          console.log("Error upload S3: "+err);
+      } else {
+          req.files.forEach(function (file) {
+              const mediaName = file.key;
+              const idUsuario = req.session.idUsuario;
+              User.registerPFP(mediaName,idUsuario)
+                .then(([rows, fieldData]) => {
+                  res.redirect('/perfil');
+                })
+                  .catch(error => { console.log(error) });
+                });
+      }
   });
 };
 
