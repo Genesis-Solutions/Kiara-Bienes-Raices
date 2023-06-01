@@ -106,14 +106,26 @@
             </div>
             <div class="col-3 space-y-2 py-5">
                 <% if (warning != '') { %>
-                    <p style="color: red">
-                        <%= warning %>
-                    </p>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: '<%- warning %>',
+                            showConfirmButton: true,
+                            allowEscapeKey: true,
+                            allowOutsideClick: true,
+                        })
+                    </script>
                 <% } %>
                 <% if (success != '') { %>
-                    <p style="color: green">
-                        <%= success %>
-                    </p>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: '<%- success %>',
+                            showConfirmButton: true,
+                            allowEscapeKey: true,
+                            allowOutsideClick: true,
+                        })
+                    </script>
                 <% } %>
             </div>
         </div>
@@ -190,7 +202,7 @@
                                     if (choice.comprobacionEliminado == false) {
                                         Swal.fire('Tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
                                     } else {
-                                        console.log("Si la eliminó alv")
+                                        // console.log("Si la eliminó alv")
                                         Swal.fire('¡Tu cuenta ha sido eliminada!')
                                         window.location='/logout'
                                     }
@@ -260,11 +272,11 @@
                         </div>
                         <div class="mb-4">
                             <label for="newPassword" class="block text-gray-700 text-sm font-bold mb-2">Nueva contraseña</label>
-                            <input type="password" name="newPassword" id="newPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required>
+                            <input type="password" name="newPassword" id="newPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required minlength="8">
                         </div>
                         <div class="mb-6">
                             <label for="confirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Confirmar contraseña</label>
-                            <input type="password" name="confirmPassword" id="confirmPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required>
+                            <input type="password" name="confirmPassword" id="confirmPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required minlength="8">
                         </div>
                         
                         <!-- Botones del formulario -->
@@ -276,6 +288,12 @@
                 </div>
             </div>
     </div>
+
+    <script>
+        function alerta() {
+            Swal.fire("Contraseña cambiada");
+        }
+    </script>
 
 </body>
 </html>
