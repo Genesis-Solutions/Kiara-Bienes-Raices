@@ -10,10 +10,10 @@
                 type="text" id="titulo" name="titulo" placeholder="Casa en Álamos" maxlength="150" required/>
         </div>
         <div class="space-y-2">
-            <label for="linkVideo" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
+            <label for="linkVideoBody" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
             <input
                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                type="text" id="linkVideo" name="linkVideo" placeholder="www.youtube.com"/>
+                type="text" id="linkVideoBody" name="linkVideoBody" placeholder="www.youtube.com"/>
         </div>
     </div>
 
@@ -33,13 +33,13 @@
                         <h3 class="text-lg font-semibold text-white">Precio Venta</h3>
                         <input
                             class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" min="0" id="precioVenta" name="precioVenta" placeholder="3,000,000" maxlength="30"/>
+                            type="number" min="0" id="precioVenta" name="precioVenta" placeholder="3,000,000" maxlength="30" />
                     </div>
                     <div class="mt-4 hidden peer-checked/renta:block space-y-2">
                         <h3 class="text-lg font-semibold text-white">Precio Renta (por mes)</h3>
                         <input
                             class="h-10 px-5 bg-white w-auto rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="number" min="0" id="precioRenta" name="precioRenta" placeholder="10,000" maxlength="30"/>
+                            type="number" min="0" id="precioRenta" name="precioRenta" placeholder="10,000" maxlength="30" />
                     </div>
                 </fieldset>
             </div>
@@ -137,7 +137,7 @@
                     <div class="flex items-center">
                         <input
                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                            type="int" id="fechaConstruccion" name="fechaConstruccion" placeholder="1990" maxlength="4" 
+                            type="number" min="1601" max="<%- currentYear %>" id="fechaConstruccion" name="fechaConstruccion" placeholder="1990" maxlength="4" 
                             required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
                 <label for="direccion" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
                 <input
                     class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                    type="text" id="linkMaps" name="linkMaps" placeholder="iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12617.262388400684!2d-100.4082022221727!3d20.611509759670554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35ae83751a45d%3A0x4fa6ee69f6b64f3a!2sTecnol%C3%B3gico%20de%20Monterrey!5e0!3m2!1ses-419!2smx!4v1682632411233!5m2!1ses-419!2smx'" maxlength="600"/>
+                    type="text" id="linkMapsBody" name="linkMapsBody" placeholder="iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12617.262388400684!2d-100.4082022221727!3d20.611509759670554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35ae83751a45d%3A0x4fa6ee69f6b64f3a!2sTecnol%C3%B3gico%20de%20Monterrey!5e0!3m2!1ses-419!2smx!4v1682632411233!5m2!1ses-419!2smx'" maxlength="600"/>
             </div>
         </div>
     </div>

@@ -11,10 +11,10 @@
                 placeholder="<%=inmueble.nombreInmueble%>" maxlength="100" required />
         </div>
         <div class="space-y-2">
-            <label for="linkVideo" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
+            <label for="linkVideoBody" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
             <input
                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                type="text" id="linkVideo" name="linkVideo" value="<%=inmueble.linkVideoInmueble%>"
+                type="text" id="linkVideoBody" name="linkVideoBody" value="<%=inmueble.linkVideoInmueble%>"
                 placeholder="<%=inmueble.linkVideoInmueble%>" />
         </div>
     </div>
@@ -146,7 +146,7 @@
                         <div class="flex items-center">
                             <input
                                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                                type="number" min="0" id="fechaConstruccion" name="fechaConstruccion"
+                                type="number" min="1601" max="<%- currentYear %>" id="fechaConstruccion" name="fechaConstruccion"
                                 value="<%=inmueble.fechaConstruccionInmueble%>"
                                 placeholder="<%=inmueble.fechaConstruccionInmueble%>" maxlength="4" required
                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
@@ -344,10 +344,10 @@
                 </div>
             </div>
             <div class="space-y-2">
-                <label for="linkMaps" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
+                <label for="linkMapsBody" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
                 <input
                     class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                    type="text" id="linkMaps" name="linkMaps" value="<%=inmueble.linkGoogleMaps%>"
+                    type="text" id="linkMapsBody" name="linkMapsBody" value="<%=inmueble.linkGoogleMaps%>"
                     placeholder="<%=inmueble.linkGoogleMaps%>" maxlength="1000" 
                 />
             </div>
