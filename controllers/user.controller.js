@@ -255,7 +255,7 @@ exports.resetPassword = ( req, res, next ) => {
     // Generar token y enviar email
     const newToken = generarId.generarId();
 
-    /**
+    /*
      * Genera el timestamp en formato aaaa-mm-dd : hh:mm:ss, se le
      * suman 10 minutos para dar tiempo de cambio de contraseña.
      * 
@@ -273,7 +273,7 @@ exports.resetPassword = ( req, res, next ) => {
 
     Token.insertToken(email, newToken, deadline);
 
-    /**
+    /*
      * Envía la URL con el token generado al usuario para que pueda
      * ingresar a cambiar su contraseña.
      * 
@@ -403,4 +403,13 @@ exports.changePassword = async (req, res, next) => {
       return res.redirect('/perfil');
     };
   });
+};
+
+/*
+* Actualizar la información del perfil.
+* @param: req, res, next
+*/
+exports.setNewProfile = (req,res,next) => {
+  console.log("Entrando a la ruta");
+  console.log(req.body);
 };
