@@ -60,8 +60,9 @@
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
                             <i class="fa-solid fa-cloud-arrow-up fa-2xl my-4 pt-5"></i>
                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Selecciona</span> las imágenes del inmueble.</p>
-                            <p class="text-xs text-gray-500 pb-2">PNG o JPG</p>
+                            <p class="text-xs text-gray-500 pb-2">PNG, JPG o WEBP</p>
                             <p id="fileCount" class="pb-5"></p>
+                            <p id="fileSize" class="pb-5"></p>
                         </div>
                     </label>
                     <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' class="hidden"/>
@@ -70,6 +71,8 @@
         </div>
     </div>
     <input type="hidden" id="imgCount" name="imgCount">
+    <input type="hidden" id="sizeCount" name="sizeCount">
+    <input type="hidden" id="successRegistry" name="successRegistry">
 
     <!-- Information Form -->
     <!-- Cambiar dependiendo del id del tipo de inmueble -->
@@ -100,6 +103,30 @@
         $('#cuerpoInmueble').submit(function(e) {
             e.preventDefault();
             var inputElement = document.getElementById('imgCount');
+            var filesSize = document.getElementById('sizeCount');
+            var successRegistry = document.getElementById('successRegistry');
+            var mapCheck = $('input[name="linkMapsBody"]').val();
+            var videoCheck = $('input[name="linkVideoBody"]').val();
+            var confirmMap = 0;
+            var confirmVideo = 0;
+
+            if (mapCheck) {
+                if(mapCheck.indexOf("<iframe src=") === -1 || 
+                mapCheck.indexOf("</iframe>") === -1){
+                    confirmMap = 0;
+                } else {
+                    confirmMap = 1;
+                }
+            };
+
+            if (videoCheck) {
+                if(videoCheck.indexOf("youtu") === -1){
+                    confirmVideo = 0;
+                } else {
+                    confirmVideo = 1;
+                }
+            };
+            
             if(inputElement.value < 5){
                 Swal.fire({
                     icon: 'error',
@@ -107,7 +134,31 @@
                     showConfirmButton: false,
                     timer: 2000
                 });
+            } else if (sizeCount.value > 200){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Las imágenes no pueden exceder los 200 MB',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else if (confirmVideo != 1) {
+                //console.log("estatus de video",confirmVideo);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que el mapa o el vídeo tengan el formato correcto',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else if (confirmMap != 1){
+                //console.log("estatus de mapa",confirmMap);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que el mapa o el vídeo tengan el formato correcto',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             } else {
+                desactivarUnload();
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'POST',
@@ -122,7 +173,7 @@
                             onOpen: () => {
                                 Swal.showLoading();
                             }
-                        });
+                        })
                     }
                 })
             }
@@ -163,7 +214,8 @@
 
     <!-- Ejecución de la función eliminarInmueble desde el boton Cancelar -->
     <script type="text/javascript">   
-        $(document).on("click", ".btnCancelar", function(){	
+        $(document).on("click", ".btnCancelar", function(){
+            desactivarUnload();
             eliminarInmueble();
         })
     </script>
@@ -212,6 +264,34 @@
         });
     </script>
 
+    <!-- Verificación para requireds de precios -->
+
+    <script type="text/javascript">
+        const checkVenta = document.getElementById('venta');
+        const checkRenta = document.getElementById('renta');
+        const precioVenta = document.getElementById('precioVenta');
+        const precioRenta = document.getElementById('precioRenta');
+
+        $(document).ready(function(){
+            $(checkVenta).change(function(){
+                if($(precioVenta).attr('required')) {
+                    $(precioVenta).removeAttr('required');
+                } else {
+                    $(precioVenta).attr('required','required')
+                };
+            });
+
+            $(checkRenta).change(function(){
+                if($(precioRenta).attr('required')) {
+                    $(precioRenta).removeAttr('required');
+                } else {
+                    $(precioRenta).attr('required','required')
+                };
+            });
+        });
+
+    </script>
+
     <!-- Verificar que existan por lo menos 5 imagenes en formMediaS3 antes del upload -->
     <script type="text/javascript">
         const fileInput = document.getElementById('uploadedImages');
@@ -225,16 +305,24 @@
     <script type="text/javascript">
         function updateFileCount(event) {
             var fileCount = event.target.files.length;
+            var fileSize = 0;
             var files = event.target.files;
             var fileCountElement = document.getElementById('fileCount');
+            var fileSizeElement = document.getElementById('fileSize');
+            var sizeCount = document.getElementById('sizeCount');
             fileCountElement.innerHTML = "<p class='text-center pb-2'>Número de imágenes: <span class='font-semibold'>" + fileCount + "</span></p>";
             for (var i = 0; i < fileCount; i++) {
                 var fileName = files[i].name;
+                console.log(files[i].size)
+                fileSize = fileSize + files[i].size;
                 var fileItem = document.createElement("p");
                 fileItem.textContent = fileName;
                 fileCountElement.appendChild(fileItem); 
-            }
-        }
+            };
+            var fileSizeMB = fileSize / 1024 / 1024;
+            fileSizeElement.innerHTML = "<p class='text-center pb-2'>Tamaño de las imágenes: <span class='font-semibold'>" + fileSizeMB.toFixed(2) + " MB" + "</span></p>";
+            sizeCount.value = fileSizeMB;
+        };
     </script>
 
 
@@ -281,6 +369,33 @@
         });
     });
     </script>
+
+    <!-- Ejecuta antes de salir de la página -->
+    <script type="text/javascript">
+        window.onbeforeunload = function(e) {
+            e.returnValue = 'Adios';
+            e.preventDefault();
+            return eliminarRegistro();
+        };
+    </script>
+
+    <!-- Función para eliminar el inmueble vacío al salir de la página -->
+    <script type="text/javascript">   
+        function eliminarRegistro() {
+            var idInmueble = $("#id_inmueble").val();
+            $.ajax({
+                url: '/dashboard/baja/inmueble/<%=idInmueble%>',
+                type: 'GET',
+                dataType: 'json'
+            });
+        };
+
+        function desactivarUnload(){
+            window.onbeforeunload = null;
+        };
+    </script>
+
+    <!-- Función para resetear el onbeforeunload -->
 
     <%- include("partials/footer") %>
 

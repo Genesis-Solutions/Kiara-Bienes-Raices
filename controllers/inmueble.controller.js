@@ -3,6 +3,8 @@ const Inmueble = require('../models/inmueble.model');
 const bucket = require("../util/awsBucket.js");
 const linkYoutubeKiara = 'https://www.youtube.com/@kiarabienesraices/featured';
 const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14939.700429428109!2d-100.40389240351634!3d20.591115845212013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b2a918d2dc1%3A0x35673f825669f344!2sCentro%2C%2076000%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1685044595433!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+const moment = require("moment-timezone"); // Para fechas
+moment.locale('es-mx');
 
 /*
  * Obtiene información de un inmueble y renderiza la vista correspondiente.
@@ -131,6 +133,7 @@ exports.getEditarInmueble = async(req, res, next) => {
     const agente = Inmueble.getInfoAgente(idAgente);
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
+    const currentYear = moment().format('YYYY');
     //console.log(idFotos[0]);
     arregloFotos = [];
     for (let i=0; i < idFotos[0].length; i++) {
@@ -144,6 +147,7 @@ exports.getEditarInmueble = async(req, res, next) => {
         fotos: arregloFotos,
         inmuebles : inmueble,
         agente : agente,
+        currentYear: currentYear,
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol
     })

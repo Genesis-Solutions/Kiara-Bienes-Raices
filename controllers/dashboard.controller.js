@@ -2,7 +2,8 @@ const Dashboard = require('../models/dashboard.model');
 const { storage } = require('../util/awsMediaMulter.util');
 const linkYoutubeKiara = 'https://www.youtube.com/@kiarabienesraices/featured';
 const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14939.700429428109!2d-100.40389240351634!3d20.591115845212013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b2a918d2dc1%3A0x35673f825669f344!2sCentro%2C%2076000%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1685044595433!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
-
+const moment = require("moment-timezone"); // Para fechas
+moment.locale('es-mx');
 /*
 * Historia de usuario 1.5, 1.6 y 1.9 - Ver lista de usuarios, modificar rol y eliminar usuario.
 * Controlador que maneja la lógica tras la llamada de las queriees de la lista de usuarios.
@@ -367,6 +368,7 @@ exports.getCategoria = async (req, res, next) => {
         isLogged = true;
         const idCategoria = req.params.categoria;
         const idUsuario = req.session.idUsuario;
+        const currentYear = moment().format('YYYY');
         //console.log("Categoria del inmueble creado",idCategoria);
         //console.log("Id del usuario",idCategoria);
         const inmueble = await Dashboard.insertDisabledRegister(idCategoria.toString(), idUsuario.toString());
@@ -383,7 +385,8 @@ exports.getCategoria = async (req, res, next) => {
             categoria: idCategoria,
             listaAgentes: listaAgentes[0],
             listaTipoMovimientos: listaTipoMovimientos[0],
-            idUsuario: idUsuario
+            idUsuario: idUsuario,
+            currentYear: currentYear
         });
     }
 };
@@ -452,7 +455,7 @@ exports.updateBodyCasa = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        linkVideo,
+        linkVideoBody,
         m2terreno,
         niveles,
         mediosBanios,
@@ -467,7 +470,7 @@ exports.updateBodyCasa = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps,
+        linkMapsBody,
         id_inmueble
     } = req.body;
     /*
@@ -494,9 +497,13 @@ exports.updateBodyCasa = (req, res, next) => {
     /*
     *Mapas y videos opcionales. Valores por defectos
     */
-    if (linkVideo == "" || linkVideo == null) {
+    let linkVideo = linkVideoBody;
+
+    if (linkVideoBody == "" || linkVideoBody == null) {
         linkVideo = linkYoutubeKiara;
     }
+
+    let linkMaps = linkMapsBody;
     if (linkMaps == "" || linkMaps == null) {
         linkMaps = mapaPorDefecto;
     }
@@ -564,7 +571,7 @@ exports.updateBodyLocal = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        linkVideo,
+        linkVideoBody,
         m2terreno,
         medidaFrente,
         medidaFondo,
@@ -581,7 +588,7 @@ exports.updateBodyLocal = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps,
+        linkMapsBody,
         id_inmueble
     } = req.body;
     /*
@@ -608,12 +615,17 @@ exports.updateBodyLocal = (req, res, next) => {
     /*
     *Mapas y videos opcionales. Valores por defectos
     */
-    if (linkVideo == "" || linkVideo == null) {
+    let linkVideo = linkVideoBody;
+
+    if (linkVideoBody == "" || linkVideoBody == null) {
         linkVideo = linkYoutubeKiara;
     }
+
+    let linkMaps = linkMapsBody;
     if (linkMaps == "" || linkMaps == null) {
         linkMaps = mapaPorDefecto;
     }
+
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
@@ -664,7 +676,7 @@ exports.updateBodyTerreno = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        linkVideo,
+        linkVideoBody,
         m2terreno,
         m2construccion,
         medidaFrente,
@@ -675,7 +687,7 @@ exports.updateBodyTerreno = (req, res, next) => {
         cuotaMantenimiento,
         desc,
         direccion,
-        linkMaps,
+        linkMapsBody,
         id_inmueble
     } = req.body;
     /*
@@ -702,12 +714,17 @@ exports.updateBodyTerreno = (req, res, next) => {
     /*
     *Mapas y videos opcionales. Valores por defectos
     */
-    if (linkVideo == "" || linkVideo == null) {
+    let linkVideo = linkVideoBody;
+
+    if (linkVideoBody == "" || linkVideoBody == null) {
         linkVideo = linkYoutubeKiara;
     }
+
+    let linkMaps = linkMapsBody;
     if (linkMaps == "" || linkMaps == null) {
         linkMaps = mapaPorDefecto;
     }
+
     const servicioAgua = req.body.servicioAgua ? 1 : 0;
     const servicioLuz = req.body.servicioLuz ? 1 : 0;
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
@@ -752,7 +769,7 @@ exports.updateBodyBodega = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        linkVideo,
+        linkVideoBody,
         m2terreno,
         m2construccion,
         medidaFrente,
@@ -772,7 +789,7 @@ exports.updateBodyBodega = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps,
+        linkMapsBody,
         id_inmueble
     } = req.body;
     /*
@@ -806,12 +823,17 @@ exports.updateBodyBodega = (req, res, next) => {
     /*
     *Mapas y videos opcionales. Valores por defectos
     */
-    if (linkVideo == "" || linkVideo == null) {
+    let linkVideo = linkVideoBody;
+
+    if (linkVideoBody == "" || linkVideoBody == null) {
         linkVideo = linkYoutubeKiara;
     }
+
+    let linkMaps = linkMapsBody;
     if (linkMaps == "" || linkMaps == null) {
         linkMaps = mapaPorDefecto;
     }
+
     Dashboard.activateInmuebleBodega(
         titulo,
         id_agente,
@@ -864,7 +886,7 @@ exports.updateBodyOficina = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        linkVideo,
+        linkVideoBody,
         m2terreno,
         m2construccion,
         niveles,
@@ -878,7 +900,7 @@ exports.updateBodyOficina = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps,
+        linkMapsBody,
         id_inmueble
     } = req.body;
     /*
@@ -905,12 +927,17 @@ exports.updateBodyOficina = (req, res, next) => {
     /*
     *Mapas y videos opcionales. Valores por defectos
     */
-    if (linkVideo == "" || linkVideo == null) {
+    let linkVideo = linkVideoBody;
+
+    if (linkVideoBody == "" || linkVideoBody == null) {
         linkVideo = linkYoutubeKiara;
     }
+
+    let linkMaps = linkMapsBody;
     if (linkMaps == "" || linkMaps == null) {
         linkMaps = mapaPorDefecto;
     }
+
     const cocina = req.body.cocina ? 1 : 0;
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
@@ -957,7 +984,7 @@ exports.updateBodyOtro = (req, res, next) => {
     const {
         titulo,
         id_agente,
-        linkVideo,
+        linkVideoBody,
         m2terreno,
         m2construccion,
         niveles,
@@ -971,7 +998,7 @@ exports.updateBodyOtro = (req, res, next) => {
         banios,
         desc,
         direccion,
-        linkMaps,
+        linkMapsBody,
         id_inmueble
     } = req.body;
     /*
@@ -998,12 +1025,17 @@ exports.updateBodyOtro = (req, res, next) => {
     /*
     *Mapas y videos opcionales. Valores por defectos
     */
-    if (linkVideo == "" || linkVideo == null) {
+    let linkVideo = linkVideoBody;
+
+    if (linkVideoBody == "" || linkVideoBody == null) {
         linkVideo = linkYoutubeKiara;
     }
+
+    let linkMaps = linkMapsBody;
     if (linkMaps == "" || linkMaps == null) {
         linkMaps = mapaPorDefecto;
     }
+
     const estudio = req.body.cocina ? 1 : 0;
     const roofGarden = req.body.cisterna ? 1 : 0;
     const bodega = req.body.vigilancia ? 1 : 0;
