@@ -16,7 +16,7 @@
             <label for="linkVideoBody" class="text-lg font-semibold">Enlace al Vídeo de Youtube</label>
             <input
                 class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                type="text" id="linkVideoBody" name="linkVideoBody" value="<%=inmueble.linkVideoInmueble%>"
+                type="url" id="linkVideoBody" name="linkVideoBody" pattern="https://.*" value="<%=inmueble.linkVideoInmueble%>"
                 placeholder="<%=inmueble.linkVideoInmueble%>" />
         </div>
     </div>

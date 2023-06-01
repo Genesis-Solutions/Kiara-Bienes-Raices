@@ -282,7 +282,7 @@
                 <label for="linkMapsBody" class="text-lg font-semibold">Link de “Embed a Map” en Google Maps</label>
                 <input
                     class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800"
-                    type="text" id="linkMapsBody" name="linkMapsBody" value="<%=inmueble.linkGoogleMaps%>"
+                    type="url" id="linkVideoBody" name="linkVideoBody" pattern="https://.*" value="<%=inmueble.linkGoogleMaps%>"
                     placeholder="<%=inmueble.linkGoogleMaps%>" maxlength="1000" />
             </div>
 
