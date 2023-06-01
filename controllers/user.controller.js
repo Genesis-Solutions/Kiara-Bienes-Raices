@@ -392,8 +392,11 @@ exports.changePassword = async (req, res, next) => {
     if (doMatch){
       if (req.body.newPassword == req.body.confirmPassword) {
         await User.resetPassword(req.body.newPassword, req.body.emailUsuario);
-        req.flash('success', 'Se ha reestablecido su contraseña.');
-        return res.redirect('/perfil');
+        User.findOne(req.body.emailUsuario).then(async ([rows, data]) => {
+          req.session.passwordUsuario = rows[0].passwordUsuario;
+          req.flash('success', 'Se ha reestablecido su contraseña.');
+          return res.redirect('/perfil');
+        });
       } else {
         req.flash('warning', 'Las contraseñas no coinciden.');
         return res.redirect('/perfil');
