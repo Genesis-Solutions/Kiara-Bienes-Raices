@@ -169,7 +169,8 @@
     <div id="changeInfo" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-md max-h-full">
         <!-- Modal content -->
-            <form id="changeUserInfo" action="/perfil/actualizarPerfil" method="POST">
+            <!-- <form id="changeUserInfo" action="/perfil/actualizarPerfil" method="POST"> -->
+                <form id="changeUserInfo">
                 <div class="relative bg-white rounded-lg shadow">
                     <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="changeInfo">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -227,7 +228,7 @@
                                             , id="telefonoUsuario" name="telefonoUsuario" value="<%=datosUsuario.telefonoUsuario%>" maxlength="10" minlength="10" pattern="[0-9]{10}" required/>
                             </div>
                         </div>
-                        <button data-modal-hide="changeInfo" type="submit" id="submitProfile" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-8 px-5 py-2.5 text-center">Guardar Cambio</button>
+                        <button type="submit" id="submitProfile" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-8 px-5 py-2.5 text-center">Guardar Cambio</button>
                     </div>
                 </div>
             </form>
@@ -294,6 +295,35 @@
                 const fileInput = document.getElementById('profilePhoto');
                 fileInput.addEventListener('change', function(event) {
                     updateFileCount(event);
+                });
+            </script>
+
+            <!-- Función para eliminar el inmueble vacío al salir de la página -->
+            <script type="text/javascript">   
+                $(document).ready(function() {
+                    $('#changeUserInfo').submit(function(event) {
+                        // Evitar que el formulario se envíe de forma tradicional
+                        event.preventDefault();
+                        // Realizar la petición AJAX
+                        $.ajax({
+                            url: '/perfil/actualizarPerfil',
+                            type: 'POST', // o 'GET' según tus necesidades
+                            data: $(this).serialize(), // serializar los datos del formulario
+                            // Manejo de la respuesta del servidor
+                            success: function() {
+                                // Procesar la respuesta del servidor
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Perfil actualizado',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                setTimeout(function() {
+                                    window.location.replace('/perfil');
+                                }, 2000);
+                            },
+                        });
+                    });
                 });
             </script>
 

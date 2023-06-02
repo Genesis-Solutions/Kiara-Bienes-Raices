@@ -410,6 +410,22 @@ exports.changePassword = async (req, res, next) => {
 * @param: req, res, next
 */
 exports.setNewProfile = (req,res,next) => {
-  console.log("Entrando a la ruta");
-  console.log(req.body);
+  const nombre = req.body.nombreUsuario;
+  const apellidos = req.body.apellidosUsuario;
+  const email = req.body.emailUsuario;
+  const telefono = req.body.telefonoUsuario;
+  let estadoCivilUsuario = req.body.estadoCivilUsuario;
+  let ocupacionUsuario = req.body.ocupacionUsuario;
+  if(estadoCivilUsuario == "" || estadoCivilUsuario == null) {
+    estadoCivilUsuario = "No hay datos"
+  } 
+  if(ocupacionUsuario == "" || ocupacionUsuario == null) {
+    ocupacionUsuario = "No hay datos"
+  }
+  const idUsuario = req.session.idUsuario;
+  User.changeUserInfo(nombre,apellidos,email,telefono,estadoCivilUsuario,ocupacionUsuario,idUsuario)
+    .then(([rows, fieldData]) => {
+      res.status(200).json({ code: 200, msg: "Ok" });
+    })
+    .catch(error => { console.log(error) });
 };
