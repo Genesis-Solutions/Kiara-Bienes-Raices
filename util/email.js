@@ -5,7 +5,7 @@ exports.olvidePassword = (datos) => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
     const msg = {
         to: email, // Change to your recipient
-        from: 'A01706972@tec.mx', // Change to your verified sender
+        from: 'soporte.kiarainmuebles@gmail.com', // Change to your verified sender
         subject: 'Recupera tu contraseña',
         text: 'Recupera tu contraseña para Kiara Bienes Raíces',
         html: `
