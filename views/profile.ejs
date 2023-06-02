@@ -60,7 +60,7 @@
                 <% } else { %>
                     <input
                     class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="Sin datos" maxlength="30" disabled/>
+                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Sin datos" maxlength="30" disabled/>
                 <% } %>
                 <!-- <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
                     id="estadoCivilUsuario" name="estadoCivilUsuario">
@@ -79,7 +79,7 @@
                 <% } else { %>
                     <input
                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                        type="text" id="ocupacion" name="ocupacionUsuario" value="Sin datos" maxlength="30" disabled/>
+                        type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Sin datos" maxlength="30" disabled/>
                 <% } %>
             </div>
             <div class="col-span-1 space-y-2">
@@ -192,13 +192,13 @@
                         <h3 class="mb-4 text-xl font-medium text-gray-900 ">Cambia la Informacion de tu Perfil</h3>
                         <div class="grid grid-cols-2 gap-5">
                             <div class="col-span-1 space-y-2">
-                                <label for="nombreUsuario">Nombre(s)</label>
+                                <label for="nombreUsuario">Nombre(s)</label><label class="text-red-500">*</label>
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                                         type="text" id="nombreUsuario" name="nombreUsuario" value="<%=datosUsuario.nombreUsuario%>" maxlength="30" required/>
                             </div>
                             <div class="col-span-1 space-y-2">
-                                <label for="apellidosUsuario">Apellidos</label>
+                                <label for="apellidosUsuario">Apellidos</label> <label class="text-red-500">*</label>
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                                         type="text" id="apellidosUsuario" name="apellidosUsuario" value="<%=datosUsuario.apellidosUsuario%>" maxlength="30" required/>
@@ -206,13 +206,17 @@
                             <div class="col-span-1 space-y-2">
                                 <label for="estadoCivilUsuario">Estado Civil</label>
                                 <% if (datosUsuario.estadoCivilUsuario != null) { %>
-                                    <input
-                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="<%=datosUsuario.estadoCivilUsuario%>" maxlength="30"/>
+                                    <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                                        id="estadoCivilUsuario" name="estadoCivilUsuario">
+                                        <option value="N/A" <% if (datosUsuario.estadoCivilUsuario === 'N/A') { %>selected<% } %>>Selecciona uno</option>
+                                        <option value="Soltero"<% if (datosUsuario.estadoCivilUsuario === 'Soltero') { %>selected<% } %>>Soltero</option>
+                                        <option value="Casado"<% if (datosUsuario.estadoCivilUsuario === 'Casado') { %>selected<% } %>>Casado</option>
+                                        <option value="Casado-Bienes Mancomunados"<% if (datosUsuario.estadoCivilUsuario === 'Casado-Bienes Mancomunados') { %>selected<% } %>>Casado-Bienes Mancomunados</option>
+                                    </select>
                                 <% } else { %>
                                     <input
                                     class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="Sin datos" maxlength="30"/>
+                                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Sin datos" maxlength="30"/>
                                 <% } %>
                             </div>
                             <div class="col-span-1 space-y-2">
@@ -224,20 +228,24 @@
                                 <% } else { %>
                                     <input
                                         class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                                        type="text" id="ocupacion" name="ocupacionUsuario" value="Sin datos" maxlength="30"/>
+                                        type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Sin datos" maxlength="30"/>
                                 <% } %>
                             </div>
                             <div class="col-span-1 space-y-2">
-                                <label for="emailUsuario">Correo Electrónico</label>
+                                <label for="emailUsuario">Correo Electrónico</label><label class="text-red-500">*</label>
+                                <p class="ml-2 pt-2 text-gray-500 text-sm">Ej: gabriela@gmail.com </p>
                                         <input
                                             class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
                                             type="email" id="emailUsuario" name="emailUsuario" value="<%=datosUsuario.emailUsuario%>" maxlength="60" required/>
                             </div>
                             <div class="col-span-1 space-y-2">
-                                <label for="telefonoUsuario">Número de Teléfono</label>
-                                <input type="number"
-                                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
-                                            , id="telefonoUsuario" name="telefonoUsuario" value="<%=datosUsuario.telefonoUsuario%>" maxlength="10" minlength="10" pattern="[0-9]{10}" required/>
+                                <label for="telefonoUsuario">Número de Teléfono</label><label class="text-red-500">*</label>
+                                <p class="ml-2 pt-2 text-gray-500 text-sm">Ej: 4424557812 </p>
+                                    <input type="tel"
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required
+                            value="<%=datosUsuario.telefonoUsuario%>"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                             </div>
                         </div>
                         <button type="submit" id="submitProfile" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-8 px-5 py-2.5 text-center">Guardar Cambio</button>
