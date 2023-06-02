@@ -133,6 +133,24 @@ class User {
       );
   }
 
+    /*
+    Actualiza la información del usuario en la base de datos.
+    @param nombre el nombre del usuario
+    @param apellidos los apellidos del usuario
+    @param email el correo electrónico del usuario
+    @param telefono el número de teléfono del usuario
+    @param estadoCivilUsuario el estado civil del usuario
+    @param ocupacionUsuario la ocupación del usuario
+    @param idUsuario el ID del usuario a actualizar
+    @return el resultado de la ejecución del comando UPDATE en la base de datos
+    */
+    static changeUserInfo(nombre,apellidos,email,telefono,estadoCivilUsuario,ocupacionUsuario,idUsuario){
+      return db.execute(
+          'UPDATE usuario SET nombreUsuario=?, apellidosUsuario=?, emailUsuario=?, telefonoUsuario=?, estadoCivilUsuario=?, ocupacionUsuario=? WHERE idUsuario=?',
+          [nombre,apellidos,email,telefono,estadoCivilUsuario,ocupacionUsuario,idUsuario]
+      );
+  }
+
 };
 
 class Token {

@@ -255,7 +255,7 @@ exports.resetPassword = ( req, res, next ) => {
     // Generar token y enviar email
     const newToken = generarId.generarId();
 
-    /**
+    /*
      * Genera el timestamp en formato aaaa-mm-dd : hh:mm:ss, se le
      * suman 10 minutos para dar tiempo de cambio de contraseña.
      * 
@@ -273,7 +273,7 @@ exports.resetPassword = ( req, res, next ) => {
 
     Token.insertToken(email, newToken, deadline);
 
-    /**
+    /*
      * Envía la URL con el token generado al usuario para que pueda
      * ingresar a cambiar su contraseña.
      * 
@@ -375,7 +375,7 @@ exports.setProfilePhoto = (req,res,next) => {
               const idUsuario = req.session.idUsuario;
               User.registerPFP(mediaName,idUsuario)
                 .then(([rows, fieldData]) => {
-                  res.redirect('/perfil');
+                  res.status(200).json({ code: 200, msg: "Ok" });
                 })
                   .catch(error => { console.log(error) });
                 });
@@ -407,4 +407,29 @@ exports.changePassword = async (req, res, next) => {
       return res.redirect('/perfil');
     };
   });
+};
+
+/*
+* Actualizar la información del perfil.
+* @param: req, res, next
+*/
+exports.setNewProfile = (req,res,next) => {
+  const nombre = req.body.nombreUsuario;
+  const apellidos = req.body.apellidosUsuario;
+  const email = req.body.emailUsuario;
+  const telefono = req.body.telefonoUsuario;
+  let estadoCivilUsuario = req.body.estadoCivilUsuario;
+  let ocupacionUsuario = req.body.ocupacionUsuario;
+  if(estadoCivilUsuario == "" || estadoCivilUsuario == null) {
+    estadoCivilUsuario = "No hay datos"
+  } 
+  if(ocupacionUsuario == "" || ocupacionUsuario == null) {
+    ocupacionUsuario = "No hay datos"
+  }
+  const idUsuario = req.session.idUsuario;
+  User.changeUserInfo(nombre,apellidos,email,telefono,estadoCivilUsuario,ocupacionUsuario,idUsuario)
+    .then(([rows, fieldData]) => {
+      res.status(200).json({ code: 200, msg: "Ok" });
+    })
+    .catch(error => { console.log(error) });
 };

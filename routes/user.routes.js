@@ -18,14 +18,16 @@ router.get('/procesos', isLogged, procesosController.getProcesos);
 */
 router.post('/fotoPerfil', isLogged, userController.setProfilePhoto);
 /* 
+* Publicar nueva información del usuario.
+*/
+router.post('/actualizarPerfil', isLogged, userController.setNewProfile);
+/* 
 * Ver perfil del usuario.
 */
 router.get('/', isLogged, userController.getPerfil);
-
-/**
- * Cambiar contraseña
- */
-
+/*
+* Cambiar contraseña
+*/
 router.post('/cambiarPassword', isLogged, userController.changePassword);
 
 module.exports = router;
