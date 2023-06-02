@@ -14,10 +14,18 @@ exports.getIniciarProceso = async (req, res, next) => {
     });
 };
 
+/*
+ * Inserta un nuevo proceso de seguimiento a un determinado inmueble.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.postIniciarProceso = async(req, res, next) => {
     const idInmueble = req.params.idInmueble;
     const idDuenio = req.body.id_duenio;
     const idCliente = req.body.id_cliente;
+    let idAgente = req.session.idUsuario;
     const pasos = req.body;
     var duenio = "id_duenio";
     var cliente = "id_cliente";
@@ -39,5 +47,9 @@ exports.postIniciarProceso = async(req, res, next) => {
     };
     const result = splitKeyValue(pasos);
     const resultJSON = JSON.stringify(result);
-    console.log(resultJSON);
+    Proceso.insertProcess(resultJSON,idInmueble,idCliente,idAgente,idDuenio)
+        .then(([rows, fieldData]) => {
+            res.redirect('/'); //Cambiar despues la redirección
+        })
+        .catch(error => { console.log(error) });
 }
