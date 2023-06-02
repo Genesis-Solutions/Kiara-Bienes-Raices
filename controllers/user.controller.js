@@ -56,7 +56,7 @@ exports.login = (req, res, next) => {
       req.session.activoUsuario = rows[0].activoUsuario;
     
       /**
- * Checks if the user is active.
+ * Verifica el atributo de activoUsuario de la sesión del usuario.
  *
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
