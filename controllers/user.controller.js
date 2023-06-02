@@ -53,6 +53,23 @@ exports.login = (req, res, next) => {
       // Contraseña del usuario:
 
       req.session.passwordUsuario = rows[0].passwordUsuario;
+      req.session.activoUsuario = rows[0].activoUsuario;
+    
+      /**
+ * Verifica el atributo de activoUsuario de la sesión del usuario.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The rendered login page with appropriate flash messages if the user is inactive.
+ */
+    if (req.session.activoUsuario == 0) {
+      req.flash('warning', 'Credenciales inválidas');
+      return res.render("login", {
+        warning: req.flash('warning'),
+        success: req.flash('success')
+      });
+    };
+    
 
       // Método de comparación para determinar autenticidad de la contraseña:
 
