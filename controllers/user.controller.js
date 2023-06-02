@@ -375,7 +375,7 @@ exports.setProfilePhoto = (req,res,next) => {
               const idUsuario = req.session.idUsuario;
               User.registerPFP(mediaName,idUsuario)
                 .then(([rows, fieldData]) => {
-                  res.redirect('/perfil');
+                  res.status(200).json({ code: 200, msg: "Ok" });
                 })
                   .catch(error => { console.log(error) });
                 });
