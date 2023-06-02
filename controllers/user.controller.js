@@ -263,7 +263,7 @@ exports.resetPassword = ( req, res, next ) => {
      * el servidor puede tener una diferente a la de los usuarios.
      */
 
-    const currentTime = moment().tz(process.env.TIMEZONE).format('YYYY-MM-DD HH:mm:ss');
+    const currentTime = moment().tz("Europe/London").format('YYYY-MM-DD HH:mm:ss');
     const deadline = moment(currentTime).add(10, 'minutes').format('YYYY-MM-DD HH:mm:ss');
 
     /**
