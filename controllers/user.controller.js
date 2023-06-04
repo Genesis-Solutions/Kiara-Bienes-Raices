@@ -54,7 +54,15 @@ exports.login = (req, res, next) => {
 
       req.session.passwordUsuario = rows[0].passwordUsuario;
       req.session.activoUsuario = rows[0].activoUsuario;
-    
+
+      /**
+       * Obtiene la foto de perfil del usuario
+       */
+
+      const foto = await User.srcFotoPortada(rows[0].idFoto);
+      const pfp = (foto[0][0].archivoFoto).slice(23);
+      req.session.urlFotoUsuario = pfp;
+
       /**
  * Verifica el atributo de activoUsuario de la sesión del usuario.
  *
@@ -184,7 +192,8 @@ exports.register = (req, res, next) => {
 exports.getContacto = (req, res, next) => {
   res.render('contacto', {
     isLogged: req.session.isLoggedIn,
-    idRol: req.session.idRol
+    idRol: req.session.idRol,
+    urlFotoUsuario : req.session.urlFotoUsuario
   });
 };
 
@@ -193,7 +202,8 @@ exports.getContacto = (req, res, next) => {
 exports.getPoliticas = (req, res, next) => {
   res.render('politicas', {
     isLogged: req.session.isLoggedIn,
-    idRol: req.session.idRol
+    idRol: req.session.idRol,
+    urlFotoUsuario : req.session.urlFotoUsuario
   });
 };
 
@@ -202,7 +212,8 @@ exports.getPoliticas = (req, res, next) => {
 exports.getNosotros = (req, res, next) => {
   res.render('nosotros', {
     isLogged: req.session.isLoggedIn,
-    idRol: req.session.idRol
+    idRol: req.session.idRol,
+    urlFotoUsuario : req.session.urlFotoUsuario
   });
 };
 
@@ -211,7 +222,8 @@ exports.getNosotros = (req, res, next) => {
 exports.getServicios = (req, res, next) => {
   res.render('servicios', {
     isLogged: req.session.isLoggedIn,
-    idRol: req.session.idRol
+    idRol: req.session.idRol,
+    urlFotoUsuario : req.session.urlFotoUsuario
   });
 };
 
@@ -229,6 +241,7 @@ exports.getPerfil = async (req, res, next) => {
     isLogged: req.session.isLoggedIn,
     idRol: req.session.idRol,
     emailUsuario: req.session.emailUsuario,
+    urlFotoUsuario : req.session.urlFotoUsuario,
     datosUsuario: datosUsuario[0][0],
     profilePhoto: pfp,
     warning : req.flash('warning'),
@@ -373,7 +386,8 @@ exports.newPassword = async (req, res, next) => {
 exports.getMisProcesos = (req, res, next) => {
   res.render('procesosUsuario', {
     isLogged: req.session.isLoggedIn,
-    idRol: req.session.idRol
+    idRol: req.session.idRol,
+    urlFotoUsuario : req.session.urlFotoUsuario
   });
 };
 
@@ -389,6 +403,7 @@ exports.setProfilePhoto = (req,res,next) => {
       } else {
           req.files.forEach(function (file) {
               const mediaName = file.key;
+              req.session.urlFotoUsuario = mediaName;
               const idUsuario = req.session.idUsuario;
               User.registerPFP(mediaName,idUsuario)
                 .then(([rows, fieldData]) => {

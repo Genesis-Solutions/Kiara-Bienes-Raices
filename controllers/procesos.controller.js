@@ -30,6 +30,7 @@ exports.getProcesos = async (req, res, next) => {
     res.render('procesosUsuario', {
       isLogged: req.session.isLoggedIn,
       idRol: req.session.idRol,
+      urlFotoUsuario : req.session.urlFotoUsuario,
       data: data
     });
   } catch (error) {
