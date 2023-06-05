@@ -170,6 +170,19 @@ module.exports = class Dashboard {
         });
     }
 
+     /*
+    * Revisión de cantidad de trámites de agente
+    * @param idUsuario: String -> Id del usuario que será revisado
+    */
+     static checkUserAgent(idUsuario) {
+        return db.execute(
+            'SELECT COUNT(idArrendador) as tercera FROM tramite where idAgente=? AND activoTramite=1', 
+            [idUsuario]
+        ).then(([rows, fielData]) => {
+        return rows[0].cuarta
+        });
+    }
+
     /*
     * Registrar un nuevo usuario en el sistema por parte del administrador.
     * @param nombreUsuario: String -> Nombre del usuario

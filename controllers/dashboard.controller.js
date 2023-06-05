@@ -151,7 +151,8 @@ exports.deleteUser = async (req, res, next) => {
     const primeraComprobacion = await Dashboard.checkUser(req.params.id)
     const segundaComprobacion = await Dashboard.checkUser2(req.params.id)
     const terceraComprobacion = await Dashboard.checkUser3(req.params.id)
-    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion
+    const comprobacionAgente = await Dashboard.checkUserAgent(req.params.id)
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion + comprobacionAgente;
     /*
     * Si los trámites activos son 0, eliminar usuario; si esto no es así, regresar un json que avise la existencia de procesos.
     */
