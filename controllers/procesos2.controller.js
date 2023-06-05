@@ -49,7 +49,7 @@ exports.postIniciarProceso = async(req, res, next) => {
     const resultJSON = JSON.stringify(result);
     Proceso.insertProcess(resultJSON,idInmueble,idCliente,idAgente,idDuenio)
         .then(([rows, fieldData]) => {
-            res.redirect('/'); //Cambiar despues la redirección
+            res.redirect('/perfil/procesos'); //Cambiar despues la redirección
         })
         .catch(error => { console.log(error) });
 }
