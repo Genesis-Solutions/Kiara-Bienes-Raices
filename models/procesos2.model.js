@@ -39,10 +39,22 @@ module.exports = class Procesos2 {
     *@param idArrendador el ID del arrendador relacionado al trámite
     *@return el resultado de la ejecución del comando INSERT en la base de datos
     */
-    static insertProcess(arregloPasos,idInmueble,idCliente,idAgente,idArrendador) {
+    static insertProcess(arregloPasos,idInmueble,idCliente,idAgente,idArrendador){
         return db.execute(
             'INSERT INTO tramite(fechaCreacionTramite, activoTramite, arregloPasos, idInmueble, idCliente, idAgente, idArrendador) VALUES(CURRENT_TIMESTAMP(),1,?,?,?,?,?)',
             [arregloPasos,idInmueble,idCliente,idAgente,idArrendador]
+        )
+    }
+
+    /*
+    Cambia el estado de un proceso de inmueble en la base de datos.
+    @param idInmueble el ID del inmueble para el cual se desea cambiar el estado del proceso
+    @return el resultado de la ejecución del comando UPDATE en la base de datos
+    */
+    static changeProcessState(idInmueble){
+        return db.execute(
+            'UPDATE inmueble SET activoInmueble=3 WHERE idInmueble=?',
+            [idInmueble]
         )
     }
 }
