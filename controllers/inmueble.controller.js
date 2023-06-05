@@ -60,7 +60,8 @@ exports.getInmueble = async (req, res, next) => {
         tramite: tramite,
         idUsuario: req.session.idUsuario,
         listaAttributesInmueble: listaAttributesInmueble[0],
-        currentURL: currentURL
+        currentURL: currentURL,
+        urlFotoUsuario : req.session.urlFotoUsuario
     })
 };
 
@@ -149,7 +150,8 @@ exports.getEditarInmueble = async(req, res, next) => {
         agente : agente,
         currentYear: currentYear,
         isLogged: req.session.isLoggedIn,
-        idRol: req.session.idRol
+        idRol: req.session.idRol,
+        urlFotoUsuario : req.session.urlFotoUsuario
     })
 }
 

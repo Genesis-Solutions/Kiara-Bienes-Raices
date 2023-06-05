@@ -10,7 +10,8 @@ exports.getIniciarProceso = async (req, res, next) => {
         idAgente: req.session.idUsuario,
         idTipoMovimiento: req.params.idTipoMovimiento,
         inmuebles: inmueble,
-        usuarios: usuarios
+        usuarios: usuarios,
+        urlFotoUsuario : req.session.urlFotoUsuario
     });
 };
 
