@@ -173,6 +173,9 @@
 
         <!-- Details Section -->
         <div class="p-12 bg-sky-950 text-white space-y-6">
+            <div class="flex flex-row space-x-5 justify-end">
+                <i class="fa-solid fa-share-nodes fa-2xl cursor-pointer" data-modal-target="shareModal" data-modal-toggle="shareModal"></i>
+            </div>
             <% if (idRol == 1 || listaAttributesInmueble[0].idAgenteAsignado == idUsuario) { %>
                 <div class="flex flex-row space-x-5 justify-end">
                     <a href="/inmueble/editarInmueble/<%=inmueble.idInmueble%>" class="flex flex-col items-end justify-center">
@@ -373,7 +376,58 @@
             </div>
         </div>
         <div id="idInmueble" class="hidden"><%=inmueble.idInmueble%></div>
+        <div id="shareModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-md max-h-full">
+            <!-- Modal content -->
+                <div class="relative bg-white rounded-lg">
+                    <div id="contenedor-modal" class="p-4">
+                        <h2 class="text-2xl font-semibold">
+                            Compartir Propiedad
+                        </h2>
+                        <hr class="h-px my-3 mb-5 bg-gray-800 border-0">
+                        <div class="flex justify-center items-center space-x-10 mb-4">
+                          <a href="https://www.facebook.com/share.php?u=Mira%20esta%20propiedad!%20<%=currentURL%>" target="_blank">
+                            <i class="fa-brands fa-facebook fa-2xl text-blue-600 hover:scale-110 transition duration-150 fa-2xl"></i>
+                          </a>
+                          <a href="whatsapp://send?text=Mira%20esta%20propiedad!%20<%=currentURL%>" target="_blank">
+                            <i class="fa-brands fa-square-whatsapp text-green-600 hover:scale-110 transition duration-150 fa-2xl"></i>
+                          </a>
+                          <a href="https://twitter.com/intent/tweet?text=Mira%20esta%20propiedad!%20<%=currentURL%>" target="_blank">
+                            <i class="fa-brands fa-twitter text-blue-300 hover:scale-110 transition duration-150 fa-2xl"></i>
+                          </a>
+                          <!-- Add more social media icons as needed -->
+                        </div>
+                        <div class="flex items-center space-x-5">
+                          <input type="text" name="url" id="url" value="<%=currentURL%>" class="w-full p-2 border">
+                          <button onclick="copy()" class="py-2 px-4 bg-green-500 text-white rounded cursor-pointer">Copy</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div> 
     <% } %>
+
+        <script>
+            function copy(){
+                var urlInput = document.getElementById("url");
+                var element = document.getElementById('contenedor-modal')
+                var urlValue = urlInput.value;
+                console.log("URL value:", urlValue);
+                navigator.clipboard.writeText(urlValue).then(function() {
+                    console.log('Copied!');
+                }, function() {
+                    console.log('Copy error')
+                });
+                const newItem = document.createElement('p');
+                newItem.innerText = "¡Url Copiado!";
+                newItem.className = "text-center pt-5";
+                element.appendChild(newItem);
+                setTimeout(function() {
+                    newItem.remove();
+                }, 1500);
+            }
+        </script>
 
     <%- include("partials/footer") %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
