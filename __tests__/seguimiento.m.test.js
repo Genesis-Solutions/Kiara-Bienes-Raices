@@ -1,4 +1,5 @@
 const { insertProcess } = require('../models/procesos2.model.js');
+const { infoTramite } = require('../models/procesos.model.js');
 const db = require('../util/database.util.js'); 
 
 jest.mock('../util/database.util.js', () => ({
@@ -12,12 +13,26 @@ describe('insertProcess', () => {
         const idCliente = 2;
         const idAgente = 3;
         const idArrendador = 4;
-
         await insertProcess(arregloPasos, idInmueble, idCliente, idAgente, idArrendador);
-
         expect(db.execute).toHaveBeenCalledWith(
             'INSERT INTO tramite(fechaCreacionTramite, activoTramite, arregloPasos, idInmueble, idCliente, idAgente, idArrendador) VALUES(CURRENT_TIMESTAMP(),1,?,?,?,?,?)',
             [arregloPasos, idInmueble, idCliente, idAgente, idArrendador]
         );
+    });
+});
+
+
+describe('infoTramite', () => {
+    it('debe ejecutar la consulta SQL correcta y devolver los datos del trámite', async () => {
+        const idUsuario = 1;
+        // Configurar el mock de db.execute para que devuelva un resultado simulado
+        const expectedData = [/* Datos simulados del trámite */];
+        db.execute.mockResolvedValue([expectedData]);
+        const result = await infoTramite(idUsuario);
+        expect(db.execute).toHaveBeenCalledWith(
+            'SELECT * FROM tramite WHERE idCliente = ? OR idArrendador = ? OR idAgente = ? AND activoTramite = 1',
+            [idUsuario, idUsuario, idUsuario]
+        );
+        expect(result).toEqual(expectedData);
     });
 });
