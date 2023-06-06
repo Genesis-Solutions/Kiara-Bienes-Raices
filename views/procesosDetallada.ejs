@@ -21,34 +21,50 @@
 
     <div class="pr-8 pl-14 md:px-28 pt-10 pb-16 grid grid-cols-5 gap-2 md:gap-0">
 
+        <% if(pasos.length > 0){ %>
+            <% pasos.forEach(paso=>{ %>
+            <!-- Esto es 1 Step con Rayita -->
+                <div class="col-span-2 row-span-1">
+                    <ol class="relative border-l border-sky-950">
+                        <li class="ml-6">            
+                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <p class="text-white"><%=paso.paso%></p>
+                            </span>
+                            <h3 class="font-medium leading-tight pt-2 md:pt-0"><%=paso.titulo%></h3>
+                            <p class="text-sm text-gray-500 hidden md:block"><%=paso.descPaso%></p>
+                        </li>
+                    </ol>
+                    <hr class="h-10 border-l border-sky-950 border-t-0">
+                </div>
+                <div class="col-span-2 row-span-1 justify-center">
+                    <%if(paso.status == 0){%>
+                        <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-gray-600">
+                            Sin empezar
+                        </p>
+                    <% } else if (paso.status == 1) { %>
+                        <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-blue-600">
+                            En proceso
+                        </p>
+                    <% } else { %>
+                        <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-green-600">
+                            Terminado
+                        </p>
+                    <% } %>
+                </div>
+                <div class="col-span-1 row-span-1 flex justify-center">
+                    <%if(paso.observacion != null || paso.observacion != undefined){%>
+                        <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
+                            <p class="text-white">?</p>
+                        </span>
+                    <% } %>
+                </div>
+        <% }); %>
+        <% } else { %>
+            <p class="text-center text-lg font-bold">No hay información del tramite</p>
+        <% }; %>
         <!-- Esto es 1 Step con Rayita -->
 
-        <div class="col-span-2 row-span-1">
-            <ol class="relative border-l border-sky-950">
-                <li class="ml-6">            
-                    <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                        <p class="text-white">1</p>
-                    </span>
-                    <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                    <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                </li>
-            </ol>
-            <hr class="h-10 border-l border-sky-950 border-t-0">
-        </div>
-        <div class="col-span-2 row-span-1 justify-center">
-            <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-green-600">
-                Terminado
-            </p>
-        </div>
-        <div class="col-span-1 row-span-1 flex justify-center">
-            <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
-                <p class="text-white">?</p>
-            </span>
-        </div>
-
-        <!-- Esto es 1 Step con Rayita -->
-
-        <div class="col-span-2 row-span-1">
+        <!-- <div class="col-span-2 row-span-1">
             <ol class="relative border-l border-sky-950">
                 <li class="ml-6">            
                     <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
@@ -69,87 +85,17 @@
             <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
                 <p class="text-white">?</p>
             </span>
-        </div>
-
-        <!-- Esto es 1 Step con Rayita -->
-
-        <div class="col-span-2 row-span-1">
-            <ol class="relative border-l border-sky-950">
-                <li class="ml-6">            
-                    <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                        <p class="text-white">3</p>
-                    </span>
-                    <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                    <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                </li>
-            </ol>
-            <hr class="h-10 border-l border-sky-950 border-t-0">
-        </div>
-        <div class="col-span-2 row-span-1 justify-center">
-            <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-gray-800">
-                Actual
-            </p>
-        </div>
-        <div class="col-span-1 row-span-1 flex justify-center">
-            <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
-                <p class="text-white">?</p>
-            </span>
-        </div>
-
-        <!-- Esto es 1 Step con Rayita-->
-
-        <div class="col-span-2 row-span-1">
-            <ol class="relative border-l border-sky-950">
-                <li class="ml-6">            
-                    <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                        <p class="text-white">4</p>
-                    </span>
-                    <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                    <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                </li>
-            </ol>
-            <hr class="h-10 border-l border-sky-950 border-t-0">
-        </div>
-        <div class="col-span-2 row-span-1 justify-center">
-            <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-red-600">
-                Sin Empezar
-            </p>
-        </div>
-        <div class="col-span-1 row-span-1 flex justify-center">
-            <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
-                <p class="text-white">?</p>
-            </span>
-        </div>
-
-        <!-- Esto es 1 Step Sin Rayita Manejar con un IF -->
-
-        <div class="col-span-2 row-span-1">
-            <ol class="relative border-l border-sky-950">
-                <li class="ml-6">            
-                    <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                        <p class="text-white">5</p>
-                    </span>
-                    <h3 class="font-medium leading-tight pt-2 md:pt-0">Título</h3>
-                    <p class="text-sm text-gray-500 hidden md:block">Descripción</p>
-                </li>
-            </ol>
-        </div>
-        <div class="col-span-2 row-span-1 justify-center">
-            <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-red-600">
-                Sin Empezar
-            </p>
-        </div>
-        <div class="col-span-1 row-span-1 flex justify-center">
-            <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
-                <p class="text-white">?</p>
-            </span>
-        </div>
+        </div> -->
 
     </div>
 
     <!-- Footer Section -->
 
     <%- include("partials/footer") %>
+
+    <script>
+        
+    </script>
 
 </body>
 </html>
