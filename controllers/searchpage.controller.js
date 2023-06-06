@@ -129,12 +129,14 @@ exports.getSearchPage = async( req,res,next ) => {
             linkFinal: linkFinal,
             numeroPaginas: numeroPaginas,
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario : req.session.urlFotoUsuario
         }); 
     } else {
         res.render('searchPageVacia', {
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario : req.session.urlFotoUsuario
         }); 
     }
 }
@@ -570,12 +572,14 @@ exports.getInmueblesFiltrados = async ( req, res, next ) => {
             linkFinal: linkFinal,
             numeroPaginas: numeroPaginas,
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario : req.session.urlFotoUsuario
         }); 
     } else {
         res.render('searchPageVacia', {
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario : req.session.urlFotoUsuario
         });
     };
 };

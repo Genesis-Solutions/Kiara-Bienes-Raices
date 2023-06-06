@@ -18,13 +18,15 @@ exports.getDashboard = (req, res, next) => {
         res.render("listUsers", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            idUsuario: req.session.idUsuario 
+            idUsuario: req.session.idUsuario,
+            urlFotoUsuario : req.session.urlFotoUsuario
         });
     } else if (req.session.idRol == 2) {
         res.render("dashboardListaPropiedades", {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            idUsuario: req.session.idUsuario 
+            idUsuario: req.session.idUsuario,
+            urlFotoUsuario : req.session.urlFotoUsuario
         });
     }
 };
@@ -37,7 +39,8 @@ exports.getDashboardProps = (req, res, next) => {
     res.render("dashboardListaPropiedades", {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
-        idUsuario: req.session.idUsuario 
+        idUsuario: req.session.idUsuario,
+        urlFotoUsuario : req.session.urlFotoUsuario
     });
 };
 
@@ -49,7 +52,8 @@ exports.getDashboardPropsInactivas = (req, res, next) => {
     res.render("listaPropiedadesInactivas", {
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
-        idUsuario: req.session.idUsuario 
+        idUsuario: req.session.idUsuario,
+        urlFotoUsuario : req.session.urlFotoUsuario
     });
 };
 
@@ -118,7 +122,8 @@ exports.getAdminUser = async (req, res, next) => {
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
             listRoles: listRoles[0],
-            idUsuario: req.session.idUsuario, 
+            idUsuario: req.session.idUsuario,
+            urlFotoUsuario : req.session.urlFotoUsuario
         });
     }
 }
@@ -151,7 +156,8 @@ exports.deleteUser = async (req, res, next) => {
     const primeraComprobacion = await Dashboard.checkUser(req.params.id)
     const segundaComprobacion = await Dashboard.checkUser2(req.params.id)
     const terceraComprobacion = await Dashboard.checkUser3(req.params.id)
-    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion
+    const comprobacionAgente = await Dashboard.checkUserAgent(req.params.id)
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion + comprobacionAgente;
     /*
     * Si los trámites activos son 0, eliminar usuario; si esto no es así, regresar un json que avise la existencia de procesos.
     */
@@ -269,7 +275,8 @@ exports.postAdminUser = async (req, res, next) => {
                         idRol: req.session.idRol,
                         errorEmail,
                         listRoles: listRoles[0],
-                        idUsuario: req.session.idUsuario 
+                        idUsuario: req.session.idUsuario,
+                        urlFotoUsuario : req.session.urlFotoUsuario
                     });
                 }
             } else {
@@ -306,7 +313,8 @@ exports.postAdminUser = async (req, res, next) => {
                             idRol: req.session.idRol,
                             errorPassword,
                             listRoles: listRoles[0],
-                            idUsuario: req.session.idUsuario
+                            idUsuario: req.session.idUsuario,
+                            urlFotoUsuario : req.session.urlFotoUsuario
                         });
                     }
                 }
@@ -344,7 +352,8 @@ exports.getRegisterpage = async (req, res, next) => {
             categorias: categorias[0],
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,
-            idUsuario: req.session.idUsuario 
+            idUsuario: req.session.idUsuario,
+            urlFotoUsuario : req.session.urlFotoUsuario
         });
     }
 }
@@ -386,7 +395,8 @@ exports.getCategoria = async (req, res, next) => {
             listaAgentes: listaAgentes[0],
             listaTipoMovimientos: listaTipoMovimientos[0],
             idUsuario: idUsuario,
-            currentYear: currentYear
+            currentYear: currentYear,
+            urlFotoUsuario : req.session.urlFotoUsuario
         });
     }
 };

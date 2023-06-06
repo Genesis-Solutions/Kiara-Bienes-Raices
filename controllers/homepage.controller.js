@@ -12,6 +12,7 @@ exports.root = async(req,res,next) => {
     const nombreUsuario = req.session.nombreUsuario;
     const apellidosUsuario = req.session.apellidosUsuario;
     const idRol = req.session.idRol;
+    const urlFotoUsuario = req.session.urlFotoUsuario;
     /** 
     * Construye la lista de inmuebles  con sus imágenes respectivas
     */
@@ -38,6 +39,7 @@ exports.root = async(req,res,next) => {
             apellidosUsuario: apellidosUsuario,
             idUsuario: idUsuario,
             idRol: idRol,
+            urlFotoUsuario : urlFotoUsuario,
             inmuebles: inmuebles[0]
         });
     } else {
@@ -398,12 +400,14 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
             linkFinal: linkFinal,
             numeroPaginas: numeroPaginas,
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario : req.session.urlFotoUsuario
         }); 
     } else {
         res.render('searchPageVacia', {
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario: req.session.urlFotoUsuario
         })
     };
     

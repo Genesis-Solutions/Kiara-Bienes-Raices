@@ -10,7 +10,8 @@ exports.getIniciarProceso = async (req, res, next) => {
         idAgente: req.session.idUsuario,
         idTipoMovimiento: req.params.idTipoMovimiento,
         inmuebles: inmueble,
-        usuarios: usuarios
+        usuarios: usuarios,
+        urlFotoUsuario : req.session.urlFotoUsuario
     });
 };
 
@@ -47,9 +48,7 @@ exports.postIniciarProceso = async(req, res, next) => {
     };
     const result = splitKeyValue(pasos);
     const resultJSON = JSON.stringify(result);
-    Proceso.insertProcess(resultJSON,idInmueble,idCliente,idAgente,idDuenio)
-        .then(([rows, fieldData]) => {
-            res.redirect('/'); //Cambiar despues la redirección
-        })
-        .catch(error => { console.log(error) });
+    const cambiarEstado = await Proceso.changeProcessState(idInmueble);
+    const insertarProceso = await Proceso.insertProcess(resultJSON,idInmueble,idCliente,idAgente,idDuenio);
+    res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }

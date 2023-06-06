@@ -21,7 +21,7 @@
         <hr class="h-px my-4 bg-gray-800 border-0">
     </div>
 
-    <form action="/dashboard/iniciarProceso/<%=inmueble.idInmueble%>" method="POST">
+    <form id="pasosForm" name="pasosForm" action="/dashboard/iniciarProceso/<%=inmueble.idInmueble%>" method="POST" novalidate>
         <!-- Section -->
         <div class="pt-5 px-12 grid grid-cols-2 gap-5">
             <div class="col-span-2 md:col-span-1">
@@ -505,8 +505,6 @@
                     </div>
                 </div>
             </div>
-            <!-- COUNTER DE CUANTOS STEPS HAY -->
-            <input id="counter" type="number" hidden value="6"></input>
         <% } %>
         
 
@@ -525,7 +523,7 @@
             <button type="button" onclick="goBack()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
                 Cancelar
             </button>
-            <button type="submit" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+            <button type="button" onclick="verificarFormulario()" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnSubmit">
                 Iniciar
             </button>
         </div>
@@ -565,15 +563,16 @@
 <% } %>
 <% if(idTipoMovimiento == 2) { %>
     <input hidden type="number" id="pasos" value="7">
+    <input hidden type="number" id="counter" name="counter" value="6">
 <% } else { %>
     <input hidden type="number" id="pasos" value="12">
+    <input hidden type="number" id="counter" name="counter" value="11">
 <% } %>
 
 <script>
     function deleteItem(item) {
         const div = item.parentNode.parentNode;
         div.parentNode.removeChild(div);
-        console.log("deleted")
         updateCounter();
         updateStepNumbers();
     }
@@ -583,14 +582,12 @@
     function updateCounter() {
         var counter = document.getElementById('counter');
         counter.value -= 1;
-        console.log("Numero de pasos " + counter.value);
     }
     function addCounter() {
         var counter = document.getElementById('counter');
         var num = parseInt(counter.value);
         var newValue = num + 1;
         counter.value = newValue;
-        console.log("Numero de pasos " + counter.value);
     }
     function updateStepNumbers() {
         var stepNumbers = document.querySelectorAll('.step-number p');
@@ -643,23 +640,24 @@
             number.name= "observacion"+(index + 1);
         });
     }
+</script>
 
-    function showPaso(item) {
-        console.log("el id es: " + item.id)
-    }
-    function showTitulo(item) {
-        console.log("el id es: " + item.id)
-    }
-    function showDescripcion(item) {
-        console.log("el id es: " + item.id)
-    }
-    function showEstatus(item) {
-        console.log("el id es: " + item.id)
-    }
-    function showObservaciones(item) {
-        console.log("el id es: " + item.id)
-    }
 
+<script type="text/javascript"> 
+    function verificarFormulario() {
+        var counter = document.getElementById('counter');
+        if(counter.value == 0){
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique que el proceso tenga por lo menos 1 paso',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return false
+        } else {
+            document.getElementById('pasosForm').submit();
+        }
+    }
 </script>
 
 <script>
