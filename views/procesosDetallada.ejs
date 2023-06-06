@@ -10,9 +10,9 @@
 
     <div class="px-10 py-2 text-center">
         <hr class="h-px my-4 bg-gray-800 border-0">
-        <h2 class="text-2xl md:text-4xl font-bold mb-2 pt-5 md:pt-10">Mi Proceso</h2>
-        <p class="pb-5 md:pb-10">
-            Consulta información detallada sobre tu proceso. Si tienes alguna duda, puedes ponerte en contacto con uno de nuestros agentes.
+        <h2 class="text-2xl md:text-4xl font-bold mb-2 pt-5 md:pt-10"><%= inmueble.nombreInmueble %></h2>
+        <p class="pb-5 md:pb-10 truncate">
+            <%= inmueble.descInmueble.slice(0,170) %>...
         </p>
         <hr class="h-px my-4 bg-gray-800 border-0">
     </div>
@@ -27,7 +27,7 @@
                 <div class="col-span-2 row-span-1">
                     <ol class="relative border-l border-sky-950">
                         <li class="ml-6">            
-                            <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                            <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
                                 <p class="text-white"><%=paso.paso%></p>
                             </span>
                             <h3 class="font-medium leading-tight pt-2 md:pt-0"><%=paso.titulo%></h3>
@@ -52,9 +52,12 @@
                     <% } %>
                 </div>
                 <div class="col-span-1 row-span-1 flex justify-center">
-                    <%if(paso.observacion != null || paso.observacion != undefined){%>
+                    <%if(paso.observacion != "0" || paso.observacion != 0){%>
                         <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
-                            <p class="text-white">?</p>
+                            <div id="tooltipObservacion" role="tooltip" class="absolute z-10 p-4 invisible inline-block text-white transition-opacity duration-300 bg-gray-900 rounded-lg opacity-0 tooltip">
+                                <%=paso.observacion%>
+                            </div>
+                            <p data-tooltip-target="tooltipObservacion" class="text-white">?</p>
                         </span>
                     <% } %>
                 </div>
@@ -94,8 +97,21 @@
     <%- include("partials/footer") %>
 
     <script>
-        
+        function updateStepNumbers() {
+            var stepNumbers = document.querySelectorAll('.step-number p');
+            stepNumbers.forEach(function(number, index) {
+            number.innerHTML = index + 1;
+            });
+        }
     </script>
+
+    <script type="text/javascript">
+        var lineas = document.querySelectorAll('hr');
+        var last = lineas[lineas.length - 1];
+        last.parentNode.removeChild(last);
+        updateStepNumbers();
+    </script>
+
 
 </body>
 </html>
