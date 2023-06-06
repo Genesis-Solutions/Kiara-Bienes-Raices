@@ -37,19 +37,26 @@
                     <hr class="h-10 border-l border-sky-950 border-t-0">
                 </div>
                 <div class="col-span-2 row-span-1 justify-center">
-                    <%if(paso.status == 0){%>
-                        <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-gray-600">
-                            Sin empezar
-                        </p>
-                    <% } else if (paso.status == 1) { %>
-                        <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-blue-600">
-                            En proceso
-                        </p>
-                    <% } else { %>
-                        <p class="flex-none px-5 py-2 w-auto text-center rounded-lg text-sm text-white bg-green-600">
-                            Terminado
-                        </p>
-                    <% } %>
+                    <select class="h-10 px-5 bg-white w-full rounded-lg border font-semibold border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block">
+                        <option value="Sin empezar" 
+                            <% if(paso.status == 0) { %> 
+                                selected
+                            <% } %> 
+                            > Sin empezar
+                        </option>
+                        <option value="En proceso" 
+                            <% if (paso.status == 1) { %>
+                                selected
+                            <% } %> 
+                            > En Proceso
+                        </option>
+                        <option value="Terminado" 
+                            <% if (paso.status == 2) { %>
+                                selected
+                            <% } %> 
+                            > Terminado
+                        </option>
+                    </select>
                 </div>
                 <div class="col-span-1 row-span-1 flex justify-center">
                     <%if(paso.observacion != "0" || paso.observacion != 0){%>

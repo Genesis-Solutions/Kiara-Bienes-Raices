@@ -1,5 +1,6 @@
 // Base controlador
 const Proceso = require('../models/procesos2.model');
+const ProcesoInfo = require('../models/procesos.model');
 
 exports.getIniciarProceso = async (req, res, next) => {
     const inmueble = await Proceso.fetchInmueble(req.params.idInmueble);
@@ -52,3 +53,45 @@ exports.postIniciarProceso = async(req, res, next) => {
     const insertarProceso = await Proceso.insertProcess(resultJSON,idInmueble,idCliente,idAgente,idDuenio);
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
+
+/*
+ * Muestra la vista detallada de un proceso.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
+exports.getTramite = async(req,res,next) => {
+    const idTramite = req.params.idTramite;
+    const pasos = await ProcesoInfo.getPasos(idTramite);
+    const inmueble = await ProcesoInfo.getDescTramite(idTramite);
+    res.render('procesosDetallada', {
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+        idUsuario: req.session.idUsuario,
+        inmueble: inmueble[0],
+        urlFotoUsuario : req.session.urlFotoUsuario,
+        pasos: pasos
+    });
+};
+
+/*
+ * Muestra la la vista detallada del proceso para modificarlo.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
+exports.getModificarTramite = async(req,res,next) => {
+    const idTramite = req.params.idTramite;
+    const pasos = await ProcesoInfo.getPasos(idTramite);
+    const inmueble = await ProcesoInfo.getDescTramite(idTramite);
+    res.render('procesoModificar', {
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+        idUsuario: req.session.idUsuario,
+        inmueble: inmueble[0],
+        urlFotoUsuario : req.session.urlFotoUsuario,
+        pasos: pasos
+    });
+};

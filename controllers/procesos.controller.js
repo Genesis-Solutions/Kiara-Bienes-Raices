@@ -22,7 +22,8 @@ exports.getProcesos = async (req, res, next) => {
         descInmueble: tramiteInfo[0].descInmueble,
         direccionInmueble: tramiteInfo[0].direccionInmueble,
         nombreAgente: nombreAgente[0][0].nombreUsuario,
-        fotoInmueble: imgSrcFilename
+        fotoInmueble: imgSrcFilename,
+        idTramite: tramiteId
       };
       return info;
     }));

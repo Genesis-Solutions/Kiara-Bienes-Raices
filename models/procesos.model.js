@@ -121,5 +121,29 @@ module.exports = class Procesos {
       });
   }
 
+  static getTramite(idTramite) {
+    return db
+      .execute("SELECT * FROM tramite WHERE idTramite = ? AND activoTramite = 1", [idTramite])
+      .then(([rows, data]) => {
+        return rows[0];
+      })
+      .catch((error) => {
+        console.log(error);
+        return 0;
+      });
+  }
+
+  static getPasos(idTramite) {
+    return db
+      .execute("SELECT arregloPasos FROM tramite WHERE idTramite = ? AND activoTramite = 1", [idTramite])
+      .then(([rows, data]) => {
+        return rows[0].arregloPasos;
+      })
+      .catch((error) => {
+        console.log(error);
+        return 0;
+      });
+  }
+
 }
 

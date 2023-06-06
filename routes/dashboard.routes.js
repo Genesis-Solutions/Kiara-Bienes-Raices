@@ -11,13 +11,13 @@ const procesos2Controller = require('../controllers/procesos2.controller');
 /**
 * Rutas
 */
-
+router.get('/proceso/:idTramite', isLogged, procesos2Controller.getTramite);
+router.get('/modificarProceso/:idTramite', isLogged, procesos2Controller.getModificarTramite);
 router.get('/iniciarProceso/:idInmueble/:idTipoMovimiento', isLogged, agenteAdminAuth, procesos2Controller.getIniciarProceso);
 router.post('/iniciarProceso/:idInmueble', procesos2Controller.postIniciarProceso);
 /**
 * Registrar imagenes de un inmueble
 */
-
 router.post('/alta/inmueble/imagenes/:inmueble', dashboardController.setPhotos);
 /**
 *Actualizar el cuerpo de una casa
@@ -81,12 +81,10 @@ router.put('/lista/eliminar/:id', dashboardController.deleteUser);
 */
 router.put('/comprobar/actualizar/:idUsuario/:idRol', dashboardController.comprobarUpdateRol);
 
-
 router.get('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.getAdminUser)
 router.post('/usuarios/nuevoUsuario',isLogged, adminAuth, dashboardController.postAdminUser)
 router.get('/usuarios',isLogged, adminAuth, dashboardController.getUsers);
 router.get('/', isLogged, agenteAdminAuth, dashboardController.getDashboard);
-
 /*
 * Rutas de la lista de propiedades
 */
