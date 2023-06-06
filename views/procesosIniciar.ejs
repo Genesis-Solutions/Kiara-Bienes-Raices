@@ -671,7 +671,21 @@
         const btnAgregarPaso = document.getElementById('btnAgregarPaso');
         
         function addItem() {
-            const i = document.getElementById('pasos');
+
+                // Validar campos vacios
+            const tituloInput = document.getElementById('titulo');
+            const descripcionInput = document.getElementById('descripcion');
+        
+            if (tituloInput.value.trim() === '' || descripcionInput.value.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que los campos esten llenos',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return false
+            } else {
+                const i = document.getElementById('pasos');
             var currentValue = parseInt(i.value);
             const titulo  = document.getElementById('titulo').value;
             const descripcion  = document.getElementById('descripcion').value;
@@ -716,6 +730,8 @@
                 addCounter();
             }
         }
+            }
+           
         // Attach a click event listener to the button
         btnAgregarPaso.addEventListener('click', addItem);
 </script>
