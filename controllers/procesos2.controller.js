@@ -74,3 +74,24 @@ exports.getTramite = async(req,res,next) => {
         pasos: pasos
     });
 };
+
+/*
+ * Muestra la la vista detallada del proceso para modificarlo.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
+exports.getModificarTramite = async(req,res,next) => {
+    const idTramite = req.params.idTramite;
+    const pasos = await ProcesoInfo.getPasos(idTramite);
+    const inmueble = await ProcesoInfo.getDescTramite(idTramite);
+    res.render('procesoModificar', {
+        isLogged: req.session.isLoggedIn,
+        idRol: req.session.idRol,
+        idUsuario: req.session.idUsuario,
+        inmueble: inmueble[0],
+        urlFotoUsuario : req.session.urlFotoUsuario,
+        pasos: pasos
+    });
+};
