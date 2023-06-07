@@ -80,7 +80,7 @@ module.exports = class Procesos {
  */
   static getFotoTramite(idInmueble) {
     return db.execute(
-      "SELECT idFoto FROM fotoinmueble WHERE idInmueble = ?",
+      "SELECT idFoto FROM fotoInmueble WHERE idInmueble = ?",
       [idInmueble]
     );
 }
