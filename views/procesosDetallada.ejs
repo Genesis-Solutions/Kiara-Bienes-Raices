@@ -52,12 +52,12 @@
                     <% } %>
                 </div>
                 <div class="col-span-1 row-span-1 flex justify-center">
-                    <%if(paso.observacion != "0" || paso.observacion != 0){%>
-                        <span class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
-                            <div id="tooltipObservacion" role="tooltip" class="absolute z-10 p-4 invisible inline-block text-white transition-opacity duration-300 bg-gray-900 rounded-lg opacity-0 tooltip">
+                    <%if(paso.observacion != "" || paso.observacion != 0){%>
+                        <span data-tooltip-target="tooltipObservacion<%= paso.paso %>" class="flex items-center justify-center w-8 h-8 bg-gray-500 rounded-full -left-4 ring-8 ring-white hover:bg-gray-400">
+                            <div id="tooltipObservacion<%= paso.paso %>" role="tooltip" class="absolute z-10 p-4 invisible inline-block text-white transition-opacity duration-300 bg-gray-900 rounded-lg opacity-0 tooltip">
                                 <%=paso.observacion%>
                             </div>
-                            <p data-tooltip-target="tooltipObservacion" class="text-white">?</p>
+                            <p class="text-white">?</p>
                         </span>
                     <% } %>
                 </div>
