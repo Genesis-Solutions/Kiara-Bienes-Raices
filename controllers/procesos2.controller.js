@@ -1,6 +1,7 @@
 // Base controlador
 const Proceso = require('../models/procesos2.model');
 const ProcesoInfo = require('../models/procesos.model');
+const notificacionPaso = require("../util/email.js");
 
 exports.getIniciarProceso = async (req, res, next) => {
     const inmueble = await Proceso.fetchInmueble(req.params.idInmueble);
@@ -84,6 +85,13 @@ exports.postModificarProceso = async(req, res, next) => {
     console.log(resultJSON);
     console.log("id del tramite", idTramite)
     const actualizarProceso = await Proceso.updateProcess(resultJSON,idTramite);
+    const 
+    notificacionPaso.notificacionPaso({
+        nombre: ,
+        email: ,
+        idTramite: idTramite,
+        nombreInmueble: 
+    })
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
 
