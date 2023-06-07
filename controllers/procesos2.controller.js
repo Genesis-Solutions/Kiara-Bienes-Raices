@@ -55,6 +55,42 @@ exports.postIniciarProceso = async(req, res, next) => {
 }
 
 /*
+ * Actualiza un proceso de seguimiento de un determinado inmueble.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
+exports.postModificarProceso = async(req, res, next) => {
+    const idDuenio = req.body.id_duenio;
+    const idCliente = req.body.id_cliente;
+    let idAgente = req.session.idUsuario;
+    const pasos = req.body;
+    var duenio = "id_duenio";
+    var cliente = "id_cliente";
+    delete pasos[duenio];
+    delete pasos[cliente];
+    const splitKeyValue = obj => {
+        const keys = Object.keys(obj);
+        const result = [];
+        for(let i = 0; i < keys.length; i=i+5){
+        result.push({
+            'titulo': obj[keys[i]],
+            'descPaso': obj[keys[i+1]],
+            'paso':obj[keys[i+2]],
+            'status':obj[keys[i+3]],
+            'observacion':obj[keys[i+4]],
+        });
+        };
+        return result;
+    };
+    const result = splitKeyValue(pasos);
+    const resultJSON = JSON.stringify(result);
+    const actualizarProceso = await Proceso.updateProcess(resultJSON,idTramite);
+    res.redirect('/perfil/procesos'); //Cambiar despues la redirección
+}
+
+/*
  * Muestra la vista detallada de un proceso.
  * @param req La solicitud HTTP que contiene los datos del formulario.
  * @param res La respuesta HTTP que se enviará al navegador.
