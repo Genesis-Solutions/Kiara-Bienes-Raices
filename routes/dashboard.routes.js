@@ -15,6 +15,7 @@ router.get('/proceso/:idTramite', isLogged, procesos2Controller.getTramite);
 router.get('/modificarProceso/:idTramite', isLogged, procesos2Controller.getModificarTramite);
 router.get('/iniciarProceso/:idInmueble/:idTipoMovimiento', isLogged, agenteAdminAuth, procesos2Controller.getIniciarProceso);
 router.post('/iniciarProceso/:idInmueble', procesos2Controller.postIniciarProceso);
+router.post('/modificarProceso/:idTramite', procesos2Controller.postModificarProceso);
 /**
 * Registrar imagenes de un inmueble
 */

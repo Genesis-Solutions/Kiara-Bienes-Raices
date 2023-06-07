@@ -47,6 +47,19 @@ module.exports = class Procesos2 {
     }
 
     /*
+    *Actualiza proceso de trámite en la base de datos.
+    *@param arregloPasos el arreglo de pasos del trámite
+    *@param idTramite el trámite a actualizar
+    *@return el resultado de la ejecución del comando UPDATE en la base de datos
+    */
+    static updateProcess(arregloPasos,idTramite){
+        return db.execute(
+            'UPDATE tramite SET arregloPasos=? WHERE idTramite=?',
+            [arregloPasos,idTramite]
+        )
+    }
+
+    /*
     Cambia el estado de un proceso de inmueble en la base de datos.
     @param idInmueble el ID del inmueble para el cual se desea cambiar el estado del proceso
     @return el resultado de la ejecución del comando UPDATE en la base de datos
