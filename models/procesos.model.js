@@ -54,7 +54,7 @@ module.exports = class Procesos {
   
   static getNombreAgente(idTramite) {
     return db.execute(
-      "SELECT u.idUsuario, u.nombreUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = ?",
+      "SELECT u.idUsuario, u.nombreUsuario, u.apellidosUsuario FROM usuario u JOIN tramite t ON u.idUsuario = t.idAgente WHERE t.idTramite = ?",
       [idTramite]
     );
   }

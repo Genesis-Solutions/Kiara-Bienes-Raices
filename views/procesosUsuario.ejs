@@ -49,7 +49,10 @@
                             </div>
                             <div class="grid grid-cols-3 gap-5">
                                 <div class="col-span-3 lg:col-span-1 flex items-center order-first lg:order-last">
-                                    <i id="userButton" class="fa-solid fa-circle-user fa-2xl mr-2"></i><p>Agente: <%= tramite.nombreAgente %></p>
+                                    <button id="userButton" class="mr-6  block h-14 w-14 rounded-full overflow-hidden border-2 border-gray-400 focus:outline-none">
+                                        <img src="/get_bucket_img?image=<%- urlFotoUsuario %>" />
+                                    </button>
+                                    <p>Agente: <%= tramite.nombreAgente %> <%= tramite.apellidosAgente %></p>
                                 </div>
 
                                 <div class="col-span-3 lg:col-span-1 flex items-center">
