@@ -64,8 +64,10 @@ exports.postIniciarProceso = async(req, res, next) => {
  */
 exports.postModificarProceso = async(req, res, next) => {
     const idTramite = req.params.idTramite;
+    const nombreInmueble = req.body.nombreInmueble;
+    var nombreIn = "nombreInmueble";
     const pasos = req.body;
-    
+    delete pasos[nombreIn];
     const splitKeyValue = obj => {
         const keys = Object.keys(obj);
         const result = [];
@@ -82,15 +84,21 @@ exports.postModificarProceso = async(req, res, next) => {
     };
     const result = splitKeyValue(pasos);
     const resultJSON = JSON.stringify(result);
-    console.log(resultJSON);
-    console.log("id del tramite", idTramite)
     const actualizarProceso = await Proceso.updateProcess(resultJSON,idTramite);
-    const 
+    const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
+    const infoDuenio = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idArrendador)
+    const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente)
     notificacionPaso.notificacionPaso({
-        nombre: ,
-        email: ,
+        nombre: infoDuenio[0][0].nombreUsuario,
+        email: infoDuenio[0][0].emailUsuario,
         idTramite: idTramite,
-        nombreInmueble: 
+        nombreInmueble: nombreInmueble
+    })
+    notificacionPaso.notificacionPaso({
+        nombre: infoCliente[0][0].nombreUsuario,
+        email: infoCliente[0][0].emailUsuario,
+        idTramite: idTramite,
+        nombreInmueble: nombreInmueble
     })
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }

@@ -21,6 +21,7 @@
 
     <form id="pasosForm" name="pasosForm" action="/dashboard/modificarProceso/<%=idTramite %>" method="POST" novalidate>
         <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+            <input type="text" name="nombreInmueble" id="nombreInmueble" value="<%=inmueble.nombreInmueble%>" hidden>
             <% if(pasos.length > 0){ %>
                 <% pasos.forEach(paso=> { %>
                     <div class="grid grid-cols-6 item">
