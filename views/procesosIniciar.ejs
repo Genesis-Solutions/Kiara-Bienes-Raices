@@ -1,5 +1,5 @@
 <%- include('partials/head') %>
-
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
 <body style="font-family: 'Montserrat', sans-serif">
 
     <!-- Navbar Section -->
@@ -346,7 +346,7 @@
 
             <!-- Plantilla para Renta -->
             
-            <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+            <div id="sortable-list" class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
                 <!-- Step -->
                 <div class="grid grid-cols-5 item" draggable="true">
                     <div class="col-span-3">
@@ -370,7 +370,7 @@
                         <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
                     </div>
                     <div class="col-span-1 text-center">
-                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
                     </div>
                 </div>
         
@@ -398,7 +398,7 @@
                         <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
                     </div>
                     <div class="col-span-1 text-center">
-                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
                     </div>
                 </div>
         
@@ -426,7 +426,7 @@
                         <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
                     </div>
                     <div class="col-span-1 text-center">
-                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
                     </div>
                 </div>
 
@@ -452,7 +452,7 @@
                         <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
                     </div>
                     <div class="col-span-1 text-center">
-                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
                     </div>
                 </div>
 
@@ -478,7 +478,7 @@
                         <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
                     </div>
                     <div class="col-span-1 text-center">
-                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
                     </div>
                 </div>
         
@@ -505,12 +505,17 @@
                         <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
                     </div>
                     <div class="col-span-1 text-center">
-                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
                     </div>
                 </div>
             </div>
         <% } %>
         
+        <div class="px-24 pb-10 flex justify-center">
+            <a onclick="updateStepNumbers()" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200">
+                <p class="text-center">Actualizar Orden de Pasos</p>
+            </a>
+        </div>
 
         <!-- Add Step Button Section (Activa Modal) -->
 
@@ -650,18 +655,6 @@
 
 <script type="text/javascript"> 
     function verificarFormulario() {
-        // Verificar que el cliente y el dueño no sean el mismo
-        var cliente = document.getElementById('id_cliente');
-        var duenio = document.getElementById('id_duenio');
-        if(cliente.value == duenio.value){
-            Swal.fire({
-                icon: 'error',
-                title: 'El cliente y el propietario no pueden ser el mismo',
-                showConfirmButton: false,
-                timer: 2000
-            });
-            return false
-        }
         var counter = document.getElementById('counter');
         if(counter.value == 0){
             Swal.fire({
@@ -681,6 +674,12 @@
         const sortableList = document.querySelector(".sortable-list");
         const btnAgregarPaso = document.getElementById('btnAgregarPaso');
         
+        const lista = document.getElementById("sortable-list");
+        new Sortable(lista,{
+            handle:'.handle',
+            animation:200
+        })
+
         function addItem() {
 
                 // Validar campos vacios
@@ -708,7 +707,7 @@
                     <div class="col-span-3">
                         <ol class="relative border-l border-sky-950">
                             <li class="ml-6">            
-                                <span class="absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
                                     <p class="text-white">PA</p>
                                 </span>
                                 <h3 class="font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
@@ -725,7 +724,7 @@
                         <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
                     </div>
                     <div class="col-span-1 text-center">
-                        <i class="fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
                     </div>
                 </div>
                 `;
@@ -745,35 +744,6 @@
            
         // Attach a click event listener to the button
         btnAgregarPaso.addEventListener('click', addItem);
-</script>
-
-<script>
-    const items = sortableList.querySelectorAll(".item");
-    items.forEach(item => {
-        item.addEventListener("dragstart", () => {
-            // Adding dragging class to item after a delay
-            setTimeout(() => item.classList.add("dragging"), 0);
-        });
-        // Removing dragging class from item on dragend event
-        item.addEventListener("dragend", () => {
-            item.classList.remove("dragging");
-            updateStepNumbers();
-        });
-    });
-    const initSortableList = (e) => {
-        e.preventDefault();
-        const draggingItem = document.querySelector(".dragging");
-        // Getting all items except currently dragging and making array of them
-        let siblings = [...sortableList.querySelectorAll(".item:not(.dragging)")];
-        // Finding the sibling after which the dragging item should be placed
-        let nextSibling = siblings.find(sibling => {
-            return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
-        });
-        // Inserting the dragging item before the found sibling
-        sortableList.insertBefore(draggingItem, nextSibling);
-    }
-    sortableList.addEventListener("dragover", initSortableList);
-    sortableList.addEventListener("dragenter", e => e.preventDefault());
 </script>
 
 <script type="text/javascript">   
