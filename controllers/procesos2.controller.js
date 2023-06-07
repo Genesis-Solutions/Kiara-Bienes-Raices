@@ -62,14 +62,9 @@ exports.postIniciarProceso = async(req, res, next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.postModificarProceso = async(req, res, next) => {
-    const idDuenio = req.body.id_duenio;
-    const idCliente = req.body.id_cliente;
-    let idAgente = req.session.idUsuario;
+    const idTramite = req.params.idTramite;
     const pasos = req.body;
-    var duenio = "id_duenio";
-    var cliente = "id_cliente";
-    delete pasos[duenio];
-    delete pasos[cliente];
+    
     const splitKeyValue = obj => {
         const keys = Object.keys(obj);
         const result = [];
@@ -86,6 +81,8 @@ exports.postModificarProceso = async(req, res, next) => {
     };
     const result = splitKeyValue(pasos);
     const resultJSON = JSON.stringify(result);
+    console.log(resultJSON);
+    console.log("id del tramite", idTramite)
     const actualizarProceso = await Proceso.updateProcess(resultJSON,idTramite);
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
@@ -128,6 +125,7 @@ exports.getModificarTramite = async(req,res,next) => {
         idUsuario: req.session.idUsuario,
         inmueble: inmueble[0],
         urlFotoUsuario : req.session.urlFotoUsuario,
-        pasos: pasos
+        pasos: pasos,
+        idTramite: idTramite
     });
 };
