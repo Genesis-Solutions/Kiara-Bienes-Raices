@@ -169,5 +169,29 @@ module.exports = class Procesos {
       );
     }
 
+    /*
+    * Actuliza el estado de un inmueble a 1 (activo)
+    * @param {number} idInmueble - El ID del inmueble.
+    * @returns {Promise} Una promesa que se resuelve con la información del inmueble.
+    */
+    static activateInmueble(idInmueble) {
+      return db.execute(
+        "UPDATE inmueble SET activoInmueble=1 WHERE idInmueble=?",
+        [idInmueble]
+      );
+    }
+
+    /*
+    * Actuliza el estado de un tramite a 0 (inactivo)
+    * @param {number} idTramite - El ID del tramite.
+    * @returns {Promise} Una promesa que se resuelve con la información del inmueble.
+    */
+    static deactivateProcess(idTramite) {
+      return db.execute(
+        "UPDATE tramite SET activoTramite=0 WHERE idTramite=?",
+        [idTramite]
+      );
+    }
+
 }
 

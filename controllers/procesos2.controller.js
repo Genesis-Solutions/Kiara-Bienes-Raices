@@ -145,3 +145,25 @@ exports.getModificarTramite = async(req,res,next) => {
         idTramite: idTramite
     });
 };
+
+/*
+Elimina un inmueble del dashboard por su ID.
+@param {Object} req - Objeto de solicitud de Express con el parámetro "idInmueble".
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede eliminar el inmueble.
+*/
+exports.cancelarProceso = (req, res, next) => {
+    const idInmueble = req.params.idInmueble;
+    const idTramite = req.params.idTramite;
+    ProcesoInfo.deactivateProcess(idTramite)
+        .then(([rows, fieldData]) => {
+            ProcesoInfo.activateInmueble(idInmueble)
+                .then(([rows, fieldData]) => {
+                    res.status(200).json({ code: 200, msg: "Ok" });
+                })
+                .catch(error => { console.log(error) });
+                })
+        .catch(error => { console.log(error) });
+};
