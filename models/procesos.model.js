@@ -59,6 +59,14 @@ module.exports = class Procesos {
     );
   }
 
+  static getFotoAgente(idUsuario) {
+    return db.execute(
+      "SELECT u.idUsuario, u.idFoto, f.archivoFoto FROM usuario u JOIN foto f ON u.idFoto = f.idFoto WHERE u.idUsuario = ?",
+      [idUsuario]
+    );
+  }
+  
+
   /**
  * Obtiene la foto asociada a un inmueble.
  * @param {number} idInmueble - El ID del inmueble.

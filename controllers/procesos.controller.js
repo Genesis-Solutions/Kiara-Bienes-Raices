@@ -8,12 +8,12 @@ exports.getProcesos = async (req, res, next) => {
 
   try {
     const tramites = await Procesos.infoTramite(req.session.idUsuario);
-
     const data = await Promise.all(tramites.map(async (tramite) => {
       const tramiteId = tramite.idTramite;
       const nombreAgente = await Procesos.getNombreAgente(tramiteId)
       const tramiteInfo = await Procesos.getDescTramite(tramiteId);
       const fotoInmueble = await Procesos.getFotoTramite(tramiteInfo[0].idInmueble);
+      const fotoAgente = await Procesos.getFotoAgente(nombreAgente[0][0].idUsuario);
       const imgSrc = await Inmueble.getSrcFotosInmueble(fotoInmueble[0][0].idFoto);
       const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
       const info = {
@@ -24,7 +24,8 @@ exports.getProcesos = async (req, res, next) => {
         nombreAgente: nombreAgente[0][0].nombreUsuario,
         apellidosAgente: nombreAgente[0][0].apellidosUsuario,
         fotoInmueble: imgSrcFilename,
-        idTramite: tramiteId
+        idTramite: tramiteId,
+        fotoAgente: fotoAgente[0][0].archivoFoto.slice(23)
       };
       return info;
     }));
