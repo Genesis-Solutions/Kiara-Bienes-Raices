@@ -160,7 +160,6 @@ exports.deleteUser = async (req, res, next) => {
     /*
     * Si los trámites activos son 0, eliminar usuario; si esto no es así, regresar un json que avise la existencia de procesos.
     */
-    console.log(tramites_activos)
     if (tramites_activos == 0) {
         await Dashboard.deleteUser(req.params.id);
         res.status(200).json({
