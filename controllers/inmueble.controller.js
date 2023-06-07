@@ -291,7 +291,8 @@ exports.updateBodyCasa = (req,res,next) => {
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    location.reload();
 };
 
 /*
@@ -421,7 +422,8 @@ exports.updateBodyLocal = (req,res,next) => {
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    location.reload();
 };
 
 /*
@@ -432,7 +434,7 @@ exports.updateBodyLocal = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyTerreno = (req,res,next) => {
-    console.log("Entrando a la ruta update body terreno");
+    //console.log("Entrando a la ruta update body terreno");
     let {
         titulo,
         linkVideo,
@@ -520,7 +522,8 @@ exports.updateBodyTerreno = (req,res,next) => {
         activoInmueble,
         idInmueble 
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    location.reload();
 };
 
 /*
@@ -531,7 +534,7 @@ exports.updateBodyTerreno = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyBodega = (req,res,next) => {
-    console.log("Entrando a la ruta update body bodega");
+    //console.log("Entrando a la ruta update body bodega");
     let {
         titulo,
         linkVideo,
@@ -669,7 +672,8 @@ exports.updateBodyBodega = (req,res,next) => {
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    location.reload();
 };
 
 /*
@@ -680,7 +684,7 @@ exports.updateBodyBodega = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyOficina = (req,res,next) => {
-    console.log("Entrando a la ruta update body oficina");
+    //console.log("Entrando a la ruta update body oficina");
     let {
         titulo,
         linkVideo,
@@ -783,7 +787,8 @@ exports.updateBodyOficina = (req,res,next) => {
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    location.reload();
 };
 
 /*
@@ -794,7 +799,7 @@ exports.updateBodyOficina = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyOtra = (req,res,next) => {
-    console.log("Entrando a la ruta update body otra");
+    //console.log("Entrando a la ruta update body otra");
     let {
         titulo,
         linkVideo,
@@ -898,5 +903,6 @@ exports.updateBodyOtra = (req,res,next) => {
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    location.reload();
 };
