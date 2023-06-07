@@ -1,8 +1,8 @@
 // Base controlador
 const Proceso = require('../models/procesos2.model');
 const ProcesoInfo = require('../models/procesos.model');
-const {notificacionPaso, cancelacionTramite} = require("../util/email.js");
-
+const notificacionPaso = require("../util/email.js");
+// {notificacionPaso, cancelacionTramite, finalizacionTramite} 
 exports.getIniciarProceso = async (req, res, next) => {
     const inmueble = await Proceso.fetchInmueble(req.params.idInmueble);
     const usuarios = await Proceso.fetchAllClients();
@@ -164,7 +164,7 @@ exports.cancelarProceso = async (req, res, next) => {
         .then(([rows, fieldData]) => {
             ProcesoInfo.activateInmueble(idInmueble)
                 .then(([rows, fieldData]) => {
-                    cancelacionTramite.cancelacionTramite({
+                    notificacionPaso.cancelacionTramite({
                         nombre: infoCliente[0][0].nombreUsuario,
                         email: infoCliente[0][0].emailUsuario,
                         nombreInmueble: nombreInmueble[0].nombreInmueble
@@ -175,3 +175,20 @@ exports.cancelarProceso = async (req, res, next) => {
                 })
         .catch(error => { console.log(error) });
 };
+
+exports.finalizarProceso = async (req, res, next) => {
+    console.log("en el controller")
+    const idTramite = req.params.idTramite;
+    const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
+    const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente);
+    const nombreInmueble = await Proceso.fetchInmueble(infoTramite[0][0].idInmueble);
+    notificacionPaso.finalizacionTramite({
+        nombre: infoCliente[0][0].nombreUsuario,
+        email: infoCliente[0][0].emailUsuario,
+        nombreInmueble: nombreInmueble[0].nombreInmueble
+    })
+    ProcesoInfo.deactivateProcess(idTramite).then(([rows, fieldData]) => {
+        res.status(200).json({ code: 200, msg: "Ok" });
+    })
+    .catch(error => { console.log(error) });
+}
