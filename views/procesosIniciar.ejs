@@ -650,6 +650,18 @@
 
 <script type="text/javascript"> 
     function verificarFormulario() {
+        // Verificar que el cliente y el dueño no sean el mismo
+        var cliente = document.getElementById('id_cliente');
+        var duenio = document.getElementById('id_duenio');
+        if(cliente.value == duenio.value){
+            Swal.fire({
+                icon: 'error',
+                title: 'El cliente y el propietario no pueden ser el mismo',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return false
+        }
         var counter = document.getElementById('counter');
         if(counter.value == 0){
             Swal.fire({

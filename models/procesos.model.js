@@ -59,6 +59,20 @@ module.exports = class Procesos {
     );
   }
 
+   /**
+ * Obtiene la foto de perfil del agente
+ * @param {number} idUsuario - El ID del usuario
+ * @returns {Promise} Una promesa que se resuelve con la foto del agente.
+ */
+
+  static getFotoAgente(idUsuario) {
+    return db.execute(
+      "SELECT u.idUsuario, u.idFoto, f.archivoFoto FROM usuario u JOIN foto f ON u.idFoto = f.idFoto WHERE u.idUsuario = ?",
+      [idUsuario]
+    );
+  }
+
+
   /**
  * Obtiene la foto asociada a un inmueble.
  * @param {number} idInmueble - El ID del inmueble.
