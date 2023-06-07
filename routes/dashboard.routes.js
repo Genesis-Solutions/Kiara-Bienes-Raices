@@ -17,6 +17,7 @@ router.get('/iniciarProceso/:idInmueble/:idTipoMovimiento', isLogged, agenteAdmi
 router.post('/iniciarProceso/:idInmueble', procesos2Controller.postIniciarProceso);
 router.post('/modificarProceso/:idTramite', procesos2Controller.postModificarProceso);
 router.get('/cancelarProceso/:idTramite/:idInmueble', procesos2Controller.cancelarProceso);
+router.get('/finalizarProceso/:idTramite', procesos2Controller.finalizarProceso);
 /**
 * Registrar imagenes de un inmueble
 */

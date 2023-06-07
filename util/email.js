@@ -44,4 +44,42 @@ exports.notificacionPaso = (datos) => {
   .then(() => {
     //console.log('Email sent')
   })
+}
+
+exports.cancelacionTramite = (datos) => {
+  const {nombre, email, nombreInmueble} = datos
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  const msg = {
+      to: email, // Change to your recipient
+      from: 'soporte.kiarainmuebles@gmail.com', // Change to your verified sender
+      subject: 'Cancelación de Proceso',
+      text: 'Tu proceso ha sido cancelado',
+      html: `
+              <h1> Hola! ${nombre}, tu proceso asociado a la propiedad ${nombreInmueble} con KIARA Bienes Raíces ha sido cancelado.<h1>
+  `
+  }
+  sgMail
+  .send(msg)
+  .then(() => {
+    //console.log('Email sent')
+  })
+}
+
+exports.finalizacionTramite = (datos) => {
+  const {nombre, email, nombreInmueble} = datos
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  const msg = {
+      to: email, // Change to your recipient
+      from: 'soporte.kiarainmuebles@gmail.com', // Change to your verified sender
+      subject: 'Proceso finalizado',
+      text: 'Su proceso ha sido marcado como finalizado',
+      html: `
+              <h1> Hola! ${nombre}, tu proceso asociado a la propiedad ${nombreInmueble} con KIARA Bienes Raíces ha sido finalizado exitosamente.<h1>
+  `
+  }
+  sgMail
+  .send(msg)
+  .then(() => {
+    //console.log('Email sent')
+  })
 }  
