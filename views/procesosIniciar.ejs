@@ -609,6 +609,7 @@
         updateDescipciones();
         updateEstatus();
         updateObservaciones();
+        updatePaso();
     }
     function updateIDs() {
         var pasos = document.querySelectorAll('.paso');
@@ -648,6 +649,15 @@
             console.log(number.id)
             number.id = "observacion"+(index + 1);
             number.name= "observacion"+(index + 1);
+        });
+    }
+    function updatePaso() {
+        var pasos = document.querySelectorAll('.paso');
+        pasos.forEach(function(number, index) {
+            console.log(number.id)
+            number.id = "paso"+(index + 1);
+            number.name= "paso"+(index + 1);
+            number.value = index + 1;
         });
     }
 </script>
