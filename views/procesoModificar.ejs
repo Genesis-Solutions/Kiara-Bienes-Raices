@@ -19,7 +19,7 @@
 
     <!-- Progress Step Bar Section -->
 
-    <form id="pasosForm" name="pasosForm" action="/dashboard/iniciarProceso/<%=inmueble.idInmueble%>" method="POST" novalidate>
+    <form id="pasosForm" name="pasosForm" action="/dashboard/modificarProceso/<%=idTramite %>" method="POST" novalidate>
         <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
             <% if(pasos.length > 0){ %>
                 <% pasos.forEach(paso=> { %>
@@ -30,27 +30,30 @@
                                     <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
                                         <p class="text-white"><%=paso.paso%></p>
                                     </span>
-                                    <h3 id="titulo1" name="titulo1" class="titulo font-medium leading-tight pt-2 md:pt-0"><%=paso.titulo%></h3>
-                                    <p id="descripcion1" name="descripcion1" class="descripcion text-sm text-gray-500 hidden md:block"><%=paso.descPaso%></p>
+                                    <h3 id="titulo<%=paso.paso%>" name="titulo<%=paso.paso%>" class="titulo font-medium leading-tight pt-2 md:pt-0"><%=paso.titulo%></h3>
+                                    <p id="descripcion<%=paso.paso%>" name="descripcion<%=paso.paso%>" class="descripcion text-sm text-gray-500 hidden md:block"><%=paso.descPaso%></p>
+                                    <input type="text" hidden name="titulo<%= paso.paso %>" id="titulo<%= paso.paso %>" value="<%= paso.titulo %>">
+                                    <input type="text" hidden name="descPaso<%= paso.paso %>" id="descPaso<%= paso.paso %>" value="<%= paso.descPaso %>">
+                                    <input type="text" hidden name="paso<%= paso.paso %>" id="paso<%= paso.paso %>" value="<%= paso.paso %>">
                                 </li>
                             </ol>
                             <hr class="h-10 border-l border-sky-950 border-t-0">
                         </div>
                         <div class="row-span-1 justify-center">
-                            <select id="estatus1" name="estatus1" class="estatus h-10 px-5 bg-white w-full rounded-lg border font-semibold border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block">
-                                <option value="Sin empezar" 
+                            <select id="estatus<%=paso.paso%>" name="estatus<%=paso.paso%>" class="estatus h-10 px-5 bg-white w-full rounded-lg border font-semibold border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block">
+                                <option value="0" 
                                     <% if(paso.status == 0) { %> 
                                         selected
                                     <% } %> 
                                     > Sin empezar
                                 </option>
-                                <option value="En proceso" 
+                                <option value="1"
                                     <% if (paso.status == 1) { %>
                                         selected
                                     <% } %> 
                                     > En Proceso
                                 </option>
-                                <option value="Terminado" 
+                                <option value="2" 
                                     <% if (paso.status == 2) { %>
                                         selected
                                     <% } %> 
@@ -58,11 +61,11 @@
                                 </option> 
                             </select>
                         </div>
-                        <input type="text" id="observacion1" name="observacion1" placeholder="Campo de observacion" 
+                        <input type="text" id="observacion<%=paso.paso%>" name="observacion<%=paso.paso%>" placeholder="Campo de observacion" 
                             <% if (paso.observacion != "0" || paso.observacion != 0) { %>
                                 value="<%=paso.observacion%>"
                             <% } %>
-                            class="observacion observacion1 mx-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            class="observacion observacion<%=paso.paso%> mx-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </input>
                         <div class="col-span-1 text-center">
                             <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
@@ -83,18 +86,27 @@
             </a>
         </div>
 
-        <!-- Buttons Section -->
-
-        <div class="px-10 pb-14 flex justify-evenly">
-            <button type="button" onclick="goBack()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
-                Cancelar
-            </button>
-            <button type="button" onclick="verificarFormulario()" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnSubmit">
-                Guardar
-            </button>
-        </div>
-
     </form>
+
+    <!-- Buttons Section -->
+
+    <div class="px-10 pb-14 flex justify-evenly space-x-10">
+        <button type="button" onclick="goBack()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-yellow-500 hover:font-medium hover:bg-yellow-700 btnReturn">
+            Regresar
+        </button>
+        <button type="button" onclick="verificarFormulario()" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnSubmit">
+            Guardar
+        </button>
+    </div>
+
+    <div class="px-10 pb-14 flex justify-evenly space-x-10">
+        <button type="button" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
+            Cancelar Proceso
+        </button>
+        <button type="button" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-green-600 hover:font-medium hover:bg-green-700 btnCancelar">
+            Finalizar Proceso
+        </button>
+    </div>
 
     <!-- Footer Section -->
 
@@ -259,6 +271,9 @@
                                         </span>
                                         <h3 id="titulo${currentValue}" name="titulo${currentValue}" class="titulo font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
                                         <p id="descripcion${currentValue}" name="descripcion${currentValue}" class="descripcion text-sm text-gray-500 hidden md:block">${descripcion}</p>
+                                        <input type="text" hidden name="titulo${currentValue}" id="titulo${currentValue}" value="${titulo}">
+                                        <input type="text" hidden name="descPaso${currentValue}" id="descPaso${currentValue}" value="${descripcion}">
+                                        <input type="text" hidden name="paso${currentValue}" id="paso${currentValue}" value="${currentValue}">
                                     </li>
                                 </ol>
                                 <hr class="h-10 border-l border-sky-950 border-t-0">
