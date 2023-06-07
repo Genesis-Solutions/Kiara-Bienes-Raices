@@ -137,7 +137,7 @@ module.exports = class Dashboard {
     */
     static checkUser(idUsuario) {
         return db.execute(
-            'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where activoInmueble=1 AND (idAgenteAsignado=? OR idArrendador=?)', 
+            'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where (activoInmueble=1 OR activoInmueble=3) AND (idAgenteAsignado=? OR idArrendador=?)', 
             [idUsuario, idUsuario]
         ).then(([rows, fielData]) => {
             return rows[0].primera
