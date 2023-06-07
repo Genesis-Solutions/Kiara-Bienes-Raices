@@ -1,7 +1,7 @@
 // Base controlador
 const Proceso = require('../models/procesos2.model');
 const ProcesoInfo = require('../models/procesos.model');
-const notificacionPaso = require("../util/email.js");
+const {notificacionPaso, cancelacionTramite} = require("../util/email.js");
 
 exports.getIniciarProceso = async (req, res, next) => {
     const inmueble = await Proceso.fetchInmueble(req.params.idInmueble);
@@ -154,13 +154,21 @@ Elimina un inmueble del dashboard por su ID.
 @returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
 @throws {Error} - Error de base de datos si no se puede eliminar el inmueble.
 */
-exports.cancelarProceso = (req, res, next) => {
+exports.cancelarProceso = async (req, res, next) => {
     const idInmueble = req.params.idInmueble;
     const idTramite = req.params.idTramite;
+    const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
+    const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente);
+    const nombreInmueble = await Proceso.fetchInmueble(idInmueble);
     ProcesoInfo.deactivateProcess(idTramite)
         .then(([rows, fieldData]) => {
             ProcesoInfo.activateInmueble(idInmueble)
                 .then(([rows, fieldData]) => {
+                    cancelacionTramite.cancelacionTramite({
+                        nombre: infoCliente[0][0].nombreUsuario,
+                        email: infoCliente[0][0].emailUsuario,
+                        nombreInmueble: nombreInmueble[0].nombreInmueble
+                    })
                     res.status(200).json({ code: 200, msg: "Ok" });
                 })
                 .catch(error => { console.log(error) });
