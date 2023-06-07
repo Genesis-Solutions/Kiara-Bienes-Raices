@@ -1,6 +1,7 @@
 // Base controlador
 const Proceso = require('../models/procesos2.model');
 const ProcesoInfo = require('../models/procesos.model');
+const notificacionPaso = require("../util/email.js");
 
 exports.getIniciarProceso = async (req, res, next) => {
     const inmueble = await Proceso.fetchInmueble(req.params.idInmueble);
@@ -63,8 +64,10 @@ exports.postIniciarProceso = async(req, res, next) => {
  */
 exports.postModificarProceso = async(req, res, next) => {
     const idTramite = req.params.idTramite;
+    const nombreInmueble = req.body.nombreInmueble;
+    var nombreIn = "nombreInmueble";
     const pasos = req.body;
-    
+    delete pasos[nombreIn];
     const splitKeyValue = obj => {
         const keys = Object.keys(obj);
         const result = [];
@@ -81,9 +84,22 @@ exports.postModificarProceso = async(req, res, next) => {
     };
     const result = splitKeyValue(pasos);
     const resultJSON = JSON.stringify(result);
-    console.log(resultJSON);
-    console.log("id del tramite", idTramite)
     const actualizarProceso = await Proceso.updateProcess(resultJSON,idTramite);
+    const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
+    const infoDuenio = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idArrendador)
+    const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente)
+    notificacionPaso.notificacionPaso({
+        nombre: infoDuenio[0][0].nombreUsuario,
+        email: infoDuenio[0][0].emailUsuario,
+        idTramite: idTramite,
+        nombreInmueble: nombreInmueble
+    })
+    notificacionPaso.notificacionPaso({
+        nombre: infoCliente[0][0].nombreUsuario,
+        email: infoCliente[0][0].emailUsuario,
+        idTramite: idTramite,
+        nombreInmueble: nombreInmueble
+    })
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
 
@@ -128,4 +144,26 @@ exports.getModificarTramite = async(req,res,next) => {
         pasos: pasos,
         idTramite: idTramite
     });
+};
+
+/*
+Elimina un inmueble del dashboard por su ID.
+@param {Object} req - Objeto de solicitud de Express con el parámetro "idInmueble".
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede eliminar el inmueble.
+*/
+exports.cancelarProceso = (req, res, next) => {
+    const idInmueble = req.params.idInmueble;
+    const idTramite = req.params.idTramite;
+    ProcesoInfo.deactivateProcess(idTramite)
+        .then(([rows, fieldData]) => {
+            ProcesoInfo.activateInmueble(idInmueble)
+                .then(([rows, fieldData]) => {
+                    res.status(200).json({ code: 200, msg: "Ok" });
+                })
+                .catch(error => { console.log(error) });
+                })
+        .catch(error => { console.log(error) });
 };

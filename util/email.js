@@ -22,4 +22,26 @@ exports.olvidePassword = (datos) => {
     .then(() => {
       //console.log('Email sent')
     })
+}
+
+exports.notificacionPaso = (datos) => {
+  const {nombre, email, idTramite, nombreInmueble} = datos
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  const msg = {
+      to: email, // Change to your recipient
+      from: 'soporte.kiarainmuebles@gmail.com', // Change to your verified sender
+      subject: 'Cambio en tu proceso',
+      text: 'Hubo un cambio en tu proceso con KIARA bienes raíces',
+      html: `
+              <h1> Hola! ${nombre}, hubo un cambio en tu proceso de la propiedad ${nombreInmueble} con KIARA Bienes Raíces <h1>
+
+              <p>Para ver los cambios en tu proceso, accede al siguiente enlace:
+              <a href="${process.env.BACKEND_URL}/dashboard/proceso/${idTramite}">Cambio en el proceso</a> </p>
+  `
+  }
+  sgMail
+  .send(msg)
+  .then(() => {
+    //console.log('Email sent')
+  })
 }  
