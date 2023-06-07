@@ -176,7 +176,7 @@ module.exports = class Dashboard {
     */
      static checkUserAgent(idUsuario) {
         return db.execute(
-            'SELECT COUNT(idArrendador) as tercera FROM tramite where idAgente=? AND activoTramite=1', 
+            'SELECT COUNT(idAgente) as tercera FROM tramite where idAgente=? AND activoTramite=1', 
             [idUsuario]
         ).then(([rows, fielData]) => {
         return rows[0].cuarta
