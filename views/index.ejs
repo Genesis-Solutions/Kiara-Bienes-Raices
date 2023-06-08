@@ -101,62 +101,74 @@
             </p>
             <!-- Properties Section -->
             <div class="grid grid-cols-2 px-2 py-8 md:py-14 gap-8 md:gap-14">
-                <a href="/search">
-                    <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
-                    
-                        <div class="flex justify-center items-center">
-                            <i class="fa-solid fa-building fa-lg mr-3"></i>
-                            <p class="font-medium hidden md:block">
-                                Departamentos
-                            </p>
-                            <p class="font-medium md:hidden">
-                                Deptos.
-                            </p>
-                        </div>
-                        <!-- <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
-                            Ver
-                        </button> -->
-                    </div>     
-                </a>
-                <a href="#">
+                <form action="/search" method="POST">
+                    <input type="hidden" name="idCategoria" id="itCategoria" value="2">
                     <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
                         <div class="flex justify-center items-center">
-                            <i class="fa-solid fa-house fa-lg mr-3"></i>
-                            <p class="font-medium">
-                                Casas
-                            </p>
+                            <button type="submit" class="flex justify-center items-center">
+                                <i class="fa-solid fa-building fa-lg mr-3"></i>
+                                <p class="font-medium hidden md:block">
+                                    Departamentos
+                                </p>
+                                <p class="font-medium md:hidden">
+                                    Deptos.
+                                </p>
+                            </button>
+                            
                         </div>
                         <!-- <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
                             Ver
                         </button> -->
                     </div>
-                </a>
-                <a href="#">
+                </form>  
+                <form action="/search" method="POST">
+                    <input type="hidden" name="idCategoria" id="itCategoria" value="1">
                     <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
                         <div class="flex justify-center items-center">
-                            <i class="fa-solid fa-city fa-lg mr-3"></i>
-                            <p class="font-medium">
-                                Oficinas
-                            </p>
+                            <button type="submit" class="flex justify-center items-center">
+                                <i class="fa-solid fa-house fa-lg mr-3"></i>
+                                <p class="font-medium">
+                                    Casas
+                                </p>
+                            </button>
                         </div>
                         <!-- <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
                             Ver
                         </button> -->
                     </div>
-                </a>
-                <a href="#">
+                </form>
+                <form action="/search" method="POST">
+                    <input type="hidden" name="idCategoria" id="itCategoria" value="6">
                     <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
                         <div class="flex justify-center items-center">
-                            <i class="fa-solid fa-shop fa-lg mr-3"></i>
-                            <p class="font-medium">
-                                Locales
-                            </p>
+                            <button type="submit" class="flex justify-center items-center">
+                                <i class="fa-solid fa-city fa-lg mr-3"></i>
+                                <p class="font-medium">
+                                    Oficinas
+                                </p>
+                            </button>
                         </div>
                         <!-- <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
                             Ver
                         </button> -->
                     </div>
-                </a>
+                </form>
+                <form action="/search" method="POST">
+                    <input type="hidden" name="idCategoria" id="itCategoria" value="3">
+                    <div class="p-5 rounded-lg bg-white border border-gray-300 flex flex-col">
+                        <div class="flex justify-center items-center">
+                            <button type="submit" class="flex justify-center items-center">
+                                <i class="fa-solid fa-shop fa-lg mr-3"></i>
+                                <p class="font-medium">
+                                    Locales
+                                </p>
+                            </button>
+                        </div>
+                        <!-- <button class="mt-5 px-5 py-2 text-white font-medium rounded-full bg-gray-800 hover:font-semibold border hover:bg-gray-700">
+                            Ver
+                        </button> -->
+                    </div>
+                </form>
             </div>
         </div>
         <div class="bg-cover" style="background-image: url(img/features_img.jpg);">
