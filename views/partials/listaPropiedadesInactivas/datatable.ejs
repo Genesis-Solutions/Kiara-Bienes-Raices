@@ -261,5 +261,34 @@
             });
         });
     </script>
+<script>
+/*
+* Funcionalidad de botón de reactivación de inmueble. Despliega un modal que verifica la decisión del usuario.
+*/
+$(document).on("click", ".btnReactivarPropiedad", function () {
+            fila = $(this).closest("tr");
+            idInmueble = parseInt(fila.find('td:eq(0)').text());
+            /*
+            *Modal de confirmación.
+            */
+            Swal.fire({
+                title: '¿Confirma la reactivación del inmueble? Se reincorporará al catálogo de propiedades.',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/inmueble/reactivarPropiedad/' + idInmueble,
+                        method: 'put'
+                    });
+                                Swal.fire('Inmueble Reactivado!')
+                                recargarTablaPropiedades();
+
+                }
+            })
+        });
+</script>
+
+
 
 </main>

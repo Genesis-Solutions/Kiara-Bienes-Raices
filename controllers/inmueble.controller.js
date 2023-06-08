@@ -96,6 +96,17 @@ exports.desactivarPropiedad = (req, res, next) => {
 }
 
 /*
+ * Reactiva una propiedad cambiando su estado a activo.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {function} next - Función de middleware de Express.
+ * @returns {void}
+ */
+exports.reactivarPropiedad = (req, res, next) => {
+    Inmueble.reactivarPropiedad(req.params.idInmueble);
+}
+
+/*
  * Obtiene una imagen desde un bucket de Amazon S3 y la envía como respuesta en el objeto de respuesta de Express.
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} res - Objeto de respuesta de Express.

@@ -68,6 +68,17 @@ module.exports = class Inmueble {
     return db
     .execute("UPDATE inmueble SET activoInmueble=? WHERE idInmueble=?", [activoInmueble, idInmueble]);
   }
+
+  /*
+  Reactivar una propiedad de la base de datos.
+  @param idInmueble El identificador de la propiedad que se desea reactivar.
+  @throws SQLException Si hay un error al ejecutar la actualización en la base de datos.
+  */
+  static reactivarPropiedad(idInmueble) {
+    return db
+    .execute("UPDATE inmueble SET activoInmueble=1 WHERE idInmueble=?", [idInmueble]);
+  }
+
   /*
 
 Actualiza un inmueble existente en la base de datos.
