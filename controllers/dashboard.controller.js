@@ -163,6 +163,8 @@ exports.deleteUser = async (req, res, next) => {
     */
     if (tramites_activos == 0) {
         await Dashboard.deleteUser(req.params.id);
+        const emailDeletedUser = Date.now()+"@deleted.com";
+        await Dashboard.updateDeletedUser(emailDeletedUser, req.params.id);
         res.status(200).json({
             isLogged: req.session.isLoggedIn,
             idRol: req.session.idRol,

@@ -89,7 +89,7 @@ module.exports = class Dashboard {
         );
     }
 
-    /*
+    /**
      * Borrado del usuario solicitado.
      * @param idUsuario: String -> Id del usuario que será eliminado
      */
@@ -97,6 +97,20 @@ module.exports = class Dashboard {
         return db.execute(
             'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?', 
             [idUsuario]
+        );
+    }
+
+/**
+ * Actualiza la información de un usuario eliminado en la base de datos.
+ *
+ * @param emailUsuario El nuevo correo electrónico del usuario.
+ * @param idUsuario El ID del usuario que se actualizará.
+ * @return El resultado de la ejecución de la consulta en la base de datos.
+ */
+    static updateDeletedUser(emailUsuario, idUsuario) {
+        return db.execute(
+            'UPDATE usuario SET telefonoUsuario=1111111111, emailUsuario=? WHERE idUsuario=?',
+            [emailUsuario, idUsuario]
         );
     }
 
