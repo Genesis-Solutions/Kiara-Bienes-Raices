@@ -103,9 +103,7 @@ exports.desactivarPropiedad = (req, res, next) => {
  * @returns {void}
  */
 exports.reactivarPropiedad = (req, res, next) => {
-    const idInmueble = req.params.idInmueble;
-    const activoInmueble = 1;
-    Inmueble.reactivarPropiedad(activoInmueble, idInmueble);
+    Inmueble.reactivarPropiedad(req.params.idInmueble);
 }
 
 /*

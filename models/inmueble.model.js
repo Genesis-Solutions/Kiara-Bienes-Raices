@@ -71,13 +71,12 @@ module.exports = class Inmueble {
 
   /*
   Reactivar una propiedad de la base de datos.
-  @param activoInmueble El estado de la propiedad que se desea reactivar.
   @param idInmueble El identificador de la propiedad que se desea reactivar.
   @throws SQLException Si hay un error al ejecutar la actualización en la base de datos.
   */
-  static reactivarPropiedad(activoInmueble, idInmueble) {
+  static reactivarPropiedad(idInmueble) {
     return db
-    .execute("UPDATE inmueble SET activoInmueble=? WHERE idInmueble=?", [activoInmueble, idInmueble]);
+    .execute("UPDATE inmueble SET activoInmueble=1 WHERE idInmueble=?", [idInmueble]);
   }
 
   /*
