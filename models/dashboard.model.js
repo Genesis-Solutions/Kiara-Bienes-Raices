@@ -907,4 +907,16 @@ module.exports = class Dashboard {
         );
     }
 
+    /*
+    * Actualizar encargado del tramite del inmueble en ese momento.
+    * @param idAgente: String -> Agente escogido para la propiedad.
+    * @param idPropiedad: String -> Propiedad escogida para actualizar su encargado.
+    */
+    static updateEncargadoTramite(idAgente,idPropiedad) {
+        return db.execute(
+            'UPDATE tramite SET idAgente=? WHERE idInmueble=? AND activoTramite=1',
+            [idAgente, idPropiedad]
+        );
+    }
+
 };

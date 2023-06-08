@@ -143,6 +143,7 @@ exports.updateRol = async (req, res, next) => {
  */
 exports.updateEncargado = async (req, res, next) => {
     await Dashboard.updateEncargadoPropiedad(req.params.idAgente, req.params.idPropiedad);
+    await Dashboard.updateEncargadoTramite(req.params.idAgente, req.params.idPropiedad);
 }
 
 /*
