@@ -19,6 +19,13 @@ jest.mock('../util/database.util.js', () => ({
     }])
 }));
 
+/**
+ * Prueba de cambio de contraseña cifrada en la base de datos.
+ * @params {string} newPassword = Nueva contraseña del usuario.
+ * @params {string} email = Correo electrónico del usuario.
+ * @return El resultado de la ejecución del comando UPDATE en la base de datos.
+ */
+
 describe('Prueba de cambio de contraseña', () => {
     it('debe cambiar la contraseña del usuario', async () => {
         const newPassword = "nuevoPassword";
