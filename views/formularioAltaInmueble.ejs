@@ -336,7 +336,12 @@
             var substring = '<iframe src="https://www.google.com/maps/';
             if (!inputValue.includes(substring)) {
                 event.preventDefault(); 
-                alert('El link de Google Maps debe ser un "Embed a Map"');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'El link de Google Maps debe ser un "Embed a Map',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             } else {
                 event.preventDefault(); 
                 $("#cuerpoInmueble").submit();
