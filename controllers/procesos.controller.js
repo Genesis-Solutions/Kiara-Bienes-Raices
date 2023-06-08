@@ -34,7 +34,9 @@ exports.getProcesos = async (req, res, next) => {
       isLogged: req.session.isLoggedIn,
       idRol: req.session.idRol,
       urlFotoUsuario : req.session.urlFotoUsuario,
-      data: data
+      data: data,
+      warning: req.flash('warning'),
+      success: req.flash('success')
     });
   } catch (error) {
     next(error);
