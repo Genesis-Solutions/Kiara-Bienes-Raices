@@ -12,6 +12,9 @@ router.get('/:idInmueble', inmuebleController.getInmueble);
 //Desactivar inmueble
 router.put('/desactivarPropiedad/:idInmueble', inmuebleController.desactivarPropiedad);
 
+//Reactivar inmueble
+router.put('/reactivarPropiedad/:idInmueble', inmuebleController.reactivarPropiedad);
+
 //"Eliminar" inmueble
 router.put('/eliminarPropiedad/:idInmueble', inmuebleController.eliminarPropiedad);
 
