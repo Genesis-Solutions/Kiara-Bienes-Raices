@@ -115,7 +115,7 @@ exports.postModificarProceso = async(req, res, next) => {
         req.flash('warning', 'Ocurrió un error al enviar el correo de notificación');
         return res.redirect('/perfil/procesos');
     };
-    req.flash('success', 'El proceso se ha actualizado exitosamente');
+    //req.flash('success', 'El proceso se ha actualizado exitosamente');
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
 
