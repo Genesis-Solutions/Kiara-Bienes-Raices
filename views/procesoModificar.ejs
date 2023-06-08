@@ -33,9 +33,9 @@
                                     </span>
                                     <h3 id="titulo<%=paso.paso%>" name="titulo<%=paso.paso%>" class="titulo font-medium leading-tight pt-2 md:pt-0"><%=paso.titulo%></h3>
                                     <p id="descripcion<%=paso.paso%>" name="descripcion<%=paso.paso%>" class="descripcion text-sm text-gray-500 hidden md:block"><%=paso.descPaso%></p>
-                                    <input type="text" hidden name="titulo<%= paso.paso %>" id="titulo<%= paso.paso %>" value="<%= paso.titulo %>">
-                                    <input type="text" hidden name="descPaso<%= paso.paso %>" id="descPaso<%= paso.paso %>" value="<%= paso.descPaso %>">
-                                    <input type="text" hidden name="paso<%= paso.paso %>" id="paso<%= paso.paso %>" value="<%= paso.paso %>">
+                                    <input type="text" hidden name="titulo<%= paso.paso %>" id="titulo<%= paso.paso %>" value="<%= paso.titulo %>" class="titulo">
+                                    <input type="text" hidden name="descPaso<%= paso.paso %>" id="descPaso<%= paso.paso %>" value="<%= paso.descPaso %>" class="descripcion">
+                                    <input type="text" hidden name="paso<%= paso.paso %>" id="paso<%= paso.paso %>" value="<%= paso.paso %>" class="paso">
                                 </li>
                             </ol>
                             <hr class="h-10 border-l border-sky-950 border-t-0">
@@ -80,10 +80,13 @@
 
         <!-- Add Step Button Section (Activa Modal) -->
 
-        <div class="px-24 pb-10 flex justify-center">
+        <div class="px-10 pb-14 flex justify-evenly space-x-10">
             <a data-modal-target="pasoModal" data-modal-toggle="pasoModal" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200 border border-dashed">
                 <i class="fa-solid fa-plus mr-2 text-center"></i>
                 <p class="text-center">Agregar Paso</p>
+            </a>
+            <a onclick="updateStepNumbers()" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200">
+                <p class="text-center">Actualizar Orden de Pasos</p>
             </a>
         </div>
 
@@ -138,7 +141,7 @@
         </div>
     </div>
 
-
+    
     <input hidden type="number" id="counter" name="counter" value="<%= pasos.length+1 %>">
 
     <!-- Enlazar con la biblioteca de jQuery -->
@@ -157,11 +160,19 @@
             updateStepNumbers();
         }
     </script>
+
+    <script>
+        $(document).ready(function (e) {
+            updateStepNumbers();
+        })
+
+    </script>
     
     <script>
         function updateCounter() {
             var counter = document.getElementById('counter');
             counter.value -= 1;
+            updateStepNumbers();
         }
         function addCounter() {
             var counter = document.getElementById('counter');
@@ -179,13 +190,15 @@
             updateDescipciones();
             updateEstatus();
             updateObservaciones();
+            updatePaso();
         }
         function updateIDs() {
             var pasos = document.querySelectorAll('.paso');
             pasos.forEach(function(number, index) {
                 console.log(number.id)
-                number.id = "paso"+(index + 1);
-                number.name = "paso"+(index + 1);
+                var num = index;
+                number.id = "paso"+(num + 1);
+                number.name = "paso"+(num + 1);
             });
         }
         function updateTitulos() {
@@ -200,8 +213,9 @@
             var descripciones = document.querySelectorAll('.descripcion');
             descripciones.forEach(function(number, index) {
                 console.log(number.id)
-                number.id = "descripcion"+(index + 1);
-                number.name = "descripcion"+(index + 1);
+                var num = index;
+                number.id = "descripcion"+(num + 1);
+                number.name = "descripcion"+(num + 1);
             });
         }
         function updateEstatus() {
@@ -218,6 +232,15 @@
                 console.log(number.id)
                 number.id = "observacion"+(index + 1);
                 number.name= "observacion"+(index + 1);
+            });
+        }
+        function updatePaso() {
+            var pasos = document.querySelectorAll('.paso');
+            pasos.forEach(function(number, index) {
+                console.log(number.id)
+                number.id = "paso"+(index + 1);
+                number.name= "paso"+(index + 1);
+                number.value = index;
             });
         }
     </script>
@@ -278,9 +301,9 @@
                                         </span>
                                         <h3 id="titulo${currentValue}" name="titulo${currentValue}" class="titulo font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
                                         <p id="descripcion${currentValue}" name="descripcion${currentValue}" class="descripcion text-sm text-gray-500 hidden md:block">${descripcion}</p>
-                                        <input type="text" hidden name="titulo${currentValue}" id="titulo${currentValue}" value="${titulo}">
-                                        <input type="text" hidden name="descPaso${currentValue}" id="descPaso${currentValue}" value="${descripcion}">
-                                        <input type="text" hidden name="paso${currentValue}" id="paso${currentValue}" value="${currentValue}">
+                                        <input type="text" hidden name="titulo${currentValue}" id="titulo${currentValue}" value="${titulo}" class="titulo">
+                                        <input type="text" hidden name="descPaso${currentValue}" id="descPaso${currentValue}" value="${descripcion}" class="descripcion">
+                                        <input type="text" hidden name="paso${currentValue}" id="paso${currentValue}" value="${currentValue}" class="paso">
                                     </li>
                                 </ol>
                                 <hr class="h-10 border-l border-sky-950 border-t-0">
@@ -302,41 +325,13 @@
                     //i += 1;
                     // Append the new item to the list
                     sortableList.appendChild(newItem);
-                    addCounter();
+                    // addCounter();
                 }
             }
             // Attach a click event listener to the button
             btnAgregarPaso.addEventListener('click', addItem);
     </script>
     
-    <script>
-        const items = sortableList.querySelectorAll(".item");
-        items.forEach(item => {
-            item.addEventListener("dragstart", () => {
-                // Adding dragging class to item after a delay
-                setTimeout(() => item.classList.add("dragging"), 0);
-            });
-            // Removing dragging class from item on dragend event
-            item.addEventListener("dragend", () => {
-                item.classList.remove("dragging");
-                updateStepNumbers();
-            });
-        });
-        const initSortableList = (e) => {
-            e.preventDefault();
-            const draggingItem = document.querySelector(".dragging");
-            // Getting all items except currently dragging and making array of them
-            let siblings = [...sortableList.querySelectorAll(".item:not(.dragging)")];
-            // Finding the sibling after which the dragging item should be placed
-            let nextSibling = siblings.find(sibling => {
-                return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
-            });
-            // Inserting the dragging item before the found sibling
-            sortableList.insertBefore(draggingItem, nextSibling);
-        }
-        sortableList.addEventListener("dragover", initSortableList);
-        sortableList.addEventListener("dragenter", e => e.preventDefault());
-    </script>
     
     <script type="text/javascript">   
         function goBack() {
