@@ -88,18 +88,18 @@ exports.postModificarProceso = async(req, res, next) => {
     const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
     const infoDuenio = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idArrendador)
     const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente)
-    notificacionPaso.notificacionPaso({
-        nombre: infoDuenio[0][0].nombreUsuario,
-        email: infoDuenio[0][0].emailUsuario,
-        idTramite: idTramite,
-        nombreInmueble: nombreInmueble
-    })
-    notificacionPaso.notificacionPaso({
-        nombre: infoCliente[0][0].nombreUsuario,
-        email: infoCliente[0][0].emailUsuario,
-        idTramite: idTramite,
-        nombreInmueble: nombreInmueble
-    })
+    // notificacionPaso.notificacionPaso({
+    //     nombre: infoDuenio[0][0].nombreUsuario,
+    //     email: infoDuenio[0][0].emailUsuario,
+    //     idTramite: idTramite,
+    //     nombreInmueble: nombreInmueble
+    // })
+    // notificacionPaso.notificacionPaso({
+    //     nombre: infoCliente[0][0].nombreUsuario,
+    //     email: infoCliente[0][0].emailUsuario,
+    //     idTramite: idTramite,
+    //     nombreInmueble: nombreInmueble
+    // })
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
 
