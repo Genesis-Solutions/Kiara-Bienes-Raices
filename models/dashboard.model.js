@@ -100,6 +100,13 @@ module.exports = class Dashboard {
         );
     }
 
+    static updateDeletedUser(emailUsuario, idUsuario) {
+        return db.execute(
+            'UPDATE usuario SET telefonoUsuario=1111111111, emailUsuario=? WHERE idUsuario=?',
+            [emailUsuario, idUsuario]
+        );
+    }
+
     /*
     * Obtención de agentes disponibles
     */
