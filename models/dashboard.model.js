@@ -29,7 +29,7 @@ module.exports = class Dashboard {
      */
     static fetchAllPropiedades() {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1'
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, I.idAgenteAsignado FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1'
         );
     }
 
@@ -49,7 +49,7 @@ module.exports = class Dashboard {
      */
         static fetchAllPropiedadesAgente(idUsuario) {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1 AND I.idAgenteAsignado=?', [
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, I.idAgenteAsignado FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1 AND I.idAgenteAsignado=?', [
                 idUsuario,
             ]);
     } 
@@ -89,7 +89,7 @@ module.exports = class Dashboard {
         );
     }
 
-    /*
+    /**
      * Borrado del usuario solicitado.
      * @param idUsuario: String -> Id del usuario que será eliminado
      */
@@ -97,6 +97,20 @@ module.exports = class Dashboard {
         return db.execute(
             'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?', 
             [idUsuario]
+        );
+    }
+
+/**
+ * Actualiza la información de un usuario eliminado en la base de datos.
+ *
+ * @param emailUsuario El nuevo correo electrónico del usuario.
+ * @param idUsuario El ID del usuario que se actualizará.
+ * @return El resultado de la ejecución de la consulta en la base de datos.
+ */
+    static updateDeletedUser(emailUsuario, idUsuario) {
+        return db.execute(
+            'UPDATE usuario SET telefonoUsuario=1111111111, emailUsuario=? WHERE idUsuario=?',
+            [emailUsuario, idUsuario]
         );
     }
 
@@ -904,6 +918,18 @@ module.exports = class Dashboard {
         return db.execute(
             'UPDATE inmueble SET activoInmueble=1 WHERE idInmueble=?', 
             [idInmueble]
+        );
+    }
+
+    /*
+    * Actualizar encargado del tramite del inmueble en ese momento.
+    * @param idAgente: String -> Agente escogido para la propiedad.
+    * @param idPropiedad: String -> Propiedad escogida para actualizar su encargado.
+    */
+    static updateEncargadoTramite(idAgente,idPropiedad) {
+        return db.execute(
+            'UPDATE tramite SET idAgente=? WHERE idInmueble=? AND activoTramite=1',
+            [idAgente, idPropiedad]
         );
     }
 

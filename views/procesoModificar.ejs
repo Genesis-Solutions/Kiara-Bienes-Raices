@@ -258,11 +258,19 @@
                 });
                 return false
             } else {
-                document.getElementById('pasosForm').submit();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cambios guardados',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                setTimeout(function() {
+                    document.getElementById('pasosForm').submit();
+                }, 2000);
             }
         }
     </script>
-    
+
     <script>
             const sortableList = document.querySelector(".sortable-list");
             const btnAgregarPaso = document.getElementById('btnAgregarPaso');
@@ -328,8 +336,9 @@
                     // addCounter();
                 }
             }
-            // Attach a click event listener to the button
-            btnAgregarPaso.addEventListener('click', addItem);
+        }
+        // Attach a click event listener to the button
+        btnAgregarPaso.addEventListener('click', addItem);
     </script>
     
     

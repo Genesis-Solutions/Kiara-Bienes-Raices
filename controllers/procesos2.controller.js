@@ -3,7 +3,14 @@ const Proceso = require('../models/procesos2.model');
 const ProcesoInfo = require('../models/procesos.model');
 const notificacionPaso = require("../util/email.js");
 const {validateEmail} = require("../util/validateEmail.js");
-// {notificacionPaso, cancelacionTramite, finalizacionTramite} 
+
+/*
+ * Renderizar la vista de iniciar proceso con todos los elementos necesarios.
+ * @param req La solicitud HTTP que contiene los datos del formulario.
+ * @param res La respuesta HTTP que se enviará al navegador.
+ * @param next El siguiente middleware en la cadena de middleware.
+ * @throws SQLException Si ocurre un error al interactuar con la base de datos.
+ */
 exports.getIniciarProceso = async (req, res, next) => {
     const inmueble = await Proceso.fetchInmueble(req.params.idInmueble);
     const usuarios = await Proceso.fetchAllClients();
@@ -187,6 +194,15 @@ exports.cancelarProceso = async (req, res, next) => {
         .catch(error => { console.log(error) });
 };
 
+
+/*
+Finalizar tramite, actualizar estado de inmueble y del tramite.
+@param {Object} req - Objeto de solicitud de Express con el parámetro "idInmueble".
+@param {Object} res - Objeto de respuesta de Express.
+@param {Function} next - Función de middleware para pasar el control al siguiente manejador.
+@returns {Object} - Objeto JSON con el código de estado 200 y mensaje "Ok" si la operación fue exitosa.
+@throws {Error} - Error de base de datos si no se puede eliminar el inmueble.
+*/
 exports.finalizarProceso = async (req, res, next) => {
     const idTramite = req.params.idTramite;
     const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
