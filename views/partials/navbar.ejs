@@ -53,8 +53,8 @@
                 <% } else { %>
                     <div class="hidden lg:block ml-6 relative">
                         <div class="object-center">
-                            <button id="userButton" class="mr-6 mt-2 block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-800 focus:outline-none">
-                                <img src="/get_bucket_img?image=<%- urlFotoUsuario %>" />
+                            <button id="userButton" name="userButton">
+                                <img src="/perfil/get_bucket_img?image=<%=urlFotoUsuario%>" class="rounded-full object-cover mx-auto w-12 h-12" alt="">
                             </button>
                             <!-- <i id="userButton" class="mt-7 fa-solid fa-circle-user fa-2xl"></i> -->
                         </div>
