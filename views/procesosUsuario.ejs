@@ -22,6 +22,29 @@
 
         <!-- Header -->
 
+        <% if (warning != '') { %>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: '<%- warning %>',
+                    showConfirmButton: true,
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                })
+            </script>
+        <% } %>
+        <% if (success != '') { %>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '<%- success %>',
+                    showConfirmButton: true,
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                })
+            </script>
+        <% } %>
+
         <h2 class="text-4xl font-bold mb-5">Mis Procesos</h2>
 
         <% if(data.length > 0){ %>
