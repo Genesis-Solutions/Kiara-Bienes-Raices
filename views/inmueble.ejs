@@ -318,7 +318,7 @@
             </div>
             <div class="flex flex-col-reverse md:px-8 md:grid md:grid-cols-4 space-x-7">
                 <% for (let agente of agenteInfo) { %>
-                    <div class="text-center bg-white rounded-lg">
+                    <div class="text-center bg-white rounded-lg h-fit">
                         <div class="bg-[#131C1B] rounded-t-lg p-2">
                             <h2 class="text-white text-2xl">Contacto</h2>
                         </div>
@@ -334,7 +334,8 @@
                             </div>
                             <div>
                                 <label for="agentPhone" class="text-gray-500 text-xs">Teléfono</label>
-                                <h3 id="agentPhone" class="text-gray-800 text-lg"><%= agente.telefonoUsuario %></h3></h3>
+                                <h3 id="agentPhone" class="text-gray-800 text-lg"><%= agente.telefonoUsuario %></h3>
+                                <h3 class="text-gray-800 text-lg">4423863232</h3>
                             </div>
                             <div class="flex justify-center mt-4">
                             <a target="_blank" href="https://api.whatsapp.com/send?phone=<%=agente.telefonoUsuario%></&text=Hola,%20me%20interesa%20la%20propiedad%20titulada%20'<%=inmueble.nombreInmueble%>'%20en%20su%20página%20me%20podrían%20brindar%20mas%20información%20porfavor%3F%20<%=currentURL%>" class="bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-10 inline-block">Contactar por WhatsApp</a>
@@ -381,6 +382,10 @@
             <!-- Modal content -->
                 <div class="relative bg-white rounded-lg">
                     <div id="contenedor-modal" class="p-4">
+                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="shareModal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
                         <h2 class="text-2xl font-semibold">
                             Compartir Propiedad
                         </h2>

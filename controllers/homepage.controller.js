@@ -243,8 +243,9 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     } else {
         var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where + isActive;
     }
-
-    //console.log(countQuery)
+    // console.log(req.session.searchParams)
+    // console.log(parameters)
+    // console.log(countQuery)
 
     /**
     * Obtiene la cantidad de inmuebles filtrados
@@ -377,10 +378,6 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     * que durante la paginación no se reestablezca la búsqueda 
     */
 
-    req.session.countParams = countQuery;
-    req.session.searchParams = builtQuery;
-    req.session.searchValues = conditions;
-
     /** 
     * Mustra la vista searchPageFiltrada.ejs con la información respectiva
     * para mostrar los inmuebles que cumplen con la búsqueda, los datos para
@@ -392,6 +389,10 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     //console.log(builtQuery)
     //console.log(resultsExist)
     if (resultsExist == true) {
+        req.session.countParams = countQuery;
+        req.session.searchParams = builtQuery;
+        req.session.searchValues = conditions;
+        //console.log(builtQuery);
         res.render('searchPageFiltrada', {
             inmuebles: inmuebles,
             pagina: pagina,

@@ -303,7 +303,9 @@ exports.updateBodyCasa = (req,res,next) => {
         idInmueble
     );
     res.redirect('/inmueble/' + idInmueble);
-    location.reload();
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -434,7 +436,9 @@ exports.updateBodyLocal = (req,res,next) => {
         idInmueble
     );
     res.redirect('/inmueble/' + idInmueble);
-    location.reload();
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -534,7 +538,9 @@ exports.updateBodyTerreno = (req,res,next) => {
         idInmueble 
     );
     res.redirect('/inmueble/' + idInmueble);
-    location.reload();
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -684,7 +690,9 @@ exports.updateBodyBodega = (req,res,next) => {
         idInmueble
     );
     res.redirect('/inmueble/' + idInmueble);
-    location.reload();
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -799,7 +807,9 @@ exports.updateBodyOficina = (req,res,next) => {
         idInmueble
     );
     res.redirect('/inmueble/' + idInmueble);
-    location.reload();
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -915,5 +925,7 @@ exports.updateBodyOtra = (req,res,next) => {
         idInmueble
     );
     res.redirect('/inmueble/' + idInmueble);
-    location.reload();
+    window.onload = function() {
+        location.reload();
+      };
 };
