@@ -8,7 +8,7 @@ jest.mock('../util/database.util.js', () => ({
         idUsuario: 1,
         nombreUsuario: 'Marco',
         apellidosUsuario: 'Antonio',
-        passwordUsuario: '1234',
+        passwordUsuario: 'passwordOriginal',
         telefonoUsuario: '4421548752',
         emailUsuario: 'marco@test',
         estadoCivilUsuario: 'N/A',
@@ -21,7 +21,7 @@ jest.mock('../util/database.util.js', () => ({
 
 describe('Prueba de cambio de contraseña', () => {
     it('debe cambiar la contraseña del usuario', async () => {
-        const newPassword = "chupo";
+        const newPassword = "nuevoPassword";
         const emailUsuario = "marco@test"
         const result = await User.resetPassword(newPassword, emailUsuario);
 
