@@ -169,7 +169,13 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return '<a href="#" type="button" id="btnIniciarProceso" style="width: auto;" class="btnIniciarProceso bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl my-2">Iniciar Proceso</a>'
+                            var idAgente = data.idAgenteAsignado;
+                            var idUsuarioActual = <%=idUsuario%>;
+                            if (idAgente == idUsuarioActual ){
+                                return '<a href="#" type="button" id="btnIniciarProceso" style="width: auto;" class="btnIniciarProceso bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl my-2">Iniciar Proceso</a>'
+                            } else {
+                                return '<a href="#" type="button" style="width: auto;" class"bg-red-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl my-2" disabled></a>'
+                            }
                         }
                     },
                 ]
