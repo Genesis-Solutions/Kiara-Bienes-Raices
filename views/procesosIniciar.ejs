@@ -592,12 +592,14 @@
     function updateCounter() {
         var counter = document.getElementById('counter');
         counter.value -= 1;
+        pasos.value -= 1;
     }
     function addCounter() {
         var counter = document.getElementById('counter');
         var num = parseInt(counter.value);
         var newValue = num + 1;
         counter.value = newValue;
+        currentValue.value += 1;
     }
     function updateStepNumbers() {
         var stepNumbers = document.querySelectorAll('.step-number p');
