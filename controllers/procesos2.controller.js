@@ -2,6 +2,7 @@
 const Proceso = require('../models/procesos2.model');
 const ProcesoInfo = require('../models/procesos.model');
 const notificacionPaso = require("../util/email.js");
+const {validateEmail} = require("../util/validateEmail.js");
 // {notificacionPaso, cancelacionTramite, finalizacionTramite} 
 exports.getIniciarProceso = async (req, res, next) => {
     const inmueble = await Proceso.fetchInmueble(req.params.idInmueble);
@@ -86,20 +87,28 @@ exports.postModificarProceso = async(req, res, next) => {
     const resultJSON = JSON.stringify(result);
     const actualizarProceso = await Proceso.updateProcess(resultJSON,idTramite);
     const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
-    const infoDuenio = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idArrendador)
-    const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente)
-    notificacionPaso.notificacionPaso({
-        nombre: infoDuenio[0][0].nombreUsuario,
-        email: infoDuenio[0][0].emailUsuario,
-        idTramite: idTramite,
-        nombreInmueble: nombreInmueble
-    })
-    notificacionPaso.notificacionPaso({
-        nombre: infoCliente[0][0].nombreUsuario,
-        email: infoCliente[0][0].emailUsuario,
-        idTramite: idTramite,
-        nombreInmueble: nombreInmueble
-    })
+    const infoDuenio = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idArrendador);
+    const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente);
+
+    if (validateEmail(infoDuenio[0][0].emailUsuario) && 
+    validateEmail(infoCliente[0][0].emailUsuario)){
+        notificacionPaso.notificacionPaso({
+            nombre: infoDuenio[0][0].nombreUsuario,
+            email: infoDuenio[0][0].emailUsuario,
+            idTramite: idTramite,
+            nombreInmueble: nombreInmueble
+        });
+        notificacionPaso.notificacionPaso({
+            nombre: infoCliente[0][0].nombreUsuario,
+            email: infoCliente[0][0].emailUsuario,
+            idTramite: idTramite,
+            nombreInmueble: nombreInmueble
+        });
+    } else {
+        req.flash('warning', 'Ocurrió un error al enviar el correo de notificación');
+        return res.redirect('/perfil/procesos');
+    };
+    req.flash('success', 'El proceso se ha actualizado exitosamente');
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
 
@@ -164,11 +173,13 @@ exports.cancelarProceso = async (req, res, next) => {
         .then(([rows, fieldData]) => {
             ProcesoInfo.activateInmueble(idInmueble)
                 .then(([rows, fieldData]) => {
-                    notificacionPaso.cancelacionTramite({
-                        nombre: infoCliente[0][0].nombreUsuario,
-                        email: infoCliente[0][0].emailUsuario,
-                        nombreInmueble: nombreInmueble[0].nombreInmueble
-                    })
+                    if (validateEmail(infoCliente[0][0].emailUsuario)){
+                        notificacionPaso.cancelacionTramite({
+                            nombre: infoCliente[0][0].nombreUsuario,
+                            email: infoCliente[0][0].emailUsuario,
+                            nombreInmueble: nombreInmueble[0].nombreInmueble
+                        });
+                    };
                     res.status(200).json({ code: 200, msg: "Ok" });
                 })
                 .catch(error => { console.log(error) });
@@ -177,16 +188,17 @@ exports.cancelarProceso = async (req, res, next) => {
 };
 
 exports.finalizarProceso = async (req, res, next) => {
-    console.log("en el controller")
     const idTramite = req.params.idTramite;
     const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
     const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente);
     const nombreInmueble = await Proceso.fetchInmueble(infoTramite[0][0].idInmueble);
-    notificacionPaso.finalizacionTramite({
-        nombre: infoCliente[0][0].nombreUsuario,
-        email: infoCliente[0][0].emailUsuario,
-        nombreInmueble: nombreInmueble[0].nombreInmueble
-    })
+    if (validateEmail(infoCliente[0][0].emailUsuario)){
+        notificacionPaso.finalizacionTramite({
+            nombre: infoCliente[0][0].nombreUsuario,
+            email: infoCliente[0][0].emailUsuario,
+            nombreInmueble: nombreInmueble[0].nombreInmueble
+        });
+    };
     ProcesoInfo.deactivateProcess(idTramite).then(([rows, fieldData]) => {
         res.status(200).json({ code: 200, msg: "Ok" });
     })
