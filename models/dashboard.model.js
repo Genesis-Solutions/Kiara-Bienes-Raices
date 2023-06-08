@@ -29,7 +29,7 @@ module.exports = class Dashboard {
      */
     static fetchAllPropiedades() {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1'
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, I.idAgenteAsignado FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1'
         );
     }
 
