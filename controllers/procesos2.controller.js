@@ -88,18 +88,18 @@ exports.postModificarProceso = async(req, res, next) => {
     const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
     const infoDuenio = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idArrendador)
     const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente)
-    notificacionPaso.notificacionPaso({
-        nombre: infoDuenio[0][0].nombreUsuario,
-        email: infoDuenio[0][0].emailUsuario,
-        idTramite: idTramite,
-        nombreInmueble: nombreInmueble
-    })
-    notificacionPaso.notificacionPaso({
-        nombre: infoCliente[0][0].nombreUsuario,
-        email: infoCliente[0][0].emailUsuario,
-        idTramite: idTramite,
-        nombreInmueble: nombreInmueble
-    })
+    // notificacionPaso.notificacionPaso({
+    //     nombre: infoDuenio[0][0].nombreUsuario,
+    //     email: infoDuenio[0][0].emailUsuario,
+    //     idTramite: idTramite,
+    //     nombreInmueble: nombreInmueble
+    // })
+    // notificacionPaso.notificacionPaso({
+    //     nombre: infoCliente[0][0].nombreUsuario,
+    //     email: infoCliente[0][0].emailUsuario,
+    //     idTramite: idTramite,
+    //     nombreInmueble: nombreInmueble
+    // })
     res.redirect('/perfil/procesos'); //Cambiar despues la redirección
 }
 
@@ -164,11 +164,11 @@ exports.cancelarProceso = async (req, res, next) => {
         .then(([rows, fieldData]) => {
             ProcesoInfo.activateInmueble(idInmueble)
                 .then(([rows, fieldData]) => {
-                    notificacionPaso.cancelacionTramite({
-                        nombre: infoCliente[0][0].nombreUsuario,
-                        email: infoCliente[0][0].emailUsuario,
-                        nombreInmueble: nombreInmueble[0].nombreInmueble
-                    })
+                    // notificacionPaso.cancelacionTramite({
+                    //     nombre: infoCliente[0][0].nombreUsuario,
+                    //     email: infoCliente[0][0].emailUsuario,
+                    //     nombreInmueble: nombreInmueble[0].nombreInmueble
+                    // })
                     res.status(200).json({ code: 200, msg: "Ok" });
                 })
                 .catch(error => { console.log(error) });
@@ -182,11 +182,11 @@ exports.finalizarProceso = async (req, res, next) => {
     const infoTramite = await ProcesoInfo.getInfoTramite(idTramite);
     const infoCliente = await ProcesoInfo.getInfoUsuario(infoTramite[0][0].idCliente);
     const nombreInmueble = await Proceso.fetchInmueble(infoTramite[0][0].idInmueble);
-    notificacionPaso.finalizacionTramite({
-        nombre: infoCliente[0][0].nombreUsuario,
-        email: infoCliente[0][0].emailUsuario,
-        nombreInmueble: nombreInmueble[0].nombreInmueble
-    })
+    // notificacionPaso.finalizacionTramite({
+    //     nombre: infoCliente[0][0].nombreUsuario,
+    //     email: infoCliente[0][0].emailUsuario,
+    //     nombreInmueble: nombreInmueble[0].nombreInmueble
+    // })
     ProcesoInfo.deactivateProcess(idTramite).then(([rows, fieldData]) => {
         res.status(200).json({ code: 200, msg: "Ok" });
     })
