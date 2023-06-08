@@ -85,9 +85,9 @@
                 <i class="fa-solid fa-plus mr-2 text-center"></i>
                 <p class="text-center">Agregar Paso</p>
             </a>
-            <a onclick="updateStepNumbers()" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200">
+            <!-- <a onclick="updateStepNumbersButton()" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200">
                 <p class="text-center">Actualizar Orden de Pasos</p>
-            </a>
+            </a> -->
         </div>
 
     </form>
@@ -192,6 +192,27 @@
             updateObservaciones();
             updatePaso();
         }
+        function updateStepNumbersButton() {
+            var stepNumbers = document.querySelectorAll('.step-number p');
+            stepNumbers.forEach(function(number, index) {
+            number.innerHTML = index + 1;
+            });
+            updateIDs();
+            updateTitulos();
+            updateDescipciones();
+            updateEstatus();
+            updateObservaciones();
+            updatePaso();
+            updateStepNumbersNotification();
+        }
+        function updateStepNumbersNotification() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Orden de pasos actualizado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
         function updateIDs() {
             var pasos = document.querySelectorAll('.paso');
             pasos.forEach(function(number, index) {
@@ -244,8 +265,7 @@
             });
         }
     </script>
-    
-    
+
     <script type="text/javascript"> 
         function verificarFormulario() {
             var counter = document.getElementById('counter');
@@ -258,16 +278,23 @@
                 });
                 return false
             } else {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Cambios guardados',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                setTimeout(function() {
-                    document.getElementById('pasosForm').submit();
-                }, 2000);
+                updateStepNumbers();
+                saveProceso();
             }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function saveProceso() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso actulizado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function() {
+                document.getElementById('pasosForm').submit();
+            }, 2000);
         }
     </script>
 
@@ -362,19 +389,25 @@
                         type: 'GET',
                         dataType: 'json',
                         success: function() {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Proceso cancelado',
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                            setTimeout(function() {
-                                window.location.replace('/perfil/procesos');
-                            }, 2000);
+                            notificacionCancelarProceso();
                         }
                     });
                 } 
             });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function notificacionCancelarProceso() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso cancelado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function() {
+                window.location.replace('/perfil/procesos');
+            }, 2000);
         }
     </script>
 
@@ -392,19 +425,25 @@
                         type: 'GET',
                         dataType: 'json',
                         success: function() {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Proceso finalizado',
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                            setTimeout(function() {
-                                window.location.replace('/perfil/procesos');
-                            }, 2000);
+                            notificacionFinalizarProceso();
                         }
                     });
                 } 
             });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function notificacionFinalizarProceso() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso finalizado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function() {
+                window.location.replace('/perfil/procesos');
+            }, 2000);
         }
     </script>
 
