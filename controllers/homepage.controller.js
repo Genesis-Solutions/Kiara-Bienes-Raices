@@ -416,3 +416,247 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
 exports.getOlvideContrasenia = ( req,res,next ) => {
     res.render('olvideContraseña');
 }
+
+/**
+* Esta función agrega la funcionalidad de filtros de búsqueda
+* mediante la creación de una query dinámica que es enviada al
+* modelo inmueblesFiltrados.
+*
+* @param: req, res, next
+* @returns: res.render(searchPageFiltrada)
+*/
+
+exports.getDepartamentos = async ( req, res, next ) => {
+    if (req.body.newSearch == 1){
+        delete req.session.searchParams;
+        delete req.session.countParams;
+        delete req.session.searchValues;
+    }
+
+    /**
+    * Esta función construye la query dinámica dependiendo de los
+    * filtros que fueron seleccionados en la vista searchpage.ejs
+    * 
+    * @param: params ()
+    * @returns: {where: conditions.length ? conditions.join(' AND ') : '1', 
+    * values: values}
+    */
+
+    function buildConditions() {
+        var conditions = [];
+        var values = [];
+        var conditionsStr;
+
+        /**
+        * Aquí se hace la construcción de la query dinámica con los
+        * parámetros de la vista searchpage.ejs para filtrar
+        */
+
+        var catDept = "2";
+        conditions.push("idCategoria = ?");
+        values.push(catDept);
+
+        return {
+            where: conditions.length ?
+                    conditions.join(' AND ') : '1',
+            values: values
+        };
+    };
+
+    /**
+    * Valida que sólo esté buscando inmuebles activos en la base de datos
+    */
+
+    var statusActive = 1
+    var isActive = ' AND activoInmueble = ' + statusActive.toString();
+    var conditions = buildConditions();
+    var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where + isActive;
+
+    // if (req.session.searchValues != null){
+    //     var conditions = req.session.searchValues;
+    //     //console.log("condiciones en cookie: " + conditions);
+    // } else {
+        
+    //     //console.log("condiciones sin cookie: " + conditions);
+    // }
+    
+    // if (req.session.countParams != null) {
+    //     var countQuery = req.session.countParams;
+    // } else {
+        
+    // }
+
+    //console.log(countQuery)
+
+    /**
+    * Obtiene la cantidad de inmuebles filtrados
+    */
+    
+    const countFiltered = await SearchPage.totalInmueblesFiltrados(countQuery, conditions.values);
+
+    console.log(countQuery)
+
+    /**
+    * Dado a que necesitamos revisar que existan inmuebles que cumplan
+    * con los filtros seleccionados, debemos crear éstas variables para que
+    * puedan ser usadas después de la verificación 
+    */
+
+    var resultsExist = false;
+    var resultadosPorPagina;
+    var numeroResultados;
+    var numeroPaginas;
+    var builtQueryLimits
+
+    /**
+    * Revisa si hay inmuebles existentes que cumplan con los filtros que el
+    * usuario seleccionó 
+    */
+
+    if (countFiltered[0][0].total > 0) {
+        resultsExist = true;
+    };
+
+    const pagina = req.query.pagina ? Number(req.query.pagina) : 1;
+
+    /**
+    * Si existen inmuebles que cumplen con los filtros, genera la paginación
+    * correspondiente y construye los límites en la query para iterar entre
+    * páginas
+    */
+
+    if (resultsExist == true) {
+        /**
+        * Obtiene la cantidad de resultados por página, en este caso es
+        * de 1 para probar la paginación 
+        */
+
+        resultadosPorPagina = 4;
+
+        /** 
+        * Establece la cantidad de resultados por pagina
+        */
+        
+        numeroResultados = countFiltered[0][0].total;
+        //console.log("numero de pags" + numeroResultados)
+        numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
+
+        /** 
+        * Solicita la cantidad de resultados por pagina 
+        */
+        
+        if (pagina > numeroPaginas) {
+            res.redirect('/catalogo/search?pagina='+encodeURIComponent(numeroPaginas));
+        } else if (pagina < 1) {
+            res.redirect('/catalogo/search?pagina='+encodeURIComponent('1'));
+        };
+
+        /** 
+        * Determina los límites para saber qué mostrar por página
+        */
+    
+        const limiteInferior = (pagina-1)*resultadosPorPagina;
+        var limSuperior = resultadosPorPagina.toString();
+        var limInferior = limiteInferior.toString();
+        var limits = ' LIMIT ' + limInferior + ',' + limSuperior;
+        
+        /** 
+        * Si hay parámetros de búsqueda existentes, sigue utilizándolos en las
+        * páginas 
+        */
+
+        var builtQuery = 'SELECT * FROM inmueble WHERE ' + conditions.where + isActive;
+
+        // if (req.session.searchParams != null) {
+        //     //console.log("parametros de búsqueda: " + req.session.searchParams)
+        //     //console.log(req.session.searchValues)
+        //     var builtQuery = req.session.searchParams;
+        // } else {
+            
+        // }
+
+        builtQueryLimits = builtQuery + limits;
+
+        // console.log(builtQuery);
+        // console.log(conditions.values)
+        // console.log(countFiltered[0][0].total)
+    };
+
+    /** 
+    * Construye la lista de inmuebles filtrados con sus imágenes
+    * respectivas sí y sólo sí hay inmuebles existentes
+    */
+
+    var inmuebles;
+    if (resultsExist == true) {
+        inmuebles = await SearchPage.inmueblesFiltrados(builtQueryLimits, conditions.values);
+        for (let i=0; i < inmuebles.length; i++) {
+            const imgId = await SearchPage.idFotoPortada((inmuebles[i].idInmueble.toString()));
+            const imgSrc = await SearchPage.srcFotoPortada((imgId[0][0].idFoto).toString());
+            const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
+            inmuebles[i].img = imgSrcFilename;
+        }
+    };
+
+    /**
+    * Construye la paginación para la vista searchPageFiltrada.ejs 
+    */
+
+    if (pagina <= 3) {
+        iterador = 1;
+    }
+    else {
+        iterador = pagina-2;
+    }
+    if(pagina <= numeroPaginas-2) {
+        linkFinal = pagina+2;
+    }
+    else if(pagina <= numeroPaginas-1) {
+        linkFinal = pagina+1;
+    }
+    else { 
+        linkFinal = pagina;
+    }
+
+    /**
+    * Almacena los parámetros de búsqueda en variables de sesión para
+    * que durante la paginación no se reestablezca la búsqueda 
+    */
+
+    req.session.countParams = countQuery;
+    req.session.searchParams = builtQuery;
+    req.session.searchValues = conditions;
+
+    /** 
+    * Mustra la vista searchPageFiltrada.ejs con la información respectiva
+    * para mostrar los inmuebles que cumplen con la búsqueda, los datos para
+    * la paginación y las variables de sesión de isLogged y el idRol, en caso
+    * de que no existan inmuebles con las características que se buscaron,
+    * muestra la vista searchPageVacia.ejs
+    */
+
+    // console.log(builtQuery)
+    // console.log(resultsExist)
+
+
+    if (resultsExist == true) {
+        res.render('searchPageFiltrada', {
+            inmuebles: inmuebles,
+            pagina: pagina,
+            resultsExist: resultsExist,
+            iterador: iterador,
+            linkFinal: linkFinal,
+            numeroPaginas: numeroPaginas,
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            urlFotoUsuario : req.session.urlFotoUsuario
+        }); 
+    } else {
+        res.render('searchPageVacia', {
+            isLogged: req.session.isLoggedIn,
+            idRol: req.session.idRol,
+            urlFotoUsuario: req.session.urlFotoUsuario
+        })
+    };
+    
+}
