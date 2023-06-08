@@ -235,78 +235,81 @@
                 });
                 return false
             } else {
-                document.getElementById('pasosForm').submit();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cambios guardados',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                setTimeout(function() {
+                    document.getElementById('pasosForm').submit();
+                }, 2000);
             }
         }
     </script>
-    
+
     <script>
-            const sortableList = document.querySelector(".sortable-list");
-            const btnAgregarPaso = document.getElementById('btnAgregarPaso');
-            
-            function addItem() {
-                console.log("Entro a additem")
-                    // Validar campos vacios
-                const tituloInput = document.getElementById('titulo');
-                const descripcionInput = document.getElementById('descripcion');
-            
-                if (tituloInput.value.trim() === '' || descripcionInput.value.trim() === '') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Verifique que los campos esten llenos',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                    return false
-                } else {
-                    const i = document.getElementById('counter');
-                    var currentValue = parseInt(i.value);
-                    const titulo  = document.getElementById('titulo').value;
-                    const descripcion  = document.getElementById('descripcion').value;
-                    // Create a new list item element
-                    const newItem = document.createElement('li');
-                    var newValue = currentValue + 1;
-                    i.value = newValue;
-                    //newItem.textContent = 'New Item'; // Set the text content of the new item
-                    newItem.innerHTML = `
-                        <div class="grid grid-cols-6 item">
-                            <div class="col-span-3">
-                                <ol class="relative border-l border-sky-950">
-                                    <li class="ml-6">            
-                                        <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
-                                            <p class="text-white">${currentValue}</p>
-                                        </span>
-                                        <h3 id="titulo${currentValue}" name="titulo${currentValue}" class="titulo font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
-                                        <p id="descripcion${currentValue}" name="descripcion${currentValue}" class="descripcion text-sm text-gray-500 hidden md:block">${descripcion}</p>
-                                        <input type="text" hidden name="titulo${currentValue}" id="titulo${currentValue}" value="${titulo}">
-                                        <input type="text" hidden name="descPaso${currentValue}" id="descPaso${currentValue}" value="${descripcion}">
-                                        <input type="text" hidden name="paso${currentValue}" id="paso${currentValue}" value="${currentValue}">
-                                    </li>
-                                </ol>
-                                <hr class="h-10 border-l border-sky-950 border-t-0">
-                            </div>
-                            <div class="row-span-1 justify-center">
-                                <select id="estatus${currentValue}" name="estatus${currentValue}" class="estatus h-10 px-5 bg-white w-full rounded-lg border font-semibold border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block">
-                                    <option value="Sin empezar">Sin empezar</option>
-                                    <option value="En proceso">En Proceso</option>
-                                    <option value="Terminado">Terminado</option> 
-                                </select>
-                            </div>
-                            <input type="text" id="observacion${currentValue}" name="observacion${currentValue}" placeholder="Campo de observacion" class="observacion observacion${currentValue} mx-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            </input>
-                            <div class="col-span-1 text-center">
-                                <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
-                            </div>
+        const sortableList = document.querySelector(".sortable-list");
+        const btnAgregarPaso = document.getElementById('btnAgregarPaso');
+        function addItem() {
+            const tituloInput = document.getElementById('titulo');
+            const descripcionInput = document.getElementById('descripcion');
+            if (tituloInput.value.trim() === '' || descripcionInput.value.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que los campos esten llenos',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return false
+            } else {
+                const i = document.getElementById('counter');
+                var currentValue = parseInt(i.value);
+                const titulo  = document.getElementById('titulo').value;
+                const descripcion  = document.getElementById('descripcion').value;
+                // Create a new list item element
+                const newItem = document.createElement('li');
+                var newValue = currentValue + 1;
+                i.value = newValue;
+                //newItem.textContent = 'New Item'; // Set the text content of the new item
+                newItem.innerHTML = `
+                    <div class="grid grid-cols-6 item">
+                        <div class="col-span-3">
+                            <ol class="relative border-l border-sky-950">
+                                <li class="ml-6">            
+                                    <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                        <p class="text-white">${currentValue}</p>
+                                    </span>
+                                    <h3 id="titulo${currentValue}" name="titulo${currentValue}" class="titulo font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
+                                    <p id="descripcion${currentValue}" name="descripcion${currentValue}" class="descripcion text-sm text-gray-500 hidden md:block">${descripcion}</p>
+                                    <input type="text" hidden name="titulo${currentValue}" id="titulo${currentValue}" value="${titulo}">
+                                    <input type="text" hidden name="descPaso${currentValue}" id="descPaso${currentValue}" value="${descripcion}">
+                                    <input type="text" hidden name="paso${currentValue}" id="paso${currentValue}" value="${currentValue}">
+                                </li>
+                            </ol>
+                            <hr class="h-10 border-l border-sky-950 border-t-0">
                         </div>
-                        `;
-                    //i += 1;
-                    // Append the new item to the list
-                    sortableList.appendChild(newItem);
-                    addCounter();
-                }
+                        <div class="row-span-1 justify-center">
+                            <select id="estatus${currentValue}" name="estatus${currentValue}" class="estatus h-10 px-5 bg-white w-full rounded-lg border font-semibold border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block">
+                                <option value="Sin empezar">Sin empezar</option>
+                                <option value="En proceso">En Proceso</option>
+                                <option value="Terminado">Terminado</option> 
+                            </select>
+                        </div>
+                        <input type="text" id="observacion${currentValue}" name="observacion${currentValue}" placeholder="Campo de observacion" class="observacion observacion${currentValue} mx-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </input>
+                        <div class="col-span-1 text-center">
+                            <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                        </div>
+                    </div>
+                    `;
+                // Append the new item to the list
+                sortableList.appendChild(newItem);
+                addCounter();
             }
-            // Attach a click event listener to the button
-            btnAgregarPaso.addEventListener('click', addItem);
+        }
+        // Attach a click event listener to the button
+        btnAgregarPaso.addEventListener('click', addItem);
     </script>
     
     <script>
