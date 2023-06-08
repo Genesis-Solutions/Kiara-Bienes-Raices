@@ -154,10 +154,12 @@ exports.deleteUser = async (req, res, next) => {
     /*
     * Triple chequeo de posibles inmuebles, trámite de cliente y trámite de arrendador posibles en el usuario.
     */
-    const primeraComprobacion = await Dashboard.checkUser(req.params.id)
-    const segundaComprobacion = await Dashboard.checkUser2(req.params.id)
-    const terceraComprobacion = await Dashboard.checkUser3(req.params.id)
-    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion;
+    const primeraComprobacion = await Dashboard.comprobacionAgenteInmueble(req.params.id)
+    const segundaComprobacion = await Dashboard.comprobacionClienteTramite(req.params.id)
+    const terceraComprobacion = await Dashboard.comprobacionArrendadorTramite(req.params.id)
+    const cuartaComprobacion = await Dashboard.comprobacionAgenteTramite(req.params.id)
+    
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion + cuartaComprobacion ;
     /*
     * Si los trámites activos son 0, eliminar usuario; si esto no es así, regresar un json que avise la existencia de procesos.
     */
@@ -190,10 +192,12 @@ exports.comprobarUpdateRol = async (req, res, next) => {
     /*
     * Triple chequeo de posibles inmuebles, trámite de cliente y trámite de arrendador posibles en el usuario.
     */
-    const primeraComprobacion = await Dashboard.checkUser(req.params.idUsuario);
-    const segundaComprobacion = await Dashboard.checkUser2(req.params.idUsuario);
-    const terceraComprobacion = await Dashboard.checkUser3(req.params.idUsuario);
-    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion;
+    const primeraComprobacion = await Dashboard.comprobacionAgenteInmueble(req.params.idUsuario);
+    const segundaComprobacion = await Dashboard.comprobacionClienteTramite(req.params.idUsuario);
+    const terceraComprobacion = await Dashboard.comprobacionArrendadorTramite(req.params.idUsuario);
+    const cuartaComprobacion = await Dashboard.comprobacionAgenteTramite(req.params.idUsuario)
+    
+    tramites_activos = primeraComprobacion + segundaComprobacion + terceraComprobacion + cuartaComprobacion ;
     /*
     * Si los trámites activos son 0, cambiar rol de usuario; si esto no es así, regresar un json que avise la existencia de procesos.
     */

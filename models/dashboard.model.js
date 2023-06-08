@@ -149,7 +149,7 @@ module.exports = class Dashboard {
     * Revisión de cantidad de inmuebles asignados 
     * @param idUsuario: String -> Id del usuario que será revisado
     */
-    static checkUser(idUsuario) {
+    static comprobacionAgenteInmueble(idUsuario) {
         return db.execute(
             'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where (activoInmueble=1 OR activoInmueble=3) AND (idAgenteAsignado=? OR idArrendador=?)', 
             [idUsuario, idUsuario]
@@ -162,7 +162,7 @@ module.exports = class Dashboard {
     * Revisión de cantidad de trámites de cliente
     * @param idUsuario: String -> Id del usuario que será revisado
     */
-    static checkUser2(idUsuario) {
+    static comprobacionClienteTramite(idUsuario) {
         return db.execute(
             'SELECT COUNT(idCliente) as segunda FROM tramite where idCliente=? AND activoTramite=1', 
             [idUsuario]
@@ -175,12 +175,25 @@ module.exports = class Dashboard {
     * Revisión de cantidad de trámites de arrendador
     * @param idUsuario: String -> Id del usuario que será revisado
     */
-    static checkUser3(idUsuario) {
+    static comprobacionArrendadorTramite(idUsuario) {
         return db.execute(
             'SELECT COUNT(idArrendador) as tercera FROM tramite where idArrendador=? AND activoTramite=1', 
             [idUsuario]
         ).then(([rows, fielData]) => {
         return rows[0].tercera
+        });
+    }
+
+    /*
+    * Revisión de cantidad de trámites de agente
+    * @param idUsuario: String -> Id del usuario que será revisado
+    */
+    static comprobacionAgenteTramite(idUsuario) {
+        return db.execute(
+            'SELECT COUNT(idAgente) as cuarta FROM tramite where idAgente=? AND activoTramite=1', 
+            [idUsuario]
+        ).then(([rows, fielData]) => {
+        return rows[0].cuarta
         });
     }
 
