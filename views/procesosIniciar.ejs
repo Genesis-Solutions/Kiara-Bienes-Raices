@@ -2,9 +2,9 @@
 
 <body style="font-family: 'Montserrat', sans-serif">
 
-    <!-- Navbar Section -->
+<!-- Navbar Section -->
 
-    <%- include('partials/navbar') %>
+<%- include('partials/navbar') %>
 
 <% for( let inmueble of inmuebles) { %>
 
@@ -604,7 +604,7 @@
     function updateStepNumbers() {
         var stepNumbers = document.querySelectorAll('.step-number p');
         stepNumbers.forEach(function(number, index) {
-          number.innerHTML = index + 1;
+            number.innerHTML = index + 1;
         });
         updateIDs();
         updateTitulos();
@@ -612,6 +612,15 @@
         updateEstatus();
         updateObservaciones();
         updatePaso();
+        updateStepNumbersNotification();
+    }
+    function updateStepNumbersNotification() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Orden de pasos actualizado',
+            showConfirmButton: false,
+            timer: 2000
+        });
     }
     function updateIDs() {
         var pasos = document.querySelectorAll('.paso');
@@ -664,7 +673,6 @@
     }
 </script>
 
-
 <script type="text/javascript"> 
     function verificarFormulario() {
         // Verificar que el cliente y el dueño no sean el mismo
@@ -689,8 +697,23 @@
             });
             return false
         } else {
-            document.getElementById('pasosForm').submit();
+            updateStepNumbers();
+            postProceso();
         }
+    }
+</script>
+
+<script type="text/javascript">
+    function postProceso() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso inicializado',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        setTimeout(function() {
+            document.getElementById('pasosForm').submit();
+        }, 2000);
     }
 </script>
 
@@ -765,7 +788,6 @@
             }
         }
             }
-           
         // Attach a click event listener to the button
         btnAgregarPaso.addEventListener('click', addItem);
 </script>
