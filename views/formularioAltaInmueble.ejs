@@ -65,7 +65,7 @@
                             <p id="fileSize" class="pb-5"></p>
                         </div>
                     </label>
-                    <input type='file' multiple='multiple' accept='image/*' name='uploadedImages[]' id='uploadedImages' class="hidden"/>
+                    <input type='file' multiple='multiple' accept='image/jpg, image/png, image/webp' name='uploadedImages[]' id='uploadedImages' class="hidden"/>
                 </form>
             </div>
         </div>
@@ -130,7 +130,7 @@
                 confirmVideo = 1;
             };
             
-            if(inputElement.value < 5){
+            if(inputElement.value < 4){
                 Swal.fire({
                     icon: 'error',
                     title: 'Necesita subir por lo menos 5 imágenes del inmueble',
