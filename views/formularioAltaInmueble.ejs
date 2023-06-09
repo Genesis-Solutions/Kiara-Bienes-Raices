@@ -65,14 +65,14 @@
                             <p id="fileSize" class="pb-5"></p>
                         </div>
                     </label>
-                    <input type='file' multiple='multiple' accept='image/jpg, image/png, image/webp' name='uploadedImages[]' id='uploadedImages' class="hidden"/>
+                    <input type='file' multiple='multiple' accept='image/jpeg, image/png, image/webp' name='uploadedImages[]' id='uploadedImages' class="hidden"/>
                 </form>
             </div>
         </div>
     </div>
     <input type="hidden" id="imgCount" name="imgCount">
     <input type="hidden" id="sizeCount" name="sizeCount">
-    <input type="hidden" id="successRegistry" name="successRegistry">
+    <input type="hidden" id="fileFormatCheck" name="fileFormatCheck">
 
     <!-- Information Form -->
     <!-- Cambiar dependiendo del id del tipo de inmueble -->
@@ -104,7 +104,7 @@
             e.preventDefault();
             var inputElement = document.getElementById('imgCount');
             var filesSize = document.getElementById('sizeCount');
-            var successRegistry = document.getElementById('successRegistry');
+            var fileFormatCheck = document.getElementById('fileFormatCheck');
             var mapCheck = $('input[name="linkMapsBody"]').val();
             var videoCheck = $('input[name="linkVideoBody"]').val();
             var confirmMap = 0;
@@ -144,8 +144,14 @@
                     showConfirmButton: false,
                     timer: 2000
                 });
+            } else if (fileFormatCheck.value == 0){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sólo se aceptan formatos JPG, PNG y WEBP',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             } else if (confirmVideo != 1) {
-                //console.log("estatus de video",confirmVideo);
                 Swal.fire({
                     icon: 'error',
                     title: 'Verifique que el video tenga el formato correcto',
@@ -153,7 +159,6 @@
                     timer: 2000
                 });
             } else if (confirmMap != 1){
-                //console.log("estatus de mapa",confirmMap);
                 Swal.fire({
                     icon: 'error',
                     title: 'Verifique que el mapa tenga el formato de "insertar mapa" de google maps',
@@ -313,14 +318,26 @@
             var fileCountElement = document.getElementById('fileCount');
             var fileSizeElement = document.getElementById('fileSize');
             var sizeCount = document.getElementById('sizeCount');
+            var fileFormatCheck = document.getElementById('fileFormatCheck');
+            var fileExtension = "";
             fileCountElement.innerHTML = "<p class='text-center pb-2'>Número de imágenes: <span class='font-semibold'>" + fileCount + "</span></p>";
             for (var i = 0; i < fileCount; i++) {
                 var fileName = files[i].name;
-                //console.log(files[i].size)
+                var extensionName = fileName.toString();
                 fileSize = fileSize + files[i].size;
                 var fileItem = document.createElement("p");
                 fileItem.textContent = fileName;
-                fileCountElement.appendChild(fileItem); 
+                fileCountElement.appendChild(fileItem);
+                
+                if (extensionName.lastIndexOf(".") > 0) {
+                    fileExtension = extensionName.substring(extensionName.lastIndexOf(".") + 1, extensionName.length);
+                    
+                };
+                if (fileExtension.toLowerCase() == "png" || fileExtension.toLowerCase() == "jpeg" || fileExtension.toLowerCase() == "jpg" || fileExtension.toLowerCase() == "webp") {
+                    fileFormatCheck.value = "1";
+                } else {
+                    fileFormatCheck.value = "0";
+                };
             };
             var fileSizeMB = fileSize / 1024 / 1024;
             fileSizeElement.innerHTML = "<p class='text-center pb-2'>Tamaño de las imágenes: <span class='font-semibold'>" + fileSizeMB.toFixed(2) + " MB" + "</span></p>";
