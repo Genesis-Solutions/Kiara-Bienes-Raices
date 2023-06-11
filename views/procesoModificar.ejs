@@ -1,0 +1,451 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Navbar Section -->
+
+    <%- include('partials/navbar') %>
+
+    <!-- Heading Section -->
+
+    <div class="px-10 py-2 text-center">
+        <hr class="h-px my-4 bg-gray-800 border-0">
+        <h2 class="text-2xl md:text-4xl font-bold mb-2 pt-5 md:pt-10"><%= inmueble.nombreInmueble %></h2>
+        <p class="pb-5 md:pb-10 truncate">
+            <%= inmueble.descInmueble.slice(0,170) %>...
+        </p>
+        <hr class="h-px my-4 bg-gray-800 border-0">
+    </div>
+
+    <!-- Progress Step Bar Section -->
+
+    <form id="pasosForm" name="pasosForm" action="/dashboard/modificarProceso/<%=idTramite %>" method="POST" novalidate>
+        <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+            <input type="text" name="nombreInmueble" id="nombreInmueble" value="<%=inmueble.nombreInmueble%>" hidden>
+            <% if(pasos.length > 0){ %>
+                <% pasos.forEach(paso=> { %>
+                    <div class="grid grid-cols-6 item">
+                        <div class="col-span-3">
+                            <ol class="relative border-l border-sky-950">
+                                <li class="ml-6">            
+                                    <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                        <p class="text-white"><%=paso.paso%></p>
+                                    </span>
+                                    <h3 id="titulo<%=paso.paso%>" name="titulo<%=paso.paso%>" class="titulo font-medium leading-tight pt-2 md:pt-0"><%=paso.titulo%></h3>
+                                    <p id="descripcion<%=paso.paso%>" name="descripcion<%=paso.paso%>" class="descripcion text-sm text-gray-500 hidden md:block"><%=paso.descPaso%></p>
+                                    <input type="text" hidden name="titulo<%= paso.paso %>" id="titulo<%= paso.paso %>" value="<%= paso.titulo %>" class="titulo">
+                                    <input type="text" hidden name="descPaso<%= paso.paso %>" id="descPaso<%= paso.paso %>" value="<%= paso.descPaso %>" class="descripcion">
+                                    <input type="text" hidden name="paso<%= paso.paso %>" id="paso<%= paso.paso %>" value="<%= paso.paso %>" class="paso">
+                                </li>
+                            </ol>
+                            <hr class="h-10 border-l border-sky-950 border-t-0">
+                        </div>
+                        <div class="row-span-1 justify-center">
+                            <select id="estatus<%=paso.paso%>" name="estatus<%=paso.paso%>" class="estatus h-10 px-5 bg-white w-full rounded-lg border font-semibold border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block">
+                                <option value="0" 
+                                    <% if(paso.status == 0) { %> 
+                                        selected
+                                    <% } %> 
+                                    > Sin empezar
+                                </option>
+                                <option value="1"
+                                    <% if (paso.status == 1) { %>
+                                        selected
+                                    <% } %> 
+                                    > En Proceso
+                                </option>
+                                <option value="2" 
+                                    <% if (paso.status == 2) { %>
+                                        selected
+                                    <% } %> 
+                                    > Terminado
+                                </option> 
+                            </select>
+                        </div>
+                        <input type="text" id="observacion<%=paso.paso%>" name="observacion<%=paso.paso%>" placeholder="Campo de observacion" 
+                            <% if (paso.observacion != "0" || paso.observacion != 0) { %>
+                                value="<%=paso.observacion%>"
+                            <% } %>
+                            class="observacion observacion<%=paso.paso%> mx-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </input>
+                        <div class="col-span-1 text-center">
+                            <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p class="text-center text-lg font-bold">No hay información del tramite</p>
+            <% }; %>
+        </div>
+
+        <!-- Add Step Button Section (Activa Modal) -->
+
+        <div class="px-10 pb-14 flex justify-evenly space-x-10">
+            <a data-modal-target="pasoModal" data-modal-toggle="pasoModal" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200 border border-dashed">
+                <i class="fa-solid fa-plus mr-2 text-center"></i>
+                <p class="text-center">Agregar Paso</p>
+            </a>
+            <!-- <a onclick="updateStepNumbersButton()" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200">
+                <p class="text-center">Actualizar Orden de Pasos</p>
+            </a> -->
+        </div>
+
+    </form>
+
+    <!-- Buttons Section -->
+
+    <div class="px-10 pb-14 flex justify-evenly space-x-10">
+        <button type="button" onclick="goBack()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-yellow-500 hover:font-medium hover:bg-yellow-700 btnReturn">
+            Regresar
+        </button>
+        <button type="button" onclick="verificarFormulario()" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnSubmit">
+            Guardar
+        </button>
+    </div>
+
+    <div class="px-10 pb-14 flex justify-evenly space-x-10">
+        <button type="button" onclick="cancelarProceso()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
+            Cancelar Proceso
+        </button>
+        <button type="button" onclick="finalizarProceso()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-green-600 hover:font-medium hover:bg-green-700 btnFinalizar">
+            Finalizar Proceso
+        </button>
+    </div>
+
+    <!-- Footer Section -->
+
+    <%- include("partials/footer") %>
+
+    <!-- Main modal -->
+    <div id="pasoModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="pasoModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Llena los datos del Paso Adicional</h3>
+                    <div>
+                        <label for="titulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título del Paso</label>
+                        <input type="text" name="titulo" id="titulo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label for="descripcion" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                        <input type="text" name="descripcion" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                    </div>
+                    <button data-modal-hide="pasoModal" id="btnAgregarPaso" class="mt-5 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <input hidden type="number" id="counter" name="counter" value="<%= pasos.length+1 %>">
+
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- jQuery form plug in -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+    <script src="https://malsup.github.io/jquery.form.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+
+    <script>
+        function deleteItem(item) {
+            const div = item.parentNode.parentNode;
+            div.parentNode.removeChild(div);
+            updateCounter();
+            updateStepNumbers();
+        }
+    </script>
+
+    <script>
+        $(document).ready(function (e) {
+            updateStepNumbers();
+        })
+
+    </script>
+    
+    <script>
+        function updateCounter() {
+            var counter = document.getElementById('counter');
+            counter.value -= 1;
+            updateStepNumbers();
+        }
+        function addCounter() {
+            var counter = document.getElementById('counter');
+            var num = parseInt(counter.value);
+            var newValue = num + 1;
+            counter.value = newValue;
+        }
+        function updateStepNumbers() {
+            var stepNumbers = document.querySelectorAll('.step-number p');
+            stepNumbers.forEach(function(number, index) {
+            number.innerHTML = index + 1;
+            });
+            updateIDs();
+            updateTitulos();
+            updateDescipciones();
+            updateEstatus();
+            updateObservaciones();
+            updatePaso();
+        }
+        function updateStepNumbersButton() {
+            var stepNumbers = document.querySelectorAll('.step-number p');
+            stepNumbers.forEach(function(number, index) {
+            number.innerHTML = index + 1;
+            });
+            updateIDs();
+            updateTitulos();
+            updateDescipciones();
+            updateEstatus();
+            updateObservaciones();
+            updatePaso();
+            updateStepNumbersNotification();
+        }
+        function updateStepNumbersNotification() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Orden de pasos actualizado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        function updateIDs() {
+            var pasos = document.querySelectorAll('.paso');
+            pasos.forEach(function(number, index) {
+                console.log(number.id)
+                var num = index;
+                number.id = "paso"+(num + 1);
+                number.name = "paso"+(num + 1);
+            });
+        }
+        function updateTitulos() {
+            var titulos = document.querySelectorAll('.titulo');
+            titulos.forEach(function(number, index) {
+                console.log(number.id)
+                number.id = "titulo"+(index + 1);
+                number.name = "titulo"+(index + 1);
+            });
+        }
+        function updateDescipciones() {
+            var descripciones = document.querySelectorAll('.descripcion');
+            descripciones.forEach(function(number, index) {
+                console.log(number.id)
+                var num = index;
+                number.id = "descripcion"+(num + 1);
+                number.name = "descripcion"+(num + 1);
+            });
+        }
+        function updateEstatus() {
+            var estatuses = document.querySelectorAll('.estatus');
+            estatuses.forEach(function(number, index) {
+                console.log(number.id)
+                number.id = "estatus"+(index + 1);
+                number.name = "estatus"+(index + 1);
+            });
+        }
+        function updateObservaciones() {
+            var observaciones = document.querySelectorAll('.observacion');
+            observaciones.forEach(function(number, index) {
+                console.log(number.id)
+                number.id = "observacion"+(index + 1);
+                number.name= "observacion"+(index + 1);
+            });
+        }
+        function updatePaso() {
+            var pasos = document.querySelectorAll('.paso');
+            pasos.forEach(function(number, index) {
+                console.log(number.id)
+                number.id = "paso"+(index + 1);
+                number.name= "paso"+(index + 1);
+                number.value = index;
+            });
+        }
+    </script>
+
+    <script type="text/javascript"> 
+        function verificarFormulario() {
+            var counter = document.getElementById('counter');
+            if(counter.value == 1){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que el proceso tenga por lo menos 1 paso',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return false
+            } else {
+                updateStepNumbers();
+                saveProceso();
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function saveProceso() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso actualizado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function() {
+                document.getElementById('pasosForm').submit();
+            }, 2000);
+        }
+    </script>
+
+    <script>
+            const sortableList = document.querySelector(".sortable-list");
+            const btnAgregarPaso = document.getElementById('btnAgregarPaso');
+            
+            function addItem() {
+                console.log("Entro a additem")
+                    // Validar campos vacios
+                const tituloInput = document.getElementById('titulo');
+                const descripcionInput = document.getElementById('descripcion');
+            
+                if (tituloInput.value.trim() === '' || descripcionInput.value.trim() === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Verifique que los campos esten llenos',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    return false
+                } else {
+                    const i = document.getElementById('counter');
+                    var currentValue = parseInt(i.value);
+                    const titulo  = document.getElementById('titulo').value;
+                    const descripcion  = document.getElementById('descripcion').value;
+                    // Create a new list item element
+                    const newItem = document.createElement('li');
+                    var newValue = currentValue + 1;
+                    i.value = newValue;
+                    //newItem.textContent = 'New Item'; // Set the text content of the new item
+                    newItem.innerHTML = `
+                        <div class="grid grid-cols-6 item">
+                            <div class="col-span-3">
+                                <ol class="relative border-l border-sky-950">
+                                    <li class="ml-6">            
+                                        <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                            <p class="text-white">${currentValue}</p>
+                                        </span>
+                                        <h3 id="titulo${currentValue}" name="titulo${currentValue}" class="titulo font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
+                                        <p id="descripcion${currentValue}" name="descripcion${currentValue}" class="descripcion text-sm text-gray-500 hidden md:block">${descripcion}</p>
+                                        <input type="text" hidden name="titulo${currentValue}" id="titulo${currentValue}" value="${titulo}" class="titulo">
+                                        <input type="text" hidden name="descPaso${currentValue}" id="descPaso${currentValue}" value="${descripcion}" class="descripcion">
+                                        <input type="text" hidden name="paso${currentValue}" id="paso${currentValue}" value="${currentValue}" class="paso">
+                                    </li>
+                                </ol>
+                                <hr class="h-10 border-l border-sky-950 border-t-0">
+                            </div>
+                            <div class="row-span-1 justify-center">
+                                <select id="estatus${currentValue}" name="estatus${currentValue}" class="estatus h-10 px-5 bg-white w-full rounded-lg border font-semibold border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block">
+                                    <option value="Sin empezar">Sin empezar</option>
+                                    <option value="En proceso">En Proceso</option>
+                                    <option value="Terminado">Terminado</option> 
+                                </select>
+                            </div>
+                            <input type="text" id="observacion${currentValue}" name="observacion${currentValue}" placeholder="Campo de observacion" class="observacion observacion${currentValue} mx-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            </input>
+                            <div class="col-span-1 text-center">
+                                <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                            </div>
+                        </div>
+                        `;
+                    //i += 1;
+                    // Append the new item to the list
+                    sortableList.appendChild(newItem);
+                    // addCounter();
+                }
+            }
+        
+        // Attach a click event listener to the button
+        btnAgregarPaso.addEventListener('click', addItem);
+    </script>
+    
+    
+    <script type="text/javascript">   
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+    <!-- Función cancelarProceso -->
+    <script type="text/javascript">   
+        function cancelarProceso() {
+            Swal.fire({
+                title: '¿Confirma la cancelación del tramite?',                
+                showCancelButton: true,
+                confirmButtonText: `Confirmar cancelación`,                
+                }).then((result) => {               
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/dashboard/cancelarProceso/<%=idTramite%>/<%=inmueble.idInmueble%>',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function() {
+                            notificacionCancelarProceso();
+                        }
+                    });
+                } 
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function notificacionCancelarProceso() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso cancelado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function() {
+                window.location.replace('/perfil/procesos');
+            }, 2000);
+        }
+    </script>
+
+    <!-- Función finalizarProceso -->
+    <script type="text/javascript">   
+        function finalizarProceso() {
+            Swal.fire({
+                title: '¿Confirma la finalización del tramite?',                
+                showCancelButton: true,
+                confirmButtonText: `Confirmar finalización`,                
+                }).then((result) => {               
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/dashboard/finalizarProceso/<%=idTramite%>',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function() {
+                            notificacionFinalizarProceso();
+                        }
+                    });
+                } 
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function notificacionFinalizarProceso() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Proceso finalizado',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            setTimeout(function() {
+                window.location.replace('/perfil/procesos');
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Navbar Section -->
+
+    <%- include('partials/navbar') %>
+
+    <!-- Menu Section -->
+
+    <div class="px-10 pt-8">
+        <div class="space-x-5 space-y-3">
+            <a href="/perfil" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white-700">Mi Perfil</a>
+            <a href="/perfil/procesos" class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Mis Procesos</a>
+        </div>
+        <hr class="h-px my-4 bg-gray-800 border-0">
+    </div>
+
+    <!-- Process Cards Section -->
+
+    <div class="p-10">
+
+        <!-- Header -->
+
+        <% if (warning != '') { %>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: '<%- warning %>',
+                    showConfirmButton: true,
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                })
+            </script>
+        <% } %>
+        <% if (success != '') { %>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '<%- success %>',
+                    showConfirmButton: true,
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                })
+            </script>
+        <% } %>
+
+        <h2 class="text-4xl font-bold mb-5">Mis Procesos</h2>
+
+        <% if(data.length > 0){ %>
+
+            <% data.forEach(tramite=>{ %>
+
+                <div class="rounded-lg border border-gray-300 text-base focus:outline-none focus:border-gray-800 focus:ring-gray-800 mb-5">
+                    <div class="flex flex-col md:grid md:grid-cols-3">
+                        <div class="md:order-last">
+                            <img src="/perfil/get_bucket_img?image=<%=tramite.fotoInmueble%>" class="h-60 md:h-72 w-full object-cover rounded-t-lg md:rounded-tl-none md:rounded-tr-lg" alt="">
+                        </div>
+                        <div class="col-span-2 p-5 md:p-6 lg:p-12 space-y-5">
+                            <div class="flex justify-between lg:flex-row flex-col">
+                                <h1 class="text-lg font-semibold">
+                                    <%= tramite.nombreInmueble %>
+                                </h1>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="font-semibold">
+                                    <%= tramite.direccionInmueble %>
+                                </h3>
+                                <p class="hidden lg:flex">
+                                    <%= tramite.descInmueble %>
+                                </p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-5">
+                                <div class="col-span-3 lg:col-span-1 flex items-center order-first lg:order-last">
+                                    <img src="/get_bucket_img?image=<%- tramite.fotoAgente %>" class="rounded-full object-cover mx-2 w-16 h-16" />
+                                    <p>Agente: <%= tramite.nombreAgente %> <%= tramite.apellidosAgente %></p>
+                                </div>
+
+                                <div class="col-span-3 lg:col-span-1 flex items-center">
+                                    <a href="/inmueble/<%=tramite.idInmueble%>" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                        Ver inmueble
+                                    </a>
+                                </div>
+
+                                <% if (idRol == 1 || idRol == 2) { %>
+                                    <div class="col-span-3 lg:col-span-1 flex items-center">
+                                        <a href="/dashboard/modificarProceso/<%=tramite.idTramite%>"  class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                            Modificar / Ver Proceso
+                                        </a>
+                                    </div>
+                                        <% } else {%>
+                                        <div class="col-span-3 lg:col-span-1 flex items-center">
+                                            <a href="/dashboard/proceso/<%=tramite.idTramite%>" class="px-5 py-2 w-full rounded-lg text-center text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                                                Ver Proceso
+                                            </a>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <% }); %>
+        <% } else { %>
+            <p class="text-center text-lg font-bold">No hay ningún tramite asignado a usted</p>
+        <% }; %>
+    </div>
+
+    <!-- Footer Section -->
+
+    <%- include("partials/footer") %>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 <%- include("partials/headMeta") %>
 
     <!-- Datos del Metadata -->
-    <meta name="description" content="Encuentra ésta y muchas otras propiedades en Kiara Bienes Raíces." />
+    <meta name="description" content="Encuentra ésta y muchas otras propiedades en KIARA Bienes Raíces." />
 
     <% for (let inmueble of inmuebles) { %>
         <meta property="og:type" content="article" />
@@ -41,8 +41,8 @@
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script crossorigin="anonymous" type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="/sweetalert2.min.css">
 
     <!-- NavBar Section -->
 
@@ -78,13 +78,13 @@
                 </div>
                 <!-- Slider controls -->
                 <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 group-hover:bg-white/50">
                         <svg aria-hidden="true" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         <span class="sr-only">Previous</span>
                     </span>
                 </button>
                 <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 group-hover:bg-white/50">
                         <svg aria-hidden="true" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         <span class="sr-only">Next</span>
                     </span>
@@ -93,17 +93,24 @@
             
             <!-- Photo Album md and lg screens -->
             <div class="md:mt-5 lg:mt-10 md:grid md:grid-cols-2 h-96 md:gap-2 hidden">
-                <div class="cursor-pointer hover:scale-105 transition duration-150 h-96 w-full">
+                <div data-modal-target="defaultModal" data-modal-toggle="defaultModal" rel="noopener noreferrer" class="cursor-pointer hover:scale-105 transition duration-150 h-96 w-full">
                     <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="rounded-l-lg object-cover h-full w-full " alt="Imagen principal">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <% for (let i=1; i < 4; i++) { %>
-                        <div class="cursor-pointer hover:scale-105 transition duration-150 h-48">
+                    <% for (let i=1; i < 3; i++) { %>
+                        <div data-modal-target="defaultModal" data-modal-toggle="defaultModal" rel="noopener noreferrer" class="cursor-pointer hover:scale-105 transition duration-150 h-48">
                             <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="object-cover h-full w-full" alt="Imagen de inmueble 4">
                         </div>
                     <%}%>
                     <div class="flex items-center justify-center cursor-pointer hover:scale-105 transition duration-150">
-                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="-z-10 brightness-50 relative rounded-br-lg object-none h-48 w-full" alt="Imagen de inmueble 5">
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[4]%>" class="-z-10 brightness-50 relative object-cover h-48 w-full" alt="Imagen de inmueble 5">
+                        <button type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal" rel="noopener noreferrer" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
+                            <i class="fa-solid fa-play"></i> 
+                            Ver más Imágenes
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-center cursor-pointer hover:scale-105 transition duration-150">
+                        <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="-z-10 brightness-50 relative rounded-br-lg object-cover h-48 w-full" alt="Imagen de inmueble 5">
                         <a href="<%=inmueble.linkVideoInmueble%>" target="_blank" rel="noopener noreferrer" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
                             <i class="fa-solid fa-play"></i> 
                             Video
@@ -112,9 +119,63 @@
                 </div>
             </div>
         </div>
-        
+
+        <!-- Carousel modal -->
+        <div id="defaultModal" tabindex="-1" aria-hidden="true" class="bg-white/10 bg-opacity-25 fixed z-50 hidden overflow-x-hidden overflow-y-auto md:inset-0">
+            <div class="relative justify-center text-center w-full h-full">
+                <!-- Modal content -->
+                <div class="relative text-center justify-center w-full">
+                    
+                    <div class="flex justify-end">
+                        <button type="button" class="px-5 py-2 absolute top-8 right-8 z-50 rounded-full text-base ml-auto text-white font-medium bg-gray-800 inline-flex items-center hover:font-medium hover:bg-gray-700" data-modal-hide="defaultModal">
+                            <p class="mr-2">Cerrar</p><i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                
+                   <!-- Photo Carousel sm screens -->
+                    <div id="controls-carousel" class="relative w-full h-full rounded-lg mx-auto" data-carousel="static">
+                        <!-- Carousel wrapper -->
+                        <div class="relative rounded-lg h-screen overflow-hidden">
+                            <div class="duration-700 ease-in-out bg-contain" data-carousel-item="active">
+                                <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="w-full h-full object-contain absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
+                            </div>
+                            <% for (let i=1; i < fotos.length; i++) { %>
+                                <div class="hidden duration-700 ease-in-out bg-contain" data-carousel-item>
+                                    <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="w-full h-full object-contain  absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
+                                </div>
+                            <%}%>
+                            <!-- Item 5 -->
+                            <div class="flex items-center justify-center duration-700 ease-in-out bg-contain" data-carousel-item>
+                                <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="w-full h-full object-contain  absolute block brightness-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="img5">
+                                <a href="<%=inmueble.linkVideoInmueble%>" target="_blank" rel="noopener noreferrer" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
+                                    <i class="fa-solid fa-play"></i> 
+                                    Video
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Slider controls -->
+                        <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-10 cursor-pointer group focus:outline-none" data-carousel-prev>
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/50 group-hover:bg-white/50">
+                                <svg aria-hidden="true" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                <span class="sr-only">Previous</span>
+                            </span>
+                        </button>
+                        <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-10 cursor-pointer group focus:outline-none" data-carousel-next>
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full  bg-black/50 group-hover:bg-white/50">
+                                <svg aria-hidden="true" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                <span class="sr-only">Next</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Details Section -->
         <div class="p-12 bg-sky-950 text-white space-y-6">
+            <div class="flex flex-row space-x-5 justify-end">
+                <i class="fa-solid fa-share-nodes fa-2xl cursor-pointer" data-modal-target="shareModal" data-modal-toggle="shareModal"></i>
+            </div>
             <% if (idRol == 1 || listaAttributesInmueble[0].idAgenteAsignado == idUsuario) { %>
                 <div class="flex flex-row space-x-5 justify-end">
                     <a href="/inmueble/editarInmueble/<%=inmueble.idInmueble%>" class="flex flex-col items-end justify-center">
@@ -123,6 +184,11 @@
                         </div>
                     </a>
                     <% if (inmueble.activoInmueble == 1 && tramite == 0) { %>
+                        <button id="btnDesactivarPropiedad" class="btnEliminarPropiedad flex flex-col items-end justify-center">
+                            <div class="bg-yellow-500 text-white py-2 px-2 flex items-center justify-center rounded-full w-auto text-sm md:text-base h-8 hover:scale-105 transition duration-150">
+                                Desactivar Propiedad
+                            </div>
+                        </button>
                         <button id="btnEliminarPropiedad" class="btnEliminarPropiedad flex flex-col items-end justify-center">
                             <div class="bg-red-500 text-white py-2 px-2 flex items-center justify-center rounded-full w-auto text-sm md:text-base h-8 hover:scale-105 transition duration-150">
                                 Eliminar Propiedad<i class="fa-solid fa-trash px-2"></i>
@@ -250,63 +316,44 @@
                     <%- include("partials/amenidades/amenidadesExtra", {inmueble: inmueble}) %>
                 </div>
             </div>
-            <div class="space-y-2">
-                <h2 class="text-2xl font-bold">
-                    Dirección de la propiedad
-                </h2>
-                <p>
-                    <%= inmueble.direccionInmueble %>
-                </p>
-            </div>
-            <div class="space-y-2">
-                <h2 class="text-2xl font-bold">
-                    Sobre esta propiedad
-                </h2>
-                <p>
-                    <%= inmueble.descInmueble %>
-                </p>
-            </div>
-        </div>
-
-        <!-- Extra Images Section -->
-    
-        <div class="pt-10 px-10 hidden md:block">
-            <h2 class="py-2 text-2xl font-bold">Más fotos del inmueble</h2>
-            <div class="flex justify-center rounded-lg">
-                <!-- Photo Carousel sm screens -->
-                <div id="controls-carousel" class="relative w-full lg:w-10/12 mt-4 h-96" data-carousel="static">
-                    <!-- Carousel wrapper -->
-                    <div class="relative rounded-lg h-96 overflow-hidden">
-                        <div class="duration-700 ease-in-out" data-carousel-item="active">
-                            <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
+            <div class="flex flex-col-reverse md:px-8 md:grid md:grid-cols-4 space-x-7">
+                <% for (let agente of agenteInfo) { %>
+                    <div class="text-center bg-white rounded-lg h-fit">
+                        <div class="bg-[#131C1B] rounded-t-lg p-2">
+                            <h2 class="text-white text-2xl">Contacto</h2>
                         </div>
-                        <% for (let i=1; i < fotos.length; i++) { %>
-                            <div class="hidden rounded-lg duration-700 ease-in-out" data-carousel-item>
-                                <img src="/inmueble/get_bucket_img?image=<%=fotos[i]%>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="<%=fotos[0]%>">
+                        <div class="bg-white p-6 rounded-b-lg flex flex-col">
+                            <img src="/get_bucket_img?image=<%- agenteFoto %>" class="rounded-full object-cover mx-auto w-20 h-20" />
+                            <div>
+                                <label for="agentName" class="text-gray-500 text-xs">Nombre</label>
+                                <h3 id="agentName" class="text-gray-800 text-lg"><%= agente.nombreUsuario %> <%= agente.apellidosUsuario %></h3>
                             </div>
-                        <%}%>
-                        <!-- Item 5 -->
-                        <div class="flex items-center rounded-lg justify-center duration-700 ease-in-out" data-carousel-item>
-                            <img src="/inmueble/get_bucket_img?image=<%=fotos[0]%>" class="absolute block w-full brightness-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="img5">
-                            <a href="<%=inmueble.linkVideoInmueble%>" target="_blank" rel="noopener noreferrer" class="absolute px-5 py-2 rounded-full text-base bg-white font-medium text-gray-800 hover:font-medium hover:text-white hover:bg-gray-700">
-                                <i class="fa-solid fa-play"></i> 
-                                Video
-                            </a>
+                            <div>
+                                <label for="agentEmail" class="text-gray-500 text-xs">Correo</label>
+                                <h3 id="agentEmail" class="break-words text-gray-800 text-lg"><%= agente.emailUsuario %></h3></h3>
+                            </div>
+                            <div>
+                                <label for="agentPhone" class="text-gray-500 text-xs">Teléfono</label>
+                                <h3 id="agentPhone" class="text-gray-800 text-lg"><%= agente.telefonoUsuario %></h3>
+                                <h3 class="text-gray-800 text-lg">4423863232</h3>
+                            </div>
+                            <div class="flex justify-center mt-4">
+                            <a target="_blank" href="https://api.whatsapp.com/send?phone=<%=agente.telefonoUsuario%></&text=Hola,%20me%20interesa%20la%20propiedad%20titulada%20'<%=inmueble.nombreInmueble%>'%20en%20su%20página%20me%20podrían%20brindar%20mas%20información%20porfavor%3F%20<%=currentURL%>" class="bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-10 inline-block">Contactar por WhatsApp</a>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Slider controls -->
-                    <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-                            <svg aria-hidden="true" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                            <span class="sr-only">Previous</span>
-                        </span>
-                    </button>
-                    <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-                            <svg aria-hidden="true" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            <span class="sr-only">Next</span>
-                        </span>
-                    </button>
+                    </div>      
+                <% } %>
+                <div class="md:px-5 col-span-3">
+                    <h2 class="text-2xl font-bold">
+                        Dirección de la propiedad
+                    </h2>
+                    <p class="mb-5">
+                        <%= inmueble.direccionInmueble %>
+                    </p>
+                    <h2 class="text-2xl font-bold">
+                        Sobre esta propiedad
+                    </h2>
+                    <p class="mb-5 whitespace-pre-wrap"><%=inmueble.descInmueble %></p>
                 </div>
             </div>
         </div>
@@ -328,17 +375,72 @@
             </div>
         </div>
         <div id="idInmueble" class="hidden"><%=inmueble.idInmueble%></div>
+        <div id="shareModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-md max-h-full">
+            <!-- Modal content -->
+                <div class="relative bg-white rounded-lg">
+                    <div id="contenedor-modal" class="p-4">
+                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="shareModal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <h2 class="text-2xl font-semibold">
+                            Compartir Propiedad
+                        </h2>
+                        <hr class="h-px my-3 mb-5 bg-gray-800 border-0">
+                        <div class="flex justify-center items-center space-x-10 mb-4">
+                          <a href="https://www.facebook.com/share.php?u=Mira%20esta%20propiedad!%20<%=currentURL%>" target="_blank">
+                            <i class="fa-brands fa-facebook fa-2xl text-blue-600 hover:scale-110 transition duration-150 fa-2xl"></i>
+                          </a>
+                          <a href="whatsapp://send?text=Mira%20esta%20propiedad!%20<%=currentURL%>" target="_blank">
+                            <i class="fa-brands fa-square-whatsapp text-green-600 hover:scale-110 transition duration-150 fa-2xl"></i>
+                          </a>
+                          <a href="https://twitter.com/intent/tweet?text=Mira%20esta%20propiedad!%20<%=currentURL%>" target="_blank">
+                            <i class="fa-brands fa-twitter text-blue-300 hover:scale-110 transition duration-150 fa-2xl"></i>
+                          </a>
+                          <!-- Add more social media icons as needed -->
+                        </div>
+                        <div class="flex items-center space-x-5">
+                          <input type="text" name="url" id="url" value="<%=currentURL%>" class="w-full p-2 border">
+                          <button onclick="copy()" class="py-2 px-4 bg-green-500 text-white rounded cursor-pointer">Copy</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div> 
     <% } %>
+
+        <script>
+            function copy(){
+                var urlInput = document.getElementById("url");
+                var element = document.getElementById('contenedor-modal')
+                var urlValue = urlInput.value;
+                console.log("URL value:", urlValue);
+                navigator.clipboard.writeText(urlValue).then(function() {
+                    console.log('Copied!');
+                }, function() {
+                    console.log('Copy error')
+                });
+                const newItem = document.createElement('p');
+                newItem.innerText = "¡Url Copiado!";
+                newItem.className = "text-center pt-5";
+                element.appendChild(newItem);
+                setTimeout(function() {
+                    newItem.remove();
+                }, 1500);
+            }
+        </script>
 
     <%- include("partials/footer") %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
         <script type="text/javascript">
-            const btnEliminar = document.getElementById('btnEliminarPropiedad');
+            const btnDesactivar = document.getElementById('btnDesactivarPropiedad');
             const idInmueble = document.getElementById('idInmueble').innerText;
-            btnEliminar.addEventListener('click', (event) => {
+            btnDesactivar.addEventListener('click', (event) => {
             
                 Swal.fire({
-                    title: '¿Estás seguro que deseas eliminar esta propiedad?',
+                    title: '¿Estás seguro que deseas desactivar esta propiedad?',
                     showCancelButton: true,
                     cancelButtonText: "Cancelar",
                     confirmButtonColor: "#212121",
@@ -350,16 +452,45 @@
                     */
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/inmueble/eliminarPropiedad/' + idInmueble,
+                            url: '/inmueble/desactivarPropiedad/' + idInmueble,
                             method: 'put'
                         })
                         //console.log("ELIMINADA EXITOSAMENTE")
-                        Swal.fire('Propiedad Eliminada!')
+                        Swal.fire('Propiedad Desactivada!')
                         window.location = "/";
                     }
                 })
             });
             
         </script>
+
+    <script type="text/javascript">
+    const btnEliminarPropiedad = document.getElementById('btnEliminarPropiedad');
+    btnEliminarPropiedad.addEventListener('click', (event) => {
+    
+        Swal.fire({
+            title: '¿Estás seguro que deseas eliminar esta propiedad?',
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#212121",
+            confirmButtonText: `Confirmar`
+        }).then((result) => {
+            //console.log("Esete es el console log idInmueble " + idInmueble);
+            /**
+            * Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+            */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/inmueble/eliminarPropiedad/' + idInmueble,
+                    method: 'put'
+                })
+                //console.log("ELIMINADA EXITOSAMENTE")
+                Swal.fire('Propiedad Eliminada!')
+                window.location = "/";
+            }
+        })
+    });
+    
+</script>
 </body>
 </html>

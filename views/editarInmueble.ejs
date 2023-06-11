@@ -5,8 +5,6 @@
     <%- include('partials/navbar') %>
     
     <% for (let inmueble of inmuebles) { %>
-     
-    
 
             <!-- Information Form -->
             <!-- Cambiar dependiendo del id del tipo de inmueble -->
@@ -40,11 +38,22 @@
     </script>
 
     <script type="text/javascript">   
-        $(document).on("click", ".btnSubmit", function(){		            
-            $("#cuerpoInmueble").submit();
+        $(document).on("click", ".btnSubmit", function(){
+            document.getElementById('cuerpoInmueble').addEventListener('submit', function(event) {
+                var inputValue = document.getElementById('linkMaps').value;
+                var substring = '<iframe src="https://www.google.com/maps/';
+                if (!inputValue.includes(substring)) {
+                    event.preventDefault(); 
+                    alert('El link de Google Maps debe ser un "Embed a Map"');
+                } else {
+                    event.preventDefault(); 
+                    $("#cuerpoInmueble").submit();
+                }
+            });
         });
     </script>
-            <script type="text/javascript">
+
+    <script type="text/javascript">
             $(document).ready(function(){
         $('.form-checkbox').change(function(){
             if($(this).is(':checked')){
@@ -57,6 +66,25 @@
         });
 
     </script>
+
+<script>
+    $(document).ready(function () {
+    $('#btnSubmit').click(function() {
+        checkedVenta = $("input[id=ventaCheckbox]:checked").length;
+        checkedRenta = $("input[id=rentaCheckbox]:checked").length;
+        if(!checkedVenta && !checkedRenta){
+            //sweetAlert("La propiedad debe estar en venta y/o renta");
+            Swal.fire({
+                icon: 'error',
+                title: 'La propiedad debe estar en venta y/o renta',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return false;
+        }
+    });
+});
+</script>
 
     <%- include("partials/footer") %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>

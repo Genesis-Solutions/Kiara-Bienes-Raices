@@ -1,0 +1,439 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+    <!-- Navbar Section -->
+    <%- include('partials/navbar') %>
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- Librerías necesarias -->
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.jqueryui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+    <!-- Menu Section -->
+
+    <div class="px-10 pt-8">
+        <div class="space-x-5 space-y-3">
+            <a href="/perfil" class="px-5 py-2 w-auto text-center rounded-full text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Mi Perfil</a>
+            <a href="/perfil/procesos" class="text-center w-auto px-5 py-2 font-medium rounded-full hover:font-medium hover:bg-gray-400 hover:text-white-700">Mis Procesos</a>
+        </div>
+        <hr class="h-px my-4 bg-gray-800 border-0">
+    </div>
+
+    <!-- Profile Section -->
+
+    <div class="p-10">
+        <h2 class="text-4xl font-bold mb-2">Información Personal</h2>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="col-span-2 lg:col-span-1 row-span-4 p-5 text-center justify-center">
+                <div>
+                    <img src="/perfil/get_bucket_img?image=<%=profilePhoto%>" alt="" class="w-96 h-80 object-cover mx-0 text-center self-center rounded-lg">
+                </div>
+                <div class="col-span-1 space-y-2 md:px-28 lg:px-5 py-5">
+                    <a data-modal-target="changePP" data-modal-toggle="changePP" id="btnFotoPerfil" name="btnFotoPerfil" class="cursor-pointer text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                        Modificar Foto de Perfil
+                    </a>
+                </div>
+            </div>
+            <div class="col-span-1 space-y-2">
+                <label for="nombre">Nombre(s)</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="nombreUsuario" name="nombreUsuario" value="<%=datosUsuario.nombreUsuario%>" maxlength="30" required disabled/>
+            </div>
+            <div class="col-span-1 space-y-2">
+                <label for="apellido">Apellidos</label>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="apellidosUsuario" name="apellidosUsuario" value="<%=datosUsuario.apellidosUsuario%>" maxlength="30" required disabled/>
+            </div>
+            <div class="col-span-1 space-y-2">
+                <label for="estadoCivilUsuario">Estado Civil</label>
+                <% if (datosUsuario.estadoCivilUsuario != null) { %>
+                    <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" value="<%=datosUsuario.estadoCivilUsuario%>" maxlength="30" disabled/>
+                <% } else { %>
+                    <input
+                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Sin datos" maxlength="30" disabled/>
+                <% } %>
+                <!-- <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                    id="estadoCivilUsuario" name="estadoCivilUsuario">
+                    <option value="N/A">Escoger una opción</option>
+                    <option value="Soltero">Soltero</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Casado-Bienes Mancomunados">Casado-Bienes Mancomunados</option>
+                </select> -->
+            </div>
+            <div class="col-span-1 space-y-2">
+                <label for="ocupacion">Ocupación</label>
+                <% if (datosUsuario.ocupacionUsuario != null) { %>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="ocupacion" name="ocupacionUsuario" value="<%=datosUsuario.ocupacionUsuario%>" maxlength="30" disabled/>
+                <% } else { %>
+                    <input
+                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                        type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Sin datos" maxlength="30" disabled/>
+                <% } %>
+            </div>
+            <div class="col-span-1 space-y-2">
+                <label for="email">Correo Electrónico</label>
+                        <input
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            type="email" id="emailUsuario" name="emailUsuario" value="<%=datosUsuario.emailUsuario%>" maxlength="60" required disabled/>
+            </div>
+            <div class="col-span-1 space-y-2">
+                <label for="telefonoUsuario">Número de Teléfono</label>
+                <input type="tel"
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            , id="telefonoUsuario" name="telefonoUsuario" value="<%=datosUsuario.telefonoUsuario%>" maxlength="10" minlength="10" pattern="[0-9]{10}" required disabled/>
+            </div>
+            <div class="col-span-1 space-y-2 py-5">
+                <a data-modal-target="changeInfo" data-modal-toggle="changeInfo" id="btnModificarInformación" name="btnModificarInformación" class="cursor-pointer text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">
+                    Modificar Información Personal
+                </a>
+            </div>
+            <div class="col-span-1 space-y-2 py-5">
+                <button id="btnCambiarContrasenia" name="btnCambiarContrasenia" class="text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700" data-modal-target="changePasswordModal" data-modal-toggle="changePasswordModal">
+                    Cambiar Contraseña
+                </button>
+            </div>
+            <div class="col-3 space-y-2 py-5">
+                <% if (warning != '') { %>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: '<%- warning %>',
+                            showConfirmButton: true,
+                            allowEscapeKey: true,
+                            allowOutsideClick: true,
+                        })
+                    </script>
+                <% } %>
+                <% if (success != '') { %>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: '<%- success %>',
+                            showConfirmButton: true,
+                            allowEscapeKey: true,
+                            allowOutsideClick: true,
+                        })
+                    </script>
+                <% } %>
+            </div>
+        </div>
+        <div class="grid grid-cols-4 space-y-2 py-5">
+            <div class="col-span-2 col-start-2">
+                <button id="btnEliminarCuenta" href="#" onclick="EliminarCuenta()" name="btnEliminarCuenta" class="btnEliminarCuenta text-sm md:text-base px-5 py-2 w-full rounded-lg text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnEliminarCuenta">
+                    Eliminar Cuenta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL MODIFICAR FOTO -->
+    <div id="changePP" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+            <form id="pfpForm">
+                <div class="relative bg-white rounded-lg shadow">
+                    <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="changePP">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="px-6 py-6 lg:px-8">
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 ">Cambia tu Foto de Perfil</h3>
+                        <div class="px-10 py-5 grid grid-cols-3">
+                            <div class="col-span-3">
+                                <h2 class="text-lg font-semibold">
+                                    Imagen de Perfil
+                                </h2>
+                                <p class="text-gray-700 pb-2"> Sube tu nueva Imagen de Perfil</p>
+                                <!-- Multiple upload al S3 -->
+                                <div class="flex items-center justify-center w-full">
+                                        <label for='profilePhoto' class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 text-sm text-gray-500">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <i class="fa-solid fa-cloud-arrow-up fa-2xl my-4 pt-5"></i>
+                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Selecciona</span> tu nueva imagen.</p>
+                                                <p class="text-xs text-gray-500 pb-2">PNG, JPG, JPEG o WEBP</p>
+                                                <p id="fileCount" class="pb-5"></p>
+                                            </div>
+                                        </label>
+                                        <input type='file' accept='.png, .jpg, .jpeg, .webp' name='profilePhoto' id='profilePhoto' class="hidden"/>
+                                </div>
+                            </div>
+                        </div>
+                        <button data-modal-hide="changePP" type="submit" id="submitPhoto" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Guardar Cambio</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL MODIFICAR Informacion -->
+    <div id="changeInfo" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+            <!-- <form id="changeUserInfo" action="/perfil/actualizarPerfil" method="POST"> -->
+                <form id="changeUserInfo">
+                <div class="relative bg-white rounded-lg shadow">
+                    <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="changeInfo">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="px-6 py-6 lg:px-8">
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 ">Cambia la Informacion de tu Perfil</h3>
+                        <div class="grid grid-cols-2 gap-5">
+                            <div class="col-span-1 space-y-2">
+                                <label for="nombreUsuario">Nombre(s)</label><label class="text-red-500">*</label>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="nombreUsuario" name="nombreUsuario" value="<%=datosUsuario.nombreUsuario%>" maxlength="30" required/>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="apellidosUsuario">Apellidos</label> <label class="text-red-500">*</label>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="apellidosUsuario" name="apellidosUsuario" value="<%=datosUsuario.apellidosUsuario%>" maxlength="30" required/>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="estadoCivilUsuario">Estado Civil</label>
+                                <% if (datosUsuario.estadoCivilUsuario != null) { %>
+                                    <select class="form-select block px-5 w-full mt-1 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 h-10"
+                                        id="estadoCivilUsuario" name="estadoCivilUsuario">
+                                        <option value="N/A" <% if (datosUsuario.estadoCivilUsuario === 'N/A') { %>selected<% } %>>Selecciona uno</option>
+                                        <option value="Soltero"<% if (datosUsuario.estadoCivilUsuario === 'Soltero') { %>selected<% } %>>Soltero</option>
+                                        <option value="Casado"<% if (datosUsuario.estadoCivilUsuario === 'Casado') { %>selected<% } %>>Casado</option>
+                                        <option value="Casado-Bienes Mancomunados"<% if (datosUsuario.estadoCivilUsuario === 'Casado-Bienes Mancomunados') { %>selected<% } %>>Casado-Bienes Mancomunados</option>
+                                    </select>
+                                <% } else { %>
+                                    <input
+                                    class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                    type="text" id="estadoCivilUsuario" name="estadoCivilUsuario" placeholder="Sin datos" maxlength="30"/>
+                                <% } %>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="ocupacionUsuario">Ocupación</label>
+                                <% if (datosUsuario.ocupacionUsuario != null) { %>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="ocupacion" name="ocupacionUsuario" value="<%=datosUsuario.ocupacionUsuario%>" maxlength="30"/>
+                                <% } else { %>
+                                    <input
+                                        class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                        type="text" id="ocupacion" name="ocupacionUsuario" placeholder="Sin datos" maxlength="30"/>
+                                <% } %>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="emailUsuario">Correo Electrónico</label><label class="text-red-500">*</label>
+                                <p class="ml-2 pt-2 text-gray-500 text-sm">Ej: gabriela@gmail.com </p>
+                                        <input
+                                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                                            type="email" id="emailUsuario" name="emailUsuario" value="<%=datosUsuario.emailUsuario%>" maxlength="60" required/>
+                            </div>
+                            <div class="col-span-1 space-y-2">
+                                <label for="telefonoUsuario">Número de Teléfono</label><label class="text-red-500">*</label>
+                                <p class="ml-2 pt-2 text-gray-500 text-sm">Ej: 4424557812 </p>
+                                    <input type="tel"
+                            class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                            , id="telefonoUsuario" name="telefonoUsuario" placeholder="4425548933" maxlength="10" minlength="10" pattern="[0-9]{10}" required
+                            value="<%=datosUsuario.telefonoUsuario%>"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                            </div>
+                        </div>
+                        <button type="submit" id="submitProfile" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mt-8 px-5 py-2.5 text-center">Guardar Cambio</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        /*
+        * Funcionalidad de botón de eliminación de la cuenta del perfil. Despliega un modal que verifica la decisión del usuario para posteriormente asegurar la inexistencia de procesos del mismo.
+        */
+                function EliminarCuenta(){
+                    const idUs=<%=datosUsuario.idUsuario%>
+                    /*
+                    *Modal de confirmación.
+                    */
+                    
+                    Swal.fire({
+                        title: '¿Confirma la eliminación de su cuenta?',
+                        showCancelButton: true,
+                        confirmButtonText: `Confirmar`,
+                    }).then((result) => {
+                        /*
+                        * Llamada de la ruta que comprueba la cantidad de procesos activos y verifica si puede ser eliminado o no.                                 
+                        */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/dashboard/lista/eliminar/' + idUs,
+                                method: 'put',
+                                success: function (choice) {
+                                    if (choice.comprobacionEliminado == false) {
+                                        Swal.fire('Tiene procesos pendientes de concluir. Reasignelos o complételos para continuar.')
+                                    } else {
+                                        Swal.fire('¡Tu cuenta ha sido eliminada!')
+                                        window.location='/logout'
+                                    }
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                                }
+                            });
+                        }
+                    })
+                }
+            </script>
+
+            <!-- Count de imagenes dentro de formMediaS3 -->
+            <script type="text/javascript">
+                function updateFileCount(event) {
+                    var fileCount = event.target.files.length;
+                    var files = event.target.files;
+                    var fileCountElement = document.getElementById('fileCount');
+                    fileCountElement.innerHTML = "<p class='text-center pb-2'>Número de imágenes: <span class='font-semibold'>" + fileCount + "</span></p>";
+                    for (var i = 0; i < fileCount; i++) {
+                        var fileName = files[i].name;
+                        var fileItem = document.createElement("p");
+                        fileItem.textContent = fileName;
+                        fileCountElement.appendChild(fileItem); 
+                    }
+                }
+            </script>
+
+            <!-- Verificar que existan por lo menos 5 imagenes en formMediaS3 antes del upload -->
+            <script type="text/javascript">
+                const fileInput = document.getElementById('profilePhoto');
+                fileInput.addEventListener('change', function(event) {
+                    updateFileCount(event);
+                });
+            </script>
+
+            <!-- Función para eliminar el inmueble vacío al salir de la página -->
+            <script type="text/javascript">   
+                $(document).ready(function() {
+                    $('#changeUserInfo').submit(function(event) {
+                        // Evitar que el formulario se envíe de forma tradicional
+                        event.preventDefault();
+                        // Realizar la petición AJAX
+                        $.ajax({
+                            url: '/perfil/actualizarPerfil',
+                            type: 'POST',
+                            data: $(this).serialize(), // serializar los datos del formulario
+                            // Manejo de la respuesta del servidor
+                            success: function() {
+                                // Procesar la respuesta del servidor
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Perfil actualizado',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                setTimeout(function() {
+                                    window.location.replace('/perfil');
+                                }, 2000);
+                            },
+                        });
+                    });
+                });
+            </script>
+
+            <!-- Función para eliminar el inmueble vacío al salir de la página -->
+            <script type="text/javascript">   
+                $(document).ready(function() {
+                    $('#pfpForm').submit(function(event) {
+                        // Evitar que el formulario se envíe de forma tradicional
+                        event.preventDefault();
+                        // Obtener los datos del formulario
+                        var formData = new FormData(this);
+                        // Realizar la petición AJAX
+                        $.ajax({
+                            url: '/perfil/fotoPerfil',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            // Manejo de la respuesta del servidor
+                            success: function() {
+                                // Procesar la respuesta del servidor
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Foto de perfil actualizada',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                                setTimeout(function() {
+                                    window.location.replace('/perfil');
+                                }, 2000);
+                            },
+                        });
+                    });
+                });
+            </script>
+
+    <!-- Footer Section -->
+    
+
+    <%- include("partials/footer") %>
+
+    <!-- Modal de cambiar contraseña -->
+    <div id="changePasswordModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+            <div class="modal-container bg-white w-96 mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <!-- Contenido del modal -->
+                <div class="modal-content py-4 text-left px-6">
+                    <!-- Título del modal -->
+                    <div class="flex justify-between items-center pb-3">
+                        <p class="text-2xl font-bold">Cambiar contraseña</p>
+                        <button data-modal-hide="changePasswordModal" class="modal-close cursor-pointer z-50">
+                            <svg class="fill-current text-gray-700 hover:text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                            <path
+                                d="M16.22 4.22L11.41 9L16.22 13.78L13.78 16.22L9 11.41L4.22 16.22L1.78 13.78L6.59 9L1.78 4.22L4.22 1.78L9 6.59L13.78 1.78L16.22 4.22Z"
+                            />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Formulario de cambio de contraseña -->
+                    <form id="changePasswordForm" action="/perfil/cambiarPassword" method="POST">
+                        <input type="hidden" name="emailUsuario" value="<%- emailUsuario %>">
+                        <div class="mb-4">
+                            <label for="currentPassword" class="block text-gray-700 text-sm font-bold mb-2">Contraseña actual</label>
+                            <input type="password" name="currentPassword" id="currentPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="newPassword" class="block text-gray-700 text-sm font-bold mb-2">Nueva contraseña</label>
+                            <input type="password" name="newPassword" id="newPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required minlength="8">
+                        </div>
+                        <div class="mb-6">
+                            <label for="confirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Confirmar contraseña</label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" required minlength="8">
+                        </div>
+                        
+                        <!-- Botones del formulario -->
+                        <div class="flex justify-end">
+                            <button type="button" data-modal-hide="changePasswordModal" class="modal-cancel-btn px-4 py-2 mr-2 rounded">Cancelar</button>
+                            <button type="submit" class="text-sm md:text-base px-2 py-2 w-fit rounded-lg text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        function alerta() {
+            Swal.fire("Contraseña cambiada");
+        }
+    </script>
+
+</body>
+</html>

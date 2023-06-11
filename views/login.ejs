@@ -19,7 +19,7 @@
             </div>
             <div class="px-16 py-2">
                 <h1 class="text-4xl font-extrabold py-5">
-                    Bienvenido a Kiara, inicia sesión para continuar
+                    Bienvenido a KIARA, inicia sesión para continuar
                 </h1>
                 <h2 class="text-base">
                     ¿No tienes una cuenta?
@@ -39,14 +39,14 @@
                     <label for="passwordUsuario">Contraseña</label>
                     <input class="h-12 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 
                     focus:ring-gray-800" name="passwordUsuario" id="passwordUsuario" type="password" placeholder="Contraseña" required maxlength="40">
-                    <% if (typeof errorLogin !=='undefined' ) { %>
+                    <% if (warning != '') { %>
                         <p style="color: red">
-                            <%= errorLogin %>
+                            <%= warning %>
                         </p>
                     <% } %>
-                    <% if (typeof errorLoginPassword !=='undefined' ) { %>
-                        <p style="color: red">
-                            <%= errorLoginPassword %>
+                    <% if (success != '') { %>
+                        <p style="color: green">
+                            <%= success %>
                         </p>
                     <% } %>
                 </div>
@@ -58,7 +58,7 @@
             </form>
 
             <div class="px-16 text-center space-y-5">
-                <a href="">
+                <a href="/olvidePassword">
                     <p class="text-base underline">
                         ¿Olvidaste tu Contraseña?
                     </p>

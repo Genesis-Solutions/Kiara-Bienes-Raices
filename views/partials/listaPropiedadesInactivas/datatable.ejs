@@ -1,0 +1,294 @@
+<!-- List Propiedades -->
+<main class="text-center mb-20 mx-32">
+    <!-- Inicio de la DataTable lista usuarios -->
+    <div class="table-responsive text-center">
+        <table class="table table-bordered text-center " id="dataTablePropiedades" width="100%" cellspacing="0">
+        </table>
+    </div>
+    <input type="hidden" id="rol" name="rol" value="<%=idRol%>">
+    <input type="hidden" id="usuario" name="usuario" value="<%=idUsuario%>">
+    <!-- Enlazar con la biblioteca de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- Enlazar con el archivo de DataTables JS -->
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
+    <script crossorigin="anonymous" type="text/javascript"
+        src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script crossorigin="anonymous" type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="https://kit.fontawesome.com/930eb895c2.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.jqueryui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+    <script type="text/javascript">
+        var log = console.log;
+        $(document).ready(function (e) {
+            recargarTablaPropiedades();
+            fixedHeader: {
+                header: true;
+                footer: true;
+            }
+        })
+
+    </script>
+
+    <script type="text/javascript">
+        /*
+         * Carga de la data table que renderiza los datos de las propiedades.
+         */
+
+        function recargarTablaPropiedades() {
+            /*
+            *Carga de la tabla de propiedades mediante data table.
+            */
+            if ($.fn.DataTable.isDataTable("#dataTablePropiedades")) {
+                $("#dataTablePropiedades").dataTable().fnDestroy();
+                $('#dataTablePropiedades').empty();
+            }
+            var rol = document.getElementById('rol');
+            var idRol = rol.value
+            if (idRol==1) {
+                var ruta = '/dashboard/propiedades/propiedadesInactivas'
+            } else {
+                var usuario = document.getElementById('usuario');
+                var idAgente = usuario.value
+                var ruta = '/dashboard/propiedades/propiedadesInactivas/'+idAgente 
+            }
+            var thead = ""
+            var tfooter = ""
+            thead += '<thead>'
+            thead += '<tr class="bg-[#F1F1F1] text-[#757F87]">'
+            thead += '<th style="width: auto; text-align: center; border-top-left-radius: 0.5rem;">Id</th>'
+            thead += '<th style="width: auto; text-align: center;">Título</th>'
+            thead += '<th style="width: auto; text-align: center;">Operación</th>'
+            thead += '<th style="width: auto; text-align: center;">Precio Venta</th>'
+            thead += '<th style="width: auto; text-align: center;">Precio Renta</th>'
+            thead += '<th style="width: auto; text-align: center;">Agente</th>'
+            thead += '<th style="width: auto; text-align: center;">Modificar Agente Asignado</th>'
+            thead += '<th style="width: auto; text-align: center; border-top-right-radius: 0.5rem;">Estado</th>'
+            thead += '</tr>'
+            thead += '</thead>'
+            tfooter += '<tfoot>'
+            tfooter += '<tr>'
+            tfooter += '<th>Id del Inmueble</th>'
+            tfooter += '<th>Propiedad</th>'
+            tfooter += '<th>Operación</th>'
+            tfooter += '<th>Precio de Venta</th>'
+            tfooter += '<th>Precio de Renta</th>'
+            tfooter += '<th>Agente</th>'
+            tfooter += '<th>Modificar agente asignado</th>'
+            tfooter += '<th>Estado</th>'
+            tfooter += '</tr>'
+            tfooter += '</tfoot>'
+            $('#dataTablePropiedades').append(thead);
+            $.fn.dataTable.moment('DD-MM-YYYY');
+            dataTable = $("#dataTablePropiedades").dataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                processing: true,
+                lengthMenu: [5, 10, 20, 25, 30],
+                order: [[0, 'asc']],
+                deferRender: true,
+                ajax: ruta,
+                columns: [
+                    {'data': "idInmueble"},
+                    {'data': null,
+                        render: function (data, type, row) {
+                            return '<a href="../inmueble/' + data.idInmueble + '" class="badge badge-success underline hover:font-bold hover:underline">' + data.nombreInmueble + '</a>'
+                        }
+                    },
+                    {"data": null,
+                        render: function (data, type, row) {
+                            if (data.idTipoMovimiento == 1) {
+                                var movimiento = 'Venta'
+                            }
+                            else if (data.idTipoMovimiento == 2) {
+                                var movimiento = 'Renta'
+                            }
+                            else if (data.idTipoMovimiento == 3) {
+                                var movimiento = 'Venta y Renta'
+                            }
+                            return '<span class="badge badge-success">' + movimiento + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (data.precioVentaInmueble == null) {
+                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
+                            }
+                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
+                            return '<span class="badge badge-success">' + formatter.format(data.precioVentaInmueble) + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if (data.precioRentaInmueble == null) {
+                                return '<span class="badge badge-success">' + 'N/A' + '</span>'
+                            }
+                            const formatter = new Intl.NumberFormat('es-MX', {maximumFractionDigits: 0, style: 'currency',currency: 'MXN'})
+                            return '<span class="badge badge-success">' + formatter.format(data.precioRentaInmueble) + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            var agente = data.nombresAgente + ' ' + data.apellidosAgente
+                            return '<span class="badge badge-success">' + agente + '</span>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return '<button type="button" id="button" style="width: auto;" class="btnEditarEncargado bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl btnEditarRol my-2">Modificar Encargado</button>'
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            /*
+                            *Si el inmueble se encuentra activo, mencionar que no está en proceso y viceversa.
+                            */
+                            if (data.activoInmueble == 0) {
+                                return '<button type="button" id="button" style="width: auto;" class="btnReactivarPropiedad bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 rounded-xl btnReactivarPropiedad my-2">Reactivar Propiedad</button>'
+                            }
+                            else if (data.activoInmueble == 3) {
+                                return '<span class="badge badge-success">' + 'En proceso' + '</span>'
+                            }
+                        }
+                    },
+                ]
+            })
+        }
+    </script>
+
+    <style>
+        
+        #dataTablePropiedades_filter {
+            text-align: center;
+            position: absolute;
+            top: 0;
+            transform: translateY(-130%);
+        }
+
+        #dataTablePropiedades_length {
+            text-align: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translateY(-130%);
+        }
+
+        td {
+            border-top: 1px solid #D9D9D9 !important;
+        }
+
+        #dataTablePropiedades {
+            margin: 0% !important;
+            border-radius: 0.5rem;
+        }
+
+        #dataTablePropiedades {
+            border-style: solid;
+            border-width: 1px;
+            border-color: #D9D9D9;
+            margin-top: 2%;
+            margin-bottom: 2%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        /*
+        * Acción del botón de edición de encargado del inmueble. Despliega un modal con un dropdown de los agentes disponibles para modificar
+        */
+        $(document).on("click", ".btnEditarEncargado", function () {
+            var agentes = {}
+            fila = $(this).closest("tr");
+            id = parseInt(fila.find('td:eq(0)').text());
+                $.ajax({
+                    url: '/dashboard/agentes',
+                    method: 'get',
+                    success: function (choice) {
+                        for (var i = 0; i < choice.agentesArray.length; i = i + 1) {
+                            var nombre = choice.agentesArray[i].nombresAgente + ' ' + choice.agentesArray[i].apellidosAgente
+                            agentes[choice.agentesArray[i].idUsuario] = nombre
+                        }
+                        const { value: eleccion } = Swal.fire({
+                            /* 
+                            * Cuando el botón de modificación de encargado sea clickeado, se desplegará un modal con los agentes disponibles.
+                            */
+                            title: 'Selecciona al Encargado Nuevo:',
+                            input: 'select',
+                            inputOptions: agentes,
+                            showCancelButton: true,
+                        }).then((result) => {
+                            if (result.value >= 1) {
+                                $.ajax({
+                                    url: '/dashboard/props/actualizar/' + result.value + '/' + id,
+                                    method: 'put',
+                                });
+                                Swal.fire('¡El encargado ha sido modificado!')
+                                recargarTablaPropiedades();
+                            }
+                        })
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                    }
+            });
+        });
+    </script>
+<script>
+/*
+* Funcionalidad de botón de reactivación de inmueble. Despliega un modal que verifica la decisión del usuario.
+*/
+$(document).on("click", ".btnReactivarPropiedad", function () {
+            fila = $(this).closest("tr");
+            idInmueble = parseInt(fila.find('td:eq(0)').text());
+            /*
+            *Modal de confirmación.
+            */
+            Swal.fire({
+                title: '¿Confirma la reactivación del inmueble? Se reincorporará al catálogo de propiedades.',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/inmueble/reactivarPropiedad/' + idInmueble,
+                        method: 'put'
+                    });
+                                Swal.fire('Inmueble Reactivado!')
+                                recargarTablaPropiedades();
+
+                }
+            })
+        });
+</script>
+
+
+
+</main>

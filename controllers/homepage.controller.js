@@ -12,6 +12,7 @@ exports.root = async(req,res,next) => {
     const nombreUsuario = req.session.nombreUsuario;
     const apellidosUsuario = req.session.apellidosUsuario;
     const idRol = req.session.idRol;
+    const urlFotoUsuario = req.session.urlFotoUsuario;
     /** 
     * Construye la lista de inmuebles  con sus imágenes respectivas
     */
@@ -38,6 +39,7 @@ exports.root = async(req,res,next) => {
             apellidosUsuario: apellidosUsuario,
             idUsuario: idUsuario,
             idRol: idRol,
+            urlFotoUsuario : urlFotoUsuario,
             inmuebles: inmuebles[0]
         });
     } else {
@@ -112,7 +114,9 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
         * precio, utiliza precioRentaInmueble para generar la query
         */
 
-        if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
+        if (params.idTipoMovimiento == "3") {
+            conditions.push("(idTipoMovimiento = 1 OR idTipoMovimiento = 2 OR idTipoMovimiento = 3)")
+        } else if (params.idTipoMovimiento == "1" || params.idTipoMovimiento == "3") {
             //console.log("dentro del precio equisde")
             conditions.push("(idTipoMovimiento = 1 OR idTipoMovimiento = 3)")
         } else if (params.idTipoMovimiento == "2" || params.idTipoMovimiento == "3") {
@@ -123,11 +127,13 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
         * En caso de buscar por dirección agrega el filtro de LIKE a la query,
         * al ser una expresión regular, permite buscar por texto aquellas
         * propiedades que coincidan o se aproximen a la búsqueda
+        * (nombre y desc.)
         */
 
-        console.log(params.direccionInmueble)
+        //console.log(params.direccionInmueble)
         if (typeof params.direccionInmueble !== 'undefined') {
-            conditions.push("direccionInmueble LIKE ?");
+            conditions.push("(nombreInmueble LIKE ? OR descInmueble LIKE ?)");
+            values.push("%" + params.direccionInmueble + "%");
             values.push("%" + params.direccionInmueble + "%");
         };
 
@@ -237,6 +243,9 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     } else {
         var countQuery = 'SELECT COUNT(idInmueble) as total FROM inmueble WHERE ' + conditions.where + isActive;
     }
+    // console.log(req.session.searchParams)
+    // console.log(parameters)
+    // console.log(countQuery)
 
     /**
     * Obtiene la cantidad de inmuebles filtrados
@@ -286,7 +295,7 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
         */
         
         numeroResultados = countFiltered[0][0].total;
-        console.log("numero de pags" + numeroResultados)
+        //console.log("numero de pags" + numeroResultados)
         numeroPaginas = Math.ceil(numeroResultados/resultadosPorPagina);
 
         /** 
@@ -323,8 +332,8 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
 
         builtQueryLimits = builtQuery + limits;
 
-        console.log(builtQuery);
-        console.log(conditions.values)
+        //console.log(builtQuery);
+        //console.log(conditions.values)
         //console.log(countFiltered[0][0].total)
     };
 
@@ -369,10 +378,6 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     * que durante la paginación no se reestablezca la búsqueda 
     */
 
-    req.session.countParams = countQuery;
-    req.session.searchParams = builtQuery;
-    req.session.searchValues = conditions;
-
     /** 
     * Mustra la vista searchPageFiltrada.ejs con la información respectiva
     * para mostrar los inmuebles que cumplen con la búsqueda, los datos para
@@ -381,9 +386,13 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
     * muestra la vista searchPageVacia.ejs
     */
 
-    console.log(builtQuery)
-    console.log(resultsExist)
+    //console.log(builtQuery)
+    //console.log(resultsExist)
     if (resultsExist == true) {
+        req.session.countParams = countQuery;
+        req.session.searchParams = builtQuery;
+        req.session.searchValues = conditions;
+        //console.log(builtQuery);
         res.render('searchPageFiltrada', {
             inmuebles: inmuebles,
             pagina: pagina,
@@ -392,13 +401,19 @@ exports.getInmueblesFiltradosIndex = async ( req, res, next ) => {
             linkFinal: linkFinal,
             numeroPaginas: numeroPaginas,
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario : req.session.urlFotoUsuario
         }); 
     } else {
         res.render('searchPageVacia', {
             isLogged: req.session.isLoggedIn,
-            idRol: req.session.idRol
+            idRol: req.session.idRol,
+            urlFotoUsuario: req.session.urlFotoUsuario
         })
     };
     
+}
+
+exports.getOlvideContrasenia = ( req,res,next ) => {
+    res.render('olvideContraseña');
 }

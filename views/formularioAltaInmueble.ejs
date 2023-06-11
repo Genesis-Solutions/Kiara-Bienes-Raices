@@ -4,61 +4,90 @@
 
     <%- include('partials/navbar') %>
 
-    <!-- Titulo de la pagina -->
-    <!-- Cambiar dependiendo del id del tipo de inmueble -->
-    <div class="p-10 flex justify-center items-center">
+    <!-- Heading Section -->
+
+    <div class="px-10">
+        <hr class="h-px my-4 bg-gray-800 border-0">
+    </div>
+
+    <div class="px-10 p-10 text-center space-y-4">
         <% if(categoria == 1){ %>
-            <h1 class="text-4xl text-center">Dando de alta una casa</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta una Casa
+            </h2>
         <% } else if (categoria == 2){ %>
-            <h1 class="text-4xl text-center">Dando de alta un departamento</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Departamento
+            </h2>
         <% } else if (categoria == 3){ %>
-            <h1 class="text-4xl text-center">Dando de alta un local</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Local
+            </h2>
         <% } else if (categoria == 4){ %>
-            <h1 class="text-4xl text-center">Dando de alta un terreno</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Terreno
+            </h2>
         <% } else if (categoria == 5){ %>
-            <h1 class="text-4xl text-center">Dando de alta una bodega</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta una Bodega
+            </h2>
         <% } else if (categoria == 6){ %>
-            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta una Oficina
+            </h2>
         <% } else if (categoria == 7){ %>
-            <h1 class="text-4xl text-center">Dando de alta una oficina</h1>
+            <h2 class="text-4xl font-bold">
+                Dando de alta un Inmueble
+            </h2>
         <%}%>
+        <p class="pb-10">
+            No olvides llenar los campos con la información correspondiente.
+        </p>
+        <hr class="h-px my-4 bg-gray-800 border-0">
     </div>
 
     <!-- Pictures Form -->
     <div class="px-10 py-5 grid grid-cols-3">
-        <!-- </div> -->
         <div class="col-span-3">
             <h2 class="text-lg font-semibold">
                 Imágenes del inmueble
             </h2>
-            <p class="text-gray-700"> Subir por lo menos 5 imágenes del inmueble </p>
-            <!-- Pictures Form -->
-            <form action="/dashboard/alta/inmueble/imagenes/<%=idInmueble%>" id="imagenes" name="imagenes"
-                enctype="multipart/form-data" method="POST">
-                <div class="dropzone dz-clickable" id="uploadDropzone">
-                    <div class="dz-default dz-message" data-dz-message="">
-                        <span>Drop files here to upload</span>
-                    </div>
-                </div>
-                <br />
-            </form>
+            <p class="text-gray-700 pb-2"> Sube por lo menos 5 imágenes del inmueble. </p>
+            <!-- Multiple upload al S3 -->
+            <div class="flex items-center justify-center w-full">
+                <form class="w-full" id="formMediaS3" action="/dashboard/alta/inmueble/imagenes/<%=idInmueble%>" method='POST' enctype="multipart/form-data">
+                    <label for='uploadedImages' class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 text-sm text-gray-500">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <i class="fa-solid fa-cloud-arrow-up fa-2xl my-4 pt-5"></i>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Selecciona</span> las imágenes del inmueble.</p>
+                            <p class="text-xs text-gray-500 pb-2">PNG, JPG o WEBP</p>
+                            <p id="fileCount" class="pb-5"></p>
+                            <p id="fileSize" class="pb-5"></p>
+                        </div>
+                    </label>
+                    <input type='file' multiple='multiple' accept='image/jpeg, image/png, image/webp' name='uploadedImages[]' id='uploadedImages' class="hidden"/>
+                </form>
+            </div>
         </div>
     </div>
+    <input type="hidden" id="imgCount" name="imgCount">
+    <input type="hidden" id="sizeCount" name="sizeCount">
+    <input type="hidden" id="fileFormatCheck" name="fileFormatCheck">
 
     <!-- Information Form -->
     <!-- Cambiar dependiendo del id del tipo de inmueble -->
     <% if(categoria == 1 || categoria == 2){ %>
-        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+        <%- include('partials/formsInmuebles/casaDepartamento', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <% } else if (categoria == 3){ %>
-        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>        
+        <%- include('partials/formsInmuebles/local', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>        
     <% } else if (categoria == 4){ %>
-        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>       
+        <%- include('partials/formsInmuebles/terreno', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>       
     <% } else if (categoria == 5){ %>
-        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+        <%- include('partials/formsInmuebles/bodega', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <% } else if (categoria == 6){ %>
-        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+        <%- include('partials/formsInmuebles/oficina', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <% } else if (categoria == 7){ %>
-        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes, listaClientes:listaClientes}) %>
+        <%- include('partials/formsInmuebles/otro', {idInmueble: idInmueble, idRol:idRol, idusuario:idUsuario, listaAgentes:listaAgentes}) %>
     <%}%>
 
     <!-- Enlazar con la biblioteca de jQuery -->
@@ -68,60 +97,133 @@
     <script src="https://malsup.github.io/jquery.form.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/es.js"></script>
-    <!-- Enlazar con la biblioteca de Dropzone -->
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-
-    <!-- Configuración de dropzone -->
-    <script type="text/javascript">
-        Dropzone.autoDiscover = false;
-        function paramNameForSend() {
-            return "media";
-        }
-        var idInmueble = $("#id_inmueble").val();
-        //console.log("Dentro de la config de dropzone, idInmueble = ",idInmueble);
-        $("#uploadDropzone").dropzone({ 
-            url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
-            maxFilesize: 15, // MB
-            maxFiles: 25,
-            autoProcessQueue: false,
-            uploadMultiple: true,
-            paramName: paramNameForSend,
-            method: 'post',
-            parallelUploads: 25,
-            init: function() {
-                var myDropzone = this;
-                $("#imagenes").submit(function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    myDropzone.processQueue();
-                    window.location.replace('/catalogo');
-                    //window.location.replace('/inmueble/<%=idInmueble%>');
-                }); 
-            }
-        });
-    </script>
 
     <!-- Submit del formulario del imagenes del inmueble desde el submit del formulario del cuerpo -->
     <script type="text/javascript">  
         $('#cuerpoInmueble').submit(function(e) {
             e.preventDefault();
-            //console.log("Submit de cuerpoInmueble");
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: $( this ).serializeArray(),
-                success: function() {
-                    //console.log("Dentro del succes de form 1");
-                    $('#imagenes').submit();
+            var inputElement = document.getElementById('imgCount');
+            var filesSize = document.getElementById('sizeCount');
+            var fileFormatCheck = document.getElementById('fileFormatCheck');
+            var mapCheck = $('input[name="linkMapsBody"]').val();
+            var videoCheck = $('input[name="linkVideoBody"]').val();
+            var confirmMap = 0;
+            var confirmVideo = 0;
+            if (mapCheck) {
+                if(mapCheck.indexOf("<iframe src=") === -1 || 
+                mapCheck.indexOf("</iframe>") === -1){
+                    confirmMap = 0;
+                } else {
+                    confirmMap = 1;
                 }
-            })
+            } else {
+                confirmMap = 1;
+            };
+
+            if (videoCheck) {
+                if(videoCheck.indexOf("youtu") === -1){
+                    confirmVideo = 0;
+                } else {
+                    confirmVideo = 1;
+                }
+            } else {
+                confirmVideo = 1;
+            };
+            
+            if(inputElement.value < 5){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Necesita subir por lo menos 5 imágenes del inmueble',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else if (sizeCount.value > 200){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Las imágenes no pueden exceder los 200 MB',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else if (fileFormatCheck.value == 0){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sólo se aceptan formatos JPG, PNG y WEBP',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else if (confirmVideo != 1) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que el video tenga el formato correcto',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else if (confirmMap != 1){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que el mapa tenga el formato de "insertar mapa" de google maps',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else {
+                desactivarUnload();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $( this ).serializeArray(),
+                    success: function() {
+                        $('#formMediaS3').submit();
+                        Swal.fire({
+                            title: 'Registrando el inmueble',
+                            showConfirmButton: false,
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            onOpen: () => {
+                                Swal.showLoading();
+                            }
+                        })
+                    }
+                })
+            }
+        });
+    </script>
+
+    <!-- Función uploadImages -->
+    <script type="text/javascript">   
+        /* 
+        * Manejador de eventos de envío del formulario
+        */
+        document.querySelector('#formMediaS3').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const files = document.querySelector('#uploadedImages').files;
+            var idInmueble = $("#id_inmueble").val();
+            var loaded = 0;
+            var total = files.length;
+            for (let i = 0; i < total; i++) {
+                const formData = new FormData();
+                formData.append('uploadedImages[]', files[i]);
+                $.ajax({
+                    url: '/dashboard/alta/inmueble/imagenes/<%=idInmueble%>',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        loaded++;
+                    },
+                    error: function(error) {
+                        console.error(error);
+                        alert('Error al cargar los archivos');
+                    }
+                });
+            }
         });
     </script>
 
     <!-- Ejecución de la función eliminarInmueble desde el boton Cancelar -->
     <script type="text/javascript">   
-        $(document).on("click", ".btnCancelar", function(){	
+        $(document).on("click", ".btnCancelar", function(){
+            desactivarUnload();
             eliminarInmueble();
         })
     </script>
@@ -130,14 +232,29 @@
     <script type="text/javascript">   
         function eliminarInmueble() {
             var idInmueble = $("#id_inmueble").val();
-            $.ajax({
-                url: '/dashboard/baja/inmueble/<%=idInmueble%>',
-                type: 'GET',
-                dataType: 'json',
-                success: function() {
-                    //console.log("On succes desde el eliminar");
-                    window.location.replace('/dashboard/alta');
-                }
+            Swal.fire({
+                title: '¿Confirma la cancelación del inmueble?',                
+                showCancelButton: true,
+                confirmButtonText: `Confirmar cancelación`,                
+                }).then((result) => {               
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/dashboard/baja/inmueble/<%=idInmueble%>',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Inmueble eliminado',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            setTimeout(function() {
+                                window.location.replace('/dashboard/alta');
+                            }, 2000);
+                        }
+                    });
+                } 
             });
         }
     </script>
@@ -154,6 +271,156 @@
             });
         });
     </script>
+
+    <!-- Verificación para requireds de precios -->
+
+    <script type="text/javascript">
+        const checkVenta = document.getElementById('venta');
+        const checkRenta = document.getElementById('renta');
+        const precioVenta = document.getElementById('precioVenta');
+        const precioRenta = document.getElementById('precioRenta');
+
+        $(document).ready(function(){
+            $(checkVenta).change(function(){
+                if($(precioVenta).attr('required')) {
+                    $(precioVenta).removeAttr('required');
+                } else {
+                    $(precioVenta).attr('required','required')
+                };
+            });
+
+            $(checkRenta).change(function(){
+                if($(precioRenta).attr('required')) {
+                    $(precioRenta).removeAttr('required');
+                } else {
+                    $(precioRenta).attr('required','required')
+                };
+            });
+        });
+
+    </script>
+
+    <!-- Verificar que existan por lo menos 5 imagenes en formMediaS3 antes del upload -->
+    <script type="text/javascript">
+        const fileInput = document.getElementById('uploadedImages');
+        fileInput.addEventListener('change', function(event) {
+            updateFileCount(event);
+            countImages(event);
+        });
+    </script>
+
+    <!-- Count de imagenes dentro de formMediaS3 -->
+    <script type="text/javascript">
+        function updateFileCount(event) {
+            var fileCount = event.target.files.length;
+            var fileSize = 0;
+            var files = event.target.files;
+            var fileCountElement = document.getElementById('fileCount');
+            var fileSizeElement = document.getElementById('fileSize');
+            var sizeCount = document.getElementById('sizeCount');
+            var fileFormatCheck = document.getElementById('fileFormatCheck');
+            var fileExtension = "";
+            fileCountElement.innerHTML = "<p class='text-center pb-2'>Número de imágenes: <span class='font-semibold'>" + fileCount + "</span></p>";
+            for (var i = 0; i < fileCount; i++) {
+                var fileName = files[i].name;
+                var extensionName = fileName.toString();
+                fileSize = fileSize + files[i].size;
+                var fileItem = document.createElement("p");
+                fileItem.textContent = fileName;
+                fileCountElement.appendChild(fileItem);
+                
+                if (extensionName.lastIndexOf(".") > 0) {
+                    fileExtension = extensionName.substring(extensionName.lastIndexOf(".") + 1, extensionName.length);
+                    
+                };
+                if (fileExtension.toLowerCase() == "png" || fileExtension.toLowerCase() == "jpeg" || fileExtension.toLowerCase() == "jpg" || fileExtension.toLowerCase() == "webp") {
+                    fileFormatCheck.value = "1";
+                } else {
+                    fileFormatCheck.value = "0";
+                };
+            };
+            var fileSizeMB = fileSize / 1024 / 1024;
+            fileSizeElement.innerHTML = "<p class='text-center pb-2'>Tamaño de las imágenes: <span class='font-semibold'>" + fileSizeMB.toFixed(2) + " MB" + "</span></p>";
+            sizeCount.value = fileSizeMB;
+        };
+    </script>
+
+
+<script type="text/javascript">   
+    $(document).on("click", ".btnSubmit", function(){
+        document.getElementById('cuerpoInmueble').addEventListener('submit', function(event) {
+            var inputValue = document.getElementById('linkMaps').value;
+            var substring = '<iframe src="https://www.google.com/maps/';
+            if (!inputValue.includes(substring)) {
+                event.preventDefault(); 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'El link de Google Maps debe ser un "Embed a Map',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } else {
+                event.preventDefault(); 
+                $("#cuerpoInmueble").submit();
+            }
+        });
+    });
+</script>
+
+    <!-- Asignar a un input el numero de imagenes en formMediaS3 -->
+    <script type="text/javascript">
+        function countImages(event) {
+            var fileCount = event.target.files.length;
+            var inputElement = document.getElementById('imgCount');
+            inputElement.value = fileCount;
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+        $('#btnSubmit').click(function() {
+            checkedVenta = $("input[id=venta]:checked").length;
+            checkedRenta = $("input[id=renta]:checked").length;
+            if(!checkedVenta && !checkedRenta){
+                //sweetAlert("La propiedad debe estar en venta y/o renta");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'La propiedad debe estar en venta y/o renta',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return false;
+            }
+        });
+    });
+    </script>
+
+    <!-- Ejecuta antes de salir de la página -->
+    <script type="text/javascript">
+        window.onbeforeunload = function(e) {
+            e.returnValue = 'Adios';
+            e.preventDefault();
+            return eliminarRegistro();
+        };
+    </script>
+
+    <!-- Función para eliminar el inmueble vacío al salir de la página -->
+    <script type="text/javascript">   
+        function eliminarRegistro() {
+            var idInmueble = $("#id_inmueble").val();
+            $.ajax({
+                url: '/dashboard/baja/inmueble/<%=idInmueble%>',
+                type: 'GET',
+                dataType: 'json'
+            });
+        };
+
+        function desactivarUnload(){
+            window.onbeforeunload = null;
+        };
+    </script>
+
+    <!-- Función para resetear el onbeforeunload -->
 
     <%- include("partials/footer") %>
 

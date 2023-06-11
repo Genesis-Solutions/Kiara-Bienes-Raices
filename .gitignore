@@ -4,6 +4,9 @@ node_modules/
 #Credenciales de AWS
 util/awsBucket.js
 
+# Carpeta de tests
+test/
+mochawesome-report/
 
 #package-lock.json
 package-lock.json
@@ -29,6 +32,9 @@ package-lock.json
 
 # Environment variables
 .env
+test-environment.json
+dev-environment.json
+prod-environment.json
 
 # Log files
 logs/

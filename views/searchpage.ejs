@@ -65,13 +65,13 @@
                             <label class="font-bold" for="precio-minimo">
                                 Precio mínimo
                             </label>
-                            <input id="precioMinimo" name="precioMinimo" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" id="precio-minimo" type="number" placeholder="0">
+                            <input id="precioMinimo" name="precioMinimo" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" id="precio-minimo" type="number" placeholder="0" min="0">
                         </div>
                         <div class="space-y-2">
                             <label class="font-bold" for="precio-maximo">
                                 Precio máximo
                             </label>
-                            <input id="precioMaximo" name="precioMaximo" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" id="precio-maximo" type="number" placeholder="0">
+                            <input id="precioMaximo" name="precioMaximo" class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800" id="precio-maximo" type="number" placeholder="0" min="0">
                         </div>
                         <div class="flex items-end justify-center order-last md:justify-start">
                             <div class="px-5 py-2 w-full rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 align-middle cursor-pointer" @click="open = ! open">

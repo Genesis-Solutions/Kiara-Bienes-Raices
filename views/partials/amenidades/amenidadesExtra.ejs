@@ -86,7 +86,7 @@
                 <li>● Sala de TV </li>
             <% } %>
             
-            <% if (inmueble.fechaConstruccionInmueble != null) { %>
+            <% if (inmueble.fechaConstruccionInmueble != null && inmueble.fechaConstruccionInmueble > 0) { %>
                 <li>● Año de Construcción: <%= inmueble.fechaConstruccionInmueble %> </li>
             <% } %>
             
@@ -121,12 +121,9 @@
             <% if (inmueble.generadorElectricoInmueble != 0 && inmueble.generadorElectricoInmueble != null) { %>
                 <li>● Generador Eléctrico</li>
             <% } %>
-        </ul>
-    </div>
-    <div>
-        <ul class="space-y-2">
+        
             <% if (inmueble.tipoPisoInmueble != null) { %>
-                <li>● Tipo Piso: $<%= tipoPisoValue.tipoPiso %> </li>
+                <li>● Tipo Piso: <%= inmueble.tipoPisoInmueble %> </li>
             <% } %>
             
             <% if (inmueble.andenCargaInmueble != 0 && inmueble.andenCargaInmueble != null) { %>

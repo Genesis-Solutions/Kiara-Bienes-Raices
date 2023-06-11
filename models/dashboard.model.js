@@ -24,13 +24,45 @@ module.exports = class Dashboard {
     }
 
     /*
-     * Obtener la lista total de propiedades del sistema para la lista.
+     * Obtener la lista total de propiedades del sistema para la lista que se encuentran activas.
      * @return JSON -> Lista de propiedades
      */
     static fetchAllPropiedades() {
             return db.execute(
-            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,X.nombreUsuario as nombresArrendador,X.apellidosUsuario as apellidosArrendador,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado JOIN usuario X ON X.idUsuario = I.idArrendador'
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, I.idAgenteAsignado FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1'
         );
+    }
+
+    /*
+     * Obtener la lista total de propiedades del sistema para la lista que se encuentran inactivas.
+     * @return JSON -> Lista de propiedades
+     */
+    static fetchAllPropiedadesInactivas() {
+        return db.execute(
+        'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=0 OR I.activoInmueble=3'
+    );
+}
+
+        /*
+     * Obtener la lista total de propiedades del agente para la lista.
+     * @return JSON -> Lista de propiedades del agente
+     */
+        static fetchAllPropiedadesAgente(idUsuario) {
+            return db.execute(
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble, I.idAgenteAsignado FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.activoInmueble=1 AND I.idAgenteAsignado=?', [
+                idUsuario,
+            ]);
+    } 
+
+         /*
+     * Obtener la lista total de propiedades del agente para la lista.
+     * @return JSON -> Lista de propiedades del agente
+     */
+         static fetchAllPropiedadesAgenteInactivas(idUsuario) {
+            return db.execute(
+            'SELECT I.idInmueble,I.nombreInmueble,U.nombreUsuario as nombresAgente,U.apellidosUsuario as apellidosAgente,I.idTipoMovimiento,I.activoInmueble, I.precioVentaInmueble, I.precioRentaInmueble FROM inmueble I JOIN usuario U ON U.idUsuario = I.idAgenteAsignado WHERE I.idAgenteAsignado=? AND (I.activoInmueble = 0 OR I.activoInmueble=3)', [
+                idUsuario,
+            ]);
     }
 
     /*
@@ -57,7 +89,7 @@ module.exports = class Dashboard {
         );
     }
 
-    /*
+    /**
      * Borrado del usuario solicitado.
      * @param idUsuario: String -> Id del usuario que será eliminado
      */
@@ -65,6 +97,20 @@ module.exports = class Dashboard {
         return db.execute(
             'UPDATE usuario SET activoUsuario=0 WHERE idUsuario=?', 
             [idUsuario]
+        );
+    }
+
+/**
+ * Actualiza la información de un usuario eliminado en la base de datos.
+ *
+ * @param emailUsuario El nuevo correo electrónico del usuario.
+ * @param idUsuario El ID del usuario que se actualizará.
+ * @return El resultado de la ejecución de la consulta en la base de datos.
+ */
+    static updateDeletedUser(emailUsuario, idUsuario) {
+        return db.execute(
+            'UPDATE usuario SET telefonoUsuario=1111111111, emailUsuario=? WHERE idUsuario=?',
+            [emailUsuario, idUsuario]
         );
     }
 
@@ -103,9 +149,9 @@ module.exports = class Dashboard {
     * Revisión de cantidad de inmuebles asignados 
     * @param idUsuario: String -> Id del usuario que será revisado
     */
-    static checkUser(idUsuario) {
+    static comprobacionAgenteInmueble(idUsuario) {
         return db.execute(
-            'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where activoInmueble=1 AND (idAgenteAsignado=? OR idArrendador=?)', 
+            'SELECT COUNT(idAgenteAsignado) as primera FROM inmueble where (activoInmueble=1 OR activoInmueble=3) AND (idAgenteAsignado=? OR idArrendador=?)', 
             [idUsuario, idUsuario]
         ).then(([rows, fielData]) => {
             return rows[0].primera
@@ -116,7 +162,7 @@ module.exports = class Dashboard {
     * Revisión de cantidad de trámites de cliente
     * @param idUsuario: String -> Id del usuario que será revisado
     */
-    static checkUser2(idUsuario) {
+    static comprobacionClienteTramite(idUsuario) {
         return db.execute(
             'SELECT COUNT(idCliente) as segunda FROM tramite where idCliente=? AND activoTramite=1', 
             [idUsuario]
@@ -129,12 +175,38 @@ module.exports = class Dashboard {
     * Revisión de cantidad de trámites de arrendador
     * @param idUsuario: String -> Id del usuario que será revisado
     */
-    static checkUser3(idUsuario) {
+    static comprobacionArrendadorTramite(idUsuario) {
         return db.execute(
             'SELECT COUNT(idArrendador) as tercera FROM tramite where idArrendador=? AND activoTramite=1', 
             [idUsuario]
         ).then(([rows, fielData]) => {
         return rows[0].tercera
+        });
+    }
+
+    /*
+    * Revisión de cantidad de trámites de agente
+    * @param idUsuario: String -> Id del usuario que será revisado
+    */
+    static comprobacionAgenteTramite(idUsuario) {
+        return db.execute(
+            'SELECT COUNT(idAgente) as cuarta FROM tramite where idAgente=? AND activoTramite=1', 
+            [idUsuario]
+        ).then(([rows, fielData]) => {
+        return rows[0].cuarta
+        });
+    }
+
+     /*
+    * Revisión de cantidad de trámites de agente
+    * @param idUsuario: String -> Id del usuario que será revisado
+    */
+     static checkUserAgent(idUsuario) {
+        return db.execute(
+            'SELECT COUNT(idAgente) as tercera FROM tramite where idAgente=? AND activoTramite=1', 
+            [idUsuario]
+        ).then(([rows, fielData]) => {
+        return rows[0].cuarta
         });
     }
 
@@ -225,7 +297,7 @@ module.exports = class Dashboard {
     static insertDisabledRegister(idCategoria,idUsuario) {
         return db.execute(
             'INSERT INTO inmueble(idAgenteAlta,idAgenteAsignado,idCategoria,idTipoMovimiento,nombreInmueble,descInmueble,precioVentaInmueble,precioRentaInmueble,activoInmueble,fechaRegistroInmueble) VALUES (?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())',
-            [idUsuario,idUsuario,idCategoria,1,"Registro vacio","Registro vacio",0,0,0]
+            [idUsuario,idUsuario,idCategoria,1,"Registro vacio","Registro vacio",0,0,2]
         );
     }
 
@@ -235,7 +307,7 @@ module.exports = class Dashboard {
     */
     static getLastDisabledRegisterID(){
         return db.execute(
-            'SELECT idInmueble FROM inmueble WHERE activoInmueble = 0 ORDER BY idInmueble DESC LIMIT 1'
+            'SELECT idInmueble FROM inmueble WHERE activoInmueble = 2 ORDER BY idInmueble DESC LIMIT 1'
         );
     }
 
@@ -315,7 +387,6 @@ module.exports = class Dashboard {
     static activateInmuebleCasa(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -348,11 +419,10 @@ module.exports = class Dashboard {
         idInmueble
     ){
         return db.execute(
-            'UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idArrendador=?, idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble = ?',
+            'UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?, idTipoMovimiento=?,linkVideoInmueble=?,precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,nivelesInmueble=?,mediosBaniosInmueble=?,cuotaMantenimientoInmueble=?,fechaConstruccionInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,tipoGasInmueble=?, m2ConstruidosInmueble=?, recamarasInmueble=?, estacionamientosInmueble=?,baniosInmueble=?, descInmueble=?, cocinaInmueble=?, cisternaInmueble=?, cuartoServicioInmueble=?, salaTVInmueble=?, estudioInmueble=?, roofGardenInmueble=?, areaLavadoInmueble=?, vigilanciaInmueble=?,jardinInmueble=?, bodegaInmueble=?, direccionInmueble=?,linkGoogleMaps=?, activoInmueble=0 WHERE idInmueble = ?',
             [   
                 titulo,
                 id_agente,
-                id_arrendador,
                 tipoMovimiento,
                 linkVideo,
                 precioVenta,
@@ -423,7 +493,6 @@ module.exports = class Dashboard {
     static activateInmuebleLocal(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento, 
         linkVideo,
         precioVenta,
@@ -452,11 +521,10 @@ module.exports = class Dashboard {
         idInmueble
     ){
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?, idTipoMovimiento=?,linkVideoInmueble=?, precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,m2ConstruidosInmueble=?,medidasFrenteInmueble=?,medidasFondoInmueble=?, nivelesInmueble=?,cuartosPrivadosInmueble=?,mediosBaniosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?, cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?, idTipoMovimiento=?,linkVideoInmueble=?, precioVentaInmueble=?,precioRentaInmueble=?,m2TerrenoInmueble=?,m2ConstruidosInmueble=?,medidasFrenteInmueble=?,medidasFondoInmueble=?, nivelesInmueble=?,cuartosPrivadosInmueble=?,mediosBaniosInmueble=?,usoSueloInmueble=?,enPrivadaInmueble=?,cuotaMantenimientoInmueble=?, cocinaInmueble=?,cisternaInmueble=?,cuartoServicioInmueble=?,fechaConstruccionInmueble=?,vigilanciaInmueble=?,tipoGasInmueble=?,estacionamientosInmueble=?,baniosInmueble=?,descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=0 WHERE idInmueble=?",
             [   
                 titulo,
                 id_agente,
-                id_arrendador,
                 tipoMovimiento, 
                 linkVideo,
                 precioVenta,
@@ -517,7 +585,6 @@ module.exports = class Dashboard {
     static activateInmuebleTerreno(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -540,11 +607,10 @@ module.exports = class Dashboard {
         id_inmueble
         ) {
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?,servicioDrenajeInmueble=?, vigilanciaInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?,  descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble = ?",
+            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, servicioAguaInmueble=?, servicioLuzInmueble=?,servicioDrenajeInmueble=?, vigilanciaInmueble=?, tipoSueloInmueble=?, cuotaMantenimientoInmueble=?,  descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=0 WHERE idInmueble = ?",
             [
                 titulo,
                 id_agente,
-                id_arrendador,
                 tipoMovimiento,
                 linkVideo,
                 precioVenta,
@@ -611,7 +677,6 @@ module.exports = class Dashboard {
     static activateInmuebleBodega(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -646,11 +711,10 @@ module.exports = class Dashboard {
         id_inmueble
         ){
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?, idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?,cuotaMantenimientoInmueble=?, fechaConstruccionInmueble=?, murosInmueble=?,alturaInmueble=?,tipoPisoInmueble=?, tipoLuzInmueble=?,estacionamientosInmueble=?, baniosInmueble=?, cocinaInmueble=?, cisternaInmueble=?,vigilanciaInmueble=?, generadorElectricoInmueble=?, andenCargaInmueble=?, oficinaInmueble=?, patioManiobrasInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?,idAgenteAsignado=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, medidasFrenteInmueble=?, medidasFondoInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?,cuotaMantenimientoInmueble=?, fechaConstruccionInmueble=?, murosInmueble=?,alturaInmueble=?,tipoPisoInmueble=?, tipoLuzInmueble=?,estacionamientosInmueble=?, baniosInmueble=?, cocinaInmueble=?, cisternaInmueble=?,vigilanciaInmueble=?, generadorElectricoInmueble=?, andenCargaInmueble=?, oficinaInmueble=?, patioManiobrasInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=0 WHERE idInmueble=?",
             [
                 titulo,
                 id_agente,
-                id_arrendador,
                 tipoMovimiento,
                 linkVideo,
                 precioVenta,
@@ -719,7 +783,6 @@ module.exports = class Dashboard {
     static changeInmuebleOficina(
         titulo,
         id_agente,
-        id_arrendador,
         tipoMovimiento,
         linkVideo,
         precioVenta,
@@ -744,11 +807,10 @@ module.exports = class Dashboard {
         id_inmueble
         ) {
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idTipoMovimiento=?, linkVideoInmueble=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, cocinaInmueble=?, cisternaInmueble=?, fechaConstruccionInmueble=?, vigilanciaInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, descInmueble=?, direccionInmueble=?,  linkGoogleMaps=?, activoInmueble=0 WHERE idInmueble=?",
             [
             titulo,
             id_agente,
-            id_arrendador,
             tipoMovimiento,
             linkVideo,
             precioVenta,
@@ -807,7 +869,6 @@ module.exports = class Dashboard {
     static activateInmuebleOtro(
         titulo,
         id_agente,
-        id_arrendador,
         linkVideo,
         tipoMovimiento,
         precioVenta,
@@ -832,11 +893,10 @@ module.exports = class Dashboard {
         id_inmueble
     ){
         return db.execute(
-            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,idArrendador=?,linkVideoInmueble=?, idTipoMovimiento=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, estudioInmueble=?,roofGardenInmueble=?,  bodegaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=1 WHERE idInmueble=?",
+            "UPDATE inmueble SET nombreInmueble=?, idAgenteAsignado=?,linkVideoInmueble=?, idTipoMovimiento=?, precioVentaInmueble=?, precioRentaInmueble=?, m2TerrenoInmueble=?, m2ConstruidosInmueble=?, nivelesInmueble=?, recamarasInmueble=?, cuartosPrivadosInmueble=?, mediosBaniosInmueble=?, usoSueloInmueble=?, enPrivadaInmueble=?, cuotaMantenimientoInmueble=?, estacionamientosInmueble=?, baniosInmueble=?, estudioInmueble=?,roofGardenInmueble=?,  bodegaInmueble=?, descInmueble=?, direccionInmueble=?, linkGoogleMaps=?, activoInmueble=0 WHERE idInmueble=?",
             [   
                 titulo,
                 id_agente,
-                id_arrendador,
                 linkVideo,
                 tipoMovimiento,
                 precioVenta,
@@ -862,5 +922,28 @@ module.exports = class Dashboard {
             ]
         );
     }
-    
+
+    /*
+    * Activar inmueble solicitado.
+    * @param idInmueble: String -> Id del inmueble que será eliminado
+    */
+    static activateInmueble(idInmueble) {
+        return db.execute(
+            'UPDATE inmueble SET activoInmueble=1 WHERE idInmueble=?', 
+            [idInmueble]
+        );
+    }
+
+    /*
+    * Actualizar encargado del tramite del inmueble en ese momento.
+    * @param idAgente: String -> Agente escogido para la propiedad.
+    * @param idPropiedad: String -> Propiedad escogida para actualizar su encargado.
+    */
+    static updateEncargadoTramite(idAgente,idPropiedad) {
+        return db.execute(
+            'UPDATE tramite SET idAgente=? WHERE idInmueble=? AND activoTramite=1',
+            [idAgente, idPropiedad]
+        );
+    }
+
 };

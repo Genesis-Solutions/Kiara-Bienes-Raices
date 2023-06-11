@@ -1,0 +1,802 @@
+<%- include('partials/head') %>
+
+<body style="font-family: 'Montserrat', sans-serif">
+
+<!-- Navbar Section -->
+
+<%- include('partials/navbar') %>
+
+<% for( let inmueble of inmuebles) { %>
+
+    <!-- Heading Section -->
+
+    <div class="px-10 py-2 text-center">
+        <hr class="h-px my-4 bg-gray-800 border-0">
+        <h2 class="text-2xl md:text-4xl font-bold mb-2 pt-5 md:pt-10">Inicializar Proceso</h2>
+        <p class="pb-5 md:pb-10">
+            Inicia el proceso de la propiedad <strong><%=inmueble.nombreInmueble%></strong>, puedes iniciar el proceso con los pasos predeterminados o puedes añadirle los pasos que desees.
+        </p>
+        <hr class="h-px my-4 bg-gray-800 border-0">
+    </div>
+
+    <form id="pasosForm" name="pasosForm" action="/dashboard/iniciarProceso/<%=inmueble.idInmueble%>" method="POST" novalidate>
+        <!-- Section -->
+        <div class="pt-5 px-12 grid grid-cols-2 gap-5">
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-lg font-semibold pb-2">¿Quién es el propietario?</h3>
+                <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                id="id_duenio" name="id_duenio">
+                <% usuarios.forEach(usuarios=>{ %>
+                    <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
+                <% }); %>
+            </select>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-lg font-semibold pb-2">¿Quién es el cliente?</h3>
+                <select class="h-10 px-5 bg-white w-full rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-gray-800 focus:ring-gray-800 block"
+                id="id_cliente" name="id_cliente">
+                <% usuarios.forEach(usuarios=>{ %>
+                    <option value="<%=usuarios.idUsuario%>"><%=usuarios.nombreUsuario%> <%=usuarios.apellidosUsuario%></option>
+                <% }); %>
+            </select>
+            </div>
+        </div>
+
+        <!-- Steps List -->
+        <% if (idTipoMovimiento == 1) { %>
+
+            <!-- Plantilla para Venta -->
+
+            <div class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list" id="sortable-list">
+                <!-- Step -->
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">1</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
+                                <input type="text" hidden id="titulo1" name="titulo1" class="titulo" value="Recepción de apartado"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
+                                <input type="text" hidden id="descripcion1" name="descripcion1" class="descripcion" value="Día 1"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="1" hidden id="paso1" name="paso1" class="paso paso1"></input>
+                    <input type="number" value="0" hidden id="estatus1" name="estatus1" class="estatus estatus1"></input>
+                    <input type="text" value="0" hidden id="observacion1" name="observacion1" class="observacion observacion1"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">2</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
+                                <input type="text" hidden id="titulo2" name="titulo2" class="titulo" value="Recepción de documentación"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 2 al día 7</p>
+                                <input type="text" hidden id="descripcion2" name="descripcion2" class="descripcion" value="Día 2 al 7"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="2" hidden id="paso2" name="paso2" class="paso paso2"></input>
+                    <input type="number" value="0" hidden id="estatus2" name="estatus2" class="estatus estatus2"></input>
+                    <input type="text" value="0" hidden id="observacion2" name="observacion2" class="observacion observacion2"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">3</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de contrato de compraventa</h3>
+                                <input type="text" hidden id="titulo3" name="titulo3" class="titulo" value="Elaboración de contrato de compraventa"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 4 al 9</p>
+                                <input type="text" hidden id="descripcion3" name="descripcion3" class="descripcion" value="Día 4 al 9"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="3" hidden id="paso3" name="paso3" class="paso paso3"></input>
+                    <input type="number" value="0" hidden id="estatus3" name="estatus3" class="estatus estatus3"></input>
+                    <input type="text" value="0" hidden id="observacion3" name="observacion3" class="observacion observacion3"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">4</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Aprobación de las partes del borrador de contrato</h3>
+                                <input type="text" hidden id="titulo4" name="titulo4" class="titulo" value="Aprobación de las partes del borrador de contrato"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 5 al 10</p>
+                                <input type="text" hidden id="descripcion4" name="descripcion4" class="descripcion" value="Día 5 al 10"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="4" hidden id="paso4" name="paso4" class="paso paso4"></input>
+                    <input type="number" value="0" hidden id="estatus4" name="estatus4" class="estatus estatus4"></input>
+                    <input type="text" value="0" hidden id="observacion4" name="observacion4" class="observacion observacion4"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">5</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato de compraventa</h3>
+                                <input type="text" hidden id="titulo5" name="titulo5" class="titulo" value="Firma de contrato de compraventa"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 6 al 11</p>
+                                <input type="text" hidden id="descripcion5" name="descripcion5" class="descripcion" value="Día 6 al 11"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="5" hidden id="paso5" name="paso5" class="paso paso5"></input>
+                    <input type="number" value="0" hidden id="estatus5" name="estatus5" class="estatus estatus5"></input>
+                    <input type="text" value="0" hidden id="observacion5" name="observacion5" class="observacion observacion5"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">6</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo comercial</h3>
+                                <input type="text" hidden id="titulo6" name="titulo6" class="titulo" value="Realización de avalúo comercial"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
+                                <input type="text" hidden id="descripcion6" name="descripcion6" class="descripcion" value="Día 14 al 18"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="6" hidden id="paso6" name="paso6" class="paso paso6"></input>
+                    <input type="number" value="0" hidden id="estatus6" name="estatus6" class="estatus estatus6"></input>
+                    <input type="text" value="0" hidden id="observacion6" name="observacion6" class="observacion observacion6"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">7</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Realización de avalúo hacendario</h3>
+                                <input type="text" hidden id="titulo7" name="titulo7" class="titulo" value="Realización de avalúo hacendario"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 14 al 18</p>
+                                <input type="text" hidden id="descripcion7" name="descripcion7" class="descripcion" value="Día 14 al 18"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="7" hidden id="paso7" name="paso7" class="paso paso7"></input>
+                    <input type="number" value="0" hidden id="estatus7" name="estatus7" class="estatus estatus7"></input>
+                    <input type="text" value="0" hidden id="observacion7" name="observacion7" class="observacion observacion7"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">8</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Avalúo terminado y entregado</h3>
+                                <input type="text" hidden id="titulo8" name="titulo8" class="titulo" value="Avalúo terminado y entregado"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 19 al día 23</p>
+                                <input type="text" hidden id="descripcion8" name="descripcion8" class="descripcion" value="Día 19 al 23"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="8" hidden id="paso8" name="paso8" class="paso paso8"></input>
+                    <input type="number" value="0" hidden id="estatus8" name="estatus8" class="estatus estatus8"></input>
+                    <input type="text" value="0" hidden id="observacion8" name="observacion8" class="observacion observacion8"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">9</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de documentación por parte de Notaria</h3>
+                                <input type="text" hidden id="titulo9" name="titulo9" class="titulo" value="Revisión de documentación por parte de Notaria"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 20 al día 30</p>
+                                <input type="text" hidden id="descripcion9" name="descripcion9" class="descripcion" value="Día 20 al 30"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="9" hidden id="paso9" name="paso9" class="paso paso9"></input>
+                    <input type="number" value="0" hidden id="estatus9" name="estatus9" class="estatus estatus9"></input>
+                    <input type="text" value="0" hidden id="observacion9" name="observacion9" class="observacion observacion9"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">10</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Elaboración de proyecto de escritura</h3>
+                                <input type="text" hidden id="titulo10" name="titulo10" class="titulo" value="Elaboración de proyecto de escritura"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 30 al día 40</p>
+                                <input type="text" hidden id="descripcion10" name="descripcion10" class="descripcion" value="Día 30 al 40"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="10" hidden id="paso10" name="paso10" class="paso paso10"></input>
+                    <input type="number" value="0" hidden id="estatus10" name="estatus10" class="estatus estatus10"></input>
+                    <input type="text" value="0" hidden id="observacion10" name="observacion10" class="observacion observacion10"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <!-- Step Sin Rayita -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">11</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de escritura de compraventa</h3>
+                                <input type="text" hidden id="titulo11" name="titulo11" class="titulo" value="Firma de escritura de compraventa"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 35 al día 45</p>
+                                <input type="text" hidden id="descripcion11" name="descripcion11" class="descripcion" value="Día 35 al 45"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="11" hidden id="paso11" name="paso11" class="paso paso11"></input>
+                    <input type="number" value="0" hidden id="estatus11" name="estatus11" class="estatus estatus11"></input>
+                    <input type="text" value="0" hidden id="observacion11" name="observacion11" class="observacion observacion11"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="handle fa-solid fa-grip-vertical fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+                <!-- COUNTER DE CUANTOS STEPS HAY -->
+                <input id="counter" type="number" hidden value="11"></input>
+            </div>
+        <% } else if(idTipoMovimiento == 2) { %>
+
+            <!-- Plantilla para Renta -->
+            
+            <div id="sortable-list" class="pr-8 pl-14 md:px-28 pt-10 pb-14 sortable-list">
+                <!-- Step -->
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">1</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de apartado</h3>
+                                <input type="text" hidden id="titulo1" name="titulo1" class="titulo" value="Recepción de apartado"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 1</p>
+                                <input type="text" hidden id="descripcion1" name="descripcion1" class="descripcion" value="Día 1"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="1" hidden id="paso1" name="paso1" class="paso paso1"></input>
+                    <input type="number" value="0" hidden id="estatus1" name="estatus1" class="estatus estatus1"></input>
+                    <input type="text" value="0" hidden id="observacion1" name="observacion1" class="observacion observacion1"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class=" step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">2</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Recepción de documentación</h3>
+                                <input type="text" hidden id="titulo2" name="titulo2" class="titulo" value="Recepción de documentación"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 2 al 6</p>
+                                <input type="text" hidden id="descripcion2" name="descripcion2" class="descripcion" value="Día 2 al 6"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="2" hidden id="paso2" name="paso2" class="paso paso2"></input>
+                    <input type="number" value="0" hidden id="estatus2" name="estatus2" class="estatus estatus2"></input>
+                    <input type="text" value="0" hidden id="observacion2" name="observacion2" class="observacion observacion2"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">3</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Inicio de trámite de póliza jurídica</h3>
+                                <input type="text" hidden id="titulo3" name="titulo3" class="titulo" value="Inicio de trámite de póliza jurídica"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 3 al 7</p>
+                                <input type="text" hidden id="descripcion3" name="descripcion3" class="descripcion" value="Día 3 al 7"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="3" hidden id="paso3" name="paso3" class="paso paso3"></input>
+                    <input type="number" value="0" hidden id="estatus3" name="estatus3" class="estatus status3"></input>
+                    <input type="text" value="0" hidden id="observacion3" name="observacion3" class="observacion observacion3"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">4</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Resultado de investigación de póliza jurídica</h3>
+                                <input type="text" hidden id="titulo4" name="titulo4" class="titulo" value="Resultado de investigación de póliza jurídica"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 7 al 11</p>
+                                <input type="text" hidden id="descripcion4" name="descripcion4" class="descripcion" value="Día 7 al 11"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="4" hidden id="paso4" name="paso4" class="paso paso4"></input>
+                    <input type="number" value="0" hidden id="estatus4" name="estatus4" class="estatus estatus4"></input>
+                    <input type="text" value="0" hidden id="observacion4" name="observacion4" class="observacion observacion4"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">5</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Revisión de contrato</h3>
+                                <input type="text" hidden id="titulo5" name="titulo5" class="titulo" value="Revisión de contrato"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 8 al 12</p>
+                                <input type="text" hidden id="descripcion5" name="descripcion5" class="descripcion" value="Día 8 al 12"></input>
+                            </li>
+                        </ol>
+                        <hr class="h-10 border-l border-sky-950 border-t-0">
+                    </div>
+                    <input type="text" value="5" hidden id="paso5" name="paso5" class="paso paso5"></input>
+                    <input type="number" value="0" hidden id="estatus5" name="estatus5" class="estatus estatus5"></input>
+                    <input type="text" value="0" hidden id="observacion5" name="observacion5" class="observacion observacion5"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+        
+                <!-- Step Sin Rayita -->
+        
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">6</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">Firma de contrato</h3>
+                                <input type="text" hidden id="titulo6" name="titulo6" class="titulo" value="Firma de contrato"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">Día 10 al 15</p>
+                                <input type="text" hidden id="descripcion6" name="descripcion6" class="descripcion" value="Día 10 al 15"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" value="6" hidden id="paso6" name="paso6" class="paso paso6"></input>
+                    <input type="number" value="0" hidden id="estatus6" name="estatus6" class="estatus estatus6"></input>
+                    <input type="text" value="0" hidden id="observacion6" name="observacion6" class="observacion observacion6"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)"  class="fa-solid fa-trash-can fa-xl mt-4 cursor-pointer text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+        
+        <div class="px-24 pb-10 flex justify-center">
+            <a onclick="updateStepNumbers()" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200">
+                <p class="text-center">Actualizar Orden de Pasos</p>
+            </a>
+        </div>
+
+        <!-- Add Step Button Section (Activa Modal) -->
+
+        <div class="px-24 pb-10 flex justify-center">
+            <a data-modal-target="pasoModal" data-modal-toggle="pasoModal" class="flex justify-center cursor-pointer items-center px-5 py-2 w-4/6 md:w-1/2 rounded-lg text-sm bg-gray-100 hover:bg-gray-200 border border-dashed">
+                <i class="fa-solid fa-plus mr-2 text-center"></i>
+                <p class="text-center">Agregar Paso</p>
+            </a>
+        </div>
+
+        <!-- Buttons Section -->
+
+        <div class="px-10 pb-14 flex justify-evenly">
+            <button type="button" onclick="goBack()" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-red-600 hover:font-medium hover:bg-red-700 btnCancelar">
+                Cancelar
+            </button>
+            <button type="button" onclick="verificarFormulario()" id="btnSubmit" class="px-5 py-2 w-1/3 rounded-lg text-base text-white font-medium bg-gray-800 hover:font-medium hover:bg-gray-700 btnSubmit">
+                Iniciar
+            </button>
+        </div>
+    </form>
+
+    <!-- Footer Section -->
+
+    <%- include("partials/footer") %>
+
+    <!-- Modal toggle -->
+
+    <!-- Main modal -->
+    <div id="pasoModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="pasoModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Llena los datos del Paso Adicional</h3>
+                    <div>
+                        <label for="titulo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título del Paso</label>
+                        <input type="text" name="titulo" id="titulo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label for="descripcion" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                        <input type="text" name="descripcion" id="descripcion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                    </div>
+                    <button data-modal-hide="pasoModal" id="btnAgregarPaso" class="mt-5 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Paso</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+<% } %>
+
+<% if(idTipoMovimiento == 2) { %>
+    <input hidden type="number" id="pasos" value="7">
+    <input hidden type="number" id="counter" name="counter" value="6">
+<% } else { %>
+    <input hidden type="number" id="pasos" value="12">
+    <input hidden type="number" id="counter" name="counter" value="11">
+<% } %>
+
+<script>
+    function deleteItem(item) {
+        const div = item.parentNode.parentNode;
+        div.parentNode.removeChild(div);
+        updateCounter();
+        updateStepNumbers();
+    }
+</script>
+
+<script>
+    function updateCounter() {
+        var counter = document.getElementById('counter');
+        counter.value -= 1;
+        pasos.value -= 1;
+    }
+    function addCounter() {
+        var counter = document.getElementById('counter');
+        var num = parseInt(counter.value);
+        var newValue = num + 1;
+        counter.value = newValue;
+        currentValue.value += 1;
+    }
+    function updateStepNumbers() {
+        var stepNumbers = document.querySelectorAll('.step-number p');
+        stepNumbers.forEach(function(number, index) {
+            number.innerHTML = index + 1;
+        });
+        updateIDs();
+        updateTitulos();
+        updateDescipciones();
+        updateEstatus();
+        updateObservaciones();
+        updatePaso();
+        updateStepNumbersNotification();
+    }
+    function updateStepNumbersNotification() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Orden de pasos actualizado',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
+    function updateIDs() {
+        var pasos = document.querySelectorAll('.paso');
+        pasos.forEach(function(number, index) {
+            console.log(number.id)
+            number.id = "paso"+(index + 1);
+            number.name = "paso"+(index + 1);
+        });
+    }
+    function updateTitulos() {
+        var titulos = document.querySelectorAll('.titulo');
+        titulos.forEach(function(number, index) {
+            console.log(number.id)
+            number.id = "titulo"+(index + 1);
+            number.name = "titulo"+(index + 1);
+        });
+    }
+    function updateDescipciones() {
+        var descripciones = document.querySelectorAll('.descripcion');
+        descripciones.forEach(function(number, index) {
+            console.log(number.id)
+            number.id = "descripcion"+(index + 1);
+            number.name = "descripcion"+(index + 1);
+        });
+    }
+    function updateEstatus() {
+        var estatuses = document.querySelectorAll('.estatus');
+        estatuses.forEach(function(number, index) {
+            console.log(number.id)
+            number.id = "estatus"+(index + 1);
+            number.name = "estatus"+(index + 1);
+        });
+    }
+    function updateObservaciones() {
+        var observaciones = document.querySelectorAll('.observacion');
+        observaciones.forEach(function(number, index) {
+            console.log(number.id)
+            number.id = "observacion"+(index + 1);
+            number.name= "observacion"+(index + 1);
+        });
+    }
+    function updatePaso() {
+        var pasos = document.querySelectorAll('.paso');
+        pasos.forEach(function(number, index) {
+            console.log(number.id)
+            number.id = "paso"+(index + 1);
+            number.name= "paso"+(index + 1);
+            number.value = index + 1;
+        });
+    }
+</script>
+
+<script type="text/javascript"> 
+    function verificarFormulario() {
+        // Verificar que el cliente y el dueño no sean el mismo
+        var cliente = document.getElementById('id_cliente');
+        var duenio = document.getElementById('id_duenio');
+        if(cliente.value == duenio.value){
+            Swal.fire({
+                icon: 'error',
+                title: 'El cliente y el propietario no pueden ser el mismo',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return false
+        }
+        var counter = document.getElementById('counter');
+        if(counter.value == 0){
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique que el proceso tenga por lo menos 1 paso',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            return false
+        } else {
+            updateStepNumbers();
+            postProceso();
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    function postProceso() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Proceso inicializado',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        setTimeout(function() {
+            document.getElementById('pasosForm').submit();
+        }, 2000);
+    }
+</script>
+
+<script>
+        const sortableList = document.querySelector(".sortable-list");
+        const btnAgregarPaso = document.getElementById('btnAgregarPaso');
+        
+        const lista = document.getElementById("sortable-list");
+        new Sortable(lista,{
+            handle:'.handle',
+            animation:200
+        })
+
+        function addItem() {
+
+                // Validar campos vacios
+            const tituloInput = document.getElementById('titulo');
+            const descripcionInput = document.getElementById('descripcion');
+        
+            if (tituloInput.value.trim() === '' || descripcionInput.value.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique que los campos esten llenos',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return false
+            } else {
+                const i = document.getElementById('pasos');
+            var currentValue = parseInt(i.value);
+            const titulo  = document.getElementById('titulo').value;
+            const descripcion  = document.getElementById('descripcion').value;
+            // Create a new list item element
+            const newItem = document.createElement('li');
+             //newItem.textContent = 'New Item'; // Set the text content of the new item
+            newItem.innerHTML = `
+                <div class="grid grid-cols-5 item" draggable="true">
+                    <div class="col-span-3">
+                        <ol class="relative border-l border-sky-950">
+                            <li class="ml-6">            
+                                <span class="step-number absolute flex items-center justify-center w-8 h-8 bg-sky-950 rounded-full -left-4 ring-8 ring-white">
+                                    <p class="text-white">PA</p>
+                                </span>
+                                <h3 class="font-medium leading-tight pt-2 md:pt-0">${titulo}</h3>
+                                <input type="text" hidden id="titulo${currentValue}" name="titulo${currentValue}" value="${titulo}"></input>
+                                <p class="text-sm text-gray-500 hidden md:block">${descripcion}</p>
+                                <input type="text" hidden id="descripcion${currentValue}" name="descripcion${currentValue}" value="${descripcion}"></input>
+                            </li>
+                        </ol>
+                    </div>
+                    <input type="text" hidden id="paso${currentValue}" name="paso${currentValue}" value="${currentValue}"></input>
+                    <input type="number" value="0" hidden id="estatus${currentValue}" name="estatus${currentValue}" class="estatus${currentValue}"></input>
+                    <input type="tex" value="0" hidden id="observacion${currentValue}" name="observacion${currentValue}" class="observacion${currentValue}"></input>
+                    <div class="col-span-1 text-center">
+                        <i onclick="deleteItem(this)" class="fa-solid fa-trash-can fa-xl mt-4 text-red-600 hover:text-red-700"></i>
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <i class="fa-solid fa-grip-vertical handle fa-xl mt-4 text-gray-400 hover:text-gray-500"></i>
+                    </div>
+                </div>
+                `;
+            // Make the new item draggable
+            newItem.draggable = true;
+            var newValue = currentValue + 1;
+            i.value = newValue;
+            console.log("Variable 'i' value: " + newValue);
+            //i += 1;
+            // Append the new item to the list
+            sortableList.appendChild(newItem);
+            if(newValue > currentValue) {
+                addCounter();
+            }
+        }
+            }
+        // Attach a click event listener to the button
+        btnAgregarPaso.addEventListener('click', addItem);
+</script>
+
+<script type="text/javascript">   
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>

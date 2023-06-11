@@ -1,9 +1,11 @@
 // Base controlador
-const path = require('path');
 const Inmueble = require('../models/inmueble.model');
+const {User, Token} = require('../models/user.model');
 const bucket = require("../util/awsBucket.js");
-const { link } = require('fs');
-
+const linkYoutubeKiara = 'https://www.youtube.com/@kiarabienesraices/featured';
+const mapaPorDefecto = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14939.700429428109!2d-100.40389240351634!3d20.591115845212013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b2a918d2dc1%3A0x35673f825669f344!2sCentro%2C%2076000%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1685044595433!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+const moment = require("moment-timezone"); // Para fechas
+moment.locale('es-mx');
 
 /*
  * Obtiene información de un inmueble y renderiza la vista correspondiente.
@@ -13,12 +15,14 @@ const { link } = require('fs');
  * @returns {void}
  */
 exports.getInmueble = async (req, res, next) => {
+    const idInmueble = req.params.idInmueble;
+    //console.log("id del inmueble: ", idInmueble);
     //Info de agente e inmueblee
-    const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
+    const inmueble = await Inmueble.getInmueble(idInmueble);
     // activoInmueble ya viene en inmueble
-    const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
+    
     //console.log("Este es el id del inmueble ", req.params.idInmueble);
-    const aTramite = await Inmueble.getActivoTramite(req.params.idInmueble);
+    const aTramite = await Inmueble.getActivoTramite(idInmueble);
     let tramite = 0;
     if (aTramite.length <= 0 ){
         tramite = 0;
@@ -26,10 +30,11 @@ exports.getInmueble = async (req, res, next) => {
         tramite = aTramite[0].activoTramite;
     }
     //console.log("Este es el activo tramite 2",tramite);
-    const agente = Inmueble.getInfoAgente(idAgente);
-    const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(req.params.idInmueble);
+    
+    //console.log(agente);
+    const listaAttributesInmueble = await Inmueble.fetchAttritubutesInmueble(idInmueble);
     //Imagenes
-    const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
+    const idFotos = await Inmueble.getIdFotosInmueble(idInmueble);
     //console.log(idFotos[0]);
     arregloFotos = [];
     for (let i=0; i < idFotos[0].length; i++) {
@@ -38,19 +43,29 @@ exports.getInmueble = async (req, res, next) => {
         const imgSrcFilename = (imgSrc[0][0].archivoFoto).slice(23);
         arregloFotos.push(imgSrcFilename);
     }
-    //console.log(arregloFotos);
+    const idAgente = await Inmueble.getIdAgente(idInmueble);
+    //console.log("idAgente: " + idAgente);
+    const agente = await Inmueble.getInfoAgente(idAgente);
+    const foto = await User.srcFotoPortada(agente[0].idFoto);
+    const pfp = (foto[0][0].archivoFoto).slice(23);
+    //console.log("info del agente: ", agente)
+    //console.log(inmueble[0].idAgenteAlta);
+    const currentURL = req.protocol + '://' + req.get('host') + req.originalUrl;
     res.render('inmueble', {
         tituloInmueble: inmueble.nombreInmueble,
         fotoPortada: arregloFotos[0],
         fotos: arregloFotos,
         inmuebles : inmueble,
-        agente : agente,
+        agenteInfo : agente,
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
         idInmueble: req.params.idInmueble,
         tramite: tramite,
         idUsuario: req.session.idUsuario,
-        listaAttributesInmueble: listaAttributesInmueble[0]
+        listaAttributesInmueble: listaAttributesInmueble[0],
+        currentURL: currentURL,
+        urlFotoUsuario : req.session.urlFotoUsuario,
+        agenteFoto: pfp
     })
 };
 
@@ -62,10 +77,33 @@ exports.getInmueble = async (req, res, next) => {
  * @returns {void}
  */
 exports.eliminarPropiedad = (req, res, next) => {
-    console.log("Adentro de controlador eliminar");
+    const idInmueble = req.params.idInmueble;
+    const activoInmueble = 2;
+    Inmueble.eliminarPropiedad(activoInmueble, idInmueble);
+}
+
+/*
+ * Desactiva una propiedad cambiando su estado a inactivo.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {function} next - Función de middleware de Express.
+ * @returns {void}
+ */
+exports.desactivarPropiedad = (req, res, next) => {
     const idInmueble = req.params.idInmueble;
     const activoInmueble = 0;
-    Inmueble.eliminarPropiedad(activoInmueble, idInmueble);
+    Inmueble.desactivarPropiedad(activoInmueble, idInmueble);
+}
+
+/*
+ * Reactiva una propiedad cambiando su estado a activo.
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {function} next - Función de middleware de Express.
+ * @returns {void}
+ */
+exports.reactivarPropiedad = (req, res, next) => {
+    Inmueble.reactivarPropiedad(req.params.idInmueble);
 }
 
 /*
@@ -87,10 +125,15 @@ exports.getImgFromBucket = ( req,res,next ) => {
     };
     //Obtiene el objeto del bucket de Amazon S3 y envía la imagen como respuesta
     bucket.getObject(opciones, function(err, data) {
-        res.attachment(img);
-        res.send(data.Body);
+        if (err) {
+            console.log("Error imgFromBucket: "+err);
+        } else {
+            res.attachment(img);
+            res.send(data.Body);
+        }
     });
 }
+
 
 /*
  * Renderiza la vista de edición de un inmueble, recuperando información necesaria para su presentación.
@@ -104,9 +147,9 @@ exports.getEditarInmueble = async(req, res, next) => {
     const inmueble = await Inmueble.getInmueble(req.params.idInmueble);
     const idAgente = await Inmueble.getIdAgente(req.params.idInmueble);
     const agente = Inmueble.getInfoAgente(idAgente);
-    const listaPropietarios = await Inmueble.fetchClientes();
     //Imagenes
     const idFotos = await Inmueble.getIdFotosInmueble(req.params.idInmueble);
+    const currentYear = moment().format('YYYY');
     //console.log(idFotos[0]);
     arregloFotos = [];
     for (let i=0; i < idFotos[0].length; i++) {
@@ -120,9 +163,10 @@ exports.getEditarInmueble = async(req, res, next) => {
         fotos: arregloFotos,
         inmuebles : inmueble,
         agente : agente,
+        currentYear: currentYear,
         isLogged: req.session.isLoggedIn,
         idRol: req.session.idRol,
-        listaPropietarios: listaPropietarios[0]
+        urlFotoUsuario : req.session.urlFotoUsuario
     })
 }
 
@@ -153,7 +197,6 @@ exports.updateBodyCasa = (req,res,next) => {
         banios,
         desc,
         direccion,
-        idPropietario,
         linkMaps,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -188,8 +231,15 @@ exports.updateBodyCasa = (req,res,next) => {
     const jardin = req.body.jardin ? 1 : 0;
     const bodega = req.body.bodega ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-    console.log("idInmueble", idInmueble);
-    
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -249,11 +299,13 @@ exports.updateBodyCasa = (req,res,next) => {
         bodega,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -284,7 +336,6 @@ exports.updateBodyLocal = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
-        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -311,7 +362,15 @@ exports.updateBodyLocal = (req,res,next) => {
     const cuartoServicio = req.body.cuartoServicio ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -373,11 +432,13 @@ exports.updateBodyLocal = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -388,7 +449,7 @@ exports.updateBodyLocal = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyTerreno = (req,res,next) => {
-    console.log("Entrando a la ruta update body terreno");
+    //console.log("Entrando a la ruta update body terreno");
     let {
         titulo,
         linkVideo,
@@ -402,7 +463,6 @@ exports.updateBodyTerreno = (req,res,next) => {
         cuotaMantenimiento,
         direccion,
         linkMaps,
-        idPropietario,
         desc,
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -428,7 +488,15 @@ exports.updateBodyTerreno = (req,res,next) => {
     const servicioDrenaje = req.body.servicioDrenaje ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
-
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -466,11 +534,13 @@ exports.updateBodyTerreno = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble 
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -481,7 +551,7 @@ exports.updateBodyTerreno = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyBodega = (req,res,next) => {
-    console.log("Entrando a la ruta update body bodega");
+    //console.log("Entrando a la ruta update body bodega");
     let {
         titulo,
         linkVideo,
@@ -504,7 +574,6 @@ exports.updateBodyBodega = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
-        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -533,6 +602,15 @@ exports.updateBodyBodega = (req,res,next) => {
     const oficina = req.body.oficina ? 1 : 0;
     const patioManiobras = req.body.patioManiobras ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -575,8 +653,6 @@ exports.updateBodyBodega = (req,res,next) => {
     if (oficina == "" || oficina == null) {
         oficina = 0;
     }
-
-
     Inmueble.changeInmuebleBodega(
         titulo,
         tipoMovimiento,
@@ -610,11 +686,13 @@ exports.updateBodyBodega = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -625,7 +703,7 @@ exports.updateBodyBodega = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyOficina = (req,res,next) => {
-    console.log("Entrando a la ruta update body oficina");
+    //console.log("Entrando a la ruta update body oficina");
     let {
         titulo,
         linkVideo,
@@ -642,7 +720,6 @@ exports.updateBodyOficina = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
-        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -667,6 +744,15 @@ exports.updateBodyOficina = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -694,8 +780,6 @@ exports.updateBodyOficina = (req,res,next) => {
     if (banios == "" || banios == null) {
         banios = 0;
     }
-
-
     Inmueble.changeInmuebleOficina(
         titulo,
         tipoMovimiento,
@@ -719,11 +803,13 @@ exports.updateBodyOficina = (req,res,next) => {
         direccion,
         desc,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    window.onload = function() {
+        location.reload();
+      };
 };
 
 /*
@@ -734,7 +820,7 @@ exports.updateBodyOficina = (req,res,next) => {
  * @throws SQLException Si ocurre un error al interactuar con la base de datos.
  */
 exports.updateBodyOtra = (req,res,next) => {
-    console.log("Entrando a la ruta update body otra");
+    //console.log("Entrando a la ruta update body otra");
     let {
         titulo,
         linkVideo,
@@ -751,7 +837,6 @@ exports.updateBodyOtra = (req,res,next) => {
         banios,
         direccion,
         linkMaps,
-        idPropietario,
         desc
     } = req.body;
     //Obtener el tipo de movimiento y los respectivos precios
@@ -776,6 +861,15 @@ exports.updateBodyOtra = (req,res,next) => {
     const cisterna = req.body.cisterna ? 1 : 0;
     const vigilancia = req.body.vigilancia ? 1 : 0;
     const idInmueble = req.params.idInmueble;
+    /*
+    *Mapas y videos opcionales. Valores por defecto
+    */
+    if (linkVideo == "" || linkVideo == null) {
+        linkVideo = linkYoutubeKiara;
+    }
+    if (linkMaps == "" || linkMaps == null) {
+        linkMaps = mapaPorDefecto;
+    }
     if (m2Terreno == "" || m2Terreno == null) {
         m2Terreno = 0;
     }
@@ -827,9 +921,11 @@ exports.updateBodyOtra = (req,res,next) => {
         desc,
         direccion,
         linkMaps,
-        idPropietario,
         activoInmueble,
         idInmueble
     );
-    res.redirect('/catalogo');
+    res.redirect('/inmueble/' + idInmueble);
+    window.onload = function() {
+        location.reload();
+      };
 };

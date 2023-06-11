@@ -2,7 +2,7 @@
 
 <nav class="flex flex-wrap px-8 py-6 items-center justify-between w-full text-lg">
     <a href="/">
-        <img class="h-16 w-16" src="/img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
+        <img class="h-16 w-16 md:h-32 md:w-32" src="/img/kiarabr_logo.png" alt="Logo de Kiara Bienes Raíces">
     </a>
     <svg id="menu-button" class="h-6 w-6 cursor-pointer lg:hidden" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -53,21 +53,22 @@
                 <% } else { %>
                     <div class="hidden lg:block ml-6 relative">
                         <div class="object-center">
-                            <button id="userButton" class="mr-6 mt-2 block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-800 focus:outline-none">
-                                <!-- Foto de usuario cuando se tenga -->
+                            <button id="userButton" name="userButton">
+                                <img src="/perfil/get_bucket_img?image=<%=urlFotoUsuario%>" class="rounded-full object-cover mx-auto w-12 h-12" alt="">
                             </button>
+                            <!-- <i id="userButton" class="mt-7 fa-solid fa-circle-user fa-2xl"></i> -->
                         </div>
-                        <div id="userDropdown" class="w-48 rounded-lg py-2 absolute right-0 mt-6 bg-white hidden">
-                            <a class="block px-4 py-2 text-gray-800" href="">Mi perfil</a>
+                        <div id="userDropdown" class="w-48 rounded-lg absolute right-0 mt-6 bg-white hidden border">
+                            <a class="block px-4 py-2 text-gray-800 hover:bg-gray-50" href="/perfil">Mi perfil</a>
                             <hr class="bg-gray-800">
-                            <a class="block px-4 py-2 text-red-500" href="/logout">Cerrar sesión</a>
+                            <a class="block px-4 py-2 text-red-500 hover:bg-gray-50" href="/logout">Cerrar sesión</a>
                         </div>
                     </div>
                 <% }; %>
             </li>
             <% if (isLogged == true) { %>
                 <li>
-                    <a class="lg:hidden lg:p-4 py-2 block hover:underline" href="#">
+                    <a class="lg:hidden lg:p-4 py-2 block hover:underline" href="/perfil">
                         Mi perfil
                     </a>
                 </li>
