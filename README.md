@@ -1,3 +1,7 @@
+## Release v2.0.1
+### Novedades:
+- Arregla URL de FaceBook al compartir una propiedad.
+
 ## Release v2.0.0
 ### Novedades:
 - Agrega módulo de perfil:
