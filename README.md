@@ -1,3 +1,7 @@
+## Release v2.0.2
+### Novedades:
+- Cambia los números de teléfono de KIARA.
+
 ## Release v2.0.1
 ### Novedades:
 - Arregla URL de FaceBook al compartir una propiedad.
