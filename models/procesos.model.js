@@ -98,9 +98,9 @@ module.exports = class Procesos {
         );
       }
 
-      /**
-     * Obtiene la información del inmueble asociado al trámite del usuario.
-     * @param {number} idUsuario - El ID del usuario.
+      /*
+     * Obtiene la información basica del inmueble asociado al trámite del agente.
+     * @param {number} idTramite - El ID del trámite.
      * @returns {Promise} Una promesa que se resuelve con la información del inmueble.
      */
   static getDescTramite(idTramite) {
@@ -118,8 +118,8 @@ module.exports = class Procesos {
   }
   
     /*
-     * Obtener los tramites de un usuario
-     * @return JSON -> Cantidad total de inmuebles.
+     * Obtener los tramites de un usuario (cliente, agente, arrendador)
+     * @return JSON -> {idTramite, fechaCreacionTramite, activoTramite, idInmueble, idCliente, idAgente, idArrendador}
      */
   static infoTramite(idUsuario) {
       
@@ -135,6 +135,12 @@ module.exports = class Procesos {
       });
   }
 
+  /*
+ * Obtiene la información del trámite basada en el ID proporcionado.
+ * @param {number} idTramite - El ID del trámite.
+ * @returns {Promise} Una promesa que se resuelve con la información del trámite.
+ */
+  
   static getTramite(idTramite) {
     return db
       .execute("SELECT * FROM tramite WHERE idTramite = ? AND activoTramite = 1", [idTramite])
@@ -147,6 +153,12 @@ module.exports = class Procesos {
       });
   }
 
+  /*
+ * Obtiene los pasos asociados a un trámite basado en el ID proporcionado.
+ * @param {number} idTramite - El ID del trámite.
+ * @returns {Promise} Una promesa que se resuelve con los pasos del trámite.
+ */
+  
   static getPasos(idTramite) {
     return db
       .execute("SELECT arregloPasos FROM tramite WHERE idTramite = ? AND activoTramite = 1", [idTramite])
