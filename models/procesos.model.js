@@ -98,7 +98,7 @@ module.exports = class Procesos {
         );
       }
 
-      /*
+      /**
      * Obtiene la información basica del inmueble asociado al trámite del agente.
      * @param {number} idTramite - El ID del trámite.
      * @returns {Promise} Una promesa que se resuelve con la información del inmueble.
@@ -117,7 +117,7 @@ module.exports = class Procesos {
     });
   }
   
-    /*
+    /**
      * Obtener los tramites de un usuario (cliente, agente, arrendador)
      * @return JSON -> {idTramite, fechaCreacionTramite, activoTramite, idInmueble, idCliente, idAgente, idArrendador}
      */
@@ -135,7 +135,7 @@ module.exports = class Procesos {
       });
   }
 
-  /*
+  /**
  * Obtiene la información del trámite basada en el ID proporcionado.
  * @param {number} idTramite - El ID del trámite.
  * @returns {Promise} Una promesa que se resuelve con la información del trámite.
@@ -153,7 +153,7 @@ module.exports = class Procesos {
       });
   }
 
-  /*
+  /**
  * Obtiene los pasos asociados a un trámite basado en el ID proporcionado.
  * @param {number} idTramite - El ID del trámite.
  * @returns {Promise} Una promesa que se resuelve con los pasos del trámite.
