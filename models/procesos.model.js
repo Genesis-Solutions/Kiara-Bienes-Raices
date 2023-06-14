@@ -118,7 +118,7 @@ module.exports = class Procesos {
   }
   
     /**
-     * Obtener los tramites de un usuario (cliente, agente, arrendador)
+     * Obtener los tramites activos de un usuario (cliente, agente, arrendador)
      * @return JSON -> {idTramite, fechaCreacionTramite, activoTramite, idInmueble, idCliente, idAgente, idArrendador}
      */
   static infoTramite(idUsuario) {
